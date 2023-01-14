@@ -115,7 +115,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: b2c425eec1125694e9ce768bd86f12ca, type: 2}
+  m_Material: {fileID: 6200000, guid: c01e64a3d538185459548e683e195b46, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -169,6 +169,7 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 2364777538405152198}
+  _explanation: 
   inputType: 1
   buttonName: 
   key: 32
@@ -302,6 +303,7 @@ MonoBehaviour:
     action: {fileID: 6493673961000930206}
   - delay: 0.5
     action: {fileID: -7210514062832317456}
+  _explanation: 
   isTrigger: 1
   eventType: 0
   tags:
@@ -355,6 +357,7 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 6810422688004762215}
+  _explanation: 
   isTrigger: 0
   eventType: 0
   tags: []

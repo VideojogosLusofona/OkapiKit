@@ -3,27 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using static UnityEngine.Rendering.DebugUI;
+using static Trigger_OnCondition;
 
 public class Trigger_OnCondition: Trigger
 {
     [System.Serializable]
     public struct Condition
     {
+        [System.Serializable] public enum ValueType { None, TagCount};
         [System.Serializable] public enum Comparison { Equal, Less, LessEqual, Greater, GreaterEqual };
 
-        [SerializeField, ShowIf("needValueHandler")]
         public ValueHandler valueHandler;
-        [SerializeField, ShowIf("needValueVariable")]
-        public Variable variable;
-        [SerializeField]
-        public Comparison comparison;
-        [SerializeField]
-        public float value;
-        [SerializeField]
-        public bool percentageCompare;
-
-        private bool needValueHandler => (variable == null);
-        private bool needValueVariable => (valueHandler == null);
+        public Variable     variable;
+        public ValueType    valueType;
+        public Hypertag     tag;
+        public Comparison   comparison;
+        public float        value;
+        public bool         percentageCompare;
 
         public Variable GetVariable()
         {
@@ -33,15 +29,19 @@ public class Trigger_OnCondition: Trigger
             {
                 return valueHandler.GetVariable();
             }
-
             return null;
         }
 
         public string GetVariableName()
         {
             if (variable) return variable.name;
-
             if (valueHandler) return valueHandler.name;
+            switch (valueType)
+            {
+                case ValueType.TagCount:
+                    if (tag) return $"TagCount({tag.name})";
+                    return "TagCount([Unknown])";
+            }
 
             return "[Unknown]";
         }
@@ -75,6 +75,10 @@ public class Trigger_OnCondition: Trigger
     protected override string GetRawDescription()
     {
         string desc = "When ";
+        if ((conditions == null) || (conditions.Length == 0))
+        {
+            return "When [No conditions set]!";
+        }
         for (int i = 0; i < conditions.Length; i++)
         {
             desc += conditions[i].GetRawDescription();
@@ -86,13 +90,34 @@ public class Trigger_OnCondition: Trigger
 
     private bool Evaluate(Condition condition)
     {
-        var v = condition.GetVariable();
-        if (v == null) return false;
+        var currentVar = condition.GetVariable();
 
-        float currentValue = v.currentValue;
+        float currentValue;
+        float minValue = 0;
+        float maxValue = 0;
+        if (currentVar == null)
+        {
+            switch (condition.valueType)
+            {
+                case Condition.ValueType.TagCount:
+                    currentValue = HypertaggedObject.FindGameObjectsWithHypertag(condition.tag).Count;
+                    minValue = 0;
+                    maxValue = float.MaxValue;
+                    break;
+                default:
+                    return false;
+            }
+        }
+        else
+        { 
+            currentValue = currentVar.currentValue;
+            minValue = currentVar.minValue;
+            maxValue = currentVar.maxValue;
+        }
+
         if (condition.percentageCompare)
         {
-            currentValue = 100 * (currentValue - v.minValue) / (v.maxValue - v.minValue);
+            currentValue = 100 * (currentValue - minValue) / (maxValue - minValue);
         }
 
         bool b = false;
@@ -122,7 +147,7 @@ public class Trigger_OnCondition: Trigger
 
     private void Update()
     {
-        bool b = false;
+        bool b = true;
 
         foreach (var condition in conditions) 
         {

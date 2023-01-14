@@ -59,7 +59,14 @@ public abstract class Trigger : MonoBehaviour
         {
             if (action.action.isActionEnabled)
             {
-                StartCoroutine(ExecuteTriggerCR(action));
+                if (action.delay > 0)
+                {
+                    StartCoroutine(ExecuteTriggerCR(action));
+                }
+                else
+                {
+                    action.action.Execute();
+                }
             }
         }
 
@@ -71,10 +78,7 @@ public abstract class Trigger : MonoBehaviour
 
     IEnumerator ExecuteTriggerCR(ActionTrigger action)
     {
-        if (action.delay > 0)
-        {
-            yield return new WaitForSeconds(action.delay);
-        }
+        yield return new WaitForSeconds(action.delay);
 
         action.action.Execute();
     }

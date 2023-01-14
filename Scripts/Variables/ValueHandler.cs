@@ -9,9 +9,9 @@ public class ValueHandler : MonoBehaviour
     [SerializeField] 
     private Variable    value;
     [SerializeField, ShowIf("hasInternalValue")]
-    public float currentValue = 0;
+    private float currentValue = 0;
     [SerializeField, ShowIf("hasInternalValue")]
-    public float defaultValue = 0;
+    private float defaultValue = 0;
     [SerializeField, ShowIf("hasInternalValue")]
     private bool isInteger = false;
     [SerializeField, ShowIf("hasInternalValue")]
