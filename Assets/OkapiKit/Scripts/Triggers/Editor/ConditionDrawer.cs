@@ -25,6 +25,9 @@ public class ConditionDrawer : PropertyDrawer
         // Check if we need both selectors
         var propValueHandler = property.FindPropertyRelative("valueHandler");
         var propVariable = property.FindPropertyRelative("variable");
+        var propValueType = property.FindPropertyRelative("valueType");
+        var propTag = property.FindPropertyRelative("tag");
+
         var propComparison = property.FindPropertyRelative("comparison");
         var propValue = property.FindPropertyRelative("value");
         var propPercentage = property.FindPropertyRelative("percentageCompare");
@@ -40,15 +43,31 @@ public class ConditionDrawer : PropertyDrawer
         {
             if (propVariable.objectReferenceValue == null)
             {
-                // Calculate rects
-                var valueHandlerRect = new Rect(position.x, position.y, 150 + extra_width_variable, position.height / 2);
-                var variableRect = new Rect(position.x, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
+                if (propValueType.enumValueIndex == 0)
+                {
+                    // Calculate rects
+                    var valueHandlerRect = new Rect(position.x, position.y, 150 + extra_width_variable, position.height / 3);
+                    var variableRect = new Rect(position.x, position.y + position.height / 3, 150 + extra_width_variable, position.height / 3);
+                    var systemRect = new Rect(position.x, position.y + 2 * position.height / 3, 150 + extra_width_variable, position.height / 3);
 
-                // Draw fields - pass GUIContent.none to each so they are drawn without labels
-                EditorGUI.PropertyField(valueHandlerRect, propValueHandler, GUIContent.none);
-                EditorGUI.PropertyField(variableRect, propVariable, GUIContent.none);
+                    // Draw fields - pass GUIContent.none to each so they are drawn without labels
+                    EditorGUI.PropertyField(valueHandlerRect, propValueHandler, GUIContent.none);
+                    EditorGUI.PropertyField(variableRect, propVariable, GUIContent.none);
+                    EditorGUI.PropertyField(systemRect, propValueType, GUIContent.none);
 
-                offset_y = position.height / 4;
+                    offset_y = position.height / 4;
+                }
+                else
+                {
+                    if (propValueType.enumValueIndex == (int)Trigger_OnCondition.Condition.ValueType.TagCount)
+                    {
+                        var valueTypeRect = new Rect(position.x, position.y, 150 + extra_width_variable, position.height / 2);
+                        var tagRect = new Rect(position.x, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
+
+                        EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        EditorGUI.PropertyField(tagRect, propTag, GUIContent.none);
+                    }
+                }
             }
             else
             {
@@ -82,12 +101,20 @@ public class ConditionDrawer : PropertyDrawer
     {
         var propValueHandler = property.FindPropertyRelative("valueHandler");
         var propVariable = property.FindPropertyRelative("variable");
+        var systemVariable = property.FindPropertyRelative("valueType");
 
         if (propValueHandler.objectReferenceValue == null)
         {
             if (propVariable.objectReferenceValue == null)
             {
-                return base.GetPropertyHeight(property, label) * 2;
+                if (systemVariable.enumValueIndex == 0)
+                {
+                    return base.GetPropertyHeight(property, label) * 3;
+                }
+                else if (systemVariable.enumValueIndex == (int)Trigger_OnCondition.Condition.ValueType.TagCount)
+                {
+                    return base.GetPropertyHeight(property, label) * 2;
+                }
             }
         }
 

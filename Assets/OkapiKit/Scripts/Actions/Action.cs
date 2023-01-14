@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 abstract public class Action : MonoBehaviour
 {
     [SerializeField]
     protected bool      enableAction = true;
-    [SerializeField]
-    private Hypertag[]  tags;
+    [SerializeField, FormerlySerializedAsAttribute("tags")]
+    private Hypertag[]  actionTags;
 
     public bool isActionEnabled { get { return enableAction; } set { enableAction = value; } }
 
@@ -27,7 +28,7 @@ abstract public class Action : MonoBehaviour
 
     public bool HasTag(Hypertag tag)
     {
-        foreach (var t in this.tags)
+        foreach (var t in actionTags)
         {
             if (t == tag) return true;
         }

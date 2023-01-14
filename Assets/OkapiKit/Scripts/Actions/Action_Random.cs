@@ -15,6 +15,10 @@ public class Action_Random : Action
 
     public override string GetRawDescription(string ident)
     {
+        if ((actions == null) || (actions.Length == 0))
+        {
+            return "Selects randomly between some actions, but no actions are defined!";
+        }
         var desc = "Select randomly between the following actions:\n";
 
         float total = 0;
@@ -52,7 +56,7 @@ public class Action_Random : Action
         float r = Random.Range(0.0f, sumProbability);
         foreach (var action in activeActions) 
         { 
-            if (action.probability > r)
+            if (action.probability >= r)
             {
                 action.action.Execute();
                 break;
