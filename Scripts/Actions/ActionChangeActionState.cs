@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Action_ChangeActionState : Action
+public class ActionChangeActionState : Action
 {
     [SerializeField] private enum StateChange { Enable, Disable, Toggle };
 

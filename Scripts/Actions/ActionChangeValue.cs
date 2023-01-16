@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Action_ChangeValue : Action
+public class ActionChangeValue : Action
 {
     [SerializeField] enum OperationType { Set, Change };
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trigger_Randomizer : Trigger
+public class TriggerOnRandomizer : Trigger
 {
     [SerializeField] Trigger[]  choiceTriggers;
 

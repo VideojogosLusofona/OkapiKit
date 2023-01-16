@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-using static UnityEngine.Rendering.DebugUI;
-using static Trigger_OnCondition;
 
-public class Trigger_OnCondition: Trigger
+public class TriggerOnCondition: Trigger
 {
     [System.Serializable]
     public struct Condition

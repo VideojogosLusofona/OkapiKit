@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Action_UnityEvent : Action
+public class ActionUnityEvent : Action
 {
     [SerializeField] private UnityEvent unityEvent;
 

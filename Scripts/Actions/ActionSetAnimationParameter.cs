@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Action_SetAnimationParameter : Action
+public class ActionSetAnimationParameter : Action
 {
     [SerializeField] private enum ValueType { Int, Float, Boolean, Trigger, Value };
 

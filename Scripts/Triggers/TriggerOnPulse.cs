@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trigger_Pulse : Trigger
+public class TriggerOnPulse : Trigger
 {
     [SerializeField] public string pulseString = "1111111";
     [SerializeField] public float  pulseDuration = 0.1f;

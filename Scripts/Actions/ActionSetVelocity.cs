@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Action_SetVelocity : Action
+public class ActionSetVelocity : Action
 {
     [SerializeField] private enum VelocityOperation { Set, PercentageModify };
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Action_PlaySound : Action
+public class ActionPlaySound : Action
 {
     [SerializeField] 
     private AudioClip   clip;

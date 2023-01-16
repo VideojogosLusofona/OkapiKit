@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Action_SetParent : Action
+public class ActionSetParent : Action
 {
     [SerializeField] private enum Target { None, Object, Tag };
 

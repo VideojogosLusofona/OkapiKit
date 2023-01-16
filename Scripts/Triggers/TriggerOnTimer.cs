@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Trigger_Timer : Trigger
+public class TriggerOnTimer : Trigger
 {
     [SerializeField, MinMaxSlider(0.0f, 10.0f)]
     private Vector2         timeInterval = new Vector2(5.0f, 5.0f);

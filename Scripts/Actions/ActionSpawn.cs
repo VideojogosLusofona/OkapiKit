@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Action_Spawn : Action
+public class ActionSpawn : Action
 {
     [SerializeField] private enum SpawnPosition { Default, This, Target, Tag };
     private Spawner         spawner;

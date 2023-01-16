@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Action_ChangeRigidBody : Action
+public class ActionModifyRigidBody : Action
 {
     [SerializeField] private enum ChangeType { SetBodyType, Mass, LinearDrag, AngularDrag, GravityScale };
 
