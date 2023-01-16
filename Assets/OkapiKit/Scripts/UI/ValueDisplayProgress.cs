@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueDisplay_Progress : ValueDisplay
+public class ValueDisplayProgress : ValueDisplay
 {
     [SerializeField] private RectTransform  fill;
 

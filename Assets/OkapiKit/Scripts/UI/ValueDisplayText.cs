@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ValueDisplay_Text : ValueDisplay
+public class ValueDisplayText : ValueDisplay
 {
     private string baseText;
 

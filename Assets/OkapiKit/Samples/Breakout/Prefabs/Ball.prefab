@@ -358,6 +358,7 @@ MonoBehaviour:
   actionTags: []
   changeType: 0
   bodyType: 0
+  value: 0
 --- !u!114 &67971990859066623
 MonoBehaviour:
   m_ObjectHideFlags: 0

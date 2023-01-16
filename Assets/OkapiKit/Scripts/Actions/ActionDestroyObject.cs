@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Action_DestroyObject : Action
+public class ActionDestroyObject : Action
 {
     [SerializeField] private enum Target { Self, Parent, Topmost, Object, Tag };
 

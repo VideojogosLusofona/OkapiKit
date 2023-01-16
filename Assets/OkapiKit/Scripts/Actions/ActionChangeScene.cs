@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using NaughtyAttributes;
 
-public class Action_ChangeScene : Action
+public class ActionChangeScene : Action
 {
     [SerializeField, Scene] private string sceneName;
 

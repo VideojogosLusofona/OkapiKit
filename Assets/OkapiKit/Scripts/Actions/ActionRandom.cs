@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Action_Random : Action
+public class ActionRandom : Action
 {
     [System.Serializable]
     struct ActionProbability

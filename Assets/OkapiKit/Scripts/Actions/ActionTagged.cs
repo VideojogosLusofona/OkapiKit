@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Action_Tagged : Action
+public class ActionTagged : Action
 {
     [SerializeField] private Hypertag[] triggerTags;
 

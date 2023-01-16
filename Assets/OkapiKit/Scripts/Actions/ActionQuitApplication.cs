@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-public class Action_QuitApplication : Action
+public class ActionQuitApplication : Action
 {
     public override string GetRawDescription(string ident)
     {

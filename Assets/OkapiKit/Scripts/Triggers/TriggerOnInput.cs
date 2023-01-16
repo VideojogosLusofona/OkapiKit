@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Trigger_Input : Trigger
+public class TriggerOnInput : Trigger
 {
     [SerializeField] private enum InputType { Button, Key };
 

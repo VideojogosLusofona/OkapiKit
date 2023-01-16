@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueDisplay_Image : ValueDisplay
+public class ValueDisplayImage : ValueDisplay
 {
     // Update is called once per frame
     void Update()

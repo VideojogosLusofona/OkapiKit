@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Trigger_OnCollision : Trigger
+public class TriggerOnCollision : Trigger
 {
     [SerializeField] private enum CollisionEvent { Enter, Stay, Exit };
 
