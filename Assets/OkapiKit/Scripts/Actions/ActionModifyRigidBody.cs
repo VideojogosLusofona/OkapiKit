@@ -20,7 +20,8 @@ public class ActionModifyRigidBody : Action
     public override void Execute()
     {
         if (!enableAction) return;
-        
+        if (!EvaluatePreconditions()) return;
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb == null) return;
 
@@ -48,20 +49,26 @@ public class ActionModifyRigidBody : Action
 
     public override string GetRawDescription(string ident)
     {
+        var desc = GetPreconditionsString();
         switch (changeType)
         {
             case ChangeType.SetBodyType:
-                return $"Changes body type of this object to {bodyType}";
+                desc += $"Changes body type of this object to {bodyType}";
+                break;
             case ChangeType.Mass:
-                return $"Changes mass of this object to {value}";
+                desc += $"Changes mass of this object to {value}";
+                break;
             case ChangeType.LinearDrag:
-                return $"Changes linear drag of this object to {value}";
+                desc += $"Changes linear drag of this object to {value}";
+                break;
             case ChangeType.AngularDrag:
-                return $"Changes angular drag of this object to {value}";
+                desc += $"Changes angular drag of this object to {value}";
+                break;
             case ChangeType.GravityScale:
-                return $"Changes gravity scale of this object to {value}";
+                desc += $"Changes gravity scale of this object to {value}";
+                break;
         }
 
-        return "Changes something on rigid body (change type not defined)!";
+        return desc;
     }
 }

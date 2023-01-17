@@ -11,6 +11,8 @@ public class TriggerOnReset : Trigger
 
     private void Start()
     {
+        if (!EvaluatePreconditions()) return;
+
         ExecuteTrigger();
     }
 }

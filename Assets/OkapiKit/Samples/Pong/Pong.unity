@@ -273,7 +273,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: ' Switches to scene Pong'
   sceneName: Pong
 --- !u!114 &101114907
 MonoBehaviour:
@@ -290,6 +294,8 @@ MonoBehaviour:
   description: When SPACE is pressed, restart the scene
   enableTrigger: 1
   allowRetrigger: 0
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 101114906}
@@ -694,7 +700,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: ' Switches to scene Pong'
   sceneName: Pong
 --- !u!114 &518810630
 MonoBehaviour:
@@ -711,10 +721,13 @@ MonoBehaviour:
   description: When SPACE is pressed, restart the scene
   enableTrigger: 1
   allowRetrigger: 0
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 518810629}
-  _explanation: 
+  _explanation: "When SPACE is pressed, restart the scene\n----------------\nWhen
+    key Space is pressed:\n At 0 seconds,  Switches to scene Pong\n"
   inputType: 1
   buttonName: 
   key: 32
@@ -1276,7 +1289,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 1
+  actionTags: []
+  hasConditions: 1
+  actionConditions: []
+  _explanation: 
   target: {fileID: 518810625}
   state: 0
 --- !u!114 &1178407169
@@ -1294,17 +1311,21 @@ MonoBehaviour:
   description: If player 2 reaches 3 points, game is done!
   enableTrigger: 1
   allowRetrigger: 0
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 1178407168}
   - delay: 0
     action: {fileID: 1178407172}
   _explanation: "If player 2 reaches 3 points, game is done!\n----------------\nWhen
-    (Score_Player2 == 3):\n  At 0 seconds, Enables object Player2_Win\n  At 0 seconds,
+    (Score_Player2 == 3):\n At 0 seconds, Enables object Player2_Win\n At 0 seconds,
     Disables action [Spawns an entity using spawner BallSpawner]\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 39bd3d25e603f3e4199972cfaee54206, type: 2}
+    valueType: 0
+    tag: {fileID: 0}
     comparison: 0
     value: 3
     percentageCompare: 0
@@ -1321,7 +1342,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 1
+  actionTags: []
+  hasConditions: 1
+  actionConditions: []
+  _explanation: 
   target: {fileID: 101114902}
   state: 0
 --- !u!114 &1178407171
@@ -1339,18 +1364,21 @@ MonoBehaviour:
   description: If player 1 reaches 3 points, game is done!
   enableTrigger: 1
   allowRetrigger: 0
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 1178407170}
   - delay: 0
     action: {fileID: 1178407172}
   _explanation: "If player 1 reaches 3 points, game is done!\n----------------\nWhen
-    (Score_Player1 == 3) and (Player1_Paddle >= 3):\n  At 0 seconds, Enables object
-    Player1_Win\n  At 0 seconds, Disables action [Spawns an entity using spawner
-    BallSpawner]\n"
+    (Score_Player1 == 3):\n At 0 seconds, Enables object Player1_Win\n At 0 seconds,
+    Disables action [Spawns an entity using spawner BallSpawner]\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 85789dd499c4bd241988c38a989575f8, type: 2}
+    valueType: 0
+    tag: {fileID: 0}
     comparison: 0
     value: 3
     percentageCompare: 0
@@ -1367,7 +1395,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Disables action [Spawns an entity using spawner BallSpawner]
   target: {fileID: 1368448081}
   state: 1
 --- !u!114 &1178407173
@@ -1383,7 +1415,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: ' Switches to scene Samples'
   sceneName: Samples
 --- !u!114 &1178407174
 MonoBehaviour:
@@ -1400,15 +1436,12 @@ MonoBehaviour:
   description: 
   enableTrigger: 1
   allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 1178407173}
-  _explanation: 'When key Escape is pressed:
-
-    At 0 seconds, Switches to scene
-    Samples
-
-'
+  _explanation: "When key Escape is pressed:\n At 0 seconds,  Switches to scene Samples\n"
   inputType: 1
   buttonName: 
   key: 27
@@ -1446,8 +1479,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags:
+  hasTags: 1
+  actionTags:
   - {fileID: 11400000, guid: 10fa1ca39f9fece46a76fe6c0ff4d47a, type: 2}
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Spawns an entity using spawner BallSpawner
+  prefabObject: {fileID: 0}
+  spawnPosition: 0
+  targetPosition: {fileID: 0}
+  targetTag: {fileID: 0}
+  setParent: 0
 --- !u!114 &1368448082
 MonoBehaviour:
   m_ObjectHideFlags: 0

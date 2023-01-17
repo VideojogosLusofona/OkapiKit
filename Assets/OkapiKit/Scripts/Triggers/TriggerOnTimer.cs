@@ -27,7 +27,10 @@ public class TriggerOnTimer : Trigger
 
         if (timer <= 0)
         {
-            ExecuteTrigger();
+            if (EvaluatePreconditions())
+            {
+                ExecuteTrigger();
+            }
 
             timer += Random.Range(timeInterval.x, timeInterval.y);
         }

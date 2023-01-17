@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using NaughtyAttributes;
+using Unity.VisualScripting;
 
 public abstract class Trigger : MonoBehaviour
 {
@@ -21,10 +22,16 @@ public abstract class Trigger : MonoBehaviour
     [SerializeField]
     public      bool            allowRetrigger = true;
     [SerializeField]
+    private     bool            hasPreconditions = false;
+    [SerializeField, ShowIf("hasPreconditions")] 
+    private     Condition[]     preConditions;
+    [SerializeField]
     protected   ActionTrigger[] actions;
 
     [SerializeField, ResizableTextArea, ReadOnly]
     private string _explanation;
+
+    private bool alreadyTriggered = false;
 
     [Button("Update Explanation")]
     private void UpdateExplanation()
@@ -37,13 +44,25 @@ public abstract class Trigger : MonoBehaviour
         string desc = "";
         if (description != "") desc += description + "\n----------------\n";
 
+        if (hasPreconditions)
+        {
+            if ((preConditions != null) && (preConditions.Length > 0))
+            {
+                desc += "If ";
+                for (int i = 0; i < preConditions.Length; i++)
+                {
+                    desc += preConditions[i].GetRawDescription() + " and ";
+                }
+            }
+        }
+
         desc += GetRawDescription() + ":\n";
 
         foreach (var action in actions)
         {
             string actionDesc = "[NULL]";
             if (action.action != null) actionDesc = action.action.GetRawDescription("  ");
-            desc += $"  At {action.delay} seconds, {actionDesc}\n";
+            desc += $" At {action.delay} seconds, {actionDesc}\n";
         }
 
         return desc;
@@ -51,9 +70,23 @@ public abstract class Trigger : MonoBehaviour
 
     protected abstract string GetRawDescription();
 
+    protected bool EvaluatePreconditions()
+    {
+        if (preConditions == null) return true;
+        if (!hasPreconditions) return true;
+
+        foreach (var condition in preConditions)
+        {
+            if (!condition.Evaluate()) return false;
+        }
+
+        return true;
+    }
+
     public virtual void ExecuteTrigger()
     {
         if (!enableTrigger) return;
+        if ((!allowRetrigger) && (alreadyTriggered)) return;
 
         foreach (var action in actions)
         {
@@ -70,10 +103,7 @@ public abstract class Trigger : MonoBehaviour
             }
         }
 
-        if (!allowRetrigger)
-        {
-            Destroy(this);
-        }
+        alreadyTriggered = true;
     }
 
     IEnumerator ExecuteTriggerCR(ActionTrigger action)

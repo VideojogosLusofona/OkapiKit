@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OkapiKit/Samples/Breakout/Breakout.unity
     guid: 30fd746f5616b8e4498befe003ee7ae5
+  - enabled: 1
+    path: Assets/OkapiKit/Samples/SpaceInvaders/SpaceInvaders.unity
+    guid: d1612ebf41a507f49bf7dec067176d6f
   m_configObjects: {}

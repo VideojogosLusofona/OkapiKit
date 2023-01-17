@@ -5,7 +5,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[CustomPropertyDrawer(typeof(TriggerOnCondition.Condition))]
+[CustomPropertyDrawer(typeof(Condition))]
 public class ConditionDrawer : PropertyDrawer
 {
     // Draw the property inside the given rect
@@ -59,7 +59,7 @@ public class ConditionDrawer : PropertyDrawer
                 }
                 else
                 {
-                    if (propValueType.enumValueIndex == (int)TriggerOnCondition.Condition.ValueType.TagCount)
+                    if (propValueType.enumValueIndex == (int)Condition.ValueType.TagCount)
                     {
                         var valueTypeRect = new Rect(position.x, position.y, 150 + extra_width_variable, position.height / 2);
                         var tagRect = new Rect(position.x, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
@@ -111,7 +111,7 @@ public class ConditionDrawer : PropertyDrawer
                 {
                     return base.GetPropertyHeight(property, label) * 3;
                 }
-                else if (systemVariable.enumValueIndex == (int)TriggerOnCondition.Condition.ValueType.TagCount)
+                else if (systemVariable.enumValueIndex == (int)Condition.ValueType.TagCount)
                 {
                     return base.GetPropertyHeight(property, label) * 2;
                 }

@@ -20,21 +20,27 @@ public class ActionDestroyObject : Action
 
     public override string GetRawDescription(string ident)
     {
+        string desc = GetPreconditionsString();
+
         switch (target)
         {
             case Target.Self:
-                return $"Destroys this object";
+                desc += $"Destroys this object";
+                break;
             case Target.Topmost:
-                return $"Destroys the topmost object that contains this";
+                desc += $"Destroys the topmost object that contains this";
+                break;
             case Target.Parent:
-                return $"Destroys the parent of this object";
+                desc += $"Destroys the parent of this object";
+                break;
             case Target.Object:
-                if (targetObject != null) return $"Destroys object {targetObject.name}";
-                else return $"Destroys this object";
+                if (targetObject != null) desc += $"Destroys object {targetObject.name}";
+                else desc += $"Destroys this object";
+                break;
             case Target.Tag:
                 if (tags.Length > 0)
                 {
-                    string desc = "Destroys objects with tags [";
+                    desc += "Destroys objects with tags [";
                     for (int i = 0; i < tags.Length; i++)
                     {
                         desc += tags[i].name;
@@ -45,17 +51,19 @@ public class ActionDestroyObject : Action
                 }
                 else
                 {
-                    return "Destroys objects with tags [undefined]!";
+                    desc += "Destroys objects with tags [undefined]!";
                 }
+                break;
             default:
                 break;
         }
 
-        return "Destroy this object";
+        return desc;
     }
     public override void Execute()
     {
         if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
 
         switch (target)
         {

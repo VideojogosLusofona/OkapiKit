@@ -11,22 +11,28 @@ public class ActionChangeActionState : Action
 
     public override string GetRawDescription(string ident)
     {
+        string desc = GetPreconditionsString();
+
         switch (state)
         {
             case StateChange.Enable:
-                return $"Enables action [{target.GetRawDescription(ident)}]";
+                desc += $"Enables action [{target.GetRawDescription(ident)}]";
+                break;
             case StateChange.Disable:
-                return $"Disables action [{target.GetRawDescription(ident)}]";
+                desc += $"Disables action [{target.GetRawDescription(ident)}]";
+                break;
             case StateChange.Toggle:
-                return $"Toggles action [{target.GetRawDescription(ident)}]";
+                desc += $"Toggles action [{target.GetRawDescription(ident)}]";
+                break;
         }
-        return "";
+        return desc;
     }
 
     public override void Execute()
     {
         if (!enableAction) return;
         if (target == null) return;
+        if (!EvaluatePreconditions()) return;
 
         switch (state)
         {

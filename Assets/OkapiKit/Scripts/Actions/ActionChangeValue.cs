@@ -29,17 +29,24 @@ public class ActionChangeValue : Action
         if (variable) n = variable.name;
         else if (valueHandler) n = valueHandler.name;
 
+        string desc = GetPreconditionsString();
+
         if (operation == OperationType.Set)
         {
-            return $"Sets variable {n} to {value}";
+            desc += $"Sets variable {n} to {value}";
+        }
+        else
+        {
+            desc += $"Adds {deltaValue} to variable {n}";
         }
 
-        return $"Adds {deltaValue} to variable {n}";
+        return desc;
     }
 
     public override void Execute()
     {
         if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
 
         if (valueHandler != null) 
         {

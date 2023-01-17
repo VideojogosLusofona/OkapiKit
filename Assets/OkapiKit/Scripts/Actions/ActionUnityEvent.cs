@@ -9,11 +9,14 @@ public class ActionUnityEvent : Action
 
     public override void Execute()
     {
+        if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
+
         unityEvent?.Invoke();
     }
 
     public override string GetRawDescription(string ident)
     {
-        return $"Execute Unity event";
+        return $"{GetPreconditionsString()}Execute Unity event";
     }
 }

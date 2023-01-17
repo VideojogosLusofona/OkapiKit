@@ -188,12 +188,14 @@ MonoBehaviour:
   description: If ball hits, reduce health
   enableTrigger: 1
   allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 2575978712568371468}
   _explanation: "If ball hits, reduce health\n----------------\nWhen a collision
-    with a bounding volume with tags [Tag_Ball] starts:\n  At 0 seconds, Adds -1
-    to variable Health\n"
+    with a bounding volume with tags [Tag_Ball] starts:\n At 0 seconds, Adds -1 to
+    variable Health\n"
   isTrigger: 0
   eventType: 0
   tags:
@@ -211,7 +213,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Adds -1 to variable Health
   valueHandler: {fileID: 2575978712690457989}
   variable: {fileID: 0}
   operation: 1
@@ -230,7 +236,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Sets animation parameter Health of object Brick05 to the value of
+    Health
   animator: {fileID: 2575978712568371510}
   animationParameter: Health
   valueType: 4
@@ -311,10 +322,13 @@ MonoBehaviour:
   description: 
   enableTrigger: 1
   allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 2575978712690457994}
-  _explanation: "When (Health <= 0):\n  At 0 seconds, Destroys this object\n"
+  _explanation: "When (Health <= 0):\n At 0 seconds, Destroys the parent of this
+    object\n"
   conditions:
   - valueHandler: {fileID: 2575978712690457989}
     variable: {fileID: 0}
@@ -336,7 +350,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Destroys the parent of this object
   target: 1
   targetObject: {fileID: 0}
   tags: []

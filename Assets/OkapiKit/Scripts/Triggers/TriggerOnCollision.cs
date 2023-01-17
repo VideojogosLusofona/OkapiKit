@@ -46,6 +46,7 @@ public class TriggerOnCollision : Trigger
     {
         if (!isTrigger) return;
         if (eventType != CollisionEvent.Enter) return;
+        if (!EvaluatePreconditions()) return;
 
         if (collision.gameObject.HasHypertags(tags))
         {
@@ -58,6 +59,7 @@ public class TriggerOnCollision : Trigger
     {
         if (isTrigger) return;
         if (eventType != CollisionEvent.Enter) return;
+        if (!EvaluatePreconditions()) return;
 
         if (collision.gameObject.HasHypertags(tags))
         {
@@ -68,6 +70,7 @@ public class TriggerOnCollision : Trigger
     {
         if (!isTrigger) return;
         if (eventType != CollisionEvent.Stay) return;
+        if (!EvaluatePreconditions()) return;
 
         if (collision.gameObject.HasHypertags(tags))
         {
@@ -80,6 +83,7 @@ public class TriggerOnCollision : Trigger
     {
         if (isTrigger) return;
         if (eventType != CollisionEvent.Stay) return;
+        if (!EvaluatePreconditions()) return;
 
         if (collision.gameObject.HasHypertags(tags))
         {
@@ -91,6 +95,7 @@ public class TriggerOnCollision : Trigger
     {
         if (!isTrigger) return;
         if (eventType != CollisionEvent.Exit) return;
+        if (!EvaluatePreconditions()) return;
 
         if (collision.gameObject.HasHypertags(tags))
         {
@@ -103,6 +108,7 @@ public class TriggerOnCollision : Trigger
     {
         if (isTrigger) return;
         if (eventType != CollisionEvent.Exit) return;
+        if (!EvaluatePreconditions()) return;
 
         if (collision.gameObject.HasHypertags(tags))
         {

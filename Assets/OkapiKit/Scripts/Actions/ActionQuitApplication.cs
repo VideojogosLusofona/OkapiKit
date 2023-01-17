@@ -9,12 +9,13 @@ public class ActionQuitApplication : Action
 {
     public override string GetRawDescription(string ident)
     {
-        return "Quit application";
+        return $"{GetPreconditionsString()}Quit application";
     }
 
     public override void Execute()
     {
         if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
 
 #if UNITY_EDITOR
         if (EditorApplication.isPlaying)
