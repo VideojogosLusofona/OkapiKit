@@ -20,6 +20,9 @@ public class ActionSetParent : Action
 
     public override void Execute()
     {
+        if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
+
         switch (target)
         {
             case Target.None:
@@ -41,19 +44,24 @@ public class ActionSetParent : Action
 
     public override string GetRawDescription(string ident)
     {
+        string desc = GetPreconditionsString();
+
         switch (target)
         {
             case Target.None:
-                return "Remove this object from parent";
+                desc += "Remove this object from parent";
+                break;
             case Target.Object:
-                if (targetObject) return $"Sets this object as a child of {targetObject.name}";
-                else return "Remove this object from parent";
+                if (targetObject) desc += $"Sets this object as a child of {targetObject.name}";
+                else desc += "Remove this object from parent";
+                break;
             case Target.Tag:
-                if (tag) return $"Sets this object as a child of object with tag {tag.name}";
-                else return $"Sets this object as a child of object with tag [Undefined]";
+                if (tag) desc += $"Sets this object as a child of object with tag {tag.name}";
+                else desc += $"Sets this object as a child of object with tag [Undefined]";
+                break;
             default:
                 break;
         }
-        return "[Uknown target]";
+        return desc;
     }
 }

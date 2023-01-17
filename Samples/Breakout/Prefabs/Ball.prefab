@@ -304,6 +304,8 @@ MonoBehaviour:
   description: When SPACE is pressed, start the ball
   enableTrigger: 1
   allowRetrigger: 0
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 67971990859066623}
@@ -312,12 +314,12 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1917432777651354207}
   _explanation: "When SPACE is pressed, start the ball\n----------------\nWhen key
-    Space is pressed:\n  At 0 seconds, Select randomly between the following actions:\n 
+    Space is pressed:\n At 0 seconds, Select randomly between the following actions:\n 
     1. Select a random angle between 35 and 60 and set the velocity of this object
     towards that direction, with a magnitude between 400 and 400 (50%)\n  2. Select
     a random angle between 125 and 150 and set the velocity of this object towards
-    that direction, with a magnitude between 400 and 400 (50%)\n\n  At 0 seconds,
-    Remove this object from parent\n  At 0 seconds, Changes body type of this object
+    that direction, with a magnitude between 400 and 400 (50%)\n\n At 0 seconds,
+    Remove this object from parent\n At 0 seconds, Changes body type of this object
     to Dynamic\n"
   inputType: 1
   buttonName: 
@@ -338,7 +340,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Remove this object from parent
   target: 0
   targetObject: {fileID: 0}
   tag: {fileID: 0}
@@ -355,7 +361,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Changes body type of this object to Dynamic
   changeType: 0
   bodyType: 0
   value: 0
@@ -372,7 +382,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: 'Select randomly between the following actions:
+
+    1. Select a
+    random angle between 35 and 60 and set the velocity of this object towards that
+    direction, with a magnitude between 400 and 400 (50%)
+
+    2. Select a random
+    angle between 125 and 150 and set the velocity of this object towards that direction,
+    with a magnitude between 400 and 400 (50%)
+
+'
   actions:
   - action: {fileID: 67971990859066622}
     probability: 100
@@ -391,7 +415,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 35 and 60 and set the velocity of this
+    object towards that direction, with a magnitude between 400 and 400
+  changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
   useRotation: 0
@@ -414,7 +444,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 1
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 125 and 150 and set the velocity of
+    this object towards that direction, with a magnitude between 400 and 400
+  changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
   useRotation: 0
@@ -437,7 +473,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 1
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 215 and 240 and set the velocity of
+    this object towards that direction, with a magnitude between 400 and 400
+  changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
   useRotation: 0
@@ -460,7 +502,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 1
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 305 and 330 and set the velocity of
+    this object towards that direction, with a magnitude between 400 and 400
+  changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
   useRotation: 0
@@ -485,12 +533,14 @@ MonoBehaviour:
   description: Everytime the ball collides, it increases the speed
   enableTrigger: 1
   allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 67971990859066609}
   _explanation: "Everytime the ball collides, it increases the speed\n----------------\nWhen
     a collision with a bounding volume with tags [Tag_Player,Tag_Bricks,Tag_Walls]
-    starts:\n  At 0 seconds, Changes the current velocity of this object by a percentage
+    starts:\n At 0 seconds, Changes the current velocity of this object by a percentage
     in the [0.01,0.01] range.\n"
   isTrigger: 0
   eventType: 0
@@ -511,7 +561,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
   actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Changes the current velocity of this object by a percentage in the
+    [0.01,0.01] range.
+  changeType: 0
   operation: 1
   percentageValue: {x: 0.01, y: 0.01}
   useRotation: 0

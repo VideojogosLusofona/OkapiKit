@@ -38,6 +38,7 @@ public class ActionSetAnimationParameter : Action
         if (!enableAction) return;
         if (!animator) return;
         if (animationParameter == "") return;
+        if (!EvaluatePreconditions()) return;
 
         switch (valueType)
         {
@@ -68,32 +69,41 @@ public class ActionSetAnimationParameter : Action
 
     public override string GetRawDescription(string ident)
     {
+        string desc = GetPreconditionsString();
+
         if (animator == null)
         {
-            return "Sets the value of a animation parameter to a value (animator set set)!";
+            desc += "Sets the value of a animation parameter to a value (animator set set)!";
         }
-
-        switch (valueType)
+        else
         {
-            case ValueType.Int:
-                return $"Sets animation parameter {animationParameter} of object {animator.name} to {integerValue}";
-            case ValueType.Float:
-                return $"Sets animation parameter {animationParameter} of object {animator.name} to {floatValue}";
-            case ValueType.Boolean:
-                return $"Sets animation parameter {animationParameter} of object {animator.name} to {boolValue}";
-            case ValueType.Trigger:
-                return $"Triggers the animation parameter {animationParameter} of object {animator.name}";
-            case ValueType.Value:
-                if (valueHandler)
-                {
-                    return $"Sets animation parameter {animationParameter} of object {animator.name} to the value of {valueHandler.name}"; 
-                }
-                else
-                {
-                    return $"Sets animation parameter {animationParameter} of object {animator.name} to the value of variable {variable.name}";
-                }
+            switch (valueType)
+            {
+                case ValueType.Int:
+                    desc += $"Sets animation parameter {animationParameter} of object {animator.name} to {integerValue}";
+                    break;
+                case ValueType.Float:
+                    desc += $"Sets animation parameter {animationParameter} of object {animator.name} to {floatValue}";
+                    break;
+                case ValueType.Boolean:
+                    desc += $"Sets animation parameter {animationParameter} of object {animator.name} to {boolValue}";
+                    break;
+                case ValueType.Trigger:
+                    desc += $"Triggers the animation parameter {animationParameter} of object {animator.name}";
+                    break;
+                case ValueType.Value:
+                    if (valueHandler)
+                    {
+                        desc += $"Sets animation parameter {animationParameter} of object {animator.name} to the value of {valueHandler.name}";
+                    }
+                    else
+                    {
+                        desc += $"Sets animation parameter {animationParameter} of object {animator.name} to the value of variable {variable.name}";
+                    }
+                    break;
+            }
         }
 
-        return "Sets the value of a animation parameter to a value (value type failure)!";
+        return desc;
     }
 }

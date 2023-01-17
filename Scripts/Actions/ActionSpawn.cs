@@ -26,21 +26,54 @@ public class ActionSpawn : Action
 
     public override string GetRawDescription(string ident)
     {
+        string desc = GetPreconditionsString();
+
         if (prefabObject)
         {
-            return $"Spawns prefab {prefabObject.name}";
+            desc += $"Spawns prefab {prefabObject.name}";
+            switch (spawnPosition)
+            {
+                case SpawnPosition.Default:
+                    desc += " at original position";
+                    break;
+                case SpawnPosition.This:
+                    desc += $" at the position of this object ({name})";
+                    break;
+                case SpawnPosition.Target:
+                    var targetName = (targetPosition) ? (targetPosition.name) : ("UNDEFINED");
+                    desc += $" at the position of {targetName}";
+                    break;
+                case SpawnPosition.Tag:
+                    var tagName = (targetTag) ? (targetTag.name) : ("UNDEFINED");
+                    desc += $" at the position of object with tag [{tagName}]";
+                    break;
+                default:
+                    break;
+            }
+            if ((needParent) && (setParent))
+            {
+                desc += ", setting it as parent";
+            }
         }
-        spawner = GetComponent<Spawner>();
-        if (spawner == null)
+        else
         {
-            return $"Spawns an entity using spawner, but there's no spawner in object!";
+            spawner = GetComponent<Spawner>();
+            if (spawner == null)
+            {
+                desc += $"Spawns an entity using spawner, but there's no spawner in object!";
+            }
+            else
+            {
+                desc += $"Spawns an entity using spawner {name}";
+            }
         }
-        return $"Spawns an entity using spawner {name}";
+        return desc;
     }
 
     public override void Execute()
     {
         if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
 
         if (prefabObject)
         {

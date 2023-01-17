@@ -11,21 +11,27 @@ public class ActionChangeObjectState : Action
 
     public override string GetRawDescription(string ident)
     {
+        string desc = GetPreconditionsString();
+
         switch (state)
         {
             case StateChange.Enable:
-                return (target) ? ($"Enables object {target.name}") : ("Enables this object");
+                desc += (target) ? ($"Enables object {target.name}") : ("Enables this object");
+                break;
             case StateChange.Disable:
-                return (target) ? ($"Disables object {target.name}") : ("Disables this object");
+                desc += (target) ? ($"Disables object {target.name}") : ("Disables this object");
+                break;
             case StateChange.Toggle:
-                return (target) ? ($"Toggles object {target.name}") : ("Toggles this object");
+                desc += (target) ? ($"Toggles object {target.name}") : ("Toggles this object");
+                break;
         }
-        return "";
+        return desc;
     }
 
     public override void Execute()
     {
         if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
 
         GameObject go = target;
         if (go == null) go = gameObject;

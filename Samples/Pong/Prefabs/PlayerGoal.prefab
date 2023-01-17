@@ -112,9 +112,14 @@ MonoBehaviour:
   description: When ball enters here, add to the score
   enableTrigger: 1
   allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 6261628145402454832}
+  _explanation: "When ball enters here, add to the score\n----------------\nWhen
+    a collision with a trigger with tags [Tag_Ball] starts:\n At 0 seconds, Adds
+    1 to variable Score_Player1\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -132,7 +137,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Adds 1 to variable Score_Player1
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: 85789dd499c4bd241988c38a989575f8, type: 2}
   operation: 1

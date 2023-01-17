@@ -17,9 +17,9 @@ public class ActionRandom : Action
     {
         if ((actions == null) || (actions.Length == 0))
         {
-            return "Selects randomly between some actions, but no actions are defined!";
+            return $"{GetPreconditionsString()}Selects randomly between some actions, but no actions are defined!";
         }
-        var desc = "Select randomly between the following actions:\n";
+        var desc = GetPreconditionsString() + "Select randomly between the following actions:\n";
 
         float total = 0;
         foreach (var action in actions)
@@ -38,6 +38,7 @@ public class ActionRandom : Action
     public override void Execute()
     {
         if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
 
         List<ActionProbability> activeActions = new List<ActionProbability>();
 

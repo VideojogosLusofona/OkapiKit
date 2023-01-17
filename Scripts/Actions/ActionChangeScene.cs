@@ -10,12 +10,13 @@ public class ActionChangeScene : Action
 
     public override string GetRawDescription(string ident)
     {
-        return $"Switches to scene {sceneName}";
+        return $"{GetPreconditionsString()} Switches to scene {sceneName}";
     }
 
     public override void Execute()
     {
         if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
 
         SceneManager.LoadScene(sceneName);
     }

@@ -166,10 +166,21 @@ MonoBehaviour:
     do this once
   enableTrigger: 1
   allowRetrigger: 0
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 2364777538405152198}
-  _explanation: 
+  _explanation: "When SPACE is pressed, lauch the ball in a random direction - Only
+    do this once\n----------------\nWhen key Space is pressed:\n At 0 seconds, Select
+    randomly between the following actions:\n  1. Select a random angle between 30
+    and 60 and set the velocity of this object towards that direction, with a magnitude
+    between 400 and 400 (25%)\n  2. Select a random angle between 120 and 150 and
+    set the velocity of this object towards that direction, with a magnitude between
+    400 and 400 (25%)\n  3. Select a random angle between 210 and 240 and set the
+    velocity of this object towards that direction, with a magnitude between 400
+    and 400 (25%)\n  4. Select a random angle between 300 and 330 and set the velocity
+    of this object towards that direction, with a magnitude between 400 and 400 (25%)\n\n"
   inputType: 1
   buttonName: 
   key: 32
@@ -189,7 +200,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: 'Select randomly between the following actions:
+
+    1. Select a
+    random angle between 30 and 60 and set the velocity of this object towards that
+    direction, with a magnitude between 400 and 400 (25%)
+
+    2. Select a random
+    angle between 120 and 150 and set the velocity of this object towards that direction,
+    with a magnitude between 400 and 400 (25%)
+
+    3. Select a random angle between
+    210 and 240 and set the velocity of this object towards that direction, with
+    a magnitude between 400 and 400 (25%)
+
+    4. Select a random angle between 300
+    and 330 and set the velocity of this object towards that direction, with a magnitude
+    between 400 and 400 (25%)
+
+'
   actions:
   - action: {fileID: 2364777538405152177}
     probability: 25
@@ -212,7 +245,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 30 and 60 and set the velocity of this
+    object towards that direction, with a magnitude between 400 and 400
+  changeType: 0
+  operation: 0
+  percentageValue: {x: 1, y: 1}
   useRotation: 0
   useRandom: 1
   startAngle: 30
@@ -233,7 +274,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 120 and 150 and set the velocity of
+    this object towards that direction, with a magnitude between 400 and 400
+  changeType: 0
+  operation: 0
+  percentageValue: {x: 1, y: 1}
   useRotation: 0
   useRandom: 1
   startAngle: 120
@@ -254,7 +303,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 210 and 240 and set the velocity of
+    this object towards that direction, with a magnitude between 400 and 400
+  changeType: 0
+  operation: 0
+  percentageValue: {x: 1, y: 1}
   useRotation: 0
   useRandom: 1
   startAngle: 210
@@ -275,7 +332,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 300 and 330 and set the velocity of
+    this object towards that direction, with a magnitude between 400 and 400
+  changeType: 0
+  operation: 0
+  percentageValue: {x: 1, y: 1}
   useRotation: 0
   useRandom: 1
   startAngle: 300
@@ -298,12 +363,17 @@ MonoBehaviour:
   description: Destroy ball and respawn when it enters one of the boundary areas
   enableTrigger: 1
   allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 1
     action: {fileID: 6493673961000930206}
   - delay: 0.5
     action: {fileID: -7210514062832317456}
-  _explanation: 
+  _explanation: "Destroy ball and respawn when it enters one of the boundary areas\n----------------\nWhen
+    a collision with a trigger with tags [Tag_Goal] starts:\n At 1 seconds, Destroys
+    this object\n At 0.5 seconds, Find actions tagged with any of [Tag_Spawner] and
+    execute all of them.\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -321,8 +391,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Destroys this object
+  target: 0
+  targetObject: {fileID: 0}
   tags: []
-  target: {fileID: 0}
 --- !u!114 &-7210514062832317456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +412,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 1
+  actionTags: []
+  hasConditions: 1
+  actionConditions: []
+  _explanation: 
+  searchType: 0
+  searchTags: []
+  triggerType: 0
   triggerTags:
   - {fileID: 11400000, guid: 10fa1ca39f9fece46a76fe6c0ff4d47a, type: 2}
 --- !u!114 &8282609411875047909
@@ -354,10 +437,14 @@ MonoBehaviour:
   description: Play sound when it hits the walls or the paddles
   enableTrigger: 1
   allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
   actions:
   - delay: 0
     action: {fileID: 6810422688004762215}
-  _explanation: 
+  _explanation: "Play sound when it hits the walls or the paddles\n----------------\nWhen
+    a collision with a bounding volume starts:\n At 0 seconds, Plays sound ball_hit
+    at volume 0.25 and a pitch in the range [0.75,1.25]\n"
   isTrigger: 0
   eventType: 0
   tags: []
@@ -374,7 +461,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAction: 1
-  tags: []
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Plays sound ball_hit at volume 0.25 and a pitch in the range [0.75,1.25]
   clip: {fileID: 8300000, guid: 253238038a40ffc49bcdb1066d04712b, type: 3}
   volume: {x: 0.25, y: 0.25}
   pitch: {x: 0.75, y: 1.25}
