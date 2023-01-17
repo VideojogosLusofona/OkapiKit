@@ -8,9 +8,9 @@ This is a series of premade scripts intended for kit bashing of quick game devel
 
 It's currently still under development, and eventually will be commented properly, and have a manual.
 
-It currently has two sample games (under the Samples directory), simple Pong and Breakout clones.
+It currently has three sample games (under the Samples directory), simple Pong, Breakout and Space Invaders clones. All games can be accessed through a Samples scene (in the Samples directory).
 
-## License
+## Licenses
 
 * All source code by Diogo Andrade is licensed under the MIT license.
 * Font "Karmatic Arcade" by [Vic Fieger]
