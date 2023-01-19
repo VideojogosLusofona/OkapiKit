@@ -30,6 +30,8 @@ public class Spawner : MonoBehaviour
     private Vector2         scaleVariance = new Vector2(1.0f, 1.0f);
     [SerializeField, MinMaxSlider(-2.0f, 2.0f), ShowIf("modifierSpeed")]
     private Vector2         speedVariance = new Vector2(1.0f, 1.0f);
+    [SerializeField]
+    private bool            setParent = false;
 
     private bool needSpawnPoints => GetComponent<BoxCollider2D>() == null;
     private bool modifierScale => (modifiers & Modifiers.Scale) != 0;
@@ -114,6 +116,10 @@ public class Spawner : MonoBehaviour
 
                 GameObject newObject = Instantiate(prefab, position, rotation);
                 if (forceCount) items.Add(newObject);
+                if (setParent)
+                {
+                    newObject.transform.SetParent(transform);
+                }
 
                 if ((modifiers & Modifiers.Scale) != 0)
                 {

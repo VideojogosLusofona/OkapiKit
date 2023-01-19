@@ -17,6 +17,7 @@ It currently has three sample games (under the Samples directory), simple Pong, 
 * Breakout paddle by [Zealex], licensed under [CC-BY 3.0]
 * Breakout bricks by [Kutejnikov], licensed under [CC0]
 * Space Invaders enemies and player by [Clear_code], licensed under [CC-BY 4.0]
+* Tiles for space shooter by [mieki256], licensed under [CC0]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
 
 ## Metadata
@@ -31,6 +32,7 @@ It currently has three sample games (under the Samples directory), simple Pong, 
 [Zealex]:https://opengameart.org/users/zealex
 [Kutejnikov]:https://opengameart.org/users/kutejnikov
 [Clear_code]:https://opengameart.org/users/clearcode
+[mieki256]:https://opengameart.org/users/mieki256
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [CC-BY 4.0]:https://creativecommons.org/licenses/by/4.0/

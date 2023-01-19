@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OkapiKit/Samples/SpaceInvaders/SpaceInvaders.unity
     guid: d1612ebf41a507f49bf7dec067176d6f
+  - enabled: 1
+    path: Assets/OkapiKit/Samples/SideShooter/SideShooter.unity
+    guid: c4e843e9dc3ffe44b89777e62c8bdc86
   m_configObjects: {}
