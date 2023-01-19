@@ -31,8 +31,12 @@ public class TriggerOnInput : Trigger
         string desc = "When ";
         if (inputType == InputType.Button) desc += "button " + buttonName + " ";
         else desc += "key " + key + " ";
-        desc += "is pressed";
-        if (useCooldown) desc += " (this can only happen every " + cooldown + " seconds)";
+        if (continuous)
+        {
+            desc += "is held";
+            if (useCooldown) desc += " (this can only happen every " + cooldown + " seconds)";
+        }
+        else desc += "is pressed";
 
         return desc;
     }
