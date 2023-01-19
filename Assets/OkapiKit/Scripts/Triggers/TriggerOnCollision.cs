@@ -22,7 +22,7 @@ public class TriggerOnCollision : Trigger
 
         if (isTrigger) desc += "a trigger ";
         else desc += "a bounding volume ";
-        if (tags.Length > 0)
+        if ((tags != null) && (tags.Length > 0))
         {
             desc += "with tags [";
             for (int i = 0; i < tags.Length; i++)
@@ -47,6 +47,7 @@ public class TriggerOnCollision : Trigger
         if (!isTrigger) return;
         if (eventType != CollisionEvent.Enter) return;
         if (!EvaluatePreconditions()) return;
+
 
         if (collision.gameObject.HasHypertags(tags))
         {

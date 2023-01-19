@@ -15,9 +15,11 @@ It currently has three sample games (under the Samples directory), simple Pong, 
 * All source code by Diogo Andrade is licensed under the MIT license.
 * Font "Karmatic Arcade" by [Vic Fieger]
 * Breakout paddle by [Zealex], licensed under [CC-BY 3.0]
-* Breakout bricks by [Kutejnikov], licensed under [CC0]
+* Breakout bricks by [Pavel Kutejnikov], licensed under [CC0]
 * Space Invaders enemies and player by [Clear_code], licensed under [CC-BY 4.0]
 * Tiles for space shooter by [mieki256], licensed under [CC0]
+* Space ships for space shooter by [SCaydi], licensed under [CC-BY 4.0]
+* Explosion by [Joshua Robertson], licensed under [CC-BY 3.0]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
 
 ## Metadata
@@ -30,9 +32,11 @@ It currently has three sample games (under the Samples directory), simple Pong, 
 [lv]:https://www.ulusofona.pt/licenciatura/videojogos
 [Vic Fieger]:http://www.vicfieger.com/
 [Zealex]:https://opengameart.org/users/zealex
-[Kutejnikov]:https://opengameart.org/users/kutejnikov
+[Pavel Kutejnikov]:https://opengameart.org/users/kutejnikov
 [Clear_code]:https://opengameart.org/users/clearcode
 [mieki256]:https://opengameart.org/users/mieki256
+[SCaydi]:https://opengameart.org/users/scaydi
+[Joshua Robertson]:https://opengameart.org/users/jrob774
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [CC-BY 4.0]:https://creativecommons.org/licenses/by/4.0/
