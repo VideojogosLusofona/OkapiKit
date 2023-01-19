@@ -56,14 +56,14 @@ public class PathWaypointsEditor : Editor
             if (Tools.current != Tool.None) lastTool = Tools.current;
             Tools.current = Tool.None;
 
-            List<Vector3> newPoints = t.GetPoints();
+            List<Vector3> newPoints = t.GetEditPoints();
             if (localSpace)
             {
                 var worldMatrix = t.transform.localToWorldMatrix;
                 for (int i = 0; i < newPoints.Count; i++) newPoints[i] = worldMatrix * new Vector4(newPoints[i].x, newPoints[i].y, newPoints[i].z, 1);
             }
 
-                EditorGUI.BeginChangeCheck();
+            EditorGUI.BeginChangeCheck();
             for (int i = 0; i < newPoints.Count; i++)
             {
                 float s = (editPoint == i) ? (10.0f) : (5.0f);
@@ -88,12 +88,12 @@ public class PathWaypointsEditor : Editor
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(target, "Move point");
-                t.SetPoints(newPoints);
+                t.SetEditPoints(newPoints);
             }
 
             var prevMatrix = Handles.matrix;
             if (localSpace) Handles.matrix = t.transform.localToWorldMatrix;
-            DrawPath(newPoints, Color.white);
+            DrawPath(t.GetPoints(), Color.white);
             if (localSpace) Handles.matrix = prevMatrix;
         }
         else
@@ -110,6 +110,8 @@ public class PathWaypointsEditor : Editor
 
     void DrawPath(List<Vector3> points, Color color)
     {
+        if (points == null) return;
+
         Handles.color = color;       
         
         for (int i = 1; i < points.Count; i++) 
