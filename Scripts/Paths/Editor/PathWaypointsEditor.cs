@@ -92,9 +92,7 @@ public class PathWaypointsEditor : Editor
             }
 
             var prevMatrix = Handles.matrix;
-            if (localSpace) Handles.matrix = t.transform.localToWorldMatrix;
             DrawPath(t.GetPoints(), Color.white);
-            if (localSpace) Handles.matrix = prevMatrix;
         }
         else
         {
@@ -102,9 +100,7 @@ public class PathWaypointsEditor : Editor
             lastTool = Tool.None;
 
             var prevMatrix = Handles.matrix;
-            if (localSpace) Handles.matrix = t.transform.localToWorldMatrix;
             DrawPath(t.GetPoints(), Color.yellow);
-            if (localSpace) Handles.matrix = prevMatrix;
         }
     }
 

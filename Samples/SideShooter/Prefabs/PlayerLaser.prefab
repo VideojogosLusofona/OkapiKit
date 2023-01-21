@@ -209,7 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hypertags: []
+  hypertags:
+  - {fileID: 11400000, guid: bc889e9e6833bc84aabfbb2cfba652b4, type: 2}
 --- !u!114 &8678970290850587037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +242,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 7f3dc234f521da84290b81f3bb6bbcf3, type: 2}
   - {fileID: 11400000, guid: a19d6302f286d8645aecfb440ea769c4, type: 2}
+  - {fileID: 11400000, guid: 397247d90ae851442b6c45df23ad58af, type: 2}
 --- !u!114 &8389004523105183423
 MonoBehaviour:
   m_ObjectHideFlags: 0

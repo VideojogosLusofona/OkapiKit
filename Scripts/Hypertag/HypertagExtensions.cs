@@ -22,13 +22,35 @@ public static class HypertaggedExtension
             if (obj.Has(tag))
             {
                 var ret = obj.GetComponent<T>();
-
-                return ret;
+                if (ret)
+                {
+                    return ret;
+                }
             }
         }
 
         return null;
     }
+
+    public static T[] FindObjectsOfTypeWithHypertag<T>(this Object go, Hypertag tag) where T : Component
+    {
+        var objects = Object.FindObjectsOfType<HypertaggedObject>();
+        var ret = new List<T>();
+        foreach (var obj in objects)
+        {
+            if (obj.Has(tag))
+            {
+                var comp = obj.GetComponent<T>();
+                if (comp)
+                {
+                    ret.Add(comp);
+                }
+            }
+        }
+
+        return ret.ToArray();
+    }
+
     public static T FindObjectOfTypeWithHypertag<T>(this MonoBehaviour go, Hypertag tag) where T : Component
     {
         var objects = Object.FindObjectsOfType<HypertaggedObject>();
@@ -37,12 +59,33 @@ public static class HypertaggedExtension
             if (obj.Has(tag))
             {
                 var ret = obj.GetComponent<T>();
-
-                return ret;
+                if (ret)
+                {
+                    return ret;
+                }
             }
         }
 
         return null;
+    }
+
+    public static T[] FindObjectsOfTypeWithHypertag<T>(this MonoBehaviour go, Hypertag tag) where T : Component
+    {
+        var objects = Object.FindObjectsOfType<HypertaggedObject>();
+        var ret = new List<T>();
+        foreach (var obj in objects)
+        {
+            if (obj.Has(tag))
+            {
+                var comp = obj.GetComponent<T>();
+                if (comp)
+                {
+                    ret.Add(comp);
+                }
+            }
+        }
+
+        return ret.ToArray();
     }
 
     public static bool HasHypertags(this GameObject go, Hypertag[] tags)

@@ -52,22 +52,6 @@ public class Path : MonoBehaviour
         }
     }
 
-    public Vector3 GetWorldPosition(int index)
-    {
-        if ((index < 0) || (index >= points.Count)) return Vector3.zero;
-
-        Vector3 pt = points[index];
-
-        if (isLocalSpace)
-        {
-            pt = transform.TransformPoint(pt);
-        }
-
-        return pt;
-    }
-
-    public int GetPathSize() => (points != null) ? (points.Count) : (0);
-
     private Vector3 ComputeBezier(Vector3[] pt, float t)
     {
         float it = (1 - t);
@@ -81,46 +65,60 @@ public class Path : MonoBehaviour
 
     public List<Vector3> GetPoints()
     {
-        if (type == PathType.Linear) return points;
-
-        if (points.Count < 3) return points;
-
-        var         ret = new List<Vector3>();
-        Vector3[] pt = null;
-        for (int i = 0; i < points.Count - 2; i += 2)
+        List<Vector3>   ret;
+        if ((type == PathType.Linear) || (points.Count < 3))
         {
-            if (i > 0)
-            {
-                pt = new Vector3[] { points[i],
-                                     points[i] + tension * (points[i] - points[i - 1]),
-                                     points[i + 2] + tension * (points[i + 1] - points[i + 2]),
-                                     points[i + 2] };
-            }
-            else
-            {
-                pt = new Vector3[] { points[i],
-                                     points[i] + tension * (points[i + 1] - points[i]),
-                                     points[i + 2] + tension * (points[i + 1] - points[i + 2]),
-                                     points[i + 2] };
-            }
+            ret = new List<Vector3>(points);
+        }
+        else
+        {
+            ret = new List<Vector3>();
 
-            // Compute bezier
-            float t = 0.0f;
-            float tInc = 1.0f / (float)20;
-
-            ret.Add(ComputeBezier(pt, t));
-            t += tInc;
-            while (t <= 1.0f)
+            if (points.Count < 3) return points;
+            Vector3[] pt = null;
+            for (int i = 0; i < points.Count - 2; i += 2)
             {
+                if (i > 0)
+                {
+                    pt = new Vector3[] { points[i],
+                                         points[i] + tension * (points[i] - points[i - 1]),
+                                         points[i + 2] + tension * (points[i + 1] - points[i + 2]),
+                                         points[i + 2] };
+                }
+                else
+                {
+                    pt = new Vector3[] { points[i],
+                                         points[i] + tension * (points[i + 1] - points[i]),
+                                         points[i + 2] + tension * (points[i + 1] - points[i + 2]),
+                                         points[i + 2] };
+                }
+
+                // Compute bezier
+                float t = 0.0f;
+                float tInc = 1.0f / (float)20;
+
                 ret.Add(ComputeBezier(pt, t));
-
                 t += tInc;
+                while (t <= 1.0f)
+                {
+                    ret.Add(ComputeBezier(pt, t));
+
+                    t += tInc;
+                }
+            }
+            Vector3 lastPoint = ComputeBezier(pt, 1.0f);
+            if (Vector3.Distance(lastPoint, ret[ret.Count - 1]) > 1e-6)
+            {
+                ret.Add(lastPoint);
             }
         }
-        Vector3 lastPoint = ComputeBezier(pt, 1.0f);
-        if (Vector3.Distance(lastPoint, ret[ret.Count - 1]) > 1e-6)
+
+        if (isLocalSpace)
         {
-            ret.Add(lastPoint);
+            for (int i = 0; i < ret.Count; i++)
+            {
+                ret[i] = transform.TransformPoint(ret[i]);
+            }
         }
 
         return ret;
