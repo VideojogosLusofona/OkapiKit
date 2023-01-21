@@ -2,7 +2,8 @@
 
 ![PongImage](Screenshots/pong.png)
 ![BreakoutImage](Screenshots/breakout.png)
-![BreakoutImage](Screenshots/spaceinvaders.png)
+![SpaceInvadersImage](Screenshots/spaceinvaders.png)
+![SideShooterImage](Screenshots/sideshooter.png)
 
 This is a series of premade scripts intended for kit bashing of quick game development experiments for the  [Licenciatura em Videojogos][lv] da [Universidade Lusófona de Humanidades e Tecnologias][ULHT] in Lisbon.
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 abstract public class Movement : MonoBehaviour
 {
-    protected Rigidbody2D rb;
+    protected Rigidbody2D   rb;
+    protected Vector3       lastDelta;
 
     abstract public Vector2 GetSpeed();
     abstract public void SetSpeed(Vector2 speed);
@@ -24,7 +25,7 @@ abstract public class Movement : MonoBehaviour
         {
             transform.position = transform.position + delta;
         }
-
+        lastDelta = delta;
     }
 
     protected void RotateZ(float angle)

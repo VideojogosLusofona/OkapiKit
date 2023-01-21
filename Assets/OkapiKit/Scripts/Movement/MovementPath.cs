@@ -5,52 +5,82 @@ using NaughtyAttributes;
 
 public class MovementPath : Movement
 {
+    [SerializeField] private enum RotationBehaviour { None, AlignX, AlignY };
+
     [SerializeField] 
-    private float       speed = 200.0f;
+    private float               speed = 200.0f;
     [SerializeField, ShowIf("needPath")] 
-    private Path        path;
+    private Path                path;
     [SerializeField, ShowIf("needTag")]
-    private Hypertag    taggedPath;
+    private Hypertag            taggedPath;
     [SerializeField]
-    private bool        loop = false;
+    private bool                loop = false;
     [SerializeField]
-    private bool        forceInitialPosition = true;
+    private bool                relativePath = false;
+    [SerializeField]
+    private RotationBehaviour   rotationBehaviour = RotationBehaviour.None;
+    [SerializeField, ShowIf("hasRotation")]
+    private bool                useFlip;
+    [SerializeField, ShowIf("hasRotation")]
+    private bool                hasMaxRotationSpeed = false;
+    [SerializeField, ShowIf("hasMaxRotation")]
+    private float               maxRotationSpeed = 360;
 
     private bool needPath => taggedPath == null;
     private bool needTag => path == null;
+    private bool hasRotation => rotationBehaviour != RotationBehaviour.None;
+    private bool hasMaxRotation => (hasRotation) && (hasMaxRotationSpeed);
 
     public override Vector2 GetSpeed() => new Vector2(speed, speed);
     public override void SetSpeed(Vector2 speed) { this.speed = speed.x; }
 
-    Path    actualPath;
-    int     pathIndex;
+    List<Vector3>   actualPath;
+    int             pathIndex;
+    Vector3         startScale;
+    Vector3         offset;
 
     void Start()
     {
-        actualPath = path;
-
         if (taggedPath)
         {
-            actualPath = gameObject.FindObjectOfTypeWithHypertag<Path>(taggedPath);
+            var paths = gameObject.FindObjectsOfTypeWithHypertag<Path>(taggedPath);
+            if (paths.Length > 0)
+            {
+                int r = Random.Range(0, paths.Length);
+                actualPath = paths[r].GetPoints();
+            }
+        }
+        else if (path != null)
+        {
+            actualPath = path.GetPoints();
         }
 
-        if (actualPath)
+        if ((actualPath != null) && (actualPath.Count > 0))
         {
             pathIndex = 0;
 
-            if (forceInitialPosition)
+            if (relativePath)
             {
-                transform.position = actualPath.GetWorldPosition(pathIndex);
+                offset = transform.position - actualPath[pathIndex];
+
+                pathIndex++;
+            }
+            else
+            { 
+                transform.position = actualPath[pathIndex];
 
                 pathIndex++;
             }
         }
+
+        startScale = transform.localScale;
     }
 
     void FixedUpdate()
     {
         if (actualPath == null) return;
-        if (pathIndex >= actualPath.GetPathSize()) return;
+        if (actualPath == null) return;
+        if (pathIndex >= actualPath.Count) return;
 
         float distanceToMove = Time.fixedDeltaTime * speed;
 
@@ -59,9 +89,9 @@ public class MovementPath : Movement
         while (distanceToMove > 0)
         {
             // Get next position
-            var targetPosition = actualPath.GetWorldPosition(pathIndex);
+            var targetPosition = actualPath[pathIndex];
 
-            var currentPosition = transform.position;
+            var currentPosition = transform.position - offset;
             var newPosition = Vector3.MoveTowards(currentPosition, targetPosition, distanceToMove);
 
             var distanceMoved = Vector3.Distance(targetPosition, currentPosition);
@@ -74,7 +104,7 @@ public class MovementPath : Movement
             {
                 // Go to next point
                 pathIndex++;
-                if (pathIndex >= actualPath.GetPathSize())
+                if (pathIndex >= actualPath.Count)
                 {
                     if (loop)
                     {
@@ -86,6 +116,61 @@ public class MovementPath : Movement
                 {
                     // Error in path
                     break;
+                }
+            }
+        }
+
+        if (rotationBehaviour != RotationBehaviour.None)
+        {
+            var direction = lastDelta;
+            if (direction.sqrMagnitude > 1e-6)
+            {
+                direction = direction.normalized;
+
+                Quaternion targetRotation = transform.rotation;
+
+                if (rotationBehaviour == RotationBehaviour.AlignX)
+                {
+                    if (useFlip)
+                    {
+                        if (direction.x < 0)
+                        {
+                            direction = -direction;
+                            transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
+                        }
+                        else
+                        {
+                            transform.localScale = startScale;
+                        }
+                    }
+
+                    targetRotation = Quaternion.LookRotation(Vector3.forward, new Vector3(-direction.y, direction.x));
+                }
+                else if (rotationBehaviour == RotationBehaviour.AlignY) 
+                {
+                    if (useFlip)
+                    {
+                        if (direction.y < 0)
+                        {
+                            direction = -direction;
+                            transform.localScale = new Vector3(startScale.x, -startScale.y, startScale.z);
+                        }
+                        else
+                        {
+                            transform.localScale = startScale;
+                        }
+                    }
+
+                    targetRotation = Quaternion.LookRotation(Vector3.forward, direction);
+                }
+
+                if (hasMaxRotation)
+                {
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxRotationSpeed * Time.fixedDeltaTime);
+                }
+                else
+                {
+                    transform.rotation = targetRotation;
                 }
             }
         }

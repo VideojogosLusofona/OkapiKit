@@ -18,6 +18,12 @@ public class Spawner : MonoBehaviour
     private bool            forceCount = false;
     [SerializeField, ShowIf("forceCount")] 
     private int             numberOfEntities = 1;
+    [SerializeField, HideIf("forceCount")]
+    private bool            usePulsePattern = false;
+    [SerializeField, ShowIf("hasPulsePattern")]
+    private string          pulsePattern = "xoxo";
+    [SerializeField, ShowIf("hasPulsePattern")]
+    private float           pulseTime = 0.1f;
     [SerializeField]
     private GameObject[]    prefabs;
     [SerializeField, ShowIf("needSpawnPoints")]
@@ -36,6 +42,7 @@ public class Spawner : MonoBehaviour
     private bool needSpawnPoints => GetComponent<BoxCollider2D>() == null;
     private bool modifierScale => (modifiers & Modifiers.Scale) != 0;
     private bool modifierSpeed => (modifiers & Modifiers.Speed) != 0;
+    private bool hasPulsePattern => (!forceCount) && (usePulsePattern);
 
     private BoxCollider2D       spawnArea;
     private int                 spawnPointIndex;
@@ -60,13 +67,44 @@ public class Spawner : MonoBehaviour
             {
                 for (int i = items.Count; i < numberOfEntities; i++)
                 {
-                    Spawn();
+                    SingleSpawn();
                 }
             }
         }
     }
 
     public void Spawn()
+    {
+        if (hasPulsePattern)
+        {
+            if (pulseTime > 0)
+            {
+                StartCoroutine(SpawnCR());
+            }
+            else
+            {
+                for (int i = 0; i < pulsePattern.Length; i++)
+                {
+                    if (pulsePattern[i] == 'x') SingleSpawn();
+                }
+            }
+        }
+        else
+        {
+            SingleSpawn();
+        }
+    }
+
+    IEnumerator SpawnCR()
+    {
+        for (int i = 0; i < pulsePattern.Length; i++)
+        {
+            if (pulsePattern[i] == 'x') SingleSpawn();
+            yield return new WaitForSeconds(pulseTime);
+        }
+    }
+
+    void SingleSpawn()
     {
         int r = Random.Range(0, prefabs.Length);
         var prefab = prefabs[r];

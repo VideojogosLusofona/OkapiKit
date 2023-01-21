@@ -58,11 +58,14 @@ public abstract class Trigger : MonoBehaviour
 
         desc += GetRawDescription() + ":\n";
 
-        foreach (var action in actions)
+        if (actions != null)
         {
-            string actionDesc = "[NULL]";
-            if (action.action != null) actionDesc = action.action.GetRawDescription("  ");
-            desc += $" At {action.delay} seconds, {actionDesc}\n";
+            foreach (var action in actions)
+            {
+                string actionDesc = "[NULL]";
+                if (action.action != null) actionDesc = action.action.GetRawDescription("  ");
+                desc += $" At {action.delay} seconds, {actionDesc}\n";
+            }
         }
 
         return desc;
