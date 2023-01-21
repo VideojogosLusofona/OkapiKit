@@ -1,15 +1,26 @@
 # OKAPI KIT
 
-![PongImage](Screenshots/pong.png)
-![BreakoutImage](Screenshots/breakout.png)
-![SpaceInvadersImage](Screenshots/spaceinvaders.png)
-![SideShooterImage](Screenshots/sideshooter.png)
+![TitleImage](Screenshots/title.png)
 
 This is a series of premade scripts intended for kit bashing of quick game development experiments for the  [Licenciatura em Videojogos][lv] da [Universidade Lusófona de Humanidades e Tecnologias][ULHT] in Lisbon.
 
 It's currently still under development, and eventually will be commented properly, and have a manual.
 
-It currently has three sample games (under the Samples directory), simple Pong, Breakout and Space Invaders clones. All games can be accessed through a Samples scene (in the Samples directory).
+# Samples
+
+It currently has four sample games (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
+
+## Pong 
+![PongImage](Screenshots/pong.png)
+
+## Breakout
+![BreakoutImage](Screenshots/breakout.png)
+
+## Space Invaders
+![SpaceInvadersImage](Screenshots/spaceinvaders.png)
+
+## "Procedural" side Scrolling shoot-em-up 
+![SideShooterImage](Screenshots/sideshooter.png)
 
 ## Licenses
 
