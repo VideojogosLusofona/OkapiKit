@@ -5,10 +5,12 @@ using UnityEngine;
 abstract public class Movement : MonoBehaviour
 {
     protected Rigidbody2D   rb;
-    protected Vector3       lastDelta;
+    protected Vector3       lastDelta;    
 
     abstract public Vector2 GetSpeed();
     abstract public void SetSpeed(Vector2 speed);
+
+    virtual public bool IsLinear() { return true; }
 
     void Start()
     {
@@ -32,7 +34,7 @@ abstract public class Movement : MonoBehaviour
     {
         if (rb != null)
         {
-            rb.MoveRotation(rb.rotation + angle * Mathf.Deg2Rad);
+            rb.MoveRotation(rb.rotation + angle);
         }
         else
         {

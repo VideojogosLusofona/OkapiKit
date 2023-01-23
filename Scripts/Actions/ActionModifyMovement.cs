@@ -7,7 +7,8 @@ public class ActionModifyMovement : Action
 {
     [SerializeField] private enum ChangeType { Velocity };
 
-    [SerializeField] private enum VelocityOperation { Set, PercentageModify };
+    [SerializeField] private enum VelocityOperation { Set, PercentageModify, AbsoluteModify };
+    [SerializeField] private enum Axis { AbsoluteRight, AbsoluteLeft, AbsoluteUp, AbsoluteDown, RelativeRight, RelativeLeft, RelativeUp, RelativeDown, Current, InverseCurrent };
 
     [SerializeField]
     private ChangeType          changeType = ChangeType.Velocity;
@@ -15,6 +16,10 @@ public class ActionModifyMovement : Action
     private VelocityOperation   operation = VelocityOperation.Set;
     [SerializeField, ShowIf("isPercentageModify")]
     private Vector2             percentageValue = new Vector2(1.0f, 1.0f);
+    [SerializeField, ShowIf("isAbsoluteModify")]
+    private Vector2             value = new Vector2(1.0f, 1.0f);
+    [SerializeField, ShowIf("isAbsoluteModify")]
+    private Axis                axis;
     [SerializeField, ShowIf("isSet")] 
     private bool                useRotation = false;
     [SerializeField, ShowIf("isSet")]
@@ -29,11 +34,18 @@ public class ActionModifyMovement : Action
     private Vector2             minVelocity = new Vector2(100, 100);
     [SerializeField, ShowIf("isSetNotRandom")]
     private Vector2             maxVelocity = new Vector2(100, 100);
+    [SerializeField, ShowIf("isModify")]
+    private bool                clampSpeed;
+    [SerializeField, ShowIf("hasClamp")]
+    private Vector2             clampTo;
 
     private bool isChangeVelocity => (changeType == ChangeType.Velocity);
     private bool isSet => isChangeVelocity && (operation == VelocityOperation.Set) && (useRandom);
     private bool isSetNotRandom => isChangeVelocity && (operation == VelocityOperation.Set) && (!useRandom);
     private bool isPercentageModify => isChangeVelocity && (operation == VelocityOperation.PercentageModify);
+    private bool isAbsoluteModify => isChangeVelocity && (operation == VelocityOperation.AbsoluteModify);
+    private bool isModify => isChangeVelocity && ((operation == VelocityOperation.PercentageModify) || (operation == VelocityOperation.AbsoluteModify));
+    private bool hasClamp => isModify && clampSpeed;
 
     public override string GetRawDescription(string ident)
     {
@@ -46,14 +58,75 @@ public class ActionModifyMovement : Action
                 if (useRandom)
                 {
                     desc += $"Select a random angle between {startAngle} and {endAngle} and set the velocity of this object towards that direction, with a magnitude between {speedRange.x} and {speedRange.y}";
-                    if (useRotation) desc += "; Angles are relative to the object rotation.";
+                    if (useRotation) desc += "; Angles are relative to the object rotation";
                     return desc;
                 }
                 desc += $"Select a random velocity between {minVelocity} and {maxVelocity} and set it to this object";
             }
             else if (operation == VelocityOperation.PercentageModify)
             {
-                desc += $"Changes the current velocity of this object by a percentage in the [{percentageValue.x},{percentageValue.y}] range.";
+                if (percentageValue.x == percentageValue.y)
+                {
+                    desc += $"Changes the current velocity of this object by a {percentageValue*100}%";
+                }
+                else
+                {
+                    desc += $"Changes the current velocity of this object by a percentage in the [{percentageValue.x},{percentageValue.y}] range";
+                }
+            }
+            else if (operation == VelocityOperation.AbsoluteModify)
+            {
+                if (value.x == value.y)
+                {
+                    desc += $"Changes the current velocity of this object by {value.x}";
+                }
+                else
+                { 
+                    desc += $"Changes the current velocity of this object by a value between {value.x} and {value.y}";
+                }
+                switch (axis)
+                {
+                    case Axis.AbsoluteRight:
+                        desc += " along the global X axis";
+                        break;
+                    case Axis.AbsoluteLeft:
+                        desc += " along the global negative X axis";
+                        break;
+                    case Axis.AbsoluteUp:
+                        desc += " along the global Y axis";
+                        break;
+                    case Axis.AbsoluteDown:
+                        desc += " along the global negative Y axis";
+                        break;
+                    case Axis.RelativeRight:
+                        desc += " along the object's X axis";
+                        break;
+                    case Axis.RelativeLeft:
+                        desc += " along the object's negative X axis";
+                        break;
+                    case Axis.RelativeUp:
+                        desc += " along the object's Y axis";
+                        break;
+                    case Axis.RelativeDown:
+                        desc += " along the object's negative Y axis";
+                        break;
+                    case Axis.Current:
+                        desc += " along the object's current velocity axis";
+                        break;
+                    case Axis.InverseCurrent:
+                        desc += " along the object's negative velocity axis";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (clampSpeed)
+            {
+                desc += $", and clamps the speed to be between [{clampTo.x},{clampTo.y}].";
+            }
+            else
+            {
+                desc += ".";
             }
         }
         else
@@ -97,7 +170,7 @@ public class ActionModifyMovement : Action
             }
             else if (operation == VelocityOperation.PercentageModify)
             {
-                if (movement)
+                if ((movement) && (movement.IsLinear()))
                 {
                     velocity = movement.GetSpeed();
                 }
@@ -110,8 +183,67 @@ public class ActionModifyMovement : Action
 
                 velocity = velocity + velocity * r;
             }
+            else if (operation == VelocityOperation.AbsoluteModify)
+            {
+                if ((movement) && (movement.IsLinear()))
+                {
+                    velocity = movement.GetSpeed();
+                }
+                else if (rb)
+                {
+                    velocity = rb.velocity;
+                }
 
-            if (movement)
+                float r = Random.Range(value.x, value.y);
+
+                switch (axis)
+                {
+                    case Axis.AbsoluteRight:
+                        velocity = velocity + Vector2.right * r;
+                        break;
+                    case Axis.AbsoluteLeft:
+                        velocity = velocity + Vector2.left * r;
+                        break;
+                    case Axis.AbsoluteUp:
+                        velocity = velocity + Vector2.up * r;
+                        break;
+                    case Axis.AbsoluteDown:
+                        velocity = velocity + Vector2.down * r;
+                        break;
+                    case Axis.RelativeRight:
+                        velocity = velocity + new Vector2(transform.right.x * r, transform.right.y * r);
+                        break;
+                    case Axis.RelativeLeft:
+                        velocity = velocity - new Vector2(transform.right.x * r, transform.right.y * r);
+                        break;
+                    case Axis.RelativeUp:
+                        velocity = velocity + new Vector2(transform.up.x * r, transform.up.y * r);
+                        break;
+                    case Axis.RelativeDown:
+                        velocity = velocity - new Vector2(transform.up.x * r, transform.up.y * r);
+                        break;
+                    case Axis.Current:
+                        velocity = velocity + velocity.normalized * r;
+                        break;
+                    case Axis.InverseCurrent:
+                        velocity = velocity - velocity.normalized * r;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (clampSpeed)
+            {
+                float n = velocity.magnitude;
+                if (n > 0)
+                {
+                    n = Mathf.Clamp(n, clampTo.x, clampTo.y);
+
+                    velocity = n * velocity.normalized;
+                }
+            }
+
+            if ((movement) && (movement.IsLinear()))
             {
                 movement.SetSpeed(velocity);
             }
