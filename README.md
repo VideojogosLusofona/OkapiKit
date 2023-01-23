@@ -19,10 +19,10 @@ It currently has four sample games (each a Scene under the Samples directory), a
 ## Space Invaders
 ![SpaceInvadersImage](Screenshots/spaceinvaders.png)
 
-## "Procedural" side Scrolling shoot-em-up 
+## "Procedural" side scrolling shoot'em'up 
 ![SideShooterImage](Screenshots/sideshooter.png)
 
-## Licenses
+# Licenses
 
 * All source code by Diogo Andrade is licensed under the MIT license.
 * Font "Karmatic Arcade" by [Vic Fieger]
@@ -32,9 +32,12 @@ It currently has four sample games (each a Scene under the Samples directory), a
 * Tiles for space shooter by [mieki256], licensed under [CC0]
 * Space ships for space shooter by [SCaydi], licensed under [CC-BY 4.0]
 * Explosion by [Joshua Robertson], licensed under [CC-BY 3.0]
+* Top down ships by [Master484], licensed under [CC0]
+* Asteroid by [Warspawn], licensed under [CC0]
+* Nebula background by [leyren], licensed under [CC0]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
 
-## Metadata
+# Metadata
 
 * Autor: [Diogo Andrade]
 
@@ -49,6 +52,8 @@ It currently has four sample games (each a Scene under the Samples directory), a
 [mieki256]:https://opengameart.org/users/mieki256
 [SCaydi]:https://opengameart.org/users/scaydi
 [Joshua Robertson]:https://opengameart.org/users/jrob774
+[Master484]:http://m484games.ucoz.com/
+[Warspawn]:https://opengameart.org/users/warspawn
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [CC-BY 4.0]:https://creativecommons.org/licenses/by/4.0/
