@@ -57,7 +57,7 @@ abstract public class Action : MonoBehaviour
 
         foreach (var condition in actionConditions)
         {
-            if (!condition.Evaluate()) return false;
+            if (!condition.Evaluate(gameObject)) return false;
         }
 
         return true;

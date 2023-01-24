@@ -46,13 +46,10 @@ public class TriggerOnCollision : Trigger
     {
         if (!isTrigger) return;
         if (eventType != CollisionEvent.Enter) return;
+        if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
 
-
-        if (collision.gameObject.HasHypertags(tags))
-        {
-            ExecuteTrigger();
-        }
+        ExecuteTrigger();
     }
 
 
@@ -60,23 +57,19 @@ public class TriggerOnCollision : Trigger
     {
         if (isTrigger) return;
         if (eventType != CollisionEvent.Enter) return;
+        if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
 
-        if (collision.gameObject.HasHypertags(tags))
-        {
-            ExecuteTrigger();
-        }
+        ExecuteTrigger();
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!isTrigger) return;
         if (eventType != CollisionEvent.Stay) return;
+        if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
 
-        if (collision.gameObject.HasHypertags(tags))
-        {
-            ExecuteTrigger();
-        }
+        ExecuteTrigger();
     }
 
 
@@ -84,24 +77,20 @@ public class TriggerOnCollision : Trigger
     {
         if (isTrigger) return;
         if (eventType != CollisionEvent.Stay) return;
+        if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
 
-        if (collision.gameObject.HasHypertags(tags))
-        {
-            ExecuteTrigger();
-        }
+        ExecuteTrigger();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!isTrigger) return;
         if (eventType != CollisionEvent.Exit) return;
+        if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
 
-        if (collision.gameObject.HasHypertags(tags))
-        {
-            ExecuteTrigger();
-        }
+        ExecuteTrigger();
     }
 
 
@@ -109,11 +98,9 @@ public class TriggerOnCollision : Trigger
     {
         if (isTrigger) return;
         if (eventType != CollisionEvent.Exit) return;
+        if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
 
-        if (collision.gameObject.HasHypertags(tags))
-        {
-            ExecuteTrigger();
-        }
+        ExecuteTrigger();
     }
 }

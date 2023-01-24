@@ -446,11 +446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 396546105}
-  - component: {fileID: 396546104}
-  - component: {fileID: 396546103}
-  - component: {fileID: 396546102}
-  - component: {fileID: 396546101}
-  - component: {fileID: 396546100}
+  - component: {fileID: 396546106}
   m_Layer: 0
   m_Name: Boundaries
   m_TagString: Untagged
@@ -458,131 +454,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &396546100
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396546098}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 740, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 100, y: 1020}
-  m_EdgeRadius: 0
---- !u!61 &396546101
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396546098}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -740, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 100, y: 1020}
-  m_EdgeRadius: 0
---- !u!61 &396546102
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396546098}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -460}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1380, y: 100}
-  m_EdgeRadius: 0
---- !u!61 &396546103
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396546098}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 460}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1380, y: 100}
-  m_EdgeRadius: 0
---- !u!50 &396546104
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396546098}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!4 &396546105
 Transform:
   m_ObjectHideFlags: 0
@@ -594,10 +465,28 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2049932362}
+  - {fileID: 940673722}
+  - {fileID: 608617377}
+  - {fileID: 758601441}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &396546106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396546098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hypertags:
+  - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
 --- !u!1 &423473767
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +563,102 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423473767}
   m_CullTransparentMesh: 1
+--- !u!1 &608617376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 608617377}
+  - component: {fileID: 608617380}
+  - component: {fileID: 608617379}
+  - component: {fileID: 608617378}
+  m_Layer: 0
+  m_Name: UpperBoundary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &608617377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608617376}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 396546105}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &608617378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608617376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hypertags:
+  - {fileID: 11400000, guid: 1a78b44e20b30794b8b40dbd522adbba, type: 2}
+  - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
+--- !u!61 &608617379
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608617376}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 460}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1380, y: 100}
+  m_EdgeRadius: 0
+--- !u!50 &608617380
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608617376}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &639838108
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,6 +794,102 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639838108}
   m_CullTransparentMesh: 1
+--- !u!1 &758601440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 758601441}
+  - component: {fileID: 758601444}
+  - component: {fileID: 758601443}
+  - component: {fileID: 758601442}
+  m_Layer: 0
+  m_Name: LowerBoundary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &758601441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758601440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 396546105}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &758601442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758601440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hypertags:
+  - {fileID: 11400000, guid: d86af5fd4f0cd564e8a0b38658546618, type: 2}
+  - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
+--- !u!61 &758601443
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758601440}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -460}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1380, y: 100}
+  m_EdgeRadius: 0
+--- !u!50 &758601444
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758601440}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &801140932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1106,102 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!1 &940673721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 940673722}
+  - component: {fileID: 940673725}
+  - component: {fileID: 940673724}
+  - component: {fileID: 940673723}
+  m_Layer: 0
+  m_Name: RightBoundary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &940673722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940673721}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 396546105}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &940673723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940673721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hypertags:
+  - {fileID: 11400000, guid: 3f1db2282755626448862f9b0a85d92a, type: 2}
+  - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
+--- !u!61 &940673724
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940673721}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 740, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 100, y: 1020}
+  m_EdgeRadius: 0
+--- !u!50 &940673725
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940673721}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &956667340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,6 +1435,8 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: 7f2a7e51dff6ded4a928fa1eed622000, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
@@ -1312,6 +1491,8 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: 7f2a7e51dff6ded4a928fa1eed622000, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 3
     value: 0
     percentageCompare: 0
@@ -1319,6 +1500,8 @@ MonoBehaviour:
     variable: {fileID: 0}
     valueType: 1
     tag: {fileID: 11400000, guid: 7f6a546c0eff3dd4b90475a96eaf8310, type: 2}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
@@ -1331,6 +1514,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099584402}
+  - component: {fileID: 1099584406}
+  - component: {fileID: 1099584405}
+  - component: {fileID: 1099584404}
+  - component: {fileID: 1099584403}
+  - component: {fileID: 1099584408}
+  - component: {fileID: 1099584407}
   m_Layer: 0
   m_Name: ThrusterSystem
   m_TagString: Untagged
@@ -1355,6 +1544,191 @@ Transform:
   m_Father: {fileID: 1207683070}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1099584403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099584401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Changes the current velocity of Player's rigid body by 10 along the
+    object's negative X axis, and clamps the speed to be between [0,200].
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 1207683074}
+  changeType: 0
+  operation: 2
+  percentageValue: {x: 1, y: 1}
+  value: {x: 10, y: 10}
+  axis: 5
+  useRotation: 0
+  useRandom: 0
+  startAngle: 0
+  endAngle: 360
+  speedRange: {x: 100, y: 100}
+  minVelocity: {x: 100, y: 100}
+  maxVelocity: {x: 100, y: 100}
+  clampSpeed: 1
+  clampTo: {x: 0, y: 200}
+--- !u!114 &1099584404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099584401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Reverse direction
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1099584403}
+  _explanation: "Reverse direction\n----------------\nWhen key DownArrow is held:\n
+    At 0 seconds, Changes the current velocity of Player's rigid body by 10 along
+    the object's negative X axis, and clamps the speed to be between [0,200].\n"
+  inputType: 1
+  buttonName: 
+  key: 274
+  continuous: 1
+  useCooldown: 0
+  cooldown: 1
+--- !u!114 &1099584405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099584401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Changes the current velocity of Player's rigid body by 10 along the
+    object's X axis, and clamps the speed to be between [0,200].
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 1207683074}
+  changeType: 0
+  operation: 2
+  percentageValue: {x: 1, y: 1}
+  value: {x: 10, y: 10}
+  axis: 4
+  useRotation: 0
+  useRandom: 0
+  startAngle: 0
+  endAngle: 360
+  speedRange: {x: 100, y: 100}
+  minVelocity: {x: 100, y: 100}
+  maxVelocity: {x: 100, y: 100}
+  clampSpeed: 1
+  clampTo: {x: 0, y: 200}
+--- !u!114 &1099584406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099584401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Increase speed of ship when forward is pressed
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1099584405}
+  _explanation: "Increase speed of ship when forward is pressed\n----------------\nWhen
+    key UpArrow is held:\n At 0 seconds, Changes the current velocity of Player's
+    rigid body by 10 along the object's X axis, and clamps the speed to be between
+    [0,200].\n"
+  inputType: 1
+  buttonName: 
+  key: 273
+  continuous: 1
+  useCooldown: 0
+  cooldown: 1
+--- !u!114 &1099584407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099584401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Changes the current velocity of Player's rigid body by -0.1%.
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 1207683074}
+  changeType: 0
+  operation: 1
+  percentageValue: {x: -0.001, y: -0.001}
+  value: {x: 1, y: 1}
+  axis: 0
+  useRotation: 0
+  useRandom: 0
+  startAngle: 0
+  endAngle: 360
+  speedRange: {x: 100, y: 100}
+  minVelocity: {x: 100, y: 100}
+  maxVelocity: {x: 100, y: 100}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
+--- !u!114 &1099584408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099584401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c477183935167543b8555b000ac6ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Add drag
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1099584407}
+  _explanation: "Add drag\n----------------\nEvery frame:\n At 0 seconds, Changes
+    the current velocity of Player's rigid body by -0.1%.\n"
 --- !u!1 &1207683068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,9 +1741,6 @@ GameObject:
   - component: {fileID: 1207683069}
   - component: {fileID: 1207683074}
   - component: {fileID: 1207683071}
-  - component: {fileID: 1207683073}
-  - component: {fileID: 1207683072}
-  - component: {fileID: 1207683076}
   - component: {fileID: 1207683075}
   m_Layer: 0
   m_Name: Player
@@ -1443,6 +1814,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1099584402}
+  - {fileID: 2022345831}
+  - {fileID: 1565783552}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1466,68 +1839,6 @@ MonoBehaviour:
   rotationButtonNegative: Fire1
   rotationKeyPositive: 275
   rotationKeyNegative: 276
---- !u!114 &1207683072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207683068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: Changes the current velocity of this object by 10 along the object's
-    X axis, and clamps the speed to be between [0,200].
-  changeType: 0
-  operation: 2
-  percentageValue: {x: 1, y: 1}
-  value: {x: 10, y: 10}
-  axis: 4
-  useRotation: 0
-  useRandom: 0
-  startAngle: 0
-  endAngle: 360
-  speedRange: {x: 100, y: 100}
-  minVelocity: {x: 100, y: 100}
-  maxVelocity: {x: 100, y: 100}
-  clampSpeed: 1
-  clampTo: {x: 0, y: 200}
---- !u!114 &1207683073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207683068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: Increase speed of ship when forward is pressed
-  enableTrigger: 1
-  allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
-  actions:
-  - delay: 0
-    action: {fileID: 1207683072}
-  _explanation: "Increase speed of ship when forward is pressed\n----------------\nWhen
-    key UpArrow is held:\n At 0 seconds, Changes the current velocity of this object
-    by 10 along the object's X axis, and clamps the speed to be between [0,200].\n"
-  inputType: 1
-  buttonName: 
-  key: 273
-  continuous: 1
-  useCooldown: 0
-  cooldown: 1
 --- !u!50 &1207683074
 Rigidbody2D:
   serializedVersion: 4
@@ -1549,68 +1860,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &1207683075
-MonoBehaviour:
+--- !u!58 &1207683075
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207683068}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: Changes the current velocity of this object by 10 along the object's
-    negative X axis, and clamps the speed to be between [0,200].
-  changeType: 0
-  operation: 2
-  percentageValue: {x: 1, y: 1}
-  value: {x: 10, y: 10}
-  axis: 5
-  useRotation: 0
-  useRandom: 0
-  startAngle: 0
-  endAngle: 360
-  speedRange: {x: 100, y: 100}
-  minVelocity: {x: 100, y: 100}
-  maxVelocity: {x: 100, y: 100}
-  clampSpeed: 1
-  clampTo: {x: 0, y: 200}
---- !u!114 &1207683076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207683068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: Reverse direction
-  enableTrigger: 1
-  allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
-  actions:
-  - delay: 0
-    action: {fileID: 1207683075}
-  _explanation: "Reverse direction\n----------------\nWhen key DownArrow is held:\n
-    At 0 seconds, Changes the current velocity of this object by 10 along the object's
-    negative X axis, and clamps the speed to be between [0,200].\n"
-  inputType: 1
-  buttonName: 
-  key: 274
-  continuous: 1
-  useCooldown: 0
-  cooldown: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 8, y: 0}
+  serializedVersion: 2
+  m_Radius: 32
 --- !u!1 &1294020097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,6 +2143,504 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1565783551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1565783552}
+  - component: {fileID: 1565783555}
+  - component: {fileID: 1565783556}
+  - component: {fileID: 1565783553}
+  - component: {fileID: 1565783554}
+  - component: {fileID: 1565783558}
+  - component: {fileID: 1565783557}
+  - component: {fileID: 1565783562}
+  - component: {fileID: 1565783561}
+  - component: {fileID: 1565783560}
+  - component: {fileID: 1565783559}
+  - component: {fileID: 1565783566}
+  - component: {fileID: 1565783565}
+  - component: {fileID: 1565783564}
+  - component: {fileID: 1565783563}
+  m_Layer: 0
+  m_Name: WrapAround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1565783552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207683070}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1565783553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Wrap around the right
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 1
+  preConditions:
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 2
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 1207683070}
+    rigidBody: {fileID: 0}
+    comparison: 4
+    value: 640
+    percentageCompare: 0
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 6
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 1207683070}
+    rigidBody: {fileID: 1207683074}
+    comparison: 4
+    value: 0
+    percentageCompare: 0
+  actions:
+  - delay: 0
+    action: {fileID: 1565783554}
+  - delay: 0
+    action: {fileID: 1565783562}
+  - delay: 0
+    action: {fileID: 1565783561}
+  - delay: 0.1
+    action: {fileID: 1565783560}
+  - delay: 0.1
+    action: {fileID: 1565783559}
+  _explanation: "Wrap around the right\n----------------\nIf (Player.x >= 640) and
+    (Player.velocity.x >= 0) and When a collision with a trigger with tags [RightBound]
+    starts:\n At 0 seconds, changes the X position of object Player, adding -1380.\n
+    At 0 seconds, Disables Thruster1's trail renderer emission\n At 0 seconds, Disables
+    Thruster2's trail renderer emission\n At 0.1 seconds, Enables Thruster1's trail
+    renderer emission\n At 0.1 seconds, Enables Thruster2's trail renderer emission\n"
+  isTrigger: 1
+  eventType: 0
+  tags:
+  - {fileID: 11400000, guid: 3f1db2282755626448862f9b0a85d92a, type: 2}
+--- !u!114 &1565783554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: changes the X position of object Player, adding -1480.
+  target: {fileID: 1207683070}
+  changeType: 0
+  xAxis: 1
+  positionX: {x: 0, y: 0}
+  deltaX: {x: -1380, y: -1380}
+  yAxis: 0
+  positionY: {x: 0, y: 0}
+  deltaY: {x: 0, y: 0}
+--- !u!50 &1565783555
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &1565783556
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 8, y: 0}
+  serializedVersion: 2
+  m_Radius: 32
+--- !u!114 &1565783557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: changes the X position of object Player, adding 1480.
+  target: {fileID: 1207683070}
+  changeType: 0
+  xAxis: 1
+  positionX: {x: 0, y: 0}
+  deltaX: {x: 1380, y: 1380}
+  yAxis: 0
+  positionY: {x: 0, y: 0}
+  deltaY: {x: 0, y: 0}
+--- !u!114 &1565783558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Wrap around the left
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 1
+  preConditions:
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 2
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 1207683070}
+    rigidBody: {fileID: 0}
+    comparison: 2
+    value: -640
+    percentageCompare: 0
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 6
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 1207683070}
+    rigidBody: {fileID: 1207683074}
+    comparison: 2
+    value: 0
+    percentageCompare: 0
+  actions:
+  - delay: 0
+    action: {fileID: 1565783557}
+  - delay: 0
+    action: {fileID: 1565783562}
+  - delay: 0
+    action: {fileID: 1565783561}
+  - delay: 0.1
+    action: {fileID: 1565783560}
+  - delay: 0.1
+    action: {fileID: 1565783559}
+  _explanation: "Wrap around the left\n----------------\nIf (Player.x <= -640) and
+    (Player.velocity.x <= 0) and When a collision with a trigger with tags [LeftBound]
+    starts:\n At 0 seconds, changes the X position of object Player, adding 1380.\n
+    At 0 seconds, Disables Thruster1's trail renderer emission\n At 0 seconds, Disables
+    Thruster2's trail renderer emission\n At 0.1 seconds, Enables Thruster1's trail
+    renderer emission\n At 0.1 seconds, Enables Thruster2's trail renderer emission\n"
+  isTrigger: 1
+  eventType: 0
+  tags:
+  - {fileID: 11400000, guid: d1bc12c6888803a46859c5ae4beca2b3, type: 2}
+--- !u!114 &1565783559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64028e521c67c154e9f5b14c963be0e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Enables Thruster2's trail renderer emission
+  target: {fileID: 805691350}
+  changeType: 0
+  emitter: 0
+  value: 0
+--- !u!114 &1565783560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64028e521c67c154e9f5b14c963be0e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Enables Thruster1's trail renderer emission
+  target: {fileID: 1827768856}
+  changeType: 0
+  emitter: 0
+  value: 0
+--- !u!114 &1565783561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64028e521c67c154e9f5b14c963be0e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Disables Thruster2's trail renderer emission
+  target: {fileID: 805691350}
+  changeType: 0
+  emitter: 1
+  value: 0
+--- !u!114 &1565783562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64028e521c67c154e9f5b14c963be0e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Disables Thruster1's trail renderer emission
+  target: {fileID: 1827768856}
+  changeType: 0
+  emitter: 1
+  value: 0
+--- !u!114 &1565783563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: changes the Y position of object Player, adding 820.
+  target: {fileID: 1207683070}
+  changeType: 0
+  xAxis: 0
+  positionX: {x: 0, y: 0}
+  deltaX: {x: -1380, y: -1380}
+  yAxis: 1
+  positionY: {x: 0, y: 0}
+  deltaY: {x: 820, y: 820}
+--- !u!114 &1565783564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Wrap around the top
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 1
+  preConditions:
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 3
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 1207683070}
+    rigidBody: {fileID: 0}
+    comparison: 2
+    value: -360
+    percentageCompare: 0
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 7
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 1207683070}
+    rigidBody: {fileID: 1207683074}
+    comparison: 2
+    value: 0
+    percentageCompare: 0
+  actions:
+  - delay: 0
+    action: {fileID: 1565783563}
+  - delay: 0
+    action: {fileID: 1565783562}
+  - delay: 0
+    action: {fileID: 1565783561}
+  - delay: 0.1
+    action: {fileID: 1565783560}
+  - delay: 0.1
+    action: {fileID: 1565783559}
+  _explanation: "Wrap around the top\n----------------\nIf (Player.y >= 360) and
+    (Player.velocity.y >= 0) and When a collision with a trigger with tags [UpBound]
+    starts:\n At 0 seconds, changes the Y position of object Player, adding 820.\n
+    At 0 seconds, Disables Thruster1's trail renderer emission\n At 0 seconds, Disables
+    Thruster2's trail renderer emission\n At 0.1 seconds, Enables Thruster1's trail
+    renderer emission\n At 0.1 seconds, Enables Thruster2's trail renderer emission\n"
+  isTrigger: 1
+  eventType: 0
+  tags:
+  - {fileID: 11400000, guid: d86af5fd4f0cd564e8a0b38658546618, type: 2}
+--- !u!114 &1565783565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: changes the Y position of object Player, adding -820.
+  target: {fileID: 1207683070}
+  changeType: 0
+  xAxis: 0
+  positionX: {x: 0, y: 0}
+  deltaX: {x: -1380, y: -1380}
+  yAxis: 1
+  positionY: {x: 0, y: 0}
+  deltaY: {x: -820, y: -820}
+--- !u!114 &1565783566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565783551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Wrap around the top
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 1
+  preConditions:
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 3
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 1207683070}
+    rigidBody: {fileID: 0}
+    comparison: 4
+    value: 360
+    percentageCompare: 0
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 7
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 1207683070}
+    rigidBody: {fileID: 1207683074}
+    comparison: 4
+    value: 0
+    percentageCompare: 0
+  actions:
+  - delay: 0
+    action: {fileID: 1565783565}
+  - delay: 0
+    action: {fileID: 1565783562}
+  - delay: 0
+    action: {fileID: 1565783561}
+  - delay: 0.1
+    action: {fileID: 1565783560}
+  - delay: 0.1
+    action: {fileID: 1565783559}
+  _explanation: "Wrap around the top\n----------------\nIf (Player.y >= 360) and
+    (Player.velocity.y >= 0) and When a collision with a trigger with tags [RightBound]
+    starts:\n At 0 seconds, changes the Y position of object Player, adding -820.\n
+    At 0 seconds, Disables Thruster1's trail renderer emission\n At 0 seconds, Disables
+    Thruster2's trail renderer emission\n At 0.1 seconds, Enables Thruster1's trail
+    renderer emission\n At 0.1 seconds, Enables Thruster2's trail renderer emission\n"
+  isTrigger: 1
+  eventType: 0
+  tags:
+  - {fileID: 11400000, guid: 1a78b44e20b30794b8b40dbd522adbba, type: 2}
 --- !u!1 &1721419922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2472,3 +3235,189 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 0fbbfd9963cc90c4a9f82c7429aa2635, type: 2}
+--- !u!1 &2022345830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2022345831}
+  - component: {fileID: 2022345833}
+  - component: {fileID: 2022345832}
+  m_Layer: 0
+  m_Name: Shooter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2022345831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022345830}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 43, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207683070}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &2022345832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022345830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Spawns prefab PlayerLaser at the position of this object (Shooter)
+  prefabObject: {fileID: 619762539372043152, guid: d1d335180e706ae4b9fc018aa67363ad, type: 3}
+  spawnPosition: 1
+  targetPosition: {fileID: 0}
+  targetTag: {fileID: 0}
+  setParent: 0
+--- !u!114 &2022345833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022345830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: When SPACE is pressed, shoot
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 2022345832}
+  _explanation: 'When SPACE is pressed, shoot
+
+    ----------------
+
+    When key
+    Space is held (this can only happen every 0.5 seconds):
+
+'
+  inputType: 1
+  buttonName: 
+  key: 32
+  continuous: 1
+  useCooldown: 1
+  cooldown: 0.75
+--- !u!1 &2049932361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2049932362}
+  - component: {fileID: 2049932365}
+  - component: {fileID: 2049932364}
+  - component: {fileID: 2049932363}
+  m_Layer: 0
+  m_Name: LeftBoundary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2049932362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049932361}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 396546105}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2049932363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049932361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hypertags:
+  - {fileID: 11400000, guid: d1bc12c6888803a46859c5ae4beca2b3, type: 2}
+  - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
+--- !u!61 &2049932364
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049932361}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -740, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 100, y: 1020}
+  m_EdgeRadius: 0
+--- !u!50 &2049932365
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049932361}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

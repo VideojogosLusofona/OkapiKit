@@ -80,7 +80,7 @@ public abstract class Trigger : MonoBehaviour
 
         foreach (var condition in preConditions)
         {
-            if (!condition.Evaluate()) return false;
+            if (!condition.Evaluate(gameObject)) return false;
         }
 
         return true;

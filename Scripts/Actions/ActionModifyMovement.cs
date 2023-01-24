@@ -10,6 +10,11 @@ public class ActionModifyMovement : Action
     [SerializeField] private enum VelocityOperation { Set, PercentageModify, AbsoluteModify };
     [SerializeField] private enum Axis { AbsoluteRight, AbsoluteLeft, AbsoluteUp, AbsoluteDown, RelativeRight, RelativeLeft, RelativeUp, RelativeDown, Current, InverseCurrent };
 
+    [SerializeField, ShowIf("needMovementComponent")]
+    private Movement            movementComponent;
+    [SerializeField, ShowIf("needRigidBodyComponent")]
+    private Rigidbody2D         rigidBodyComponent;
+
     [SerializeField]
     private ChangeType          changeType = ChangeType.Velocity;
     [SerializeField, ShowIf("isChangeVelocity")] 
@@ -47,9 +52,53 @@ public class ActionModifyMovement : Action
     private bool isModify => isChangeVelocity && ((operation == VelocityOperation.PercentageModify) || (operation == VelocityOperation.AbsoluteModify));
     private bool hasClamp => isModify && clampSpeed;
 
+    private bool needMovementComponent => rigidBodyComponent == null;
+    private bool needRigidBodyComponent => movementComponent == null;
+
+
+    private (Movement, Rigidbody2D) GetTarget()
+    {
+        Movement movement = null;
+        Rigidbody2D rb = null;
+
+        if ((movementComponent != null) && (movementComponent.IsLinear()))
+        {
+            movement = movementComponent;
+        }
+        else if (rigidBodyComponent != null)
+        {
+            rb = rigidBodyComponent;
+        }
+        else
+        {
+            movement = GetComponent<Movement>();
+            if ((movement == null) || (!movement.IsLinear()))
+            {
+                movement = null;
+                rb = GetComponent<Rigidbody2D>();
+            }
+        }
+
+        return (movement, rb);
+    }
+
+    private string GetTargetName()
+    {
+        Movement movement = null;
+        Rigidbody2D rb = null;
+
+        (movement, rb) = GetTarget();
+        if (movement != null) return $"{movement.name}'s movement";
+        else if (rb != null) return $"{rb.name}'s rigid body";
+
+        return "[UNKNOWN]";
+    }
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
+
+        string targetName = GetTargetName();
 
         if (changeType == ChangeType.Velocity)
         {
@@ -57,32 +106,32 @@ public class ActionModifyMovement : Action
             {
                 if (useRandom)
                 {
-                    desc += $"Select a random angle between {startAngle} and {endAngle} and set the velocity of this object towards that direction, with a magnitude between {speedRange.x} and {speedRange.y}";
+                    desc += $"Select a random angle between {startAngle} and {endAngle} and set the velocity of {targetName} towards that direction, with a magnitude between {speedRange.x} and {speedRange.y}";
                     if (useRotation) desc += "; Angles are relative to the object rotation";
                     return desc;
                 }
-                desc += $"Select a random velocity between {minVelocity} and {maxVelocity} and set it to this object";
+                desc += $"Select a random velocity between {minVelocity} and {maxVelocity} and set it to {targetName}";
             }
             else if (operation == VelocityOperation.PercentageModify)
             {
                 if (percentageValue.x == percentageValue.y)
                 {
-                    desc += $"Changes the current velocity of this object by a {percentageValue*100}%";
+                    desc += $"Changes the current velocity of {targetName} by {percentageValue.x*100}%";
                 }
                 else
                 {
-                    desc += $"Changes the current velocity of this object by a percentage in the [{percentageValue.x},{percentageValue.y}] range";
+                    desc += $"Changes the current velocity of {targetName} by a percentage in the [{percentageValue.x*100},{percentageValue.y*100}] range";
                 }
             }
             else if (operation == VelocityOperation.AbsoluteModify)
             {
                 if (value.x == value.y)
                 {
-                    desc += $"Changes the current velocity of this object by {value.x}";
+                    desc += $"Changes the current velocity of {targetName} by {value.x}";
                 }
                 else
                 { 
-                    desc += $"Changes the current velocity of this object by a value between {value.x} and {value.y}";
+                    desc += $"Changes the current velocity of {targetName} by a value between {value.x} and {value.y}";
                 }
                 switch (axis)
                 {
@@ -144,8 +193,10 @@ public class ActionModifyMovement : Action
 
         if (changeType == ChangeType.Velocity)
         {
-            Movement movement = GetComponent<Movement>();
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            Movement movement = null;
+            Rigidbody2D rb = null;
+
+            (movement, rb) = GetTarget();
 
             Vector2 velocity = Vector2.zero;
 
