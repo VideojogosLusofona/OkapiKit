@@ -34,7 +34,7 @@ public class TriggerOnCondition: Trigger
 
         foreach (var condition in conditions) 
         {
-            b &= condition.Evaluate();
+            b &= condition.Evaluate(gameObject);
             if (!b) break;
         }
 

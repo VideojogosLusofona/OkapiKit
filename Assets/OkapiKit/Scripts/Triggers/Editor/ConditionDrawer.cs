@@ -27,6 +27,8 @@ public class ConditionDrawer : PropertyDrawer
         var propVariable = property.FindPropertyRelative("variable");
         var propValueType = property.FindPropertyRelative("valueType");
         var propTag = property.FindPropertyRelative("tag");
+        var propTransform = property.FindPropertyRelative("sourceTransform");
+        var propRB = property.FindPropertyRelative("rigidBody");
 
         var propComparison = property.FindPropertyRelative("comparison");
         var propValue = property.FindPropertyRelative("value");
@@ -66,6 +68,24 @@ public class ConditionDrawer : PropertyDrawer
 
                         EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                         EditorGUI.PropertyField(tagRect, propTag, GUIContent.none);
+                    }
+                    else if ((propValueType.enumValueIndex >= (int)Condition.ValueType.WorldPositionX) &&
+                             (propValueType.enumValueIndex <= (int)Condition.ValueType.RelativePositionY))
+                    {
+                        var valueTypeRect = new Rect(position.x, position.y, 150 + extra_width_variable, position.height / 2);
+                        var transformRect = new Rect(position.x, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
+
+                        EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        EditorGUI.PropertyField(transformRect, propTransform, GUIContent.none);
+                    }
+                    else if ((propValueType.enumValueIndex >= (int)Condition.ValueType.AbsoluteVelocityX) &&
+                             (propValueType.enumValueIndex <= (int)Condition.ValueType.AbsoluteVelocityY))
+                    {
+                        var valueTypeRect = new Rect(position.x, position.y, 150 + extra_width_variable, position.height / 2);
+                        var rbRect = new Rect(position.x, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
+
+                        EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        EditorGUI.PropertyField(rbRect, propRB, GUIContent.none);
                     }
                 }
             }
@@ -111,7 +131,8 @@ public class ConditionDrawer : PropertyDrawer
                 {
                     return base.GetPropertyHeight(property, label) * 3;
                 }
-                else if (systemVariable.enumValueIndex == (int)Condition.ValueType.TagCount)
+                else if ((systemVariable.enumValueIndex >= (int)Condition.ValueType.TagCount) &&
+                         (systemVariable.enumValueIndex <= (int)Condition.ValueType.AbsoluteVelocityY))
                 {
                     return base.GetPropertyHeight(property, label) * 2;
                 }
