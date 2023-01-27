@@ -15,6 +15,8 @@ public class ActionChangeValue : Action
     private OperationType   operation = OperationType.Change;
     [SerializeField, ShowIf("isChange")] 
     private float           deltaValue;
+    [SerializeField, ShowIf("isChange")] 
+    private bool            scaleWithTime = false;
     [SerializeField, ShowIf("isSet")] 
     private float           value;
 
@@ -37,7 +39,8 @@ public class ActionChangeValue : Action
         }
         else
         {
-            desc += $"Adds {deltaValue} to variable {n}";
+            if (scaleWithTime) desc += $"Adds {deltaValue} every second to variable {n}";
+            else desc += $"Adds {deltaValue} to variable {n}";
         }
 
         return desc;
@@ -56,7 +59,8 @@ public class ActionChangeValue : Action
                     valueHandler.SetValue(value);
                     break;
                 case OperationType.Change:
-                    valueHandler.ChangeValue(deltaValue);
+                    if (scaleWithTime) valueHandler.ChangeValue(deltaValue * Time.deltaTime);
+                    else valueHandler.ChangeValue(deltaValue);
                     break;
                 default:
                     break;
@@ -70,7 +74,8 @@ public class ActionChangeValue : Action
                     variable.SetValue(value);
                     break;
                 case OperationType.Change:
-                    variable.ChangeValue(deltaValue);
+                    if (scaleWithTime) variable.ChangeValue(deltaValue * Time.deltaTime);
+                    else variable.ChangeValue(deltaValue);
                     break;
                 default:
                     break;

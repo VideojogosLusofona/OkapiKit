@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2b8ecd3a095ec41bb3f2814c8c5e2b, type: 3}
+  m_Name: ShieldCharge
+  m_EditorClassIdentifier: 
+  _currentValue: 8.474444
+  _defaultValue: 100
+  _isInteger: 0
+  _hasLimits: 1
+  _minValue: 0
+  _maxValue: 100

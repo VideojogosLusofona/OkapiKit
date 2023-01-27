@@ -1,0 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
+using TreeEditor;
+using UnityEngine;
+using static UnityEngine.CullingGroup;
+
+public class ActionFlash : Action
+{
+    [SerializeField] private Renderer   target;
+    [SerializeField] private Gradient   color;
+    [SerializeField] private float      duration = 1.0f;
+
+    float       timer;
+
+    public override void Execute()
+    {
+        if (!enableAction) return;
+        if (!EvaluatePreconditions()) return;
+        if (target == null) return;
+
+        timer = duration;
+
+        StartCoroutine(FlashCR());
+    }
+
+    IEnumerator FlashCR()
+    {
+        var originalMaterial = target.material;
+
+        Material newMaterial = new Material(originalMaterial);
+        newMaterial.shader = Shader.Find("Shader Graphs/FlashShader");
+        target.material = newMaterial;
+        
+        timer = duration;
+
+        while (timer > 0)
+        {
+            float t = 1.0f - (timer / duration);
+            Color c = color.Evaluate(t);
+
+            newMaterial.SetColor("_FlashColor", c);
+
+            timer -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        target.material = originalMaterial;
+    }
+
+    public override string GetRawDescription(string ident)
+    {
+        string desc = GetPreconditionsString();
+
+        if (target == null)
+        {
+            desc += $"Flashes this renderer for {duration} seconds";
+        }
+        else
+        {
+            desc += $"Flashes renderer {target.name} for {duration} seconds";
+        }
+
+        return desc;
+    }
+
+    void Start()
+    {
+        if (target == null)
+        {
+            target = GetComponent<Renderer>();
+            if (target == null)
+            {
+                target = GetComponentInChildren<Renderer>();
+            }
+        }
+    }
+}
