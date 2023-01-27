@@ -8,7 +8,7 @@ public class ActionSpawn : Action
     [SerializeField] private enum SpawnPosition { Default, This, Target, Tag };
     private Spawner         spawner;
 
-    [SerializeField]
+    [SerializeField, ShowIf("needObject")]
     private GameObject      prefabObject;
     [SerializeField, ShowIf("hasPrefab")]
     private SpawnPosition   spawnPosition = SpawnPosition.Default;
@@ -20,6 +20,7 @@ public class ActionSpawn : Action
     private bool            setParent = false;
 
     private bool hasPrefab => prefabObject != null;
+    private bool needObject => GetComponent<Spawner>() == null;
     private bool needsTransform => (prefabObject != null) && (spawnPosition == SpawnPosition.Target);
     private bool needsTag => (prefabObject != null) && (spawnPosition == SpawnPosition.Tag);
     private bool needParent => spawnPosition != SpawnPosition.Default;

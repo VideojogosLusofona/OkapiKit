@@ -44,7 +44,7 @@ public class Spawner : MonoBehaviour
     private bool modifierSpeed => (modifiers & Modifiers.Speed) != 0;
     private bool hasPulsePattern => (!forceCount) && (usePulsePattern);
 
-    private BoxCollider2D       spawnArea;
+    private BoxCollider2D[]     spawnAreas;
     private int                 spawnPointIndex;
     private List<GameObject>    items;
 
@@ -53,7 +53,7 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         items = new List<GameObject>();
-        spawnArea = GetComponent<BoxCollider2D>();
+        spawnAreas = GetComponents<BoxCollider2D>();
         spawnPointIndex = 0;
     }
 
@@ -137,8 +137,11 @@ public class Spawner : MonoBehaviour
                     position = spawnPoints[p].position;
                     rotation = spawnPoints[p].rotation;
                 }
-                else if (spawnArea)
+                else if ((spawnAreas != null) && (spawnAreas.Length > 0))
                 {
+                    var ra = Random.Range(0, spawnAreas.Length);
+                    var spawnArea = spawnAreas[ra];
+
                     float x = 0.5f * Random.Range(-spawnArea.size.x, spawnArea.size.x) + spawnArea.offset.x;
                     float y = 0.5f * Random.Range(-spawnArea.size.y, spawnArea.size.y) + spawnArea.offset.y;
 

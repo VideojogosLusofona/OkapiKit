@@ -8,7 +8,7 @@ It's currently still under development, and eventually will be commented properl
 
 # Samples
 
-It currently has four sample games (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
+It currently has five sample games (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
 
 ## Pong 
 ![PongImage](Screenshots/pong.png)
@@ -21,6 +21,9 @@ It currently has four sample games (each a Scene under the Samples directory), a
 
 ## "Procedural" side scrolling shoot'em'up 
 ![SideShooterImage](Screenshots/sideshooter.png)
+
+## Asteroids
+![AsteroidsImage](Screenshots/asteroids.png)
 
 # Licenses
 

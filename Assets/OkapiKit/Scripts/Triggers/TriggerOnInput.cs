@@ -15,15 +15,18 @@ public class TriggerOnInput : Trigger
     private KeyCode key;
     [SerializeField]
     private bool    continuous = true;
-    [SerializeField]
+    [SerializeField, ShowIf("continuous")]
+    private bool    negate = false;
+    [SerializeField, ShowIf("continuousAndNotNegated")]
     private bool    useCooldown = false;
     [SerializeField, ShowIf("useCooldown")]
     private float   cooldown = 1.0f;
 
     private bool isButton => inputType == InputType.Button;
     private bool isKey => inputType == InputType.Key;
+    private bool continuousAndNotNegated => continuous && (!negate);
 
-    
+
     float cooldownTimer = 0.0f;
 
     protected override string GetRawDescription()
@@ -33,8 +36,12 @@ public class TriggerOnInput : Trigger
         else desc += "key " + key + " ";
         if (continuous)
         {
-            desc += "is held";
-            if (useCooldown) desc += " (this can only happen every " + cooldown + " seconds)";
+            if (negate) desc += "is not held";
+            else
+            {
+                desc += "is held";
+                if (useCooldown) desc += " (this can only happen every " + cooldown + " seconds)";
+            }
         }
         else desc += "is pressed";
 
@@ -65,6 +72,7 @@ public class TriggerOnInput : Trigger
         {
             isTrigger = (continuous) ? (Input.GetKey(key)) : (Input.GetKeyDown(key));
         }
+        if ((continuous) && (negate)) isTrigger = !isTrigger;
 
         if (isTrigger)
         {
