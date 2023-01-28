@@ -22,11 +22,6 @@ public class PathWaypointsEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        //serializedObject.Update();
-
-        //bool b = propEditMode.boolValue;
-        //propEditMode.boolValue = EditorGUILayout.Toggle("EDIT MODE", b, "Button");
-
         base.OnInspectorGUI();
 
         if (GUILayout.Button("Add Point"))
@@ -36,12 +31,6 @@ public class PathWaypointsEditor : Editor
 
             EditorUtility.SetDirty(target);
         }
-
-        //EditorGUILayout.PropertyField(lookAtPoint);
-
-        //serializedObject.ApplyModifiedProperties();
-
-        //Debug.Log(propEditMode.boolValue);
     }
 
     public void OnSceneGUI()

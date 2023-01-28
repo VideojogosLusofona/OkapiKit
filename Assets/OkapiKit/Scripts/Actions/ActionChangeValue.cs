@@ -25,6 +25,8 @@ public class ActionChangeValue : Action
     private bool isChange => operation == OperationType.Change;
     private bool isSet => operation == OperationType.Set;
 
+    public override string GetActionTitle() { return "Change Value"; }
+
     public override string GetRawDescription(string ident)
     {
         string n = "[]";
