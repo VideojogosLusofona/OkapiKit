@@ -6,6 +6,8 @@ using NaughtyAttributes;
 
 abstract public class Action : MonoBehaviour
 {
+    [SerializeField, HideInInspector]
+    protected bool      _showInfo = true;
     [SerializeField]
     protected bool      enableAction = true;
     [SerializeField]
@@ -25,6 +27,14 @@ abstract public class Action : MonoBehaviour
     public abstract string GetRawDescription(string ident);
 
     public abstract void Execute();
+
+    public virtual string GetActionTitle() { return "Action"; }
+
+    public bool showInfo
+    {
+        get { return _showInfo; }
+        set { _showInfo = value; }
+    }
 
     public bool HasTag(Hypertag[] tags)
     {

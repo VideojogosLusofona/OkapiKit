@@ -25,6 +25,8 @@ public class ActionSpawn : Action
     private bool needsTag => (prefabObject != null) && (spawnPosition == SpawnPosition.Tag);
     private bool needParent => spawnPosition != SpawnPosition.Default;
 
+    public override string GetActionTitle() { return "Spawn"; }
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
