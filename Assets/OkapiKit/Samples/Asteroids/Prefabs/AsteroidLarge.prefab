@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Wrap around the right
   enableTrigger: 1
   allowRetrigger: 1
@@ -136,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -162,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Wrap around the left
   enableTrigger: 1
   allowRetrigger: 1
@@ -208,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -234,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Wrap around the top
   enableTrigger: 1
   allowRetrigger: 1
@@ -280,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -306,6 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Wrap around the top
   enableTrigger: 1
   allowRetrigger: 1
@@ -352,6 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -438,6 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -454,9 +463,12 @@ MonoBehaviour:
     action: {fileID: 5446639135666914435}
   - delay: 0
     action: {fileID: 5393053789900464162}
-  _explanation: "When (Health <= 0):\n At 0 seconds, Spawns prefab Explosion at the
-    position of this object (Health)\n At 0 seconds, Destroys the parent of this
-    object\n"
+  _explanation: "When (Health <= 0):\n First, \n          spawns prefab Explosion
+    at the position of this object (Health)\n          destroys the parent of this
+    object\n          spawns prefab AsteroidMedium Variant at the position of this
+    object (Health)\n          spawns prefab AsteroidMedium Variant at the position
+    of this object (Health)\n          spawns prefab AsteroidMedium Variant at the
+    position of this object (Health)\n"
   conditions:
   - valueHandler: {fileID: 6678966173699173573}
     variable: {fileID: 0}
@@ -479,6 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -502,6 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -523,6 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -547,6 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -571,6 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -763,6 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: When hit by a laser, reduce health and eventually explode
   enableTrigger: 1
   allowRetrigger: 1
@@ -783,8 +801,8 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 6678966174736319243}
   _explanation: "When hit by a laser, reduce health and eventually explode\n----------------\nWhen
-    a collision with a trigger with tags [Laser] starts:\n At 0 seconds, [NULL]\nAt
-    0 seconds, [NULL]\n"
+    a collision with a trigger with tags [Laser] starts:\n First, \n          adds
+    -1 to variable Health\n          flashes renderer AsteroidLarge for 0.125 seconds\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -801,6 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -825,6 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b4d31c25fb0a0a488c6aec0ef066b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -874,6 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -909,6 +930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe33e4a0e2979294d8e04d307e34bb03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -917,7 +939,9 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1041648331}
-  _explanation: 
+  _explanation: "When Start is called:\n First, \n          select a random velocity
+    between (-50.00, -50.00) and (50.00, 50.00) and set it to AsteroidLarge's rigid
+    body.\n"
 --- !u!114 &1041648342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -930,12 +954,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Adds -3 to variable Health
   valueHandler: {fileID: 6678966173699173573}
   variable: {fileID: 0}
   operation: 1
@@ -954,6 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: When hit by a shield, explode
   enableTrigger: 1
   allowRetrigger: 1
@@ -971,9 +997,9 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1041648342}
-  _explanation: "When hit by a laser, reduce health and eventually explode\n----------------\nWhen
-    a collision with a trigger with tags [Laser] starts:\n At 0 seconds, [NULL]\nAt
-    0 seconds, [NULL]\n"
+  _explanation: "When hit by a shield, explode\n----------------\nWhen a collision
+    with a trigger with tags [Shield] starts:\n First, \n          adds -3 to variable
+    Health\n"
   isTrigger: 1
   eventType: 0
   tags:

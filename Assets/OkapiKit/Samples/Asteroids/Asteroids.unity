@@ -494,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -517,6 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -525,7 +527,7 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 128201713}
-  _explanation: "When (TagCount(Asteroid) == 0):\n At 0 seconds, Spawns an entity
+  _explanation: "When (TagCount(Asteroid) == 0):\n First, \n          spawns an entity
     using spawner AsteroidSpawner\n"
   conditions:
   - valueHandler: {fileID: 0}
@@ -1476,7 +1478,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1062124228}
-  - component: {fileID: 1062124227}
+  - component: {fileID: 1062124239}
+  - component: {fileID: 1062124238}
+  - component: {fileID: 1062124237}
   - component: {fileID: 1062124230}
   - component: {fileID: 1062124229}
   - component: {fileID: 1062124234}
@@ -1490,23 +1494,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1062124227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062124226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afad85b3b6a28054a95956da154c132f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  variablesToResetOnStart:
-  - {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
-  - {fileID: 11400000, guid: a2d42889e8a380c4588011f485d0b496, type: 2}
-  variablesToResetOnSpawn: []
-  prefabsToSpawn: []
 --- !u!4 &1062124228
 Transform:
   m_ObjectHideFlags: 0
@@ -1534,12 +1521,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' Switches to scene Samples'
+  _explanation: ' switches to scene Samples'
   sceneName: Samples
 --- !u!114 &1062124230
 MonoBehaviour:
@@ -1553,6 +1541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1561,7 +1550,8 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124229}
-  _explanation: "When key Escape is pressed:\n At 0 seconds,  Switches to scene Samples\n"
+  _explanation: "When key Escape is held:\n First, \n           switches to scene
+    Samples\n"
   inputType: 1
   buttonName: 
   key: 27
@@ -1581,6 +1571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1601,6 +1592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: If it runs out of lives, game over!
   enableTrigger: 1
   allowRetrigger: 1
@@ -1610,7 +1602,7 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1062124233}
   _explanation: "If it runs out of lives, game over!\n----------------\nWhen (Lives
-    <= 0):\n At 0 seconds, Enables object GameOver\n"
+    <= 0):\n First, \n          enables object GameOver\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
@@ -1633,6 +1625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1656,6 +1649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: If there's no player ship and there's enough lives, respawn
   enableTrigger: 1
   allowRetrigger: 1
@@ -1683,8 +1677,8 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1062124235}
   _explanation: "If there's no player ship and there's enough lives, respawn\n----------------\nIf
-    (Lives > 0) and (TagCount(Player) == 0) and When key Space is pressed:\n At 0
-    seconds, Spawns prefab Player at original position\n"
+    (Lives > 0) and (TagCount(Player) == 0) and When key Space is pressed:\n First,
+    \n          spawns prefab Player at original position\n"
   inputType: 1
   buttonName: 
   key: 32
@@ -1692,6 +1686,80 @@ MonoBehaviour:
   negate: 0
   useCooldown: 0
   cooldown: 1
+--- !u!114 &1062124237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Resets variable ShieldCharge
+  valueHandler: {fileID: 0}
+  variable: {fileID: 11400000, guid: a2d42889e8a380c4588011f485d0b496, type: 2}
+  operation: 2
+  deltaValue: 0
+  scaleWithTime: 0
+  value: 0
+--- !u!114 &1062124238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Resets variable Lives
+  valueHandler: {fileID: 0}
+  variable: {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
+  operation: 2
+  deltaValue: 0
+  scaleWithTime: 0
+  value: 0
+--- !u!114 &1062124239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe33e4a0e2979294d8e04d307e34bb03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1062124238}
+  - delay: 0
+    action: {fileID: 1062124237}
+  _explanation: "When Start is called:\n First, \n          resets variable Lives\n"
 --- !u!1 &1294020097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,6 +2326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -2277,6 +2346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 0

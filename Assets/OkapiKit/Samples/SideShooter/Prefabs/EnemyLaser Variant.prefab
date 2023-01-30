@@ -93,20 +93,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8678970290850587037, guid: 883029c510fb9164586c9497f7b505d0, type: 3}
       propertyPath: _explanation
-      value: 'If this hits anything, destroy the shot
-
-        ----------------
-
-        When
-        a collision with a trigger with tags [TagObstacle,TagBoundaries,TagPlayer]
-        starts:
-
-        At 0 seconds, Spawns prefab HitFX at the position of this
-        object (EnemyLaser)
-
-        At 0 seconds, Destroys this object
-
-'
+      value: "If this hits anything, destroy the shot\n----------------\nWhen a collision
+        with a trigger with tags [TagObstacle,TagBoundaries,TagPlayer] starts:\n
+        First, \n          spawns prefab HitFX at the position of this object (EnemyLaser
+        Variant)\n          destroys this object\n"
       objectReference: {fileID: 0}
     - target: {fileID: 8678970290850587037, guid: 883029c510fb9164586c9497f7b505d0, type: 3}
       propertyPath: tags.Array.data[2]

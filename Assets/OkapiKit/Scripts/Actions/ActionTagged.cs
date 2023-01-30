@@ -5,8 +5,8 @@ using NaughtyAttributes;
 
 public class ActionTagged : Action
 {
-    [SerializeField] private enum SearchType { Global, Tagged };
-    [SerializeField] private enum TriggerType { All, Sequence, Random };
+    public enum SearchType { Global = 0, Tagged = 1 };
+    public enum TriggerType { All = 0, Sequence = 1, Random = 2 };
 
     [SerializeField] 
     private SearchType  searchType = SearchType.Global;
@@ -21,17 +21,19 @@ public class ActionTagged : Action
 
     private int sequenceIndex = 0;
 
+    public override string GetActionTitle() => "Execute Tagged Action";
+
     public override string GetRawDescription(string ident)
     {
         var desc = GetPreconditionsString();
         
         if (searchType == SearchType.Global)
         {
-            desc = "Find actions tagged with any of ["; ;
+            desc = "find actions tagged with any of ["; ;
         }
         else if (searchType == SearchType.Tagged)
         {
-            desc = "Find all objects tagged with any of [";
+            desc = "find all objects tagged with any of [";
 
             if ((searchTags != null) && (searchTags.Length > 0))
             {

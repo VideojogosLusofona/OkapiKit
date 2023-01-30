@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class ActionSpawn : Action
 {
-    [SerializeField] private enum SpawnPosition { Default, This, Target, Tag };
+    public enum SpawnPosition { Default, This, Target, Tag };
     private Spawner         spawner;
 
     [SerializeField, ShowIf("needObject")]
@@ -33,7 +33,7 @@ public class ActionSpawn : Action
 
         if (prefabObject)
         {
-            desc += $"Spawns prefab {prefabObject.name}";
+            desc += $"spawns prefab {prefabObject.name}";
             switch (spawnPosition)
             {
                 case SpawnPosition.Default:
@@ -63,11 +63,11 @@ public class ActionSpawn : Action
             spawner = GetComponent<Spawner>();
             if (spawner == null)
             {
-                desc += $"Spawns an entity using spawner, but there's no spawner in object!";
+                desc += $"spawns an entity using spawner, but there's no spawner in object!";
             }
             else
             {
-                desc += $"Spawns an entity using spawner {name}";
+                desc += $"spawns an entity using spawner {name}";
             }
         }
         return desc;

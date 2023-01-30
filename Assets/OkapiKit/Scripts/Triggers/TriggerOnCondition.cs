@@ -10,12 +10,14 @@ public class TriggerOnCondition: Trigger
     private bool firstTime = true;
     private bool prevValue = false;
 
+    public override string GetTriggerTitle() => "On Condition";
+
     protected override string GetRawDescription()
     {
         string desc = "When ";
         if ((conditions == null) || (conditions.Length == 0))
         {
-            return "When [No conditions set]!";
+            return "when [No conditions set]!";
         }
         for (int i = 0; i < conditions.Length; i++)
         {

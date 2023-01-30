@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class TriggerOnInput : Trigger
 {
-    [SerializeField] private enum InputType { Button, Key };
+    public enum InputType { Button = 0, Key = 1};
 
     [SerializeField]
     InputType       inputType = InputType.Button;
@@ -28,6 +28,8 @@ public class TriggerOnInput : Trigger
 
 
     float cooldownTimer = 0.0f;
+
+    public override string GetTriggerTitle() => "On Input";
 
     protected override string GetRawDescription()
     {

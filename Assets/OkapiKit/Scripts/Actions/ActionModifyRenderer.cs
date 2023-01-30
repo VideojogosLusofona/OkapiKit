@@ -5,9 +5,9 @@ using NaughtyAttributes;
 
 public class ActionModifyRenderer : Action
 {
-    [SerializeField] private enum ChangeType { Visibility };
+    public enum ChangeType { Visibility = 0 };
 
-    [SerializeField] private enum BoolChange { Enable, Disable, Toggle };
+    public enum BoolChange { Enable = 0, Disable = 1, Toggle = 2 };
 
     [SerializeField]
     new private Renderer    renderer;
@@ -17,6 +17,8 @@ public class ActionModifyRenderer : Action
     private BoolChange  visibility;
 
     private bool needVisibility => (changeType == ChangeType.Visibility);
+
+    public override string GetActionTitle() { return "Modify Renderer"; }
 
     public override void Execute()
     {
@@ -62,13 +64,13 @@ public class ActionModifyRenderer : Action
                 switch (visibility)
                 {
                     case BoolChange.Enable:
-                        desc += $"Enables renderer {rendererName}";
+                        desc += (renderer) ? ($"enables renderer {rendererName}") : ("enables this renderer");
                         break;
                     case BoolChange.Disable:
-                        desc += $"Disables renderer {rendererName}";
+                        desc += (renderer) ? ($"disables renderer {rendererName}") : ("disables this renderer");
                         break;
                     case BoolChange.Toggle:
-                        desc += $"Toggles renderer {rendererName}";
+                        desc += (renderer) ? ($"toggles renderer {rendererName}") : ("toggles this renderer");
                         break;
                     default:
                         break;

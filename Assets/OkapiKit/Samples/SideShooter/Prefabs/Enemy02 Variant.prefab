@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3920506269660966603, guid: ee40daa3866fe0d499e4d71ab8eb1530, type: 3}
       propertyPath: m_Name
-      value: Enemy02
+      value: Enemy02 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3920506269731617649, guid: ee40daa3866fe0d499e4d71ab8eb1530, type: 3}
       propertyPath: m_LocalPosition.x
@@ -82,6 +82,15 @@ PrefabInstance:
     - target: {fileID: 3920506269731617651, guid: ee40daa3866fe0d499e4d71ab8eb1530, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.9607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 8977402804195159703, guid: ee40daa3866fe0d499e4d71ab8eb1530, type: 3}
+      propertyPath: _explanation
+      value: "When a collision with a trigger with tags [TagPlayer,TagPlayerShot]
+        starts:\n First, \n          spawns prefab Explosion at the position of this
+        object (Enemy02 Variant)\n          disables component Enemy02 Variant (UnityEngine.CapsuleCollider2D)
+        on Enemy02 Variant\n then, at 0.25 seconds, \n          disables this renderer\n         
+        disables emission of particle system ThrusterPS\n then, at 1 seconds, \n         
+        destroys this object\n"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee40daa3866fe0d499e4d71ab8eb1530, type: 3}

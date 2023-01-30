@@ -404,6 +404,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  inputEnabled: 0
+  inputType: 0
+  rotationAxis: Horizontal
+  rotationButtonPositive: Right
+  rotationButtonNegative: Left
+  rotationKeyPositive: 275
+  rotationKeyNegative: 276
 --- !u!212 &460038262
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1034,11 +1041,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1062124228}
-  - component: {fileID: 1062124227}
   - component: {fileID: 1062124230}
   - component: {fileID: 1062124229}
   - component: {fileID: 1062124232}
   - component: {fileID: 1062124231}
+  - component: {fileID: 1062124234}
+  - component: {fileID: 1062124233}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -1046,22 +1054,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1062124227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062124226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afad85b3b6a28054a95956da154c132f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  variablesToResetOnStart:
-  - {fileID: 11400000, guid: fb13fed526333984185b5996de505241, type: 2}
-  variablesToResetOnSpawn: []
-  prefabsToSpawn: []
 --- !u!4 &1062124228
 Transform:
   m_ObjectHideFlags: 0
@@ -1089,12 +1081,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' Switches to scene Samples'
+  _explanation: ' switches to scene Samples'
   sceneName: Samples
 --- !u!114 &1062124230
 MonoBehaviour:
@@ -1108,6 +1101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1116,11 +1110,13 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124229}
-  _explanation: "When key Escape is pressed:\n At 0 seconds,  Switches to scene Samples\n"
+  _explanation: "When key Escape is held:\n First, \n           switches to scene
+    Samples\n"
   inputType: 1
   buttonName: 
   key: 27
   continuous: 1
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!114 &1062124231
@@ -1135,6 +1131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1155,6 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: When there are no more bricks, show message and exit to menu
   enableTrigger: 1
   allowRetrigger: 1
@@ -1164,15 +1162,64 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1062124231}
   _explanation: "When there are no more bricks, show message and exit to menu\n----------------\nWhen
-    (TagCount(Tag_Bricks) <= 0):\n At 0 seconds, Enables object Congratulations\n"
+    (TagCount(Tag_Bricks) <= 0):\n First, \n          enables object Congratulations\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 0}
     valueType: 1
     tag: {fileID: 11400000, guid: b2bb66f99c083a645bc4043daf03e1b6, type: 2}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
+--- !u!114 &1062124233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 0
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Resets variable Lives
+  valueHandler: {fileID: 0}
+  variable: {fileID: 11400000, guid: fb13fed526333984185b5996de505241, type: 2}
+  operation: 2
+  deltaValue: 0
+  scaleWithTime: 0
+  value: 0
+--- !u!114 &1062124234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe33e4a0e2979294d8e04d307e34bb03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 0
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1062124233}
+  _explanation: "When Start is called:\n First, \n          resets variable Lives\n"
 --- !u!1 &1110339606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1205,6 +1252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1224,6 +1272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 0
@@ -1237,6 +1286,7 @@ MonoBehaviour:
   buttonName: 
   key: 32
   continuous: 0
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!114 &1110339609
@@ -1901,6 +1951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1925,6 +1976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1947,6 +1999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1957,6 +2010,7 @@ MonoBehaviour:
   variable: {fileID: 11400000, guid: fb13fed526333984185b5996de505241, type: 2}
   operation: 1
   deltaValue: -1
+  scaleWithTime: 0
   value: 0
 --- !u!114 &1632317753
 MonoBehaviour:
@@ -1970,6 +2024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: When ball hits trigger area, reduce one life and respawn
   enableTrigger: 1
   allowRetrigger: 1
@@ -1984,8 +2039,8 @@ MonoBehaviour:
     action: {fileID: 1632317750}
   _explanation: "When ball hits trigger area, reduce one life and respawn\n----------------\nWhen
     a collision with a trigger with tags [Tag_Ball] starts:\n At 0 seconds, Adds
-    -1 to variable Lives\n At 0 seconds, Destroys objects with tags [Tag_Ball] \n
-    At 1 seconds, Spawns prefab Ball at the position of object with tag [Tag_BallSpawn],
+    -1 to variable Lives\n At 0 seconds, Destroys objects with tags [Tag_Ball] \nAt
+    1 seconds, Spawns prefab Ball at the position of object with tag [Tag_BallSpawn],
     setting it as parent\n"
   isTrigger: 1
   eventType: 0
@@ -2003,6 +2058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31863e175690d5a49b2571d3fb18d15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 0
   hasTags: 0
   actionTags: []
@@ -2024,6 +2080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -2044,6 +2101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: If there are no more lives, show Game Over and stop spawning
   enableTrigger: 1
   allowRetrigger: 1
@@ -2063,6 +2121,8 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: fb13fed526333984185b5996de505241, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
@@ -2119,6 +2179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -2138,6 +2199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 0
@@ -2151,6 +2213,7 @@ MonoBehaviour:
   buttonName: 
   key: 32
   continuous: 0
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!114 &1721419926

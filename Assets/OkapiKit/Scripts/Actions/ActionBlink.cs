@@ -27,17 +27,19 @@ public class ActionBlink : Action
         blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
     }
 
+    public override string GetActionTitle() => "Blink";
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
 
         if (target == null)
         {
-            desc += $"Blinks this renderer for {duration} seconds";
+            desc += $"blinks this renderer for {duration} seconds";
         }
         else
         {
-            desc += $"Blinks renderer {target.name} for {duration} seconds";
+            desc += $"blinks renderer {target.name} for {duration} seconds";
         }
 
         return desc;

@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class ActionModifyRigidBody : Action
 {
-    [SerializeField] private enum ChangeType { SetBodyType, Mass, LinearDrag, AngularDrag, GravityScale };
+    public enum ChangeType { SetBodyType = 0, Mass = 1, LinearDrag = 2, AngularDrag = 3, GravityScale = 4 };
 
     [SerializeField] 
     private ChangeType         changeType;
@@ -47,25 +47,26 @@ public class ActionModifyRigidBody : Action
         }
     }
 
+    public override string GetActionTitle() => "Modify Rigid Body";
     public override string GetRawDescription(string ident)
     {
         var desc = GetPreconditionsString();
         switch (changeType)
         {
             case ChangeType.SetBodyType:
-                desc += $"Changes body type of this object to {bodyType}";
+                desc += $"changes body type of this object to {bodyType}";
                 break;
             case ChangeType.Mass:
-                desc += $"Changes mass of this object to {value}";
+                desc += $"changes mass of this object to {value}";
                 break;
             case ChangeType.LinearDrag:
-                desc += $"Changes linear drag of this object to {value}";
+                desc += $"changes linear drag of this object to {value}";
                 break;
             case ChangeType.AngularDrag:
-                desc += $"Changes angular drag of this object to {value}";
+                desc += $"changes angular drag of this object to {value}";
                 break;
             case ChangeType.GravityScale:
-                desc += $"Changes gravity scale of this object to {value}";
+                desc += $"changes gravity scale of this object to {value}";
                 break;
         }
 

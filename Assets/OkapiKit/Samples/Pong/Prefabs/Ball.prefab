@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: When SPACE is pressed, lauch the ball in a random direction - Only
     do this once
   enableTrigger: 1
@@ -172,19 +173,21 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 2364777538405152198}
   _explanation: "When SPACE is pressed, lauch the ball in a random direction - Only
-    do this once\n----------------\nWhen key Space is pressed:\n At 0 seconds, Select
-    randomly between the following actions:\n  1. Select a random angle between 30
-    and 60 and set the velocity of this object towards that direction, with a magnitude
-    between 400 and 400 (25%)\n  2. Select a random angle between 120 and 150 and
-    set the velocity of this object towards that direction, with a magnitude between
-    400 and 400 (25%)\n  3. Select a random angle between 210 and 240 and set the
-    velocity of this object towards that direction, with a magnitude between 400
-    and 400 (25%)\n  4. Select a random angle between 300 and 330 and set the velocity
-    of this object towards that direction, with a magnitude between 400 and 400 (25%)\n\n"
+    do this once\n----------------\nWhen key Space is pressed:\n First, \n         
+    select randomly between the following actions:\n              1. select a random
+    angle between 30 and 60 and set the velocity of Ball's rigid body towards that
+    direction, with a magnitude of 400 (25%)\n              2. select a random angle
+    between 120 and 150 and set the velocity of Ball's rigid body towards that direction,
+    with a magnitude of 400 (25%)\n              3. select a random angle between
+    210 and 240 and set the velocity of Ball's rigid body towards that direction,
+    with a magnitude of 400 (25%)\n              4. select a random angle between
+    300 and 330 and set the velocity of Ball's rigid body towards that direction,
+    with a magnitude of 400 (25%)\n"
   inputType: 1
   buttonName: 
   key: 32
   continuous: 0
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!114 &2364777538405152198
@@ -199,30 +202,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597b94e489d16984395e6685f78929f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 'Select randomly between the following actions:
-
-    1. Select a
-    random angle between 30 and 60 and set the velocity of this object towards that
-    direction, with a magnitude between 400 and 400 (25%)
-
-    2. Select a random
-    angle between 120 and 150 and set the velocity of this object towards that direction,
-    with a magnitude between 400 and 400 (25%)
-
-    3. Select a random angle between
-    210 and 240 and set the velocity of this object towards that direction, with
-    a magnitude between 400 and 400 (25%)
-
-    4. Select a random angle between 300
-    and 330 and set the velocity of this object towards that direction, with a magnitude
-    between 400 and 400 (25%)
-
-'
+  _explanation: "Select randomly between the following actions:\n  1. select a random
+    angle between 30 and 60 and set the velocity of Ball's rigid body towards that
+    direction, with a magnitude of 400 (25%)\n  2. select a random angle between
+    120 and 150 and set the velocity of Ball's rigid body towards that direction,
+    with a magnitude of 400 (25%)\n  3. select a random angle between 210 and 240
+    and set the velocity of Ball's rigid body towards that direction, with a magnitude
+    of 400 (25%)\n  4. select a random angle between 300 and 330 and set the velocity
+    of Ball's rigid body towards that direction, with a magnitude of 400 (25%)"
   actions:
   - action: {fileID: 2364777538405152177}
     probability: 25
@@ -244,16 +237,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Select a random angle between 30 and 60 and set the velocity of this
-    object towards that direction, with a magnitude between 400 and 400
+  _explanation: Select a random angle between 30 and 60 and set the velocity of Ball's
+    rigid body towards that direction, with a magnitude of 400
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 1
   startAngle: 30
@@ -261,6 +259,8 @@ MonoBehaviour:
   speedRange: {x: 400, y: 400}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &2364777538405152185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,16 +273,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
   _explanation: Select a random angle between 120 and 150 and set the velocity of
-    this object towards that direction, with a magnitude between 400 and 400
+    Ball's rigid body towards that direction, with a magnitude of 400
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 1
   startAngle: 120
@@ -290,6 +295,8 @@ MonoBehaviour:
   speedRange: {x: 400, y: 400}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &2364777538405152184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,16 +309,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
   _explanation: Select a random angle between 210 and 240 and set the velocity of
-    this object towards that direction, with a magnitude between 400 and 400
+    Ball's rigid body towards that direction, with a magnitude of 400
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 1
   startAngle: 210
@@ -319,6 +331,8 @@ MonoBehaviour:
   speedRange: {x: 400, y: 400}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &2364777538405152187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,16 +345,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
   _explanation: Select a random angle between 300 and 330 and set the velocity of
-    this object towards that direction, with a magnitude between 400 and 400
+    Ball's rigid body towards that direction, with a magnitude of 400
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 1
   startAngle: 300
@@ -348,6 +367,8 @@ MonoBehaviour:
   speedRange: {x: 400, y: 400}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &2332827236971577460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Destroy ball and respawn when it enters one of the boundary areas
   enableTrigger: 1
   allowRetrigger: 1
@@ -371,9 +393,9 @@ MonoBehaviour:
   - delay: 0.5
     action: {fileID: -7210514062832317456}
   _explanation: "Destroy ball and respawn when it enters one of the boundary areas\n----------------\nWhen
-    a collision with a trigger with tags [Tag_Goal] starts:\n At 1 seconds, Destroys
-    this object\n At 0.5 seconds, Find actions tagged with any of [Tag_Spawner] and
-    execute all of them.\n"
+    a collision with a trigger with tags [Tag_Goal] starts:\n At 0.5 seconds, \n         
+    find actions tagged with any of [Tag_Spawner] and execute all of them.\n then,
+    at 1 seconds, \n          destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -390,6 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -411,6 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5e16b163b1cd84eb48645e1b7ff1dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 1
   actionTags: []
@@ -434,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Play sound when it hits the walls or the paddles
   enableTrigger: 1
   allowRetrigger: 1
@@ -443,7 +468,7 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 6810422688004762215}
   _explanation: "Play sound when it hits the walls or the paddles\n----------------\nWhen
-    a collision with a bounding volume starts:\n At 0 seconds, Plays sound ball_hit
+    a collision with a bounding volume starts:\n First, \n          plays sound ball_hit
     at volume 0.25 and a pitch in the range [0.75,1.25]\n"
   isTrigger: 0
   eventType: 0
@@ -460,6 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []

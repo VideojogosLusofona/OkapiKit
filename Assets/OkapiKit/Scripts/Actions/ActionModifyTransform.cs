@@ -5,9 +5,9 @@ using NaughtyAttributes;
 
 public class ActionModifyTransform : Action
 {
-    [SerializeField] private enum ChangeType { Position };
+    public enum ChangeType { Position = 0 };
 
-    [SerializeField] private enum AxisChange { None, Change, Set };
+    public enum AxisChange { None = 0, Change = 1, Set = 2 };
 
     [SerializeField]
     private Transform           target;
@@ -62,6 +62,8 @@ public class ActionModifyTransform : Action
 
         return desc;
     }
+
+    public override string GetActionTitle() => "Modify Transform";
 
     public override string GetRawDescription(string ident)
     {

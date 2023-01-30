@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class ActionChangeComponentState : Action
 {
-    [SerializeField] private enum StateChange { Enable, Disable, Toggle };
+    public enum StateChange { Enable = 0, Disable = 1, Toggle = 2};
 
     [SerializeField] private Behaviour      target;
     [SerializeField] private StateChange    state;
+
+    public override string GetActionTitle() { return "Change Component State"; }
 
     public override string GetRawDescription(string ident)
     {
@@ -22,13 +24,13 @@ public class ActionChangeComponentState : Action
         switch (state)
         {
             case StateChange.Enable:
-                desc += $"Enables component {targetDesc}";
+                desc += $"enables component {targetDesc}";
                 break;
             case StateChange.Disable:
-                desc += $"Disables component {targetDesc}";
+                desc += $"disables component {targetDesc}";
                 break;
             case StateChange.Toggle:
-                desc += $"Toggles component {targetDesc}";
+                desc += $"toggles component {targetDesc}";
                 break;
         }
         return desc;

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ActionChangeActionState : Action
 {
-    [SerializeField] private enum StateChange { Enable, Disable, Toggle };
+    public enum StateChange { Enable = 0, Disable = 1, Toggle = 2};
 
     [SerializeField] private Action         target;
     [SerializeField] private StateChange    state;
+
+    public override string GetActionTitle() => "Change Action State";
 
     public override string GetRawDescription(string ident)
     {
@@ -16,13 +18,13 @@ public class ActionChangeActionState : Action
         switch (state)
         {
             case StateChange.Enable:
-                desc += $"Enables action [{target.GetRawDescription(ident)}]";
+                desc += $"enables action [{target.GetRawDescription(ident)}]";
                 break;
             case StateChange.Disable:
-                desc += $"Disables action [{target.GetRawDescription(ident)}]";
+                desc += $"disables action [{target.GetRawDescription(ident)}]";
                 break;
             case StateChange.Toggle:
-                desc += $"Toggles action [{target.GetRawDescription(ident)}]";
+                desc += $"toggles action [{target.GetRawDescription(ident)}]";
                 break;
         }
         return desc;

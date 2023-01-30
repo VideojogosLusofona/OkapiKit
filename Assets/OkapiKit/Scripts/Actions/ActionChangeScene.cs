@@ -8,9 +8,11 @@ public class ActionChangeScene : Action
 {
     [SerializeField, Scene] private string sceneName;
 
+    public override string GetActionTitle() => "Change Scene";
+
     public override string GetRawDescription(string ident)
     {
-        return $"{GetPreconditionsString()} Switches to scene {sceneName}";
+        return $"{GetPreconditionsString()} switches to scene {sceneName}";
     }
 
     public override void Execute()

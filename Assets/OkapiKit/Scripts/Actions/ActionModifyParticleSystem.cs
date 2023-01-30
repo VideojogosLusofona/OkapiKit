@@ -6,9 +6,9 @@ using UnityEngine.Android;
 
 public class ActionModifyParticleSystem : Action
 {
-    [SerializeField] private enum ChangeType { Emission };
+    public enum ChangeType { Emission = 0 };
 
-    [SerializeField] private enum BoolChange { Enable, Disable, Toggle };
+    [SerializeField] private enum BoolChange { Enable = 0, Disable = 1, Toggle = 2 };
 
     [SerializeField]
     new private ParticleSystem    particleSystem;
@@ -58,6 +58,8 @@ public class ActionModifyParticleSystem : Action
         }
     }
 
+    public override string GetActionTitle() => "Modify Particle System";
+
     public override string GetRawDescription(string ident)
     {
         var desc = GetPreconditionsString();
@@ -68,13 +70,13 @@ public class ActionModifyParticleSystem : Action
                 switch (emission)
                 {
                     case BoolChange.Enable:
-                        desc += $"Enables emission of particle system {psName}";
+                        desc += $"enables emission of particle system {psName}";
                         break;
                     case BoolChange.Disable:
-                        desc += $"Disables emission of particle system {psName}";
+                        desc += $"disables emission of particle system {psName}";
                         break;
                     case BoolChange.Toggle:
-                        desc += $"Toggles  emission of particle system {psName}";
+                        desc += $"toggles  emission of particle system {psName}";
                         break;
                     default:
                         break;

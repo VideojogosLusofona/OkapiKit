@@ -9,6 +9,8 @@ public class ActionChangeObjectState : Action
     [SerializeField] private GameObject     target;
     [SerializeField] private StateChange    state;
 
+    public override string GetActionTitle() => "Change Object State";
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
@@ -16,13 +18,13 @@ public class ActionChangeObjectState : Action
         switch (state)
         {
             case StateChange.Enable:
-                desc += (target) ? ($"Enables object {target.name}") : ("Enables this object");
+                desc += (target) ? ($"enables object {target.name}") : ("enables this object");
                 break;
             case StateChange.Disable:
-                desc += (target) ? ($"Disables object {target.name}") : ("Disables this object");
+                desc += (target) ? ($"disables object {target.name}") : ("disables this object");
                 break;
             case StateChange.Toggle:
-                desc += (target) ? ($"Toggles object {target.name}") : ("Toggles this object");
+                desc += (target) ? ($"toggles object {target.name}") : ("toggles this object");
                 break;
         }
         return desc;

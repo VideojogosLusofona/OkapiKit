@@ -1275,6 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: If this touches the left boundary, destroy itself
   enableTrigger: 1
   allowRetrigger: 1
@@ -1284,8 +1285,8 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 3716762262022758704}
   _explanation: "If this touches the left boundary, destroy itself\n----------------\nWhen
-    a collision with a trigger with tags [TagLeftBoundary] starts:\n At 0 seconds,
-    Destroys this object\n"
+    a collision with a trigger with tags [TagLeftBoundaryBackground] starts:\n First,
+    \n          destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -1302,6 +1303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []

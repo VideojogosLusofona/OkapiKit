@@ -48,17 +48,18 @@ public class ActionFlash : Action
         target.material = originalMaterial;
     }
 
+    public override string GetActionTitle() => "Flash";
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
 
         if (target == null)
         {
-            desc += $"Flashes this renderer for {duration} seconds";
+            desc += $"flashes this renderer for {duration} seconds";
         }
         else
         {
-            desc += $"Flashes renderer {target.name} for {duration} seconds";
+            desc += $"flashes renderer {target.name} for {duration} seconds";
         }
 
         return desc;

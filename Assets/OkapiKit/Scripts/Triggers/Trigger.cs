@@ -15,6 +15,8 @@ public abstract class Trigger : MonoBehaviour
         public Action   action;
     }
 
+    [SerializeField, HideInInspector]
+    protected   bool            _showInfo = true;
     [SerializeField, ResizableTextArea]
     public      string          description;
     [SerializeField]
@@ -33,11 +35,18 @@ public abstract class Trigger : MonoBehaviour
 
     private bool alreadyTriggered = false;
 
-    [Button("Update Explanation")]
-    private void UpdateExplanation()
+    public bool showInfo
     {
-        _explanation = GetDescription();
+        get { return _showInfo; }
+        set { _showInfo = value; }
     }
+    public bool isTriggerEnabled
+    {
+        get { return enableTrigger; }
+        set { enableTrigger = value; }
+    }
+
+    public virtual string GetTriggerTitle() { return "Trigger"; }
 
     public string GetDescription()
     {
@@ -60,15 +69,57 @@ public abstract class Trigger : MonoBehaviour
 
         if (actions != null)
         {
-            foreach (var action in actions)
+            List<ActionTrigger> sortedActions = new List<ActionTrigger>(actions);
+            sortedActions.Sort((e1, e2) => (e1.delay == e2.delay)?(0): ((e1.delay < e2.delay) ? (-1):(1)));
+
+            float lastTime = -float.MaxValue;
+            for (int i = 0; i < sortedActions.Count; i++)
             {
+                var action = sortedActions[i];
                 string actionDesc = "[NULL]";
-                if (action.action != null) actionDesc = action.action.GetRawDescription("  ");
-                desc += $" At {action.delay} seconds, {actionDesc}\n";
+                string timeString = $" At {action.delay} seconds, \n";
+
+                if (action.delay == 0)
+                {
+                    timeString = $" First, \n";
+                }
+                else
+                {
+                    if (i != 0) timeString = $" then, at {action.delay} seconds, \n";
+                    else timeString = $" At {action.delay} seconds, \n";
+                }
+
+                string spaces = "";
+
+                for (int k = 0; k < 10; k++) spaces += " ";
+
+                if (lastTime == action.delay)
+                {
+                    timeString = spaces;
+                }
+                else
+                {
+                    timeString += spaces;
+                }
+
+                if (action.action != null)
+                {
+                    actionDesc = action.action.GetRawDescription("  ");
+                    actionDesc = actionDesc.Replace("\n", "\n" + spaces);
+                }
+                
+                desc += $"{timeString}{actionDesc}\n";
+
+                lastTime = action.delay;
             }
         }
 
         return desc;
+    }
+
+    public void UpdateExplanation()
+    {
+        _explanation = GetDescription();
     }
 
     protected abstract string GetRawDescription();

@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class ActionDestroyObject : Action
 {
-    [SerializeField] private enum Target { Self, Parent, Topmost, Object, Tag };
+    public enum Target { Self = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4 };
 
     [SerializeField]
     private Target      target = Target.Object;
@@ -18,6 +18,8 @@ public class ActionDestroyObject : Action
     private bool needsTarget => target == Target.Object;
     private bool needsTags => target == Target.Tag;
 
+    public override string GetActionTitle() { return "Destroy Object"; }
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
@@ -25,22 +27,22 @@ public class ActionDestroyObject : Action
         switch (target)
         {
             case Target.Self:
-                desc += $"Destroys this object";
+                desc += $"destroys this object";
                 break;
             case Target.Topmost:
-                desc += $"Destroys the topmost object that contains this";
+                desc += $"destroys the topmost object that contains this";
                 break;
             case Target.Parent:
-                desc += $"Destroys the parent of this object";
+                desc += $"destroys the parent of this object";
                 break;
             case Target.Object:
                 if (targetObject != null) desc += $"Destroys object {targetObject.name}";
-                else desc += $"Destroys this object";
+                else desc += $"destroys this object";
                 break;
             case Target.Tag:
                 if (tags.Length > 0)
                 {
-                    desc += "Destroys objects with tags [";
+                    desc += "destroys objects with tags [";
                     for (int i = 0; i < tags.Length; i++)
                     {
                         desc += tags[i].name;
@@ -51,7 +53,7 @@ public class ActionDestroyObject : Action
                 }
                 else
                 {
-                    desc += "Destroys objects with tags [undefined]!";
+                    desc += "destroys objects with tags [undefined]!";
                 }
                 break;
             default:

@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick03
       objectReference: {fileID: 0}
+    - target: {fileID: 8283077565059313030, guid: 85fea748d7083a0418f007179733c82b, type: 3}
+      propertyPath: actions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283077565059313030, guid: 85fea748d7083a0418f007179733c82b, type: 3}
+      propertyPath: actions.Array.data[1].action
+      value: 
+      objectReference: {fileID: 6267725120359924778}
     - target: {fileID: 8283077565059313082, guid: 85fea748d7083a0418f007179733c82b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -75,5 +83,20 @@ PrefabInstance:
       propertyPath: defaultValue
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8283077565206546702, guid: 85fea748d7083a0418f007179733c82b, type: 3}
+      propertyPath: onChange.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85fea748d7083a0418f007179733c82b, type: 3}
+--- !u!114 &6267725120359924778 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8283077565059313084, guid: 85fea748d7083a0418f007179733c82b, type: 3}
+  m_PrefabInstance: {fileID: 2596336055414598038}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36ea0b4a4f80be42880b56e364b61d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
