@@ -38,6 +38,7 @@ It currently has five sample games (each a Scene under the Samples directory), a
 * Top down ships by [Master484], licensed under [CC0]
 * Asteroid by [Warspawn], licensed under [CC0]
 * Nebula background by [leyren], licensed under [CC0]
+* Tag and variable icon from [FlatIcon]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
 
 # Metadata
@@ -60,3 +61,4 @@ It currently has five sample games (each a Scene under the Samples directory), a
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [CC-BY 4.0]:https://creativecommons.org/licenses/by/4.0/
+[FlatIcon]:Flaticon.com

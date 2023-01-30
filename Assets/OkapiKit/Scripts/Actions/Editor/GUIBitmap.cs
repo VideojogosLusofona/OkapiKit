@@ -111,7 +111,7 @@ public class GUIBitmap
                 string str = "\t\t\t";
                 for (int x = 0; x < texture.width; x++)
                 {
-                    str += string.Format($"new Color({colors[idx].r}, {colors[idx].g}, {colors[idx].b}, {colors[idx].a}), ");
+                    str += string.Format($"new Color({colors[idx].r}f, {colors[idx].g}f, {colors[idx].b}f, {colors[idx].a}f), ");
                     idx++;
                 }
                 writer.WriteLine(str);
