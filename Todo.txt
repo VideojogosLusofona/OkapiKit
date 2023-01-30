@@ -1,5 +1,12 @@
+- Add custom editor to movement stuff (with explainer)
+- Add custom editor to spawn system (with explainer)
 - Remove events from ValueHandler (replace by Triggers)
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
-- Add custom inspectors to everything
 - Add a tree view to explore objects in the games
-- Add icons to scriptable objects (hypertag and variables)
+- Samples games:
+  - Flag Catcher
+  - UI Game
+  - Solid Spy
+  - Platformer
+- Comment Code
+- Documentation
