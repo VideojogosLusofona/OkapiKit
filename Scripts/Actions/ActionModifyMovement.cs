@@ -5,10 +5,10 @@ using NaughtyAttributes;
 
 public class ActionModifyMovement : Action
 {
-    [SerializeField] private enum ChangeType { Velocity };
+    public enum ChangeType { Velocity = 0 };
 
-    [SerializeField] private enum VelocityOperation { Set, PercentageModify, AbsoluteModify };
-    [SerializeField] private enum Axis { AbsoluteRight, AbsoluteLeft, AbsoluteUp, AbsoluteDown, RelativeRight, RelativeLeft, RelativeUp, RelativeDown, Current, InverseCurrent };
+    public enum VelocityOperation { Set = 0, PercentageModify = 1, AbsoluteModify = 2 };
+    public enum Axis { AbsoluteRight = 0, AbsoluteLeft = 1, AbsoluteUp = 2, AbsoluteDown = 3, RelativeRight = 4, RelativeLeft = 5, RelativeUp = 6, RelativeDown = 7, Current = 8, InverseCurrent = 9 };
 
     [SerializeField, ShowIf("needMovementComponent")]
     private Movement            movementComponent;
@@ -55,6 +55,8 @@ public class ActionModifyMovement : Action
     private bool needMovementComponent => rigidBodyComponent == null;
     private bool needRigidBodyComponent => movementComponent == null;
 
+
+    public override string GetActionTitle() { return "Modify Movement"; }
 
     private (Movement, Rigidbody2D) GetTarget()
     {
@@ -106,32 +108,39 @@ public class ActionModifyMovement : Action
             {
                 if (useRandom)
                 {
-                    desc += $"Select a random angle between {startAngle} and {endAngle} and set the velocity of {targetName} towards that direction, with a magnitude between {speedRange.x} and {speedRange.y}";
-                    if (useRotation) desc += "; Angles are relative to the object rotation";
+                    if (speedRange.x == speedRange.y)
+                    {
+                        desc += $"select a random angle between {startAngle} and {endAngle} and set the velocity of {targetName} towards that direction, with a magnitude of {speedRange.x}";
+                    }
+                    else
+                    {
+                        desc += $"select a random angle between {startAngle} and {endAngle} and set the velocity of {targetName} towards that direction, with a magnitude between {speedRange.x} and {speedRange.y}";
+                    }
+                    if (useRotation) desc += "; angles are relative to the object rotation";
                     return desc;
                 }
-                desc += $"Select a random velocity between {minVelocity} and {maxVelocity} and set it to {targetName}";
+                desc += $"select a random velocity between {minVelocity} and {maxVelocity} and set it to {targetName}";
             }
             else if (operation == VelocityOperation.PercentageModify)
             {
                 if (percentageValue.x == percentageValue.y)
                 {
-                    desc += $"Changes the current velocity of {targetName} by {percentageValue.x*100}%";
+                    desc += $"changes the current velocity of {targetName} by {percentageValue.x*100}%";
                 }
                 else
                 {
-                    desc += $"Changes the current velocity of {targetName} by a percentage in the [{percentageValue.x*100},{percentageValue.y*100}] range";
+                    desc += $"changes the current velocity of {targetName} by a percentage in the [{percentageValue.x*100},{percentageValue.y*100}] range";
                 }
             }
             else if (operation == VelocityOperation.AbsoluteModify)
             {
                 if (value.x == value.y)
                 {
-                    desc += $"Changes the current velocity of {targetName} by {value.x}";
+                    desc += $"changes the current velocity of {targetName} by {value.x}";
                 }
                 else
                 { 
-                    desc += $"Changes the current velocity of {targetName} by a value between {value.x} and {value.y}";
+                    desc += $"changes the current velocity of {targetName} by a value between {value.x} and {value.y}";
                 }
                 switch (axis)
                 {

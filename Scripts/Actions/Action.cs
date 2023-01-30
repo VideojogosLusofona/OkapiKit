@@ -22,6 +22,8 @@ abstract public class Action : MonoBehaviour
     [SerializeField, ResizableTextArea, ReadOnly]
     private string      _explanation;
 
+    public string explanation => _explanation;
+
     public bool isActionEnabled { get { return enableAction; } set { enableAction = value; } }
 
     public abstract string GetRawDescription(string ident);
@@ -80,7 +82,7 @@ abstract public class Action : MonoBehaviour
         string desc = "";
         if ((actionConditions != null) && (actionConditions.Length > 0))
         {
-            desc += "If ";
+            desc += "if ";
             for (int i = 0; i < actionConditions.Length; i++)
             {
                 desc += actionConditions[i].GetRawDescription();
@@ -90,11 +92,25 @@ abstract public class Action : MonoBehaviour
         }
         return desc;
     }
-
-    [Button("Update Explanation")]
-    private void UpdateExplanation()
+    public void UpdateExplanation()
     {
-        _explanation = GetRawDescription("");
-    }
+        string e = GetRawDescription("");
+
+        _explanation = "";
+        for (int i = 0; i < e.Length; i++)
+        {
+            if (i != ' ')
+            {
+                _explanation += char.ToUpper(e[i]) + e.Substring(i + 1);
+                break;
+            }
+            else
+            {
+                _explanation += e[i];
+            }
+        }
+
+        
+    } 
 
 }

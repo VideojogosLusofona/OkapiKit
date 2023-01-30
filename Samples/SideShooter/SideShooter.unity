@@ -844,6 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -867,6 +868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46216fa097ecb754babda0f26d640422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Spawn enemies
   enableTrigger: 1
   allowRetrigger: 1
@@ -876,7 +878,7 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 265817969}
   _explanation: "Spawn enemies\n----------------\nEvery [3,6] seconds, trigger the
-    actions::\n At 0 seconds, Spawns an entity using spawner EnemySpawner\n"
+    actions::\n First, \n          spawns an entity using spawner EnemySpawner\n"
   startTriggered: 1
   timeInterval: {x: 3, y: 6}
 --- !u!114 &265817971
@@ -1735,13 +1737,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1062124228}
-  - component: {fileID: 1062124227}
   - component: {fileID: 1062124230}
   - component: {fileID: 1062124229}
   - component: {fileID: 1062124234}
   - component: {fileID: 1062124233}
   - component: {fileID: 1062124236}
   - component: {fileID: 1062124235}
+  - component: {fileID: 1062124240}
+  - component: {fileID: 1062124239}
+  - component: {fileID: 1062124238}
+  - component: {fileID: 1062124237}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -1749,24 +1754,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1062124227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062124226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afad85b3b6a28054a95956da154c132f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  variablesToResetOnStart:
-  - {fileID: 11400000, guid: 7f2a7e51dff6ded4a928fa1eed622000, type: 2}
-  - {fileID: 11400000, guid: c569cd302776e724bb5ad6412befae3c, type: 2}
-  - {fileID: 11400000, guid: b1c7f564cbfedf44a95cfe9cb6cbe933, type: 2}
-  variablesToResetOnSpawn: []
-  prefabsToSpawn: []
 --- !u!4 &1062124228
 Transform:
   m_ObjectHideFlags: 0
@@ -1794,12 +1781,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' Switches to scene Samples'
+  _explanation: ' switches to scene Samples'
   sceneName: Samples
 --- !u!114 &1062124230
 MonoBehaviour:
@@ -1813,6 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1821,11 +1810,13 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124229}
-  _explanation: "When key Escape is pressed:\n At 0 seconds,  Switches to scene Samples\n"
+  _explanation: "When key Escape is held:\n First, \n           switches to scene
+    Samples\n"
   inputType: 1
   buttonName: 
   key: 27
   continuous: 1
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!114 &1062124233
@@ -1840,12 +1831,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Enables object GameOver
   target: {fileID: 1721419922}
   state: 0
 --- !u!114 &1062124234
@@ -1860,6 +1852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: If it runs out of lives, game over!
   enableTrigger: 1
   allowRetrigger: 1
@@ -1869,12 +1862,14 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1062124233}
   _explanation: "If it runs out of lives, game over!\n----------------\nWhen (Lives
-    <= 0):\n At 0 seconds, Enables object GameOver\n"
+    <= 0):\n First, \n          enables object GameOver\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 7f2a7e51dff6ded4a928fa1eed622000, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
@@ -1890,6 +1885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1913,6 +1909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: If there's no player ship and there's enough lives, respawn
   enableTrigger: 1
   allowRetrigger: 1
@@ -1922,13 +1919,15 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1062124235}
   _explanation: "If there's no player ship and there's enough lives, respawn\n----------------\nWhen
-    (Lives > 0) and (TagCount(TagPlayer) <= 0):\n At 0 seconds, Spawns prefab Player
-    at original position\n"
+    (Lives > 0) and (TagCount(TagPlayer) <= 0):\n First, \n          spawns prefab
+    Player at original position\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 7f2a7e51dff6ded4a928fa1eed622000, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 3
     value: 0
     percentageCompare: 0
@@ -1936,9 +1935,112 @@ MonoBehaviour:
     variable: {fileID: 0}
     valueType: 1
     tag: {fileID: 11400000, guid: 7f6a546c0eff3dd4b90475a96eaf8310, type: 2}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
+--- !u!114 &1062124237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Resets variable Overheat
+  valueHandler: {fileID: 0}
+  variable: {fileID: 11400000, guid: b1c7f564cbfedf44a95cfe9cb6cbe933, type: 2}
+  operation: 2
+  deltaValue: 0
+  scaleWithTime: 0
+  value: 0
+--- !u!114 &1062124238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Resets variable Heat
+  valueHandler: {fileID: 0}
+  variable: {fileID: 11400000, guid: c569cd302776e724bb5ad6412befae3c, type: 2}
+  operation: 2
+  deltaValue: 0
+  scaleWithTime: 0
+  value: 0
+--- !u!114 &1062124239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Resets variable Lives
+  valueHandler: {fileID: 0}
+  variable: {fileID: 11400000, guid: 7f2a7e51dff6ded4a928fa1eed622000, type: 2}
+  operation: 2
+  deltaValue: 0
+  scaleWithTime: 0
+  value: 0
+--- !u!114 &1062124240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062124226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe33e4a0e2979294d8e04d307e34bb03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1062124239}
+  - delay: 0
+    action: {fileID: 1062124238}
+  - delay: 0
+    action: {fileID: 1062124237}
+  _explanation: 
 --- !u!1001 &1065766310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2159,6 +2261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -2182,6 +2285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46216fa097ecb754babda0f26d640422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Generate a piece of background
   enableTrigger: 1
   allowRetrigger: 1
@@ -2191,7 +2295,7 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1384171471}
   _explanation: "Generate a piece of background\n----------------\nEvery 5.12 seconds,
-    trigger the actions::\n At 0 seconds, Spawns an entity using spawner BackgroundSpawner01\n"
+    trigger the actions::\n First, \n          spawns an entity using spawner BackgroundSpawner01\n"
   startTriggered: 1
   timeInterval: {x: 5.12, y: 5.12}
 --- !u!114 &1384171473
@@ -2648,12 +2752,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns an entity using spawner BackgroundSpawner01
+  _explanation: Spawns an entity using spawner BackgroundSpawner03
   prefabObject: {fileID: 0}
   spawnPosition: 0
   targetPosition: {fileID: 0}
@@ -2671,6 +2776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46216fa097ecb754babda0f26d640422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Generate a piece of background
   enableTrigger: 1
   allowRetrigger: 1
@@ -2679,8 +2785,8 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1563645344}
-  _explanation: "Generate a piece of background\n----------------\nEvery 2.56 seconds,
-    trigger the actions::\n At 0 seconds, Spawns an entity using spawner BackgroundSpawner02\n"
+  _explanation: "Generate a piece of background\n----------------\nEvery 1.28 seconds,
+    trigger the actions::\n First, \n          spawns an entity using spawner BackgroundSpawner03\n"
   startTriggered: 1
   timeInterval: {x: 1.28, y: 1.28}
 --- !u!114 &1563645346
@@ -2765,12 +2871,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns an entity using spawner BackgroundSpawner01
+  _explanation: Spawns an entity using spawner BackgroundSpawner02
   prefabObject: {fileID: 0}
   spawnPosition: 0
   targetPosition: {fileID: 0}
@@ -2788,6 +2895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46216fa097ecb754babda0f26d640422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Generate a piece of background
   enableTrigger: 1
   allowRetrigger: 1
@@ -2796,8 +2904,8 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1622149318}
-  _explanation: "Generate a piece of background\n----------------\nEvery 1.28 seconds,
-    trigger the actions::\n At 0 seconds, Spawns an entity using spawner BackgroundSpawner02\n"
+  _explanation: "Generate a piece of background\n----------------\nEvery 2.56 seconds,
+    trigger the actions::\n First, \n          spawns an entity using spawner BackgroundSpawner02\n"
   startTriggered: 1
   timeInterval: {x: 2.56, y: 2.56}
 --- !u!114 &1622149320
@@ -2907,6 +3015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -2926,6 +3035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 0
@@ -2939,6 +3049,7 @@ MonoBehaviour:
   buttonName: 
   key: 32
   continuous: 0
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!114 &1721419926

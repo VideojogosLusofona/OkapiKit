@@ -6,6 +6,8 @@ public class TriggerOnRandomizer : Trigger
 {
     [SerializeField] Trigger[]  choiceTriggers;
 
+    public override string GetTriggerTitle() => "On Random";
+
     protected override string GetRawDescription()
     {
         string desc = "Choose a random trigger:\n";

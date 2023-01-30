@@ -41,16 +41,46 @@ public class ActionSequence : Action
         action.action.Execute();
     }
 
+    public override string GetActionTitle() => "Sequence";
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
 
         if (actions != null)
         {
-            desc += ":\n";
-            foreach (var action in actions)
+            List<ActionTrigger> sortedActions = new List<ActionTrigger>(actions);
+            sortedActions.Sort((e1, e2) => (e1.delay == e2.delay) ? (0) : ((e1.delay < e2.delay) ? (-1) : (1)));
+
+            float lastTime = -float.MaxValue;
+            for (int i = 0; i < sortedActions.Count; i++)
             {
-                desc += $"{ident}After {action.delay} seconds, {action.action.GetRawDescription(ident + " ")}\n";
+                var action = sortedActions[i];
+                string actionDesc = "[NULL]";
+                string timeString = $" At {action.delay} seconds, \n";
+
+                string spaces = "";
+
+                for (int k = 0; k < 10; k++) spaces += " ";
+
+                if (lastTime == action.delay)
+                {
+                    timeString = spaces;
+                }
+                else
+                {
+                    timeString += spaces;
+                }
+
+                if (action.action != null)
+                {
+                    actionDesc = action.action.GetRawDescription("  ");
+                    actionDesc = actionDesc.Replace("\n", "\n" + spaces);
+                }
+
+                desc += $"{timeString}{actionDesc}\n";
+
+                lastTime = action.delay;
             }
         }
 

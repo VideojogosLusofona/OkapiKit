@@ -7,9 +7,10 @@ using UnityEngine;
 
 public class ActionQuitApplication : Action
 {
+    public override string GetActionTitle() => "Quit Application";
     public override string GetRawDescription(string ident)
     {
-        return $"{GetPreconditionsString()}Quit application";
+        return $"{GetPreconditionsString()}quit application";
     }
 
     public override void Execute()

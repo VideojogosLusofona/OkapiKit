@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class ActionChangeValue : Action
 {
-    [SerializeField] enum OperationType { Set, Change };
+    public enum OperationType { Set = 0, Change = 1, Reset = 2 };
 
     [SerializeField, ShowIf("needValueHandler")]
     private ValueHandler    valueHandler;
@@ -29,7 +29,7 @@ public class ActionChangeValue : Action
 
     public override string GetRawDescription(string ident)
     {
-        string n = "[]";
+        string n = "[UNKNOWN]";
         if (variable) n = variable.name;
         else if (valueHandler) n = valueHandler.name;
 
@@ -37,12 +37,16 @@ public class ActionChangeValue : Action
 
         if (operation == OperationType.Set)
         {
-            desc += $"Sets variable {n} to {value}";
+            desc += $"sets variable {n} to {value}";
+        }
+        else if (operation == OperationType.Reset)
+        {
+            desc += $"resets variable {n}";
         }
         else
         {
-            if (scaleWithTime) desc += $"Adds {deltaValue} every second to variable {n}";
-            else desc += $"Adds {deltaValue} to variable {n}";
+            if (scaleWithTime) desc += $"adds {deltaValue} every second to variable {n}";
+            else desc += $"adds {deltaValue} to variable {n}";
         }
 
         return desc;
@@ -64,6 +68,9 @@ public class ActionChangeValue : Action
                     if (scaleWithTime) valueHandler.ChangeValue(deltaValue * Time.deltaTime);
                     else valueHandler.ChangeValue(deltaValue);
                     break;
+                case OperationType.Reset:
+                    valueHandler.Reset();
+                    break;
                 default:
                     break;
             }
@@ -78,6 +85,9 @@ public class ActionChangeValue : Action
                 case OperationType.Change:
                     if (scaleWithTime) variable.ChangeValue(deltaValue * Time.deltaTime);
                     else variable.ChangeValue(deltaValue);
+                    break;
+                case OperationType.Reset:
+                    variable.ResetValue();
                     break;
                 default:
                     break;

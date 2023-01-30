@@ -1,6 +1,4 @@
-using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +8,14 @@ public class GUIBitmap
     public int width = 0;
     public int height = 0;
     public Color[] bitmap;
+
+    public GUIBitmap(GUIBitmap src)
+    {
+        width = src.width;
+        height = src.height;
+        bitmap = new Color[width * height];
+        Array.Copy(src.bitmap, bitmap, src.bitmap.Length);
+    }
 
     public GUIBitmap(int width, int height)
     {

@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class ActionSetParent : Action
 {
-    [SerializeField] private enum Target { None, Object, Tag };
+    public enum Target { None = 0, Object = 1, Tag = 2};
 
     [SerializeField]
     private Target      target = Target.Object;
@@ -42,6 +42,8 @@ public class ActionSetParent : Action
         }
     }
 
+    public override string GetActionTitle() => "Set Parent";
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
@@ -49,15 +51,15 @@ public class ActionSetParent : Action
         switch (target)
         {
             case Target.None:
-                desc += "Remove this object from parent";
+                desc += "remove this object from parent";
                 break;
             case Target.Object:
-                if (targetObject) desc += $"Sets this object as a child of {targetObject.name}";
-                else desc += "Remove this object from parent";
+                if (targetObject) desc += $"sets this object as a child of {targetObject.name}";
+                else desc += "remove this object from parent";
                 break;
             case Target.Tag:
-                if (tag) desc += $"Sets this object as a child of object with tag {tag.name}";
-                else desc += $"Sets this object as a child of object with tag [Undefined]";
+                if (tag) desc += $"sets this object as a child of object with tag {tag.name}";
+                else desc += $"sets this object as a child of object with tag [Undefined]";
                 break;
             default:
                 break;

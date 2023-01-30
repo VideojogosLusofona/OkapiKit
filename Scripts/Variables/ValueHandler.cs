@@ -51,6 +51,11 @@ public class ValueHandler : MonoBehaviour
         ChangeValue(value);
     }
 
+    public void Reset()
+    {
+        this.value.ResetValue();
+    }
+
     public void ChangeValue(float value)
     {
         //Debug.Log($"Change value {name}: Old = {this.value.currentValue}, New = {this.value.currentValue + value}");

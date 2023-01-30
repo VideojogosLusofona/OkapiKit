@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: When SPACE is pressed, start the ball
   enableTrigger: 1
   allowRetrigger: 0
@@ -314,17 +315,18 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1917432777651354207}
   _explanation: "When SPACE is pressed, start the ball\n----------------\nWhen key
-    Space is pressed:\n At 0 seconds, Select randomly between the following actions:\n 
-    1. Select a random angle between 35 and 60 and set the velocity of this object
-    towards that direction, with a magnitude between 400 and 400 (50%)\n  2. Select
-    a random angle between 125 and 150 and set the velocity of this object towards
-    that direction, with a magnitude between 400 and 400 (50%)\n\n At 0 seconds,
-    Remove this object from parent\n At 0 seconds, Changes body type of this object
-    to Dynamic\n"
+    Space is pressed:\n First, \n          select randomly between the following
+    actions:\n              1. select a random angle between 35 and 60 and set the
+    velocity of Ball's rigid body towards that direction, with a magnitude of 400
+    (50%)\n              2. select a random angle between 125 and 150 and set the
+    velocity of Ball's rigid body towards that direction, with a magnitude of 400
+    (50%)\n          remove this object from parent\n          changes body type
+    of this object to Dynamic\n"
   inputType: 1
   buttonName: 
   key: 32
   continuous: 0
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!114 &5030316420521800457
@@ -339,6 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42922afc9506d147bd1e7eabf98c2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -360,6 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979d65757dd51494888686cae7731d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -381,22 +385,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597b94e489d16984395e6685f78929f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 'Select randomly between the following actions:
-
-    1. Select a
-    random angle between 35 and 60 and set the velocity of this object towards that
-    direction, with a magnitude between 400 and 400 (50%)
-
-    2. Select a random
-    angle between 125 and 150 and set the velocity of this object towards that direction,
-    with a magnitude between 400 and 400 (50%)
-
-'
+  _explanation: "Select randomly between the following actions:\n  1. select a random
+    angle between 35 and 60 and set the velocity of Ball's rigid body towards that
+    direction, with a magnitude of 400 (50%)\n  2. select a random angle between
+    125 and 150 and set the velocity of Ball's rigid body towards that direction,
+    with a magnitude of 400 (50%)"
   actions:
   - action: {fileID: 67971990859066622}
     probability: 100
@@ -414,16 +413,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Select a random angle between 35 and 60 and set the velocity of this
-    object towards that direction, with a magnitude between 400 and 400
+  _explanation: Select a random angle between 35 and 60 and set the velocity of Ball's
+    rigid body towards that direction, with a magnitude of 400
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 1
   startAngle: 35
@@ -431,6 +435,8 @@ MonoBehaviour:
   speedRange: {x: 400, y: 400}
   minVelocity: {x: 100, y: 100}
   maxVelocity: {x: 100, y: 100}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &67971990859066613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,16 +449,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
-  hasTags: 1
+  hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
   _explanation: Select a random angle between 125 and 150 and set the velocity of
-    this object towards that direction, with a magnitude between 400 and 400
+    Ball's rigid body towards that direction, with a magnitude of 400
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 1
   startAngle: 125
@@ -460,6 +471,8 @@ MonoBehaviour:
   speedRange: {x: 400, y: 400}
   minVelocity: {x: 100, y: 100}
   maxVelocity: {x: 100, y: 100}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &67971990859066612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,16 +485,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
-  hasTags: 1
+  hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
   _explanation: Select a random angle between 215 and 240 and set the velocity of
-    this object towards that direction, with a magnitude between 400 and 400
+    Ball's rigid body towards that direction, with a magnitude of 400
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 1
   startAngle: 215
@@ -489,6 +507,8 @@ MonoBehaviour:
   speedRange: {x: 400, y: 400}
   minVelocity: {x: 100, y: 100}
   maxVelocity: {x: 100, y: 100}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &67971990859066615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,16 +521,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
-  hasTags: 1
+  hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
   _explanation: Select a random angle between 305 and 330 and set the velocity of
-    this object towards that direction, with a magnitude between 400 and 400
+    Ball's rigid body towards that direction, with a magnitude of 400
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 0
   percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 1
   startAngle: 305
@@ -518,6 +543,8 @@ MonoBehaviour:
   speedRange: {x: 400, y: 400}
   minVelocity: {x: 100, y: 100}
   maxVelocity: {x: 100, y: 100}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &67971990859066614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: Everytime the ball collides, it increases the speed
   enableTrigger: 1
   allowRetrigger: 1
@@ -540,8 +568,8 @@ MonoBehaviour:
     action: {fileID: 67971990859066609}
   _explanation: "Everytime the ball collides, it increases the speed\n----------------\nWhen
     a collision with a bounding volume with tags [Tag_Player,Tag_Bricks,Tag_Walls]
-    starts:\n At 0 seconds, Changes the current velocity of this object by a percentage
-    in the [0.01,0.01] range.\n"
+    starts:\n First, \n          changes the current velocity of Ball's rigid body
+    by 1%.\n"
   isTrigger: 0
   eventType: 0
   tags:
@@ -560,16 +588,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Changes the current velocity of this object by a percentage in the
-    [0.01,0.01] range.
+  _explanation: Changes the current velocity of Ball's rigid body by 1%.
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
   changeType: 0
   operation: 1
   percentageValue: {x: 0.01, y: 0.01}
+  value: {x: 1, y: 1}
+  axis: 0
   useRotation: 0
   useRandom: 0
   startAngle: 0
@@ -577,3 +609,5 @@ MonoBehaviour:
   speedRange: {x: 100, y: 100}
   minVelocity: {x: 100, y: 100}
   maxVelocity: {x: 100, y: 100}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}

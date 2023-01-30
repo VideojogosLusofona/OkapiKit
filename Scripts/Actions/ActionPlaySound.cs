@@ -12,16 +12,18 @@ public class ActionPlaySound : Action
     [SerializeField, MinMaxSlider(0.0f, 2.0f)]
     private Vector2     pitch = Vector2.one;
 
+    public override string GetActionTitle() => "Play Sound";
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
         if (clip == null)
         {
-            desc += "Plays an undefined sound";
+            desc += "plays an undefined sound";
         }
         else
         {
-            desc += $"Plays sound {clip.name}";
+            desc += $"plays sound {clip.name}";
         }
 
         if (volume.x == volume.y)

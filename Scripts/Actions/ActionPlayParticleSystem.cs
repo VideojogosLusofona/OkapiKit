@@ -6,6 +6,8 @@ public class ActionPlayParticleSystem : Action
 {
     [SerializeField] private ParticleSystem target;
 
+    public override string GetActionTitle() => "Play Particle System";
+
     public override void Execute()
     {
         if (!enableAction) return;
@@ -25,6 +27,6 @@ public class ActionPlayParticleSystem : Action
     {
         string targetName = (target) ? (target.name) : (name);
 
-        return $"{GetPreconditionsString()}Play particle system {targetName}";
+        return $"{GetPreconditionsString()}play particle system {targetName}";
     }
 }

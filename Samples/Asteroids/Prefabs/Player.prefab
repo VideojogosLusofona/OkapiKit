@@ -463,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: When SPACE is pressed, shoot
   enableTrigger: 1
   allowRetrigger: 1
@@ -471,14 +472,9 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1014014148283785724}
-  _explanation: 'When SPACE is pressed, shoot
-
-    ----------------
-
-    When key
-    Space is held (this can only happen every 0.5 seconds):
-
-'
+  _explanation: "When SPACE is pressed, shoot\n----------------\nWhen key Space is
+    held (this can only happen every 0.75 seconds):\n First, \n         spawns prefab
+    PlayerLaser at the position of this object (Shooter)\n"
   inputType: 1
   buttonName: 
   key: 32
@@ -498,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -560,6 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: Increase speed of ship when forward is pressed
   enableTrigger: 1
   allowRetrigger: 1
@@ -569,7 +567,7 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1014014148669619713}
   _explanation: "Increase speed of ship when forward is pressed\n----------------\nWhen
-    key UpArrow is held:\n At 0 seconds, Changes the current velocity of Player's
+    key UpArrow is held:\n First, \n         Changes the current velocity of Player's
     rigid body by 10 along the object's X axis, and clamps the speed to be between
     [0,200].\n"
   inputType: 1
@@ -591,6 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -626,6 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: Reverse direction
   enableTrigger: 1
   allowRetrigger: 1
@@ -634,18 +634,9 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1014014148669619719}
-  _explanation: 'Reverse direction
-
-    ----------------
-
-    When key DownArrow
-    is held:
-
-    At 0 seconds, Changes the current velocity of Player''s rigid body
-    by 10 along the object''s negative X axis, and clamps the speed to be between
-    [0,200].
-
-'
+  _explanation: "Reverse direction\n----------------\nWhen key DownArrow is held:\n
+    First, \n         Changes the current velocity of Player's rigid body by 10 along
+    the object's negative X axis, and clamps the speed to be between [0,200].\n"
   inputType: 1
   buttonName: 
   key: 274
@@ -665,6 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -700,6 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c477183935167543b8555b000ac6ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: Add drag
   enableTrigger: 1
   allowRetrigger: 1
@@ -722,6 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -928,6 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -950,12 +945,12 @@ MonoBehaviour:
     action: {fileID: 8066291357277394070}
   - delay: 2
     action: {fileID: 390963681288524359}
-  _explanation: "When a collision with a trigger with tags [Asteroid] starts:\n At
-    0 seconds, Adds -1 to variable Lives\n At 0 seconds, Spawns prefab Explosion
-    at the position of this object (Player)\n At 0 seconds, Disables component Player
-    (UnityEngine.CircleCollider2D) on Player\n At 0 seconds, Disables renderer Player\nAt
-    0 seconds, Disables renderer Thruster1\n At 0 seconds, Disables renderer Thruster2\nAt
-    0 seconds, Disables renderer Shield\n At 2 seconds, Destroys this object\n"
+  _explanation: "When a collision with a trigger with tags [Asteroid] starts:\n First,
+    \n         Adds -1 to variable Lives\n         Spawns prefab Explosion at the
+    position of this object (Player)\n         Disables component Player (UnityEngine.CircleCollider2D)
+    on Player\n         Disables renderer Player\n         Disables renderer Thruster1\n        
+    Disables renderer Thruster2\n         Disables renderer ActualShield\n then,
+    at 2 seconds, \n                      Destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -972,12 +967,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Adds -1 to variable Lives
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
   operation: 1
@@ -996,6 +992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1019,6 +1016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1040,6 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1060,6 +1059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1081,6 +1081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1102,6 +1103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1123,6 +1125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1226,6 +1229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: Wrap around the right
   enableTrigger: 1
   allowRetrigger: 1
@@ -1262,10 +1266,11 @@ MonoBehaviour:
     action: {fileID: 1014014148867365779}
   _explanation: "Wrap around the right\n----------------\nIf (Player.x >= 640) and
     (Player.velocity.x >= 0) and When a collision with a trigger with tags [RightBound]
-    starts:\n At 0 seconds, changes the X position of object Player, adding -1380.\nAt
-    0 seconds, Disables Thruster1's trail renderer emission\n At 0 seconds, Disables
-    Thruster2's trail renderer emission\n At 0.1 seconds, Enables Thruster1's trail
-    renderer emission\n At 0.1 seconds, Enables Thruster2's trail renderer emission\n"
+    starts:\n First, \n          changes the X position of object Player, adding
+    -1380.\n          disables Thruster1's trail renderer emission\n          disables
+    Thruster2's trail renderer emission\n then, at 0.1 seconds, \n          enables
+    Thruster1's trail renderer emission\n          enables Thruster2's trail renderer
+    emission\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -1282,12 +1287,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: changes the X position of object Player, adding -1480.
+  _explanation: Changes the X position of object Player, adding -1380.
   target: {fileID: 1014014148773522026}
   changeType: 0
   xAxis: 1
@@ -1308,6 +1314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: Wrap around the left
   enableTrigger: 1
   allowRetrigger: 1
@@ -1344,10 +1351,11 @@ MonoBehaviour:
     action: {fileID: 1014014148867365779}
   _explanation: "Wrap around the left\n----------------\nIf (Player.x <= -640) and
     (Player.velocity.x <= 0) and When a collision with a trigger with tags [LeftBound]
-    starts:\n At 0 seconds, changes the X position of object Player, adding 1380.\nAt
-    0 seconds, Disables Thruster1's trail renderer emission\n At 0 seconds, Disables
-    Thruster2's trail renderer emission\n At 0.1 seconds, Enables Thruster1's trail
-    renderer emission\n At 0.1 seconds, Enables Thruster2's trail renderer emission\n"
+    starts:\n First, \n          changes the X position of object Player, adding
+    1380.\n          disables Thruster1's trail renderer emission\n          disables
+    Thruster2's trail renderer emission\n then, at 0.1 seconds, \n          enables
+    Thruster1's trail renderer emission\n          enables Thruster2's trail renderer
+    emission\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -1364,12 +1372,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: changes the X position of object Player, adding 1480.
+  _explanation: Changes the X position of object Player, adding 1380.
   target: {fileID: 1014014148773522026}
   changeType: 0
   xAxis: 1
@@ -1390,6 +1399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64028e521c67c154e9f5b14c963be0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1399,7 +1409,6 @@ MonoBehaviour:
   target: {fileID: 1014014148085278604}
   changeType: 0
   emitter: 1
-  value: 0
 --- !u!114 &1014014148867365789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1412,6 +1421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64028e521c67c154e9f5b14c963be0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1421,7 +1431,6 @@ MonoBehaviour:
   target: {fileID: 1014014147335270978}
   changeType: 0
   emitter: 1
-  value: 0
 --- !u!114 &1014014148867365788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,6 +1443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64028e521c67c154e9f5b14c963be0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1443,7 +1453,6 @@ MonoBehaviour:
   target: {fileID: 1014014148085278604}
   changeType: 0
   emitter: 0
-  value: 0
 --- !u!114 &1014014148867365779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,6 +1465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64028e521c67c154e9f5b14c963be0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1465,7 +1475,6 @@ MonoBehaviour:
   target: {fileID: 1014014147335270978}
   changeType: 0
   emitter: 0
-  value: 0
 --- !u!114 &1014014148867365786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1478,6 +1487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: Wrap around the top
   enableTrigger: 1
   allowRetrigger: 1
@@ -1513,11 +1523,12 @@ MonoBehaviour:
   - delay: 0.1
     action: {fileID: 1014014148867365779}
   _explanation: "Wrap around the top\n----------------\nIf (Player.y >= 360) and
-    (Player.velocity.y >= 0) and When a collision with a trigger with tags [RightBound]
-    starts:\n At 0 seconds, changes the Y position of object Player, adding -820.\nAt
-    0 seconds, Disables Thruster1's trail renderer emission\n At 0 seconds, Disables
-    Thruster2's trail renderer emission\n At 0.1 seconds, Enables Thruster1's trail
-    renderer emission\n At 0.1 seconds, Enables Thruster2's trail renderer emission\n"
+    (Player.velocity.y >= 0) and When a collision with a trigger with tags [UpBound]
+    starts:\n First, \n          changes the Y position of object Player, adding
+    -820.\n          disables Thruster1's trail renderer emission\n          disables
+    Thruster2's trail renderer emission\n then, at 0.1 seconds, \n          enables
+    Thruster1's trail renderer emission\n          enables Thruster2's trail renderer
+    emission\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -1534,12 +1545,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: changes the Y position of object Player, adding -820.
+  _explanation: Changes the Y position of object Player, adding -820.
   target: {fileID: 1014014148773522026}
   changeType: 0
   xAxis: 0
@@ -1560,6 +1572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: Wrap around the top
   enableTrigger: 1
   allowRetrigger: 1
@@ -1594,12 +1607,13 @@ MonoBehaviour:
     action: {fileID: 1014014148867365788}
   - delay: 0.1
     action: {fileID: 1014014148867365779}
-  _explanation: "Wrap around the top\n----------------\nIf (Player.y >= 360) and
-    (Player.velocity.y >= 0) and When a collision with a trigger with tags [UpBound]
-    starts:\n At 0 seconds, changes the Y position of object Player, adding 820.\nAt
-    0 seconds, Disables Thruster1's trail renderer emission\n At 0 seconds, Disables
-    Thruster2's trail renderer emission\n At 0.1 seconds, Enables Thruster1's trail
-    renderer emission\n At 0.1 seconds, Enables Thruster2's trail renderer emission\n"
+  _explanation: "Wrap around the top\n----------------\nIf (Player.y <= -360) and
+    (Player.velocity.y <= 0) and When a collision with a trigger with tags [DownBound]
+    starts:\n First, \n          changes the Y position of object Player, adding
+    820.\n          disables Thruster1's trail renderer emission\n          disables
+    Thruster2's trail renderer emission\n then, at 0.1 seconds, \n          enables
+    Thruster1's trail renderer emission\n          enables Thruster2's trail renderer
+    emission\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -1616,12 +1630,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: changes the Y position of object Player, adding 820.
+  _explanation: Changes the Y position of object Player, adding 820.
   target: {fileID: 1014014148773522026}
   changeType: 0
   xAxis: 0
@@ -1682,6 +1697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1722,6 +1738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1742,6 +1759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1766,6 +1784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1774,7 +1793,7 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 8826206495458641143}
-  _explanation: "When (ShieldCharge <= 0):\n At 0 seconds, Disables object ActualShield\n"
+  _explanation: "When (ShieldCharge <= 0):\n First, \n          disables object ActualShield\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: a2d42889e8a380c4588011f485d0b496, type: 2}
@@ -1797,12 +1816,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Disables object ActualShield
   target: {fileID: 365537305}
   state: 1
 --- !u!114 &3729428001357977197
@@ -1817,6 +1837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1827,8 +1848,8 @@ MonoBehaviour:
     action: {fileID: 5899095986585234539}
   - delay: 0
     action: {fileID: 6787398629277202601}
-  _explanation: "When key LeftControl is not held:\n At 0 seconds, Disables object
-    ActualShield\n At 0 seconds, Adds 0.2 to variable ShieldCharge\n"
+  _explanation: "When key LeftControl is not held:\n First, \n          disables
+    object ActualShield\n          adds 5 every second to variable ShieldCharge\n"
   inputType: 1
   buttonName: 
   key: 306
@@ -1848,12 +1869,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Enables object ActualShield
+  _explanation: Disables object ActualShield
   target: {fileID: 365537305}
   state: 1
 --- !u!114 &6787398629277202601
@@ -1868,6 +1890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []

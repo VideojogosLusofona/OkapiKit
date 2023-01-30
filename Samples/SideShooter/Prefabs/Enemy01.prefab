@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 2463686118925282817}
   - component: {fileID: 6330960564530668071}
   - component: {fileID: 4997731155163786887}
-  - component: {fileID: 3612270685706994173}
   - component: {fileID: 3391716172128901541}
   - component: {fileID: 1357823831120232487}
   - component: {fileID: 1692661054196645538}
@@ -182,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -195,18 +195,15 @@ MonoBehaviour:
   - delay: 0.25
     action: {fileID: 4997731155163786887}
   - delay: 0.25
-    action: {fileID: 3612270685706994173}
-  - delay: 0.25
     action: {fileID: 3391716172128901541}
   - delay: 1
     action: {fileID: 1357823831120232487}
   _explanation: "When a collision with a trigger with tags [TagPlayer,TagPlayerShot]
-    starts:\n At 0 seconds, Spawns prefab Explosion at the position of this object
-    (Enemy01)\n At 0 seconds, Disables component Enemy01 (UnityEngine.CapsuleCollider2D)
-    on Enemy01\n At 0.25 seconds, Disables renderer this\n At 0.25 seconds, Disables
-    component Thruster (UnityEngine.Rendering.Universal.Light2D) on Thruster\n At
-    0.25 seconds, Disables emission of particle system Particle System\n At 1 seconds,
-    Destroys this object\n"
+    starts:\n First, \n          spawns prefab Explosion at the position of this
+    object (Enemy01)\n          disables component Enemy01 (UnityEngine.CapsuleCollider2D)
+    on Enemy01\n then, at 0.25 seconds, \n          disables this renderer\n         
+    disables emission of particle system ThrusterPS\n then, at 1 seconds, \n         
+    destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -224,12 +221,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Explosion at the position of this object (Player)
+  _explanation: Spawns prefab Explosion at the position of this object (Enemy01)
   prefabObject: {fileID: 5269490633250505714, guid: 2e0b592444d459941990441548f7c7cc, type: 3}
   spawnPosition: 1
   targetPosition: {fileID: 0}
@@ -247,12 +245,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables component Player (UnityEngine.CapsuleCollider2D) on Player
+  _explanation: Disables component Enemy01 (UnityEngine.CapsuleCollider2D) on Enemy01
   target: {fileID: 4421854062431725008}
   state: 1
 --- !u!114 &4997731155163786887
@@ -267,36 +266,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables renderer this
+  _explanation: Disables this renderer
   renderer: {fileID: 0}
   changeType: 0
   visibility: 1
---- !u!114 &3612270685706994173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3920506269660966603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: Disables component Thruster (UnityEngine.Rendering.Universal.Light2D)
-    on Thruster
-  target: {fileID: 0}
-  state: 1
 --- !u!114 &3391716172128901541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c089eefb072ca9418d828f0be736fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -330,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -351,6 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -360,7 +342,7 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1357823831120232487}
   _explanation: "When a collision with a trigger with tags [TagLeftBoundaryEnemies]
-    starts:\n At 0 seconds, Destroys this object\n"
+    starts:\n First, \n          destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Shooting
   enableTrigger: 1
   allowRetrigger: 1
@@ -56,6 +57,8 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: b1c7f564cbfedf44a95cfe9cb6cbe933, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 0
     value: 0
     percentageCompare: 0
@@ -72,6 +75,7 @@ MonoBehaviour:
   buttonName: Fire1
   key: 0
   continuous: 1
+  negate: 0
   useCooldown: 1
   cooldown: 0.25
 --- !u!114 &715410887
@@ -86,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -109,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -119,6 +125,7 @@ MonoBehaviour:
   variable: {fileID: 11400000, guid: c569cd302776e724bb5ad6412befae3c, type: 2}
   operation: 1
   deltaValue: 5
+  scaleWithTime: 0
   value: 0
 --- !u!1 &1431201604679139188
 GameObject:
@@ -167,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe33e4a0e2979294d8e04d307e34bb03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Set player invulnerable for a couple of seconds when it spawns
   enableTrigger: 1
   allowRetrigger: 1
@@ -195,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -215,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7194731d179090d42868566f363fe11e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -237,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -433,6 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -453,13 +465,13 @@ MonoBehaviour:
     action: {fileID: 5996548610855719764}
   - delay: 1
     action: {fileID: 7997895165050178262}
-  _explanation: "When a collision with a trigger with tags [TagObstacle] starts:\nAt
-    0 seconds, Spawns prefab Explosion at the position of this object (Player)\nAt
-    0 seconds, Disables component Player (UnityEngine.CapsuleCollider2D) on Player\nAt
-    0 seconds, Adds -1 to variable Lives\n At 0.25 seconds, Disables renderer this\nAt
-    0.25 seconds, Disables component Thruster (UnityEngine.Rendering.Universal.Light2D)
-    on Thruster\n At 0.25 seconds, Disables emission of particle system Particle
-    System\n At 1 seconds, Destroys this object\n"
+  _explanation: "When a collision with a trigger with tags [TagObstacle,TagEnemyShot]
+    starts:\n First, \n          spawns prefab Explosion at the position of this
+    object (Player)\n          disables component Player (UnityEngine.CapsuleCollider2D)
+    on Player\n          adds -1 to variable Lives\n then, at 0.25 seconds, \n         
+    disables this renderer\n          disables component Thruster (UnityEngine.Rendering.Universal.Light2D)
+    on Thruster\n          disables emission of particle system Particle System\n
+    then, at 1 seconds, \n          destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -477,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -500,6 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -520,6 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -541,6 +556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -551,6 +567,7 @@ MonoBehaviour:
   variable: {fileID: 11400000, guid: 7f2a7e51dff6ded4a928fa1eed622000, type: 2}
   operation: 1
   deltaValue: -1
+  scaleWithTime: 0
   value: 0
 --- !u!114 &5622906722785250060
 MonoBehaviour:
@@ -564,6 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -585,6 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c089eefb072ca9418d828f0be736fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -606,6 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -5588,6 +5608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Check if it overheats
   enableTrigger: 1
   allowRetrigger: 1
@@ -5608,6 +5629,8 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: c569cd302776e724bb5ad6412befae3c, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 4
     value: 100
     percentageCompare: 0
@@ -5623,6 +5646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -5633,6 +5657,7 @@ MonoBehaviour:
   variable: {fileID: 11400000, guid: b1c7f564cbfedf44a95cfe9cb6cbe933, type: 2}
   operation: 0
   deltaValue: 1
+  scaleWithTime: 0
   value: 1
 --- !u!114 &8096158737010267771
 MonoBehaviour:
@@ -5646,6 +5671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46216fa097ecb754babda0f26d640422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Slowly cools down weapon
   enableTrigger: 1
   allowRetrigger: 1
@@ -5670,6 +5696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -5680,6 +5707,7 @@ MonoBehaviour:
   variable: {fileID: 11400000, guid: c569cd302776e724bb5ad6412befae3c, type: 2}
   operation: 1
   deltaValue: -1
+  scaleWithTime: 0
   value: 0
 --- !u!114 &2308620403983649714
 MonoBehaviour:
@@ -5693,6 +5721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: Check if it has already cooled down
   enableTrigger: 1
   allowRetrigger: 1
@@ -5708,6 +5737,8 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: c569cd302776e724bb5ad6412befae3c, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
@@ -5723,6 +5754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -5733,4 +5765,5 @@ MonoBehaviour:
   variable: {fileID: 11400000, guid: b1c7f564cbfedf44a95cfe9cb6cbe933, type: 2}
   operation: 0
   deltaValue: 0
+  scaleWithTime: 0
   value: 0

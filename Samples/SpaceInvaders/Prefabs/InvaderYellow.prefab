@@ -4916,21 +4916,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5589b26fd161ed94482bcd3969cd9349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 1
   actionTags:
   - {fileID: 11400000, guid: cb2be485da8536140a4f8ca292e6065b, type: 2}
   hasConditions: 0
-  actionConditions: []
-  _explanation: ':
-
-    After 0 seconds, Spawns prefab EnemyShot Variant at the position
-    of this object (Shooter)
-
-    After 0 seconds, Plays sound enemy_shot at volume
-    1 and a pitch in the range [0.9222882,1.09714]
-
-'
+  actionConditions:
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 0
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
+    comparison: 0
+    value: 0
+    percentageCompare: 0
+  _explanation: "If ([Unknown] == 0) :\n    after 0 seconds, spawns prefab EnemyShot
+    Variant at the position of this object (Shooter)\n    after 0 seconds, plays
+    sound enemy_shot at volume 1 and a pitch in the range [0.9222882,1.09714]\n"
   actions:
   - delay: 0
     action: {fileID: 3125665836661115545}
@@ -4948,6 +4952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -4971,6 +4976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -5140,6 +5146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: If hit by player, destroy itself with special effect!
   enableTrigger: 1
   allowRetrigger: 0
@@ -5161,12 +5168,13 @@ MonoBehaviour:
   - delay: 2
     action: {fileID: 6690380381337995009}
   _explanation: "If hit by player, destroy itself with special effect!\n----------------\nWhen
-    a collision with a trigger with tags [TagPlayerShot] starts:\n At 0 seconds,
-    Play particle system Explosion\n At 0 seconds, Disables renderer this\n At 0
-    seconds, Disables component InvaderYellow (UnityEngine.CircleCollider2D) on InvaderYellow\nAt
-    0 seconds, Adds 10 to variable Score\n At 0 seconds, Find actions tagged with
-    any of [TagIncreaseSpeed] and execute all of them.\n At 0 seconds, Plays sound
-    explosion\n At 2 seconds, Destroys this object\n"
+    a collision with a trigger with tags [TagPlayerShot] starts:\n First, \n         
+    play particle system Explosion\n          disables this renderer\n          disables
+    component InvaderYellow (UnityEngine.CircleCollider2D) on InvaderYellow\n         
+    adds 10 to variable Score\n          find actions tagged with any of [TagIncreaseSpeed]
+    and execute all of them.\n          plays sound explosion at volume 1 and a pitch
+    in the range [0.8992686,1.196398]\n then, at 2 seconds, \n          destroys
+    this object\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -5183,12 +5191,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3e57c646e95844d843a12ec6d71381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Play particle system Explosion
   target: {fileID: 1235568349719781854}
 --- !u!114 &8103286499118433415
 MonoBehaviour:
@@ -5202,12 +5211,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Disables component InvaderYellow (UnityEngine.CircleCollider2D) on
+    InvaderYellow
   target: {fileID: 4589386302681279464}
   state: 1
 --- !u!114 &1345833667982665773
@@ -5222,12 +5233,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Disables this renderer
   renderer: {fileID: 0}
   changeType: 0
   visibility: 1
@@ -5243,16 +5255,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Adds 10 to variable Score
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: 20dee269a7cafaf4fbf470b2acc10d9c, type: 2}
   operation: 1
   deltaValue: 10
+  scaleWithTime: 0
   value: 0
 --- !u!114 &5550000699115009989
 MonoBehaviour:
@@ -5266,12 +5280,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5e16b163b1cd84eb48645e1b7ff1dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 1
   actionTags: []
   hasConditions: 1
   actionConditions: []
-  _explanation: 
+  _explanation: Find actions tagged with any of [TagIncreaseSpeed] and execute all
+    of them.
   searchType: 0
   searchTags: []
   triggerType: 0
@@ -5289,12 +5305,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Plays sound explosion at volume 1 and a pitch in the range [0.8992686,1.196398]
   clip: {fileID: 8300000, guid: 3d1ed18b96b40c14ba50d9b74a73fd89, type: 3}
   volume: {x: 1, y: 1}
   pitch: {x: 0.8992686, y: 1.1963985}
@@ -5310,12 +5327,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 
+  _explanation: Destroys this object
   target: 0
   targetObject: {fileID: 0}
   tags: []

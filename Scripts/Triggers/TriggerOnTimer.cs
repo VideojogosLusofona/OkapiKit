@@ -12,6 +12,8 @@ public class TriggerOnTimer : Trigger
 
     private float timer;
 
+    public override string GetTriggerTitle() => "On Timer";
+
     protected override string GetRawDescription()
     {
         if (timeInterval.x == timeInterval.y)

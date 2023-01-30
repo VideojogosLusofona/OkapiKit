@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class ActionSetAnimationParameter : Action
 {
-    [SerializeField] private enum ValueType { Int, Float, Boolean, Trigger, Value };
+    public enum ValueType { Int = 0, Float = 1, Boolean = 2, Trigger = 3, Value = 4};
 
     [SerializeField]
     private Animator animator;
@@ -67,38 +67,40 @@ public class ActionSetAnimationParameter : Action
         }
     }
 
+    public override string GetActionTitle() => "Set Animation Parameter";
+
     public override string GetRawDescription(string ident)
     {
         string desc = GetPreconditionsString();
 
         if (animator == null)
         {
-            desc += "Sets the value of a animation parameter to a value (animator set set)!";
+            desc += "sets the value of a animation parameter to a value (animator set set)!";
         }
         else
         {
             switch (valueType)
             {
                 case ValueType.Int:
-                    desc += $"Sets animation parameter {animationParameter} of object {animator.name} to {integerValue}";
+                    desc += $"sets animation parameter {animationParameter} of object {animator.name} to {integerValue}";
                     break;
                 case ValueType.Float:
-                    desc += $"Sets animation parameter {animationParameter} of object {animator.name} to {floatValue}";
+                    desc += $"sets animation parameter {animationParameter} of object {animator.name} to {floatValue}";
                     break;
                 case ValueType.Boolean:
-                    desc += $"Sets animation parameter {animationParameter} of object {animator.name} to {boolValue}";
+                    desc += $"sets animation parameter {animationParameter} of object {animator.name} to {boolValue}";
                     break;
                 case ValueType.Trigger:
-                    desc += $"Triggers the animation parameter {animationParameter} of object {animator.name}";
+                    desc += $"triggers the animation parameter {animationParameter} of object {animator.name}";
                     break;
                 case ValueType.Value:
                     if (valueHandler)
                     {
-                        desc += $"Sets animation parameter {animationParameter} of object {animator.name} to the value of {valueHandler.name}";
+                        desc += $"sets animation parameter {animationParameter} of object {animator.name} to the value of {valueHandler.name}";
                     }
                     else
                     {
-                        desc += $"Sets animation parameter {animationParameter} of object {animator.name} to the value of variable {variable.name}";
+                        desc += $"sets animation parameter {animationParameter} of object {animator.name} to the value of variable {variable.name}";
                     }
                     break;
             }

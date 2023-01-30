@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -291,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: When SPACE is pressed, restart the scene
   enableTrigger: 1
   allowRetrigger: 0
@@ -304,6 +306,7 @@ MonoBehaviour:
   buttonName: 
   key: 32
   continuous: 0
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!1001 &262567206
@@ -699,6 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -718,6 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: When SPACE is pressed, restart the scene
   enableTrigger: 1
   allowRetrigger: 0
@@ -732,6 +737,7 @@ MonoBehaviour:
   buttonName: 
   key: 32
   continuous: 0
+  negate: 0
   useCooldown: 0
   cooldown: 1
 --- !u!1 &519420028
@@ -1111,6 +1117,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  inputEnabled: 0
+  inputType: 0
+  rotationAxis: Horizontal
+  rotationButtonPositive: Right
+  rotationButtonNegative: Left
+  rotationKeyPositive: 275
+  rotationKeyNegative: 276
 --- !u!224 &1076908895 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1537739021302978031, guid: 0cbb5171eedb3194c8d8f053cea1a14d, type: 3}
@@ -1229,7 +1242,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1178407167}
-  - component: {fileID: 1178407166}
   - component: {fileID: 1178407171}
   - component: {fileID: 1178407170}
   - component: {fileID: 1178407169}
@@ -1237,6 +1249,9 @@ GameObject:
   - component: {fileID: 1178407172}
   - component: {fileID: 1178407174}
   - component: {fileID: 1178407173}
+  - component: {fileID: 1178407177}
+  - component: {fileID: 1178407176}
+  - component: {fileID: 1178407175}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -1244,23 +1259,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1178407166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178407165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afad85b3b6a28054a95956da154c132f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  variablesToResetOnStart:
-  - {fileID: 11400000, guid: 85789dd499c4bd241988c38a989575f8, type: 2}
-  - {fileID: 11400000, guid: 39bd3d25e603f3e4199972cfaee54206, type: 2}
-  variablesToResetOnSpawn: []
-  prefabsToSpawn: []
 --- !u!4 &1178407167
 Transform:
   m_ObjectHideFlags: 0
@@ -1288,12 +1286,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 1
   actionTags: []
   hasConditions: 1
   actionConditions: []
-  _explanation: 
+  _explanation: Enables object Player2_Win
   target: {fileID: 518810625}
   state: 0
 --- !u!114 &1178407169
@@ -1308,6 +1307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: If player 2 reaches 3 points, game is done!
   enableTrigger: 1
   allowRetrigger: 0
@@ -1319,13 +1319,15 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1178407172}
   _explanation: "If player 2 reaches 3 points, game is done!\n----------------\nWhen
-    (Score_Player2 == 3):\n At 0 seconds, Enables object Player2_Win\n At 0 seconds,
-    Disables action [Spawns an entity using spawner BallSpawner]\n"
+    (Score_Player2 == 3):\n First, \n          enables object Player2_Win\n         
+    disables action [spawns an entity using spawner BallSpawner]\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 39bd3d25e603f3e4199972cfaee54206, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 0
     value: 3
     percentageCompare: 0
@@ -1341,12 +1343,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c4cd7728b890f44ab45fb8ca143d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 1
   actionTags: []
   hasConditions: 1
   actionConditions: []
-  _explanation: 
+  _explanation: Enables object Player1_Win
   target: {fileID: 101114902}
   state: 0
 --- !u!114 &1178407171
@@ -1361,6 +1364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: If player 1 reaches 3 points, game is done!
   enableTrigger: 1
   allowRetrigger: 0
@@ -1372,13 +1376,15 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1178407172}
   _explanation: "If player 1 reaches 3 points, game is done!\n----------------\nWhen
-    (Score_Player1 == 3):\n At 0 seconds, Enables object Player1_Win\n At 0 seconds,
-    Disables action [Spawns an entity using spawner BallSpawner]\n"
+    (Score_Player1 == 3):\n First, \n          enables object Player1_Win\n         
+    disables action [spawns an entity using spawner BallSpawner]\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 85789dd499c4bd241988c38a989575f8, type: 2}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 0
     value: 3
     percentageCompare: 0
@@ -1394,12 +1400,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31863e175690d5a49b2571d3fb18d15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables action [Spawns an entity using spawner BallSpawner]
+  _explanation: Disables action [spawns an entity using spawner BallSpawner]
   target: {fileID: 1368448081}
   state: 1
 --- !u!114 &1178407173
@@ -1414,12 +1421,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b12253cfd341aa46a3a6fcba7709af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' Switches to scene Samples'
+  _explanation: ' switches to scene Samples'
   sceneName: Samples
 --- !u!114 &1178407174
 MonoBehaviour:
@@ -1433,6 +1441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1441,13 +1450,89 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1178407173}
-  _explanation: "When key Escape is pressed:\n At 0 seconds,  Switches to scene Samples\n"
+  _explanation: "When key Escape is pressed:\n First, \n           switches to scene
+    Samples\n"
   inputType: 1
   buttonName: 
   key: 27
   continuous: 0
+  negate: 0
   useCooldown: 0
   cooldown: 1
+--- !u!114 &1178407175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178407165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Resets variable Score_Player2
+  valueHandler: {fileID: 0}
+  variable: {fileID: 11400000, guid: 39bd3d25e603f3e4199972cfaee54206, type: 2}
+  operation: 2
+  deltaValue: 0
+  scaleWithTime: 0
+  value: 0
+--- !u!114 &1178407176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178407165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Resets variable Score_Player1
+  valueHandler: {fileID: 0}
+  variable: {fileID: 11400000, guid: 85789dd499c4bd241988c38a989575f8, type: 2}
+  operation: 2
+  deltaValue: 0
+  scaleWithTime: 0
+  value: 0
+--- !u!114 &1178407177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178407165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe33e4a0e2979294d8e04d307e34bb03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1178407176}
+  - delay: 0
+    action: {fileID: 1178407175}
+  _explanation: 
 --- !u!1 &1368448080
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 1
   actionTags:
@@ -1504,6 +1590,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceCount: 0
   numberOfEntities: 1
+  usePulsePattern: 0
+  pulsePattern: xoxo
+  pulseTime: 0.1
   prefabs:
   - {fileID: 2364777538405152176, guid: 64c7fa0fe73ef184b836b94ca6755edb, type: 3}
   spawnPoints: []
@@ -1511,6 +1600,7 @@ MonoBehaviour:
   modifiers: 0
   scaleVariance: {x: 1, y: 1}
   speedVariance: {x: 1, y: 1}
+  setParent: 0
 --- !u!4 &1368448083
 Transform:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class TriggerOnCollision : Trigger
 {
-    [SerializeField] private enum CollisionEvent { Enter, Stay, Exit };
+    public enum CollisionEvent { Enter, Stay, Exit };
 
     [SerializeField]
     private bool isTrigger = true;
@@ -13,6 +13,8 @@ public class TriggerOnCollision : Trigger
     private CollisionEvent eventType;
     [SerializeField]
     private Hypertag[] tags;
+
+    public override string GetTriggerTitle() { return "On Collision"; }
 
     protected override string GetRawDescription()
     {

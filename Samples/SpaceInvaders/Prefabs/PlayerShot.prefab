@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: If this hits boundaries or aliens, destroy the shot
   enableTrigger: 1
   allowRetrigger: 1
@@ -233,7 +234,7 @@ MonoBehaviour:
     action: {fileID: 6904852695586673447}
   _explanation: "If this hits boundaries or aliens, destroy the shot\n----------------\nWhen
     a collision with a trigger with tags [TagBoundary,TagAlien,TagBase] starts:\n
-    At 0 seconds, Destroys this object\n"
+    First, \n          destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -252,6 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []

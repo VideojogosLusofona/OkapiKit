@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TriggerOnUpdate : Trigger
 {
+    public override string GetTriggerTitle() => "On Update";
+
     protected override string GetRawDescription()
     {
         return "Every frame";

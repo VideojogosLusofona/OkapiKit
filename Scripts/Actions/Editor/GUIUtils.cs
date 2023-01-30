@@ -28,7 +28,7 @@ static class GUIUtils
     static public GUIStyle GetActionTitleStyle()
     {
         if (styles == null) styles = new Dictionary<string, GUIStyle>();
-        
+
         GUIStyle titleStyle;
         styles.TryGetValue("ActionTitle", out titleStyle);
         if (titleStyle == null)
@@ -42,6 +42,85 @@ static class GUIUtils
             styles.Add("ActionTitle", titleStyle);
         }
         return titleStyle;
+    }
+
+    static public GUIStyle GetTriggerTitleStyle()
+    {
+        if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+        GUIStyle titleStyle;
+        styles.TryGetValue("TriggerTitle", out titleStyle);
+        if (titleStyle == null)
+        {
+            titleStyle = new GUIStyle(GUI.skin.label);
+            titleStyle.fontSize = 24;
+            titleStyle.fixedHeight = 24;
+            titleStyle.normal.textColor = ColorFromHex("#0e1a51");
+            titleStyle.clipping = TextClipping.Overflow;
+            titleStyle.wordWrap = true;
+            styles.Add("TriggerTitle", titleStyle);
+        }
+        return titleStyle;
+    }
+
+    static public GUIStyle GetActionExplanationStyle()
+    {
+        if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+        GUIStyle explanationStyle;
+        styles.TryGetValue("ActionExplanation", out explanationStyle);
+        if (explanationStyle == null)
+        {
+            explanationStyle = new GUIStyle(GUI.skin.label);
+            explanationStyle.fontSize = 10;
+            explanationStyle.fixedHeight = 10;
+            explanationStyle.alignment = TextAnchor.UpperLeft;
+            explanationStyle.normal.textColor = ColorFromHex("#0e1a51");
+            explanationStyle.clipping = TextClipping.Overflow;
+            explanationStyle.wordWrap = false;
+            styles.Add("ActionExplanation", explanationStyle);
+        }
+        return explanationStyle;
+    }
+
+    static public GUIStyle GetTriggerExplanationStyle()
+    {
+        if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+        GUIStyle explanationStyle;
+        styles.TryGetValue("TriggerExplanation", out explanationStyle);
+        if (explanationStyle == null)
+        {
+            explanationStyle = new GUIStyle(GUI.skin.label);
+            explanationStyle.fontSize = 10;
+            explanationStyle.fixedHeight = 10;
+            explanationStyle.alignment = TextAnchor.UpperLeft;
+            explanationStyle.normal.textColor = ColorFromHex("#0e1a51");
+            explanationStyle.clipping = TextClipping.Overflow;
+            explanationStyle.wordWrap = false;
+            styles.Add("TriggerExplanation", explanationStyle);
+        }
+        return explanationStyle;
+    }
+
+    static public GUIStyle GetTriggerActionExplanationStyle()
+    {
+        if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+        GUIStyle explanationStyle;
+        styles.TryGetValue("TriggerActionExplanation", out explanationStyle);
+        if (explanationStyle == null)
+        {
+            explanationStyle = new GUIStyle(GUI.skin.label);
+            explanationStyle.fontSize = 10;
+            explanationStyle.fixedHeight = 10;
+            explanationStyle.alignment = TextAnchor.UpperLeft;
+            explanationStyle.normal.textColor = ColorFromHex("#A0A0A0");
+            explanationStyle.clipping = TextClipping.Overflow;
+            explanationStyle.wordWrap = false;
+            styles.Add("TriggerActionExplanation", explanationStyle);
+        }
+        return explanationStyle;
     }
 
     static public GUIStyle GetButtonStyle(string name, GenTexture gen_texture)

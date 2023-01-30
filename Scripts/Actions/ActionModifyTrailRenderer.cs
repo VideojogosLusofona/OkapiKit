@@ -6,8 +6,8 @@ using static UnityEngine.CullingGroup;
 
 public class ActionModifyTrailRenderer : Action
 {
-    [SerializeField] private enum ChangeType { Emitter };
-    [SerializeField] private enum StateChange { Enable, Disable, Toggle};
+    public enum ChangeType { Emitter = 0 };
+    public enum StateChange { Enable = 0, Disable = 1, Toggle = 2};
 
     [SerializeField]
     private TrailRenderer       target;
@@ -15,8 +15,6 @@ public class ActionModifyTrailRenderer : Action
     private ChangeType          changeType;
     [SerializeField, ShowIf("isEmitter")] 
     private StateChange         emitter;
-    [SerializeField, ShowIf("needValue")]
-    private float              value;
 
     private bool isEmitter => (changeType == ChangeType.Emitter);
 
@@ -41,6 +39,8 @@ public class ActionModifyTrailRenderer : Action
         }
     }
 
+    public override string GetActionTitle() => "Modify Trail Renderer";
+
     public override string GetRawDescription(string ident)
     {
         var desc = GetPreconditionsString();
@@ -52,13 +52,13 @@ public class ActionModifyTrailRenderer : Action
                 switch (emitter)
                 {
                     case StateChange.Enable:
-                        desc += $"Enables {targetName}'s trail renderer emission";
+                        desc += $"enables {targetName}'s trail renderer emission";
                         break;
                     case StateChange.Disable:
-                        desc += $"Disables {targetName}'s trail renderer emission";
+                        desc += $"disables {targetName}'s trail renderer emission";
                         break;
                     case StateChange.Toggle:
-                        desc += $"Toggles {targetName}'s trail renderer emission";
+                        desc += $"toggles {targetName}'s trail renderer emission";
                         break;
                 }
                 break;
