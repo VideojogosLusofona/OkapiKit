@@ -20,6 +20,17 @@ public class TriggerOnCollisionEditor : TriggerEditor
         propTags = serializedObject.FindProperty("tags");
     }
 
+    public override Texture2D GetIcon()
+    {
+        var varTexture = GUIUtils.GetTexture("CollisionTexture");
+        if (varTexture == null)
+        {
+            varTexture = GUIUtils.AddTexture("CollisionTexture", new CodeBitmaps.Collision());
+        }
+
+        return varTexture;
+    }
+
 
     public override void OnInspectorGUI()
     {

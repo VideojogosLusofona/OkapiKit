@@ -16,6 +16,16 @@ public class TriggerOnConditionEditor : TriggerEditor
         propConditions = serializedObject.FindProperty("conditions");
     }
 
+    public override Texture2D GetIcon()
+    {
+        var varTexture = GUIUtils.GetTexture("ConditionTexture");
+        if (varTexture == null)
+        {
+            varTexture = GUIUtils.AddTexture("ConditionTexture", new CodeBitmaps.Condition());
+        }
+
+        return varTexture;
+    }
 
     public override void OnInspectorGUI()
     {

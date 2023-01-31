@@ -35,6 +35,18 @@ public class TriggerEditor : Editor
         }
     }
 
+    public virtual Texture2D GetIcon()
+    {
+        var varTexture = GUIUtils.GetTexture("TriggerTexture");
+        if (varTexture == null)
+        {
+            varTexture = GUIUtils.AddTexture("TriggerTexture", new CodeBitmaps.Trigger());
+        }
+
+        return varTexture;
+    }
+
+
     protected virtual bool WriteTitle()
     {
         Trigger trigger = target as Trigger;
@@ -64,7 +76,8 @@ public class TriggerEditor : Editor
         EditorGUI.DrawRect(fullRect, backgroundColor);
         var prevColor = styleTitle.normal.textColor;
         styleTitle.normal.textColor = textColor;
-        EditorGUI.LabelField(new Rect(titleRect.x + 10, titleRect.y + 6, inspectorWidth - 20 - titleRect.x - 4, styleTitle.fontSize), trigger.GetTriggerTitle(), styleTitle);
+        GUI.DrawTexture(new Rect(titleRect.x + 10, titleRect.y + 4, 32, 32), GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
+        EditorGUI.LabelField(new Rect(titleRect.x + 50, titleRect.y + 6, inspectorWidth - 20 - titleRect.x - 4, styleTitle.fontSize), trigger.GetTriggerTitle(), styleTitle);
         styleTitle.normal.textColor = prevColor;
         EditorGUILayout.EndVertical();
         EditorGUILayout.Space(fullRect.height);

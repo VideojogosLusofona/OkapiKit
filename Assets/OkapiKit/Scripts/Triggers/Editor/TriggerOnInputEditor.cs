@@ -28,6 +28,17 @@ public class TriggerOnInputEditor : TriggerEditor
         propCooldown = serializedObject.FindProperty("cooldown");
     }
 
+    public override Texture2D GetIcon()
+    {
+        var varTexture = GUIUtils.GetTexture("InputTexture");
+        if (varTexture == null)
+        {
+            varTexture = GUIUtils.AddTexture("InputTexture", new CodeBitmaps.Input());
+        }
+
+        return varTexture;
+    }
+
 
     public override void OnInspectorGUI()
     {
