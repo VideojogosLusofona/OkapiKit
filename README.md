@@ -25,6 +25,18 @@ It currently has five sample games (each a Scene under the Samples directory), a
 ## Asteroids
 ![AsteroidsImage](Screenshots/asteroids.png)
 
+# Documentation
+
+For now, there's no documentation yet, but everything has custom editors, which display information on what
+each thing is doing (dynamically, depending on options selected):
+
+![InspectorImage](Screenshots/inspector.png)
+
+In this image, we can see a bit of the inspector of a normal object (the player object in the asteroids sample). There's the normal Unity components (Sprite Renderer, Rigidbody, Collider), and then we have 
+several Okapi Kit components (identifiable by the large title). We have a movement script (rotation movement), an hypertag (allows to define what this object is, usefull to identify objects in collisions or
+as targets for operations), we have a collision Trigger (with the text that explains when it triggers,
+and what happens), and finally we have several Action scripts (used by the Triggers), that also explain what they're doing.
+
 # Licenses
 
 * All source code by Diogo Andrade is licensed under the MIT license.
