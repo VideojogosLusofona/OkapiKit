@@ -22,7 +22,7 @@ public class ActionSetAnimationParameter : Action
     [SerializeField, ShowIf("needsBoolean")]
     private bool            boolValue;
     [SerializeField, ShowIf("needsValue")]
-    private ValueHandler    valueHandler;
+    private VariableInstance    valueHandler;
     [SerializeField, ShowIf("needsVariable")]
     private Variable        variable;
 

@@ -303,16 +303,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c124f990a067b478caf900b6cb6d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: {fileID: 0}
+  type: 1
   currentValue: 5
   defaultValue: 5
   isInteger: 1
   hasLimits: 0
   minValue: -3.4028235e+38
   maxValue: 3.4028235e+38
-  onChange: []
-  onIncrease: []
-  onDecrease: []
 --- !u!114 &2575978712690457995
 MonoBehaviour:
   m_ObjectHideFlags: 0

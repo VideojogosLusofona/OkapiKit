@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class MovementRotate : Movement
 {
-    [SerializeField] private enum InputType { Axis, Button, Key };
+    public enum InputType { Axis = 0, Button = 1, Key = 2};
 
     [SerializeField] 
     private float       speed = 200.0f;
@@ -33,6 +33,40 @@ public class MovementRotate : Movement
     public override void SetSpeed(Vector2 speed) { this.speed = speed.x; }
 
     override public bool IsLinear() { return false; }
+
+    override public string GetTitle() => "Rotate";
+
+    public override string GetRawDescription()
+    {
+        string desc = "";
+        desc += $"Rotational movement, at {speed} degrees per second.\n";
+
+        if (inputEnabled)
+        {
+            if (inputType == InputType.Axis)
+            {
+                if ((rotationAxis != "") && (rotationAxis != "None"))
+                {
+                    desc += $"Rotation will be controlled by the [{rotationAxis}] axis.\n";
+                }
+            }
+            else if (inputType == InputType.Button)
+            {
+                if ((rotationButtonNegative != "") || (rotationButtonPositive != ""))
+                {
+                    desc += $"The [{rotationButtonNegative}] button will turn counter-clockwise, and the [{rotationButtonPositive}] button will turn clockwise.\n";
+                }
+            }
+            else if (inputType == InputType.Key)
+            {
+                if ((rotationKeyNegative != KeyCode.None) || (rotationKeyPositive != KeyCode.None))
+                {
+                    desc += $"[{rotationKeyNegative}] will turn counter-clockwise, and [{rotationButtonPositive}] will turn clockwise.\n";
+                }
+            }
+        }
+        return desc;
+    }
 
     void FixedUpdate()
     {

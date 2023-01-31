@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2b8ecd3a095ec41bb3f2814c8c5e2b, type: 3}
   m_Name: Score_Player2
   m_EditorClassIdentifier: 
+  _type: 1
   _currentValue: 0
   _defaultValue: 0
   _isInteger: 1

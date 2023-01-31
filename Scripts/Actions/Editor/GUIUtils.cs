@@ -147,7 +147,9 @@ static class GUIUtils
 
         var style = new GUIStyle("Button");
         style.normal.background = GetTexture(name + ":normal");
+        style.normal.scaledBackgrounds = null;
         style.hover.background = GetTexture(name + ":hover");
+        style.hover.scaledBackgrounds = null;
 
         return style;
     }
@@ -172,12 +174,20 @@ static class GUIUtils
     }
 
     static Dictionary<string, Texture2D> textures;
-    static public void AddTexture(string name, Texture2D texture)
+    static public Texture2D AddTexture(string name, Texture2D texture)
     {
         if (textures == null) textures = new Dictionary<string, Texture2D>();
 
         textures[name] = texture;
+
+        return texture;
     }
+
+    static public Texture2D AddTexture(string name, GUIBitmap bitmap)
+    {
+        return BitmapToTexture(name, bitmap);
+    }
+
     static public Texture2D GetTexture(string name)
     {
         if (textures == null) return null;

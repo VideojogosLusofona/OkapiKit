@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class MovementXY : Movement
 {
-    [SerializeField] private enum InputType { Axis, Button, Key };
+    public enum InputType { Axis = 0, Button = 1, Key = 2};
 
     [SerializeField] 
     private Vector2     speed = new Vector2(100, 100);
@@ -45,6 +45,72 @@ public class MovementXY : Movement
     public override Vector2 GetSpeed() => speed;
     public override void    SetSpeed(Vector2 speed) { this.speed = speed; }
 
+    override public string GetTitle() => "XY Movement";
+
+    public override string GetRawDescription()
+    {
+        string desc = "";
+        if (speed.x != 0.0f)
+        {
+            if (speed.y != 0.0f)
+            {
+                desc += $"Dual axis movement, at {speed} units per second.\n";
+            }
+            else
+            {
+                desc += $"Horizontal movement, at {speed.x} units per second.\n";
+            }
+        }
+        else
+        {
+            if (speed.y != 0.0f)
+            {
+                desc += $"Vertical movement, at {speed.y} units per second.\n";
+            }
+            else
+            {
+                desc += $"No movement!\n";
+            }
+        }
+        if (useRotation) desc += "These directions will be relative to the current object orientation.\n";
+        if (inputEnabled)
+        {
+            if (inputType == InputType.Axis)
+            {
+                if ((horizontalAxis != "") && (horizontalAxis != "None"))
+                {
+                    desc += $"Horizontal movement will be controlled by the [{horizontalAxis}] axis.\n";
+                }
+                if ((verticalAxis!= "") && (verticalAxis != "None"))
+                {
+                    desc += $"Vertical movement will be controlled by the [{verticalAxis}] axis.\n";
+                }
+            }
+            else if (inputType == InputType.Button)
+            {
+                if ((horizontalButtonPositive != "") || (horizontalButtonNegative != ""))
+                {
+                    desc += $"Horizontal movement will be controlled by the [{horizontalButtonNegative}] and [{horizontalButtonPositive}] buttons.\n";
+                }
+                if ((verticalButtonPositive != "") || (verticalButtonNegative != ""))
+                {
+                    desc += $"Vertical movement will be controlled by the [{verticalButtonNegative}] and [{verticalButtonPositive}] buttons.\n";
+                }
+            }
+            else if (inputType == InputType.Key)
+            {
+                if ((horizontalKeyPositive != KeyCode.None) || (horizontalKeyNegative != KeyCode.None))
+                {
+                    desc += $"Horizontal movement will be controlled by the [{horizontalKeyNegative}] and [{horizontalKeyPositive}] keys.\n";
+                }
+                if ((verticalKeyPositive != KeyCode.None) || (verticalKeyNegative != KeyCode.None))
+                {
+                    desc += $"Vertical movement will be controlled by the [{verticalKeyNegative}] and [{verticalKeyPositive}] keys.\n";
+                }
+            }
+        }
+        return desc;
+    }
 
     void FixedUpdate()
     {

@@ -1,16 +1,24 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 abstract public class Movement : MonoBehaviour
 {
+    [SerializeField, HideInInspector]
+    private bool            _showInfo = true;
+    [SerializeField, ResizableTextArea]
+    private string          _description = "";
     protected Rigidbody2D   rb;
     protected Vector3       lastDelta;    
 
     abstract public Vector2 GetSpeed();
-    abstract public void SetSpeed(Vector2 speed);
+    abstract public void    SetSpeed(Vector2 speed);
 
-    virtual public bool IsLinear() { return true; }
+    virtual public bool     IsLinear() { return true; }
+
+    abstract public string GetTitle();
 
     void Start()
     {
@@ -41,5 +49,17 @@ abstract public class Movement : MonoBehaviour
             transform.rotation = transform.rotation * Quaternion.Euler(0.0f, 0.0f, angle);
         }
 
+    }
+
+    public virtual string GetRawDescription() => "MOVEMENT AUTO DESCRIPTION";
+
+    virtual public string UpdateDescription()
+    {
+        string desc = "";
+        if (_description != "") desc += _description + "\n----------------\n";
+
+        desc = desc + GetRawDescription();
+
+        return desc;
     }
 }

@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class MovementPath : Movement
 {
-    [SerializeField] private enum RotationBehaviour { None, AlignX, AlignY };
+    public enum RotationBehaviour { None = 0, AlignX = 1, AlignY = 2 };
 
     [SerializeField] 
     private float               speed = 200.0f;
@@ -33,6 +33,47 @@ public class MovementPath : Movement
 
     public override Vector2 GetSpeed() => new Vector2(speed, speed);
     public override void SetSpeed(Vector2 speed) { this.speed = speed.x; }
+
+    override public string GetTitle() => "Follow Path";
+
+    public override string GetRawDescription()
+    {
+        string desc = "";
+        if (speed != 0.0f)
+        {
+            if (path != null)
+            {
+                desc += $"Follows the [{path.name}] path, at {speed} units per second.\n";
+            }
+            else if (taggedPath != null)
+            {
+                desc += $"Follows a path tagged with [{taggedPath.name}], at {speed} units per second.\n";
+                desc += $"If multiple paths have the [{taggedPath.name}] tag, a random one is selected.\n";
+            }
+            else
+            {
+                desc += $"Follows a path, at {speed} units per second.\n";
+            }
+        }
+        if (loop) desc += "The object will loop back to the beginning at the end of the path.\n";
+        if (relativePath) desc += "The path will be relative to the initial position of the object.\n";        
+        if (rotationBehaviour != RotationBehaviour.None)
+        {
+            if (rotationBehaviour == RotationBehaviour.AlignX)
+                desc += "The object will align it's X axis to the path direction";
+            if (rotationBehaviour == RotationBehaviour.AlignY)
+                desc += "The object will align it's Y axis to the path direction";
+            if (useFlip)
+                desc += ", flipping along that axis if the path reverses direction.\n";
+            else
+                desc += ".\n";
+            if (hasMaxRotation)
+            {
+                desc += $"It will turn at a maximum rate of {maxRotationSpeed} degrees per second.";
+            }
+        }
+        return desc;
+    }
 
     List<Vector3>   actualPath;
     int             pathIndex;
