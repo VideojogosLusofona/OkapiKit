@@ -5,42 +5,59 @@ using UnityEditor;
 using static UnityEngine.Rendering.DebugUI.MessageBox;
 using System.Linq;
 
-[CustomEditor(typeof(Action))]
-public class ActionEditor : Editor
+[CustomEditor(typeof(Spawner))]
+public class SpawnerEditor : Editor
 {
     SerializedProperty propShowInfo;
     SerializedProperty propExplanation;
-    SerializedProperty propEnableAction;
-    SerializedProperty propHasTags;
-    SerializedProperty propHasConditions;
-    SerializedProperty propTags;
-    SerializedProperty propConditions;
+    SerializedProperty propDescription;
+    SerializedProperty propForceCount;
+    SerializedProperty propNumberOfEntities;
+    SerializedProperty propUsePulsePattern;
+    SerializedProperty propPulsePattern;
+    SerializedProperty propPulseTime;
+    SerializedProperty propPrefabs;
+    SerializedProperty propSpawnPoints;
+    SerializedProperty propSpawnPointType;
+    SerializedProperty propModifiers;
+    SerializedProperty propScaleVariance;
+    SerializedProperty propSpeedVariance;
+    SerializedProperty propSetParent;
 
     protected virtual void OnEnable()
     {
         propShowInfo = serializedObject.FindProperty("_showInfo");
         propExplanation = serializedObject.FindProperty("_explanation");
-        propEnableAction = serializedObject.FindProperty("enableAction");
-        propHasTags = serializedObject.FindProperty("hasTags");
-        propHasConditions = serializedObject.FindProperty("hasConditions");
-        propTags = serializedObject.FindProperty("actionTags");
-        propConditions = serializedObject.FindProperty("actionConditions");
+
+        propDescription = serializedObject.FindProperty("description");
+        propForceCount = serializedObject.FindProperty("forceCount");
+        propNumberOfEntities = serializedObject.FindProperty("numberOfEntities");
+        propUsePulsePattern = serializedObject.FindProperty("usePulsePattern");
+        propPulsePattern = serializedObject.FindProperty("pulsePattern");
+        propPulseTime = serializedObject.FindProperty("pulseTime");
+        propPrefabs = serializedObject.FindProperty("prefabs");
+        propSpawnPoints = serializedObject.FindProperty("spawnPoints");
+        propSpawnPointType = serializedObject.FindProperty("spawnPointType");
+        propModifiers = serializedObject.FindProperty("modifiers");
+        propScaleVariance = serializedObject.FindProperty("scaleVariance");
+        propSpeedVariance = serializedObject.FindProperty("speedVariance");
+        propSetParent = serializedObject.FindProperty("setParent");
     }
 
     public override void OnInspectorGUI()
     {
         if (WriteTitle())
         {
-            StdEditor();
+            StdEditor(false);
         }
     }
 
     public virtual Texture2D GetIcon()
     {
-        var varTexture = GUIUtils.GetTexture("ActionTexture");
+        var varTexture = GUIUtils.GetTexture("SpawnerTexture");
         if (varTexture == null)
         {
-            varTexture = GUIUtils.AddTexture("ActionTexture", new CodeBitmaps.Action());
+            varTexture = GUIUtils.AddTexture("SpawnerTexture", new CodeBitmaps.Spawner());
         }
 
         return varTexture;
@@ -48,21 +65,21 @@ public class ActionEditor : Editor
 
     protected virtual bool WriteTitle()
     {
-        Action action = target as Action;
-        if (action == null) { return true; }
+        Spawner spawner = target as Spawner;
+        if (spawner == null) { return true; }
 
         GUIStyle styleTitle = GUIUtils.GetActionTitleStyle();
         GUIStyle explanationStyle = GUIUtils.GetActionExplanationStyle();
 
-        var backgroundColor = GUIUtils.ColorFromHex("#D7E8BA");
+        var backgroundColor = GUIUtils.ColorFromHex("#ffeffc");
         var textColor = GUIUtils.ColorFromHex("#2f4858");
-        var separatorColor = GUIUtils.ColorFromHex("#86CB92");
+        var separatorColor = GUIUtils.ColorFromHex("#ff5a5a");
 
         // Compute explanation text height
         string explanation = propExplanation.stringValue;
         int explanationLines = explanation.Count((c) => c == '\n');
         explanationLines += 1;
-        int explanationTextHeight = explanationLines * explanationStyle.fontSize + 6;
+        int explanationTextHeight = explanationLines * (explanationStyle.fontSize + 2) + 6;
 
         // Background and title
         float inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
@@ -77,7 +94,7 @@ public class ActionEditor : Editor
         var prevColor = styleTitle.normal.textColor;
         styleTitle.normal.textColor = textColor;
         GUI.DrawTexture(new Rect(titleRect.x + 10, titleRect.y + 4, 32, 32), GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
-        EditorGUI.LabelField(new Rect(titleRect.x + 50, titleRect.y + 6, inspectorWidth - 20 - titleRect.x - 4, styleTitle.fontSize), action.GetActionTitle(), styleTitle);
+        EditorGUI.LabelField(new Rect(titleRect.x + 50, titleRect.y + 6, inspectorWidth - 20 - titleRect.x - 4, styleTitle.fontSize), "Spawner", styleTitle);
         styleTitle.normal.textColor = prevColor;
         EditorGUILayout.EndVertical();
         EditorGUILayout.Space(fullRect.height);
@@ -95,7 +112,7 @@ public class ActionEditor : Editor
 
         bool toggle = false;
         bool refreshExplanation = false;
-        if (action.showInfo)
+        if (propShowInfo.boolValue)
         {
             toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("EyeClose", BuildEyeClose));
         }
@@ -113,7 +130,7 @@ public class ActionEditor : Editor
             if (e.shift)
             {
                 // Affect all the Actions in this object
-                var allActions = action.GetComponents<Action>();
+                var allActions = spawner.GetComponents<Action>();
                 foreach (var a in allActions)
                 {
                     a.showInfo = propShowInfo.boolValue;
@@ -125,7 +142,7 @@ public class ActionEditor : Editor
         }
         if (refreshExplanation)
         {
-            action.UpdateExplanation();
+            spawner.UpdateExplanation();
         }
 
         return propShowInfo.boolValue;
@@ -134,29 +151,60 @@ public class ActionEditor : Editor
 
     protected void StdEditor(bool useOriginalEditor = true)
     {
-        Rect rect = EditorGUILayout.BeginHorizontal();
-        rect.height = 20;
-        float totalWidth = rect.width;
-        float elemWidth = totalWidth / 3;
-        propEnableAction.boolValue = CheckBox("Active", rect.x, rect.y, elemWidth, propEnableAction.boolValue);
-        propHasTags.boolValue = CheckBox("Tags", rect.x + elemWidth, rect.y, elemWidth, propHasTags.boolValue);
-        propHasConditions.boolValue = CheckBox("Conditions", rect.x + elemWidth * 2, rect.y, elemWidth, propHasConditions.boolValue);
-        EditorGUILayout.EndHorizontal();
-        EditorGUILayout.Space(rect.height);
+        Spawner spawner = target as Spawner;
+        if (spawner == null) return;
 
-        if (propHasTags.boolValue)
+        EditorGUI.BeginChangeCheck();
+
+        EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+        EditorGUILayout.PropertyField(propForceCount, new GUIContent("Force Count?"));
+        if (propForceCount.boolValue)
         {
-            // Display tags
-            EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"), true);
+            EditorGUILayout.PropertyField(propNumberOfEntities, new GUIContent("Number Of Entities"));
+        }
+        else
+        {
+            EditorGUILayout.PropertyField(propUsePulsePattern, new GUIContent("Use Pulse Pattern?"));
+            if (propUsePulsePattern.boolValue)
+            {
+                EditorGUILayout.PropertyField(propPulsePattern, new GUIContent("Pulse Pattern"));
+                EditorGUILayout.PropertyField(propPulseTime, new GUIContent("Pulse Time"));
+            }
+        }
+        EditorGUILayout.PropertyField(propPrefabs, new GUIContent("Prefabs"));
+
+        var colliders = spawner.GetComponents<BoxCollider2D>();
+        if ((colliders != null) && (colliders.Length > 0))
+        {
+
+        }
+        else
+        {
+            EditorGUILayout.PropertyField(propSpawnPoints, new GUIContent("Spawn Points"));
+            
+            if (spawner.GetSpawnPointCount() > 1)
+            {
+                EditorGUILayout.PropertyField(propSpawnPointType, new GUIContent("Spawn Point Sequence"));
+            }
+        }
+        EditorGUILayout.PropertyField(propModifiers, new GUIContent("Modifiers"));
+        if ((propModifiers.enumValueFlag & (int)Spawner.Modifiers.Scale) != 0)
+        {
+            EditorGUILayout.PropertyField(propScaleVariance, new GUIContent("Scale Variance"));
+        }
+        if ((propModifiers.enumValueFlag & (int)Spawner.Modifiers.Speed) != 0)
+        {
+            EditorGUILayout.PropertyField(propSpeedVariance, new GUIContent("Speed Variance"));
         }
 
-        if (propHasConditions.boolValue)
-        {
-            // Display tags
-            EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions"), true);
-        }
+        EditorGUILayout.PropertyField(propSetParent, new GUIContent("Set Parent?"));
 
         serializedObject.ApplyModifiedProperties();
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            spawner.UpdateExplanation();
+        }
 
         // Draw old editor, need it for now
         if (useOriginalEditor)

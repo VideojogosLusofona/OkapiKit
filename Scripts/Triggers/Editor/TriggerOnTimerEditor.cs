@@ -18,6 +18,16 @@ public class TriggerOnTimerEditor : TriggerEditor
         propTimeInterval = serializedObject.FindProperty("timeInterval");
     }
 
+    public override Texture2D GetIcon()
+    {
+        var varTexture = GUIUtils.GetTexture("TimerTexture");
+        if (varTexture == null)
+        {
+            varTexture = GUIUtils.AddTexture("TimerTexture", new CodeBitmaps.Timer());
+        }
+
+        return varTexture;
+    }
 
     public override void OnInspectorGUI()
     {

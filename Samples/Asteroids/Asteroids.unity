@@ -454,6 +454,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a80c1b00e4b0e2a4e8c66fd1517e2b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  description: Asteroid Spawner
   forceCount: 0
   numberOfEntities: 3
   usePulsePattern: 1
@@ -467,6 +469,28 @@ MonoBehaviour:
   scaleVariance: {x: 1, y: 1}
   speedVariance: {x: 1, y: 1}
   setParent: 0
+  _explanation: 'Asteroid Spawner
+
+    ----------------
+
+    When triggered by a
+    [Spawn] action, this component will create new objects.
+
+    Every spawn trigger
+    will generate 4 objects, following a [xxxx] pattern,
+
+    where an ''x'' is a
+    spawn, and a ''o'' is a pause.
+
+    The generated object will be [AsteroidLarge].
+
+    These
+    objects will spawn anywhere in the area defined by any of the 2
+
+    BoxCollider2D
+    attached to this object.
+
+'
 --- !u!4 &128201712
 Transform:
   m_ObjectHideFlags: 0
@@ -494,7 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -518,7 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -2921,6 +2945,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1014014148669619719, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1014014148773522024, guid: e371979db9738534eaa19b62be84a435, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2974,6 +3002,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3251126500596206056, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300853860778645336, guid: e371979db9738534eaa19b62be84a435, type: 3}
       propertyPath: _showInfo
       value: 0
       objectReference: {fileID: 0}

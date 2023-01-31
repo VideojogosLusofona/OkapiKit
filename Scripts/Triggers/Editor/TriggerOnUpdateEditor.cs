@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(TriggerOnReset))]
-public class TriggerOnResetEditor : TriggerEditor
+[CustomEditor(typeof(TriggerOnUpdate))]
+public class TriggerOnUpdateEditor : TriggerEditor
 {
     protected override void OnEnable()
     {
@@ -13,10 +13,10 @@ public class TriggerOnResetEditor : TriggerEditor
 
     public override Texture2D GetIcon()
     {
-        var varTexture = GUIUtils.GetTexture("ResetTexture");
+        var varTexture = GUIUtils.GetTexture("UpdateTexture");
         if (varTexture == null)
         {
-            varTexture = GUIUtils.AddTexture("ResetTexture", new CodeBitmaps.Reset());
+            varTexture = GUIUtils.AddTexture("UpdateTexture", new CodeBitmaps.Update());
         }
 
         return varTexture;
