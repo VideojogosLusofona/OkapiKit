@@ -1,7 +1,6 @@
 - Add tooltips to everything with explanations
 - Add custom editor to movement stuff (with explainer)
 - Add custom editor to spawn system (with explainer)
-- Remove events from ValueHandler (replace by Triggers)
 - Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
 - Add a tree view to explore objects in the games

@@ -732,6 +732,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
   hypertags:
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
 --- !u!1 &423473767
@@ -856,6 +858,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
   hypertags:
   - {fileID: 11400000, guid: 1a78b44e20b30794b8b40dbd522adbba, type: 2}
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
@@ -1087,6 +1091,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
   hypertags:
   - {fileID: 11400000, guid: d86af5fd4f0cd564e8a0b38658546618, type: 2}
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
@@ -1335,6 +1341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
   hypertags:
   - {fileID: 11400000, guid: 3f1db2282755626448862f9b0a85d92a, type: 2}
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
@@ -2777,6 +2785,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
   hypertags:
   - {fileID: 11400000, guid: d1bc12c6888803a46859c5ae4beca2b3, type: 2}
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
@@ -2957,6 +2967,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1014014148773522026, guid: e371979db9738534eaa19b62be84a435, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014014148773522027, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3251126500596206056, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: _showInfo
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -1,11 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class HypertaggedObject : MonoBehaviour
 {
-    [SerializeField] private Hypertag[] hypertags;
+    [SerializeField, HideInInspector] 
+    private bool        _showInfo = true;
+    [SerializeField, ResizableTextArea] 
+    private string      _description = "";
+    [SerializeField] 
+    private Hypertag[]  hypertags;
 
+    public string GetTagString()
+    {
+        if ((hypertags == null) || (hypertags.Length == 0)) return "Hypertag";
+
+        string ret = "";
+        foreach (var tag in hypertags)
+        {
+            if (tag)
+            {
+                if (ret != "") ret += ", ";
+                ret += tag.name;
+            }
+        }
+
+        return ret;
+    }
     public bool Has(Hypertag tag)
     {
         foreach (var t in hypertags)

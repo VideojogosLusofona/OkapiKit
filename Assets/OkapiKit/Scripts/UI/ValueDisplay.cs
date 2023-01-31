@@ -6,7 +6,7 @@ using UnityEngine;
 public class ValueDisplay : MonoBehaviour
 {
     [SerializeField, ShowIf("needValueHandler")]
-    protected ValueHandler valueHandler;
+    protected VariableInstance valueHandler;
     [SerializeField, ShowIf("needValueVariable")]
     protected Variable variable;
 

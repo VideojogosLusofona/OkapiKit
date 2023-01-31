@@ -1244,6 +1244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
   hypertags:
   - {fileID: 11400000, guid: 26c6aabe8f9ad1c4697e9bf7819e39b5, type: 2}
 --- !u!61 &396546100
@@ -1932,6 +1934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3326af6cdffd048863041cfdbb0778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
   speed: 15
   path: {fileID: 523803614}
   taggedPath: {fileID: 0}
@@ -5513,6 +5517,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 267223325403768704, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 267223325403768704, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: _description
+      value: This is the tag for the player
+      objectReference: {fileID: 0}
+    - target: {fileID: 267223325403768704, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: hypertags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 267223325403768704, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: hypertags.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 267223325403768704, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: hypertags.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3f1db2282755626448862f9b0a85d92a, type: 2}
+    - target: {fileID: 1070873276154404948, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070873276154404948, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: inputType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070873276154404948, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: _description
+      value: Player movement
+      objectReference: {fileID: 0}
     - target: {fileID: 1070873276154404951, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
       propertyPath: m_Name
       value: Player
@@ -5559,6 +5595,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1070873276154404954, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870301207308341775, guid: 6c9e81521543bfd40a726532b8650134, type: 3}
+      propertyPath: _showInfo
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7805097519303005512, guid: 6c9e81521543bfd40a726532b8650134, type: 3}

@@ -10,7 +10,7 @@ public struct Condition
                                                   AbsoluteVelocityX, AbsoluteVelocityY };
     [System.Serializable] public enum Comparison { Equal, Less, LessEqual, Greater, GreaterEqual };
 
-    public ValueHandler valueHandler;
+    public VariableInstance valueHandler;
     public Variable     variable;
     public ValueType    valueType;
     public Hypertag     tag;

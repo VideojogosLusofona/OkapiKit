@@ -9790,16 +9790,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c124f990a067b478caf900b6cb6d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: {fileID: 0}
+  _showInfo: 0
+  _description: Health of the base
+  type: 1
   currentValue: 8
   defaultValue: 8
   isInteger: 1
   hasLimits: 0
   minValue: -3.4028235e+38
   maxValue: 3.4028235e+38
-  onChange: []
-  onIncrease: []
-  onDecrease: []
 --- !u!114 &6576810377050572910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9812,6 +9811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -9828,15 +9828,18 @@ MonoBehaviour:
     action: {fileID: 7619897011921874865}
   - delay: 3
     action: {fileID: 6576810377050572914}
-  _explanation: "When (Health <= 0):\n At 0 seconds, Play particle system BigHit\nAt
-    0 seconds, Disables renderer Base\n At 0 seconds, Disables component Base (UnityEngine.BoxCollider2D)
-    on Base\n At 0 seconds, Plays sound explosion at volume 1 and a pitch in the
-    range [0.8992686,1.196398]\n At 3 seconds, Destroys this object\n"
+  _explanation: "When (Health <= 0):\n First, \n          play particle system BigHit\n         
+    disables renderer Base1\n          disables component Base1 (UnityEngine.BoxCollider2D)
+    on Base1\n          plays sound explosion at volume 1 and a pitch in the range
+    [0.8992686,1.196398]\n then, at 3 seconds, \n          destroys the parent of
+    this object\n"
   conditions:
   - valueHandler: {fileID: 6576810377050572916}
     variable: {fileID: 0}
     valueType: 0
     tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
@@ -9852,6 +9855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3e57c646e95844d843a12ec6d71381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -9871,12 +9875,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables renderer Base
+  _explanation: Disables renderer Base1
   renderer: {fileID: 6576810377233776055}
   changeType: 0
   visibility: 1
@@ -9892,12 +9897,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables component Base (UnityEngine.BoxCollider2D) on Base
+  _explanation: Disables component Base1 (UnityEngine.BoxCollider2D) on Base1
   target: {fileID: 6576810377233776058}
   state: 1
 --- !u!114 &7619897011921874865
@@ -9912,6 +9918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -9933,6 +9940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -10131,6 +10139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   description: When hit by a shot (player or enemy), or by the enemy ship, reduce
     one health
   enableTrigger: 1
@@ -10170,6 +10179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -10180,6 +10190,7 @@ MonoBehaviour:
   variable: {fileID: 0}
   operation: 1
   deltaValue: -1
+  scaleWithTime: 0
   value: 0
 --- !u!114 &6576810377233776061
 MonoBehaviour:
@@ -10193,6 +10204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3e57c646e95844d843a12ec6d71381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -10212,6 +10224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36ea0b4a4f80be42880b56e364b61d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -10238,6 +10251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
   enableAction: 1
   hasTags: 0
   actionTags: []

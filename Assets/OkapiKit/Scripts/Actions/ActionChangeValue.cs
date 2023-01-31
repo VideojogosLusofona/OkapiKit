@@ -8,7 +8,7 @@ public class ActionChangeValue : Action
     public enum OperationType { Set = 0, Change = 1, Reset = 2 };
 
     [SerializeField, ShowIf("needValueHandler")]
-    private ValueHandler    valueHandler;
+    private VariableInstance    valueHandler;
     [SerializeField, ShowIf("needValueVariable")]
     private Variable        variable;
     [SerializeField] 
