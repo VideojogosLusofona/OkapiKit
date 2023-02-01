@@ -20,9 +20,9 @@ public class ActionDestroyObject : Action
 
     public override string GetActionTitle() { return "Destroy Object"; }
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         switch (target)
         {

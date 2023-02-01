@@ -43,9 +43,9 @@ public class ActionSequence : Action
 
     public override string GetActionTitle() => "Sequence";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         if (actions != null)
         {
@@ -74,7 +74,7 @@ public class ActionSequence : Action
 
                 if (action.action != null)
                 {
-                    actionDesc = action.action.GetRawDescription("  ");
+                    actionDesc = action.action.GetRawDescription("  ", gameObject);
                     actionDesc = actionDesc.Replace("\n", "\n" + spaces);
                 }
 

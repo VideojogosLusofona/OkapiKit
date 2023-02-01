@@ -60,9 +60,9 @@ public class ActionModifyParticleSystem : Action
 
     public override string GetActionTitle() => "Modify Particle System";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        var desc = GetPreconditionsString();
+        var desc = GetPreconditionsString(gameObject);
         var psName = (particleSystem) ? (particleSystem.name) : ("this");
         switch (changeType)
         {

@@ -27,13 +27,13 @@ public class ActionChangeValue : Action
 
     public override string GetActionTitle() { return "Change Value"; }
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
         string n = "[UNKNOWN]";
         if (variable) n = variable.name;
         else if (valueHandler) n = valueHandler.name;
 
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         if (operation == OperationType.Set)
         {

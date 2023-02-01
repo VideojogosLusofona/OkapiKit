@@ -27,9 +27,9 @@ public class ActionSpawn : Action
 
     public override string GetActionTitle() { return "Spawn"; }
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         if (prefabObject)
         {

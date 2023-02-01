@@ -10,9 +10,9 @@ public class ActionChangeScene : Action
 
     public override string GetActionTitle() => "Change Scene";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        return $"{GetPreconditionsString()} switches to scene {sceneName}";
+        return $"{GetPreconditionsString(gameObject)} switches to scene {sceneName}";
     }
 
     public override void Execute()

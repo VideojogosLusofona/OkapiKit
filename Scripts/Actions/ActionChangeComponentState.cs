@@ -12,9 +12,9 @@ public class ActionChangeComponentState : Action
 
     public override string GetActionTitle() { return "Change Component State"; }
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         string targetDesc = "[Undefined] on [Undefined Object]";
         if (target != null)

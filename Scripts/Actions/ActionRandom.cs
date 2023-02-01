@@ -15,13 +15,13 @@ public class ActionRandom : Action
 
     public override string GetActionTitle() => "Choose Random Action";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
         if ((actions == null) || (actions.Length == 0))
         {
-            return $"{GetPreconditionsString()}selects randomly between some actions, but no actions are defined!";
+            return $"{GetPreconditionsString(gameObject)}selects randomly between some actions, but no actions are defined!";
         }
-        var desc = GetPreconditionsString() + "select randomly between the following actions:\n";
+        var desc = GetPreconditionsString(gameObject) + "select randomly between the following actions:\n";
 
         float total = 0;
         foreach (var action in actions)
@@ -31,7 +31,7 @@ public class ActionRandom : Action
 
         for (int i = 0; i < actions.Length; i++)
         {
-            desc += $"{ident}  {i + 1}. {actions[i].action.GetRawDescription(ident + "    ")} ({(int)(actions[i].probability * 100 / total)}%)";
+            desc += $"{ident}  {i + 1}. {actions[i].action.GetRawDescription(ident + "    ", gameObject)} ({(int)(actions[i].probability * 100 / total)}%)";
             if (i < (actions.Length - 1)) desc += "\n";
         }
 

@@ -23,9 +23,9 @@ public class ActionTagged : Action
 
     public override string GetActionTitle() => "Execute Tagged Action";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        var desc = GetPreconditionsString();
+        var desc = GetPreconditionsString(gameObject);
         
         if (searchType == SearchType.Global)
         {

@@ -41,9 +41,9 @@ public class ActionModifyTrailRenderer : Action
 
     public override string GetActionTitle() => "Modify Trail Renderer";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        var desc = GetPreconditionsString();
+        var desc = GetPreconditionsString(gameObject);
 
         string targetName = (target) ? (target.name) : (name);
         switch (changeType)

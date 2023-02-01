@@ -8,9 +8,9 @@ using UnityEngine;
 public class ActionQuitApplication : Action
 {
     public override string GetActionTitle() => "Quit Application";
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        return $"{GetPreconditionsString()}quit application";
+        return $"{GetPreconditionsString(gameObject)}quit application";
     }
 
     public override void Execute()
