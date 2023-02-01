@@ -49,9 +49,9 @@ public class ActionFlash : Action
     }
 
     public override string GetActionTitle() => "Flash";
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         if (target == null)
         {

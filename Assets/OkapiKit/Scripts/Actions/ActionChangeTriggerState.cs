@@ -11,9 +11,9 @@ public class ActionChangeTriggerState : Action
 
     public override string GetActionTitle() => "Change Trigger State";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         string targetName = (target) ? ($"{target.name}.{target.GetTriggerTitle()}") : ("UNDEFINED");
 

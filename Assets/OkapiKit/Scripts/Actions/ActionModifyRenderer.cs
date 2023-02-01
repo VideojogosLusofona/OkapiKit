@@ -54,9 +54,9 @@ public class ActionModifyRenderer : Action
         }
     }
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        var desc = GetPreconditionsString();
+        var desc = GetPreconditionsString(gameObject);
         var rendererName = (renderer) ? (renderer.name) : ("this");
         switch (changeType)
         {

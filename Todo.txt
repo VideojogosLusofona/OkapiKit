@@ -1,6 +1,4 @@
 - Add tooltips to everything with explanations
-- Add custom editor to spawn system (with explainer)
-- Add icons to Triggers and Actions
 - Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
 - Add a tree view to explore objects in the games

@@ -65,9 +65,9 @@ public class ActionModifyTransform : Action
 
     public override string GetActionTitle() => "Modify Transform";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         string targetName = GetTargetName();
 

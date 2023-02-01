@@ -44,9 +44,9 @@ public class ActionSetParent : Action
 
     public override string GetActionTitle() => "Set Parent";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         switch (target)
         {

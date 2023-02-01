@@ -60,7 +60,7 @@ public abstract class Trigger : MonoBehaviour
                 desc += "If ";
                 for (int i = 0; i < preConditions.Length; i++)
                 {
-                    desc += preConditions[i].GetRawDescription() + " and ";
+                    desc += preConditions[i].GetRawDescription(gameObject) + " and ";
                 }
             }
         }
@@ -104,7 +104,7 @@ public abstract class Trigger : MonoBehaviour
 
                 if (action.action != null)
                 {
-                    actionDesc = action.action.GetRawDescription("  ");
+                    actionDesc = action.action.GetRawDescription("  ", gameObject);
                     actionDesc = actionDesc.Replace("\n", "\n" + spaces);
                 }
                 

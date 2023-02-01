@@ -21,7 +21,7 @@ public class TriggerOnCondition: Trigger
         }
         for (int i = 0; i < conditions.Length; i++)
         {
-            desc += conditions[i].GetRawDescription();
+            desc += conditions[i].GetRawDescription(gameObject);
             if (i < conditions.Length - 1) desc = desc + " and ";
         }
 

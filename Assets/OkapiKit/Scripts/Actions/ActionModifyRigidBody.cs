@@ -48,9 +48,9 @@ public class ActionModifyRigidBody : Action
     }
 
     public override string GetActionTitle() => "Modify Rigid Body";
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        var desc = GetPreconditionsString();
+        var desc = GetPreconditionsString(gameObject);
         switch (changeType)
         {
             case ChangeType.SetBodyType:

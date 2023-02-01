@@ -31,7 +31,7 @@ public struct Condition
         return null;
     }
 
-    public string GetVariableName()
+    public string GetVariableName(GameObject gameObject)
     {
         if (variable) return variable.name;
         if (valueHandler) return valueHandler.name;
@@ -42,30 +42,30 @@ public struct Condition
                 return "TagCount([Unknown])";
             case ValueType.WorldPositionX:
                 if (sourceTransform) return $"{sourceTransform.name}.x";
-                return $"this.x";
+                return $"{gameObject.name}.x";
             case ValueType.WorldPositionY:
                 if (sourceTransform) return $"{sourceTransform.name}.y";
-                return $"this.y";
+                return $"{gameObject.name}.y";
             case ValueType.RelativePositionX:
                 if (sourceTransform) return $"{sourceTransform.name}.rx";
-                return $"this.rx";
+                return $"{gameObject.name}.rx";
             case ValueType.RelativePositionY:
                 if (sourceTransform) return $"{sourceTransform.name}.ry";
-                return $"this.ry";
+                return $"{gameObject.name}.ry";
             case ValueType.AbsoluteVelocityX:
                 if (rigidBody) return $"{rigidBody.name}.velocity.x";
-                return $"this.velocity.x";
+                return $"{gameObject.name}.velocity.x";
             case ValueType.AbsoluteVelocityY:
                 if (rigidBody) return $"{rigidBody.name}.velocity.y";
-                return $"this.velocity.y";
+                return $"{gameObject.name}.velocity.y";
         }
 
         return "[Unknown]";
     }
 
-    public string GetRawDescription()
+    public string GetRawDescription(GameObject gameObject)
     {
-        string desc = $"({GetVariableName()}";
+        string desc = $"({GetVariableName(gameObject)}";
         switch (comparison)
         {
             case Comparison.Equal: desc += " == "; break;

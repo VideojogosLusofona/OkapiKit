@@ -17,8 +17,8 @@ public class ActionUnityEvent : Action
 
     public override string GetActionTitle() => "Unity Event";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        return $"{GetPreconditionsString()}execute Unity event";
+        return $"{GetPreconditionsString(gameObject)}execute Unity event";
     }
 }

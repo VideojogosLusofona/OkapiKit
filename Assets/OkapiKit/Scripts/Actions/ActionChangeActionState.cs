@@ -11,20 +11,20 @@ public class ActionChangeActionState : Action
 
     public override string GetActionTitle() => "Change Action State";
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        string desc = GetPreconditionsString();
+        string desc = GetPreconditionsString(gameObject);
 
         switch (state)
         {
             case StateChange.Enable:
-                desc += $"enables action [{target.GetRawDescription(ident)}]";
+                desc += $"enables action [{target.GetRawDescription(ident, gameObject)}]";
                 break;
             case StateChange.Disable:
-                desc += $"disables action [{target.GetRawDescription(ident)}]";
+                desc += $"disables action [{target.GetRawDescription(ident, gameObject)}]";
                 break;
             case StateChange.Toggle:
-                desc += $"toggles action [{target.GetRawDescription(ident)}]";
+                desc += $"toggles action [{target.GetRawDescription(ident, gameObject)}]";
                 break;
         }
         return desc;

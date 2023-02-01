@@ -50,7 +50,7 @@ and what happens), and finally we have several Action scripts (used by the Trigg
 * Top down ships by [Master484], licensed under [CC0]
 * Asteroid by [Warspawn], licensed under [CC0]
 * Nebula background by [leyren], licensed under [CC0]
-* Unity Editor icons from [FlatIcon]
+* Editor icons from [FlatIcon]
 * Title imagem from [Midjourney]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
 

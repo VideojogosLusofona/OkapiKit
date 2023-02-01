@@ -23,10 +23,10 @@ public class ActionPlayParticleSystem : Action
         }
     }
 
-    public override string GetRawDescription(string ident)
+    public override string GetRawDescription(string ident, GameObject gameObject)
     {
         string targetName = (target) ? (target.name) : (name);
 
-        return $"{GetPreconditionsString()}play particle system {targetName}";
+        return $"{GetPreconditionsString(gameObject)}play particle system {targetName}";
     }
 }
