@@ -2434,6 +2434,7 @@ GameObject:
   - component: {fileID: 1906407537}
   - component: {fileID: 1906407539}
   - component: {fileID: 1906407538}
+  - component: {fileID: 1906407540}
   m_Layer: 0
   m_Name: Shoot
   m_TagString: Untagged
@@ -2519,6 +2520,23 @@ MonoBehaviour:
   negate: 0
   useCooldown: 0
   cooldown: 1
+--- !u!1183024399 &1906407540
+LookAtConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906407536}
+  m_Enabled: 1
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_Roll: 0
+  m_WorldUpObject: {fileID: 0}
+  m_UseUpObject: 0
+  m_IsContraintActive: 0
+  m_IsLocked: 0
+  m_Sources: []
 --- !u!1 &2147338994
 GameObject:
   m_ObjectHideFlags: 0
