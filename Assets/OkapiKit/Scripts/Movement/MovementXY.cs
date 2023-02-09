@@ -6,39 +6,42 @@ using NaughtyAttributes;
 public class MovementXY : Movement
 {
     public enum InputType { Axis = 0, Button = 1, Key = 2};
+    public enum Axis { UpAxis = 0, RightAxis = 1};
 
     [SerializeField] 
     private Vector2     speed = new Vector2(100, 100);
     [SerializeField]
     private bool        useRotation = false;
     [SerializeField]
+    private bool        turnToDirection = false;
+    [SerializeField]
+    private Axis        axisToAlign = Axis.UpAxis;
+    [SerializeField]
+    private float       maxTurnSpeed = 360.0f;
+    [SerializeField]
     private bool        inputEnabled;
-    [SerializeField, ShowIf("inputEnabled")]
+    [SerializeField]
     private InputType   inputType;
-    [SerializeField, ShowIf("axisEnabled"), InputAxis]
+    [SerializeField, InputAxis]
     private string      horizontalAxis = "Horizontal";
-    [SerializeField, ShowIf("axisEnabled"), InputAxis]
+    [SerializeField, InputAxis]
     private string      verticalAxis = "Vertical";
-    [SerializeField, ShowIf("buttonEnabled")]    
+    [SerializeField]
     private string      horizontalButtonPositive = "Right";
-    [SerializeField, ShowIf("buttonEnabled")]    
+    [SerializeField]
     private string      horizontalButtonNegative = "Left";
-    [SerializeField, ShowIf("buttonEnabled")]
+    [SerializeField]
     private string      verticalButtonPositive = "Up";
-    [SerializeField, ShowIf("buttonEnabled")]
+    [SerializeField]
     private string      verticalButtonNegative = "Down";
-    [SerializeField, ShowIf("keyEnabled")]    
+    [SerializeField]
     private KeyCode     horizontalKeyPositive = KeyCode.RightArrow;
-    [SerializeField, ShowIf("keyEnabled")]
+    [SerializeField]
     private KeyCode     horizontalKeyNegative = KeyCode.LeftArrow;
-    [SerializeField, ShowIf("keyEnabled")]    
+    [SerializeField]
     private KeyCode     verticalKeyPositive = KeyCode.UpArrow;
-    [SerializeField, ShowIf("keyEnabled")]
+    [SerializeField]
     private KeyCode     verticalKeyNegative = KeyCode.DownArrow;
-
-    private bool axisEnabled => inputEnabled && (inputType == InputType.Axis);
-    private bool buttonEnabled => inputEnabled && (inputType == InputType.Button);
-    private bool keyEnabled => inputEnabled && (inputType == InputType.Key);
 
     Vector3 moveVector;
 
@@ -72,7 +75,18 @@ public class MovementXY : Movement
                 desc += $"No movement!\n";
             }
         }
-        if (useRotation) desc += "These directions will be relative to the current object orientation.\n";
+        if (useRotation)
+        {
+            desc += "These directions will be relative to the current object orientation.\n";
+        }
+        else
+        {
+            if (turnToDirection)
+            {
+                string axisName = (axisToAlign == Axis.UpAxis) ? ("up") : ("right");
+                desc += $"This object will turn {maxTurnSpeed} degrees/sec to align it's {axisName} axis to the movement direction.\n";
+            }
+        }
         if (inputEnabled)
         {
             if (inputType == InputType.Axis)
@@ -118,6 +132,22 @@ public class MovementXY : Movement
         if (useRotation)
         {
             transformedDelta = moveVector.x * transform.right + moveVector.y * transform.up;
+        }
+        else
+        {
+            if (turnToDirection)
+            {
+                if (transformedDelta.sqrMagnitude > 1e-6)
+                {
+                    Vector3 upAxis = transformedDelta.normalized;
+
+                    if (axisToAlign == Axis.RightAxis) upAxis = new Vector3(-upAxis.y, upAxis.x);
+
+                    Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, upAxis);
+
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxTurnSpeed * Time.fixedDeltaTime);
+                }
+            }
         }
 
         MoveDelta(transformedDelta * Time.fixedDeltaTime);

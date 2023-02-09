@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OkapiKit/Samples/Asteroids/Asteroids.unity
     guid: 9e99fa697cd7be843a880567c21ee193
+  - enabled: 1
+    path: Assets/OkapiKit/Samples/Commando/Commando.unity
+    guid: fd707bc1ef9c7d94bb739a1e9b66193d
   m_configObjects: {}

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 abstract public class Movement : MonoBehaviour
 {
@@ -48,7 +49,24 @@ abstract public class Movement : MonoBehaviour
         {
             transform.rotation = transform.rotation * Quaternion.Euler(0.0f, 0.0f, angle);
         }
+    }
 
+    protected void RotateTo(Vector2 upDir, float maxTime)
+    {
+        if (rb != null)
+        {
+            Quaternion target = Quaternion.LookRotation(Vector3.forward, upDir);
+
+            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, target, GetSpeed().x * maxTime);
+
+            rb.MoveRotation(newRotation);
+        }
+        else
+        {
+            Quaternion target = Quaternion.LookRotation(Vector3.forward, upDir);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, GetSpeed().x * maxTime);
+        }
     }
 
     public virtual string GetRawDescription() => "MOVEMENT AUTO DESCRIPTION";

@@ -658,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -877,7 +877,7 @@ MonoBehaviour:
   _showInfo: 1
   _description: 
   speed: 200
-  inputEnabled: 1
+  mode: 2
   inputType: 0
   rotationAxis: Horizontal
   rotationButtonPositive: Fire2
@@ -912,7 +912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   _description: 
   hypertags:
   - {fileID: 11400000, guid: b51e68d37579c9a49bcc68ee51a9cc67, type: 2}
@@ -928,7 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -952,11 +952,11 @@ MonoBehaviour:
   - delay: 2
     action: {fileID: 390963681288524359}
   _explanation: "When a collision with a trigger with tags [Asteroid] starts:\n First,
-    \n          adds -1 to variable Lives\n          spawns prefab Explosion at the
-    position of this object (Player)\n          disables component Player (UnityEngine.CircleCollider2D)
-    on Player\n          disables renderer Player\n          disables renderer Thruster1\n         
-    disables renderer Thruster2\n          disables renderer ActualShield\n then,
-    at 2 seconds, \n          destroys this object\n"
+    \n         Adds -1 to variable Lives\n         Spawns prefab Explosion at the
+    position of this object (Player)\n         Disables component Player (UnityEngine.CircleCollider2D)
+    on Player\n         Disables renderer Player\n         Disables renderer Thruster1\n        
+    Disables renderer Thruster2\n         Disables renderer ActualShield\n then,
+    at 2 seconds, \n                      Destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -973,7 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -998,13 +998,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Explosion at the position of this object (Player)
+  _explanation: 
   prefabObject: {fileID: 5363241896603793910, guid: 419230a07f18d8f47a2c7b24eaf78e01, type: 3}
   spawnPosition: 1
   targetPosition: {fileID: 0}
@@ -1022,13 +1022,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Destroys this object
+  _explanation: 
   target: 0
   targetObject: {fileID: 0}
   tags: []
@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1115,7 +1115,7 @@ MonoBehaviour:
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables renderer Thruster2
+  _explanation: Disables renderer Player
   renderer: {fileID: 1014014147335270978}
   changeType: 0
   visibility: 1
