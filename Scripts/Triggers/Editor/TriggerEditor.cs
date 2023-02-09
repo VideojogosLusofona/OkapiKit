@@ -9,6 +9,7 @@ using System.Linq;
 public class TriggerEditor : Editor
 {
     SerializedProperty propShowInfo;
+    SerializedProperty propDescription;
     SerializedProperty propExplanation;
     SerializedProperty propEnableTrigger;
     SerializedProperty propAllowRetrigger;
@@ -19,6 +20,7 @@ public class TriggerEditor : Editor
     protected virtual void OnEnable()
     {
         propShowInfo = serializedObject.FindProperty("_showInfo");
+        propDescription = serializedObject.FindProperty("description");
         propExplanation = serializedObject.FindProperty("_explanation");
         propEnableTrigger = serializedObject.FindProperty("enableTrigger");
         propAllowRetrigger = serializedObject.FindProperty("allowRetrigger");
@@ -144,6 +146,7 @@ public class TriggerEditor : Editor
         propHasConditions.boolValue = CheckBox("Conditions", rect.x + elemWidth * 2, rect.y, elemWidth, propHasConditions.boolValue);
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(rect.height);
+        EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
 
         if (propHasConditions.boolValue)
         {

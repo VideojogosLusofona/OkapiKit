@@ -48,11 +48,8 @@ public class TriggerOnCollisionEditor : TriggerEditor
             EditorGUILayout.PropertyField(propEventType, new GUIContent("Event type"));
             EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Trigger).UpdateExplanation();
-            }
+            serializedObject.ApplyModifiedProperties();
+            (target as Trigger).UpdateExplanation();
 
             ActionPanel();
         }

@@ -29,7 +29,8 @@ public class TriggerOnCollision : Trigger
             desc += "with tags [";
             for (int i = 0; i < tags.Length; i++)
             {
-                desc += tags[i].name;
+                if (tags[i] == null) desc += "NULL";
+                else desc += tags[i].name;
                 if (i < tags.Length - 1) desc += ",";
             }
             desc += "] ";
