@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class MovementRotate : Movement
 {
-    public enum RotateMode { Auto = 0, InputSet = 1, InputDelta = 2/*, TargetObject = 3, TargetTag = 4 */};
+    public enum RotateMode { Auto = 0, InputSet = 1, InputDelta = 2, Target = 3 };
     public enum InputType { Axis = 0, Button = 1, Key = 2};
     public enum Axis { UpAxis = 0, RightAxis = 1 };
 
@@ -47,6 +47,10 @@ public class MovementRotate : Movement
     private KeyCode     rotationKeyNegativeY = KeyCode.DownArrow;
     [SerializeField]
     private Axis        axisToAlign = Axis.UpAxis;
+    [SerializeField]
+    private Transform   targetObject;
+    [SerializeField]
+    private Hypertag    targetTag;
 
     private bool inputEnabled => (mode == RotateMode.InputSet) || (mode == RotateMode.InputDelta);
 
@@ -60,6 +64,7 @@ public class MovementRotate : Movement
     public override string GetRawDescription()
     {
         string desc = "";
+        string axisName = (axisToAlign == Axis.UpAxis) ? ("up") : ("right");
 
         if (mode == RotateMode.InputDelta)
         {
@@ -90,8 +95,6 @@ public class MovementRotate : Movement
         {
             desc += $"Rotational movement, at a maximum of {speed} degrees per second.\n";
 
-            string axisName = (axisToAlign == Axis.UpAxis) ? ("up") : ("right");
-
             if (inputType == InputType.Axis)
             {
                 if ((rotationAxisX != "") && (rotationAxisX != "None") && (rotationAxisY != "") && (rotationAxisY != "None"))
@@ -112,6 +115,21 @@ public class MovementRotate : Movement
                 {
                     desc += $"Object's {axisName} axis will point in the direction given by keys [{rotationKeyNegativeX}], [{rotationKeyPositiveX}], [{rotationKeyNegativeY}] and [{rotationKeyPositiveY}].\n";
                 }
+            }
+        }
+        else if (mode == RotateMode.Target)
+        {
+            if (targetObject)
+            {
+                desc += $"This object will align its {axisName} with the direction towards {targetObject.name}, at a maximum {speed} degrees per second.\n";
+            }
+            else if (targetTag)
+            {
+                desc += $"This object will align its {axisName} with the direction towards the closest object tagged with {targetTag.name}, at a maximum {speed} degrees per second.\n";
+            }
+            else
+            {
+                desc += $"This object will align its {axisName} with the direction towards [UNDEFINED], at a maximum {speed} degrees per second.\n";
             }
         }
         else
@@ -189,6 +207,42 @@ public class MovementRotate : Movement
                 if (axisToAlign == Axis.RightAxis) dir = new Vector2(-dir.y, dir.x);
 
                 RotateTo(dir, speed * Time.fixedDeltaTime);
+            }
+        }
+        else if (mode == RotateMode.Target)
+        {
+            Transform targetTransform = null;
+
+            if (targetTag)
+            {
+                var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(targetTag);
+                var minDist = float.MaxValue;
+                foreach (var obj in potentialObjects)
+                {
+                    var d = Vector3.Distance(obj.position, transform.position);
+                    if (d < minDist)
+                    {
+                        minDist = d;
+                        targetTransform = obj;
+                    }
+                }
+            }
+            else if (targetObject)
+            {
+                targetTransform = targetObject;
+            }
+
+            if (targetTransform)
+            {
+                Vector2 dir = (targetTransform.position - transform.position);
+                if (dir.sqrMagnitude > 1e-6)
+                { 
+                    dir.Normalize();
+
+                    if (axisToAlign == Axis.RightAxis) dir = new Vector2(-dir.y, dir.x);
+
+                    RotateTo(dir, speed * Time.fixedDeltaTime);
+                }
             }
         }
         else

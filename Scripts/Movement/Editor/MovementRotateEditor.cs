@@ -25,6 +25,8 @@ public class MovementRotateEditor : MovementEditor
     SerializedProperty propRotationKeyPositiveY;
     SerializedProperty propRotationKeyNegativeY;
     SerializedProperty propAxisToAlign;
+    SerializedProperty propTargetTag;
+    SerializedProperty propTargetObject;
 
     protected override void OnEnable()
     {
@@ -49,6 +51,8 @@ public class MovementRotateEditor : MovementEditor
         propRotationKeyPositiveY = serializedObject.FindProperty("rotationKeyPositiveY");
         propRotationKeyNegativeY = serializedObject.FindProperty("rotationKeyNegativeY");
         propAxisToAlign = serializedObject.FindProperty("axisToAlign");
+        propTargetTag = serializedObject.FindProperty("targetTag"); ;
+        propTargetObject = serializedObject.FindProperty("targetObject"); ;
     }
 
     public override void OnInspectorGUI()
@@ -63,7 +67,7 @@ public class MovementRotateEditor : MovementEditor
             EditorGUILayout.PropertyField(propMode, new GUIContent("Mode"));
             if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.InputSet)
             {
-                EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis to align"));
+                EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align"));
                 EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type"));
 
                 var inputType = (MovementXY.InputType)propInputType.enumValueIndex;
@@ -111,6 +115,26 @@ public class MovementRotateEditor : MovementEditor
                         break;
                     default:
                         break;
+                }
+            }
+            else if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.Target)
+            {
+                EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align"));
+                if (propTargetTag.objectReferenceValue == null)
+                {
+                    if (propTargetObject.objectReferenceValue == null)
+                    {
+                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                    }
+                    else
+                    {
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                    }
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
                 }
             }
             EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));

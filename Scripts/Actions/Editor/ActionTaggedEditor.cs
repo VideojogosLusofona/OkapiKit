@@ -35,7 +35,10 @@ public class ActionTaggedEditor : ActionEditor
 
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(propSearchType, new GUIContent("Search Type"));
-            EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags"));
+            if (propSearchType.enumValueIndex == (int)ActionTagged.SearchType.Tagged)
+            {
+                EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags"));
+            }
             EditorGUILayout.PropertyField(propTriggerType, new GUIContent("Trigger Type"));
             EditorGUILayout.PropertyField(propTriggerTags, new GUIContent("Trigger Tags"));
 

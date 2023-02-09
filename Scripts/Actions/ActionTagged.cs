@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class ActionTagged : Action
 {
-    public enum SearchType { Global = 0, Tagged = 1 };
+    public enum SearchType { Global = 0, Tagged = 1, Children = 2 };
     public enum TriggerType { All = 0, Sequence = 1, Random = 2 };
 
     [SerializeField] 
@@ -26,10 +26,14 @@ public class ActionTagged : Action
     public override string GetRawDescription(string ident, GameObject gameObject)
     {
         var desc = GetPreconditionsString(gameObject);
-        
+
         if (searchType == SearchType.Global)
         {
             desc = "find actions tagged with any of ["; ;
+        }
+        else if (searchType == SearchType.Children)
+        {
+            desc = "find actions underneath this object tagged with any of ["; ;
         }
         else if (searchType == SearchType.Tagged)
         {
@@ -143,6 +147,12 @@ public class ActionTagged : Action
         if (searchType == SearchType.Global)
         {
             targetActions = new List<Action>(GameObject.FindObjectsOfType<Action>());
+
+            targetActions.RemoveAll((action) => !action.HasTag(triggerTags));
+        }
+        else if (searchType == SearchType.Children)
+        {
+            targetActions = new List<Action>(GetComponentsInChildren<Action>());
 
             targetActions.RemoveAll((action) => !action.HasTag(triggerTags));
         }
