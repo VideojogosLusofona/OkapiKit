@@ -5803,6 +5803,8 @@ MonoBehaviour:
   inputType: 1
   buttonName: 
   key: 27
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 1
   negate: 0
   useCooldown: 0
@@ -5930,6 +5932,8 @@ MonoBehaviour:
   inputType: 1
   buttonName: 
   key: 32
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 0
   negate: 0
   useCooldown: 0
@@ -6489,9 +6493,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1482789966}
   - component: {fileID: 1482789970}
+  - component: {fileID: 1482789967}
   - component: {fileID: 1482789969}
   - component: {fileID: 1482789968}
-  - component: {fileID: 1482789967}
+  - component: {fileID: 1482789971}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Untagged
@@ -6575,11 +6580,16 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1482789968}
-  _explanation: "When button Fire1 is held (this can only happen every 0.15 seconds):\n
-    First, \n          spawns prefab Bullet at the position of this object (Shooter)\n"
-  inputType: 0
+  - delay: 0
+    action: {fileID: 1482789971}
+  _explanation: "When axis RightTrigger is held (this can only happen every 0.15
+    seconds):\n First, \n          spawns prefab Bullet at the position of this object
+    (Shooter)\n"
+  inputType: 2
   buttonName: Fire1
   key: 0
+  axis: RightTrigger
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 1
   negate: 0
   useCooldown: 1
@@ -6600,6 +6610,29 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2048
+--- !u!114 &1482789971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482789965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901970b618aa1c4489b6c7410f963e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Shakes the object with tag [Camera] with intensity 2 for 0.05 seconds
+  targetTag: {fileID: 11400000, guid: 2f478aa6dec00f3449f3977690be69d6, type: 2}
+  targetObject: {fileID: 0}
+  strength: 2
+  duration: 0.05
 --- !u!1 &1486943413
 GameObject:
   m_ObjectHideFlags: 0
@@ -6812,6 +6845,8 @@ MonoBehaviour:
   inputType: 1
   buttonName: 
   key: 32
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 0
   negate: 0
   useCooldown: 0
@@ -7028,6 +7063,7 @@ GameObject:
   - component: {fileID: 1963678300}
   - component: {fileID: 1963678299}
   - component: {fileID: 1963678302}
+  - component: {fileID: 1963678304}
   - component: {fileID: 1963678303}
   m_Layer: 0
   m_Name: Main Camera
@@ -7161,6 +7197,22 @@ MonoBehaviour:
   cameraLimits: {fileID: 737576420}
   _showInfo: 1
   _description: 
+--- !u!114 &1963678304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963678298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
+  hypertags:
+  - {fileID: 11400000, guid: 2f478aa6dec00f3449f3977690be69d6, type: 2}
 --- !u!1 &1976388546
 GameObject:
   m_ObjectHideFlags: 0

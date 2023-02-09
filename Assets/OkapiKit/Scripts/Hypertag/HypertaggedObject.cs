@@ -30,6 +30,7 @@ public class HypertaggedObject : MonoBehaviour
     }
     public bool Has(Hypertag tag)
     {
+        if (hypertags == null) return false;
         foreach (var t in hypertags)
         {
             if (t == tag) return true;

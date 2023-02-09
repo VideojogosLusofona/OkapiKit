@@ -5,27 +5,26 @@ using NaughtyAttributes;
 
 public class TriggerOnInput : Trigger
 {
-    public enum InputType { Button = 0, Key = 1};
+    public enum InputType { Button = 0, Key = 1, Axis = 2};
 
     [SerializeField]
     InputType       inputType = InputType.Button;
-    [SerializeField, ShowIf("isButton")]
+    [SerializeField]
     private string  buttonName;
-    [SerializeField, ShowIf("isKey")]
+    [SerializeField]
     private KeyCode key;
+    [SerializeField, InputAxis]
+    private string  axis;
+    [SerializeField, MinMaxSlider(-1.0f, 1.0f)]
+    private Vector2 deadArea = new Vector2(-0.2f, 0.2f);
     [SerializeField]
     private bool    continuous = true;
-    [SerializeField, ShowIf("continuous")]
+    [SerializeField]
     private bool    negate = false;
-    [SerializeField, ShowIf("continuousAndNotNegated")]
+    [SerializeField]
     private bool    useCooldown = false;
-    [SerializeField, ShowIf("useCooldown")]
+    [SerializeField]
     private float   cooldown = 1.0f;
-
-    private bool isButton => inputType == InputType.Button;
-    private bool isKey => inputType == InputType.Key;
-    private bool continuousAndNotNegated => continuous && (!negate);
-
 
     float cooldownTimer = 0.0f;
 
@@ -34,8 +33,12 @@ public class TriggerOnInput : Trigger
     protected override string GetRawDescription()
     {
         string desc = "When ";
-        if (inputType == InputType.Button) desc += "button " + buttonName + " ";
-        else desc += "key " + key + " ";
+        if (inputType == InputType.Button) desc += $"button {buttonName} ";
+        else if (inputType == InputType.Key) desc += $"key {key} ";
+        else
+        {
+            desc += $"axis {axis} ";
+        }
         if (continuous)
         {
             if (negate) desc += "is not held";
@@ -65,16 +68,29 @@ public class TriggerOnInput : Trigger
         }
 
         bool isTrigger = false;
+        bool c = continuous;
 
         if (inputType == InputType.Button)
         {
             isTrigger = (continuous) ? (Input.GetButton(buttonName)) : (Input.GetButtonDown(buttonName));
         }
-        else
+        else if (inputType == InputType.Key)
         {
             isTrigger = (continuous) ? (Input.GetKey(key)) : (Input.GetKeyDown(key));
         }
-        if ((continuous) && (negate)) isTrigger = !isTrigger;
+        else if (inputType == InputType.Axis)
+        {
+            float a = Input.GetAxis(axis);
+            isTrigger = (a < deadArea.x) || (a > deadArea.y);
+            if (isTrigger)
+            {
+                int ba = 10;
+                ba++;
+            }
+            c = true;
+        }
+
+        if ((c) && (negate)) isTrigger = !isTrigger;
 
         if (isTrigger)
         {

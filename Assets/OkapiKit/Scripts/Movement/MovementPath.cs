@@ -80,8 +80,10 @@ public class MovementPath : Movement
     Vector3         startScale;
     Vector3         offset;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         if (taggedPath)
         {
             var paths = gameObject.FindObjectsOfTypeWithHypertag<Path>(taggedPath);
