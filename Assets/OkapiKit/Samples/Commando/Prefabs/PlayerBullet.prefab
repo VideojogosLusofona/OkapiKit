@@ -14,11 +14,10 @@ GameObject:
   - component: {fileID: 33121139253085236}
   - component: {fileID: 8635979388230552314}
   - component: {fileID: 6407055194964639863}
-  - component: {fileID: 6277299456708509931}
   - component: {fileID: 5910797483671174380}
   - component: {fileID: 579285207572291628}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: PlayerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +57,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &5769963226924786180
 CircleCollider2D:
@@ -75,7 +74,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 4
 --- !u!96 &33121139253085236
 TrailRenderer:
   serializedVersion: 2
@@ -207,34 +206,6 @@ MonoBehaviour:
   _description: 
   axis: 1
   speed: 5000
---- !u!114 &6277299456708509931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8000608644733957495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  description: Check if bullet leaves the area of the player
-  enableTrigger: 1
-  allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
-  actions:
-  - delay: 0
-    action: {fileID: 579285207572291628}
-  _explanation: "Check if bullet leaves the area of the player\n----------------\nWhen
-    a collision with a trigger with tags [BulletRange] ends:\n First, \n         
-    destroys this object\n"
-  isTrigger: 1
-  eventType: 2
-  tags:
-  - {fileID: 11400000, guid: 693704083fea7a844aa44060b8ce07db, type: 2}
 --- !u!114 &5910797483671174380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,12 +227,14 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 579285207572291628}
-  _explanation: "When a collision with a trigger with tags [Obstacle] starts:\n First,
-    \n          destroys this object\n"
+  _explanation: "When a collision with a trigger with tags [Obstacle,BulletRange,Enemy]
+    starts:\n First, \n          destroys this object\n"
   isTrigger: 1
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 7e2c396cd21ce0d47970864cdfe71a51, type: 2}
+  - {fileID: 11400000, guid: 693704083fea7a844aa44060b8ce07db, type: 2}
+  - {fileID: 11400000, guid: 76220200ca6fac545990fa726cd81fb1, type: 2}
 --- !u!114 &579285207572291628
 MonoBehaviour:
   m_ObjectHideFlags: 0

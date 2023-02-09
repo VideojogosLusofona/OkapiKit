@@ -43,7 +43,10 @@ public class VariableInstance : MonoBehaviour
 
     public void Reset()
     {
-        this.value.ResetValue();
+        if (value)
+        {
+            value.ResetValue();
+        }
     }
 
     public void ChangeValue(float value)

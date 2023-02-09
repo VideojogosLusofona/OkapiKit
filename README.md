@@ -8,7 +8,7 @@ It's currently still under development, and eventually will be commented properl
 
 # Samples
 
-It currently has five sample games (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
+It currently has six sample 'games' (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
 
 ## Pong 
 ![PongImage](Screenshots/pong.png)
@@ -25,10 +25,12 @@ It currently has five sample games (each a Scene under the Samples directory), a
 ## Asteroids
 ![AsteroidsImage](Screenshots/asteroids.png)
 
+## Commando
+![CommandoImage](Screenshots/commando.png)
+
 # Documentation
 
-For now, there's no documentation yet, but everything has custom editors, which display information on what
-each thing is doing (dynamically, depending on options selected):
+For now, there's no documentation yet, but everything has custom editors, which display information on what each thing is doing (dynamically, depending on options selected):
 
 ![InspectorImage](Screenshots/inspector.png)
 

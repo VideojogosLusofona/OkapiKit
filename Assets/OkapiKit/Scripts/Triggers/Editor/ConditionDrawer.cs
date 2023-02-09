@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -29,6 +30,7 @@ public class ConditionDrawer : PropertyDrawer
         var propTag = property.FindPropertyRelative("tag");
         var propTransform = property.FindPropertyRelative("sourceTransform");
         var propRB = property.FindPropertyRelative("rigidBody");
+        var propAxis = property.FindPropertyRelative("axis");
 
         var propComparison = property.FindPropertyRelative("comparison");
         var propValue = property.FindPropertyRelative("value");
@@ -61,7 +63,8 @@ public class ConditionDrawer : PropertyDrawer
                 }
                 else
                 {
-                    if (propValueType.enumValueIndex == (int)Condition.ValueType.TagCount)
+                    Condition.ValueType valueType = (Condition.ValueType)propValueType.enumValueIndex;
+                    if (valueType == Condition.ValueType.TagCount)
                     {
                         var valueTypeRect = new Rect(position.x, position.y, 150 + extra_width_variable, position.height / 2);
                         var tagRect = new Rect(position.x, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
@@ -86,6 +89,46 @@ public class ConditionDrawer : PropertyDrawer
 
                         EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                         EditorGUI.PropertyField(rbRect, propRB, GUIContent.none);
+                    }
+                    else if (valueType == Condition.ValueType.Distance) 
+                    {
+                        var elemHeight = position.height / 2.0f;
+                        if ((propTransform.objectReferenceValue == null) && (propTag.objectReferenceValue == null)) elemHeight = position.height / 3;
+
+                        var valueTypeRect = new Rect(position.x, position.y, 150 + extra_width_variable, elemHeight);
+                        var rect = new Rect(position.x, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+
+                        EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        if ((propTag.objectReferenceValue) || (propTransform.objectReferenceValue == null))
+                        {
+                            EditorGUI.PropertyField(rect, propTag, GUIContent.none);
+                            rect.y += elemHeight;
+                        }
+                        if ((propTransform.objectReferenceValue) || (propTag.objectReferenceValue == null))
+                        {
+                            EditorGUI.PropertyField(rect, propTransform, GUIContent.none);
+                        }
+                    }
+                    else if (valueType == Condition.ValueType.Angle)
+                    {
+                        var elemHeight = position.height / 3.0f;
+                        if ((propTransform.objectReferenceValue == null) && (propTag.objectReferenceValue == null)) elemHeight = position.height / 4;
+
+                        var valueTypeRect = new Rect(position.x, position.y, 150 + extra_width_variable, elemHeight);
+                        var axisRect = new Rect(position.x, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+                        var rect = new Rect(position.x, axisRect.yMax, 150 + extra_width_variable, elemHeight);
+
+                        EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        EditorGUI.PropertyField(axisRect, propAxis, GUIContent.none);
+                        if ((propTag.objectReferenceValue) || (propTransform.objectReferenceValue == null))
+                        {
+                            EditorGUI.PropertyField(rect, propTag, GUIContent.none);
+                            rect.y += elemHeight;
+                        }
+                        if ((propTransform.objectReferenceValue) || (propTag.objectReferenceValue == null))
+                        {
+                            EditorGUI.PropertyField(rect, propTransform, GUIContent.none);
+                        }
                     }
                 }
             }
@@ -135,6 +178,25 @@ public class ConditionDrawer : PropertyDrawer
                          (systemVariable.enumValueIndex <= (int)Condition.ValueType.AbsoluteVelocityY))
                 {
                     return base.GetPropertyHeight(property, label) * 2;
+                }
+                else if (systemVariable.enumValueIndex == (int)Condition.ValueType.Distance)
+                         
+                {
+                    var tagVariable = property.FindPropertyRelative("tag");
+                    var transformVariable = property.FindPropertyRelative("sourceTransform");
+
+                    if (tagVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 2;
+                    else if (transformVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 2;
+                    else return base.GetPropertyHeight(property, label) * 3;
+                }
+                else if (systemVariable.enumValueIndex == (int)Condition.ValueType.Angle)
+                {
+                    var tagVariable = property.FindPropertyRelative("tag");
+                    var transformVariable = property.FindPropertyRelative("sourceTransform");
+
+                    if (tagVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 3;
+                    else if (transformVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 3;
+                    else return base.GetPropertyHeight(property, label) * 4;
                 }
             }
         }
