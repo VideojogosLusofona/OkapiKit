@@ -50,6 +50,8 @@ and what happens), and finally we have several Action scripts (used by the Trigg
 * Top down ships by [Master484], licensed under [CC0]
 * Asteroid by [Warspawn], licensed under [CC0]
 * Nebula background by [leyren], licensed under [CC0]
+* Desert texture by [pansapiens], licensed under [CC0]
+* Survivor top down sprites by [rileygombart], licensed under [CC-BY 3.0]
 * Editor icons from [FlatIcon]
 * Title imagem from [Midjourney]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
@@ -71,6 +73,7 @@ and what happens), and finally we have several Action scripts (used by the Trigg
 [Joshua Robertson]:https://opengameart.org/users/jrob774
 [Master484]:http://m484games.ucoz.com/
 [Warspawn]:https://opengameart.org/users/warspawn
+[pansapiens]:https://opengameart.org/users/pansapiens
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [CC-BY 4.0]:https://creativecommons.org/licenses/by/4.0/

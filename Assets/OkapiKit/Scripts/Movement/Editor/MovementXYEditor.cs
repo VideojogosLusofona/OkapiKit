@@ -8,6 +8,9 @@ public class MovementXYEditor : MovementEditor
 {
     SerializedProperty propSpeed;
     SerializedProperty propUseRotation;
+    SerializedProperty propTurnToDirection;
+    SerializedProperty propMaxTurnSpeed;
+    SerializedProperty propAxisToAlign;
     SerializedProperty propInputEnabled;
     SerializedProperty propInputType;
     SerializedProperty propHorizontalAxis;
@@ -27,6 +30,9 @@ public class MovementXYEditor : MovementEditor
 
         propSpeed = serializedObject.FindProperty("speed");
         propUseRotation = serializedObject.FindProperty("useRotation");
+        propTurnToDirection = serializedObject.FindProperty("turnToDirection");
+        propMaxTurnSpeed = serializedObject.FindProperty("maxTurnSpeed");
+        propAxisToAlign = serializedObject.FindProperty("axisToAlign");
         propInputEnabled = serializedObject.FindProperty("inputEnabled");
         propInputType = serializedObject.FindProperty("inputType");
         propHorizontalAxis = serializedObject.FindProperty("horizontalAxis");
@@ -50,7 +56,18 @@ public class MovementXYEditor : MovementEditor
             EditorGUI.BeginChangeCheck();
 
             EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed"));
+
             EditorGUILayout.PropertyField(propUseRotation, new GUIContent("Use Rotation?"));
+            if (!propUseRotation.boolValue)
+            {
+                EditorGUILayout.PropertyField(propTurnToDirection, new GUIContent("Turn To Movement Direction?"));
+                if (propTurnToDirection.boolValue)
+                {
+                    EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis to align"));
+                    EditorGUILayout.PropertyField(propMaxTurnSpeed, new GUIContent("Max turn speed"));
+                }
+            }
+
             EditorGUILayout.PropertyField(propInputEnabled, new GUIContent("Use Input?"));
             if (propInputEnabled.boolValue)
             {
