@@ -188,7 +188,7 @@ public class MovementRotate : Movement
 
                 if (axisToAlign == Axis.RightAxis) dir = new Vector2(-dir.y, dir.x);
 
-                RotateTo(dir, Time.fixedDeltaTime);
+                RotateTo(dir, speed * Time.fixedDeltaTime);
             }
         }
         else
