@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8635979388230552314}
   - component: {fileID: 6407055194964639863}
   - component: {fileID: 6277299456708509931}
+  - component: {fileID: 5910797483671174380}
   - component: {fileID: 579285207572291628}
   m_Layer: 0
   m_Name: Bullet
@@ -218,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
   description: Check if bullet leaves the area of the player
   enableTrigger: 1
   allowRetrigger: 1
@@ -234,6 +235,33 @@ MonoBehaviour:
   eventType: 2
   tags:
   - {fileID: 11400000, guid: 693704083fea7a844aa44060b8ce07db, type: 2}
+--- !u!114 &5910797483671174380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000608644733957495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 579285207572291628}
+  _explanation: "When a collision with a trigger with tags [Obstacle] starts:\n First,
+    \n          destroys this object\n"
+  isTrigger: 1
+  eventType: 0
+  tags:
+  - {fileID: 11400000, guid: 7e2c396cd21ce0d47970864cdfe71a51, type: 2}
 --- !u!114 &579285207572291628
 MonoBehaviour:
   m_ObjectHideFlags: 0
