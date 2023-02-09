@@ -10,6 +10,8 @@ public class TriggerOnInputEditor : TriggerEditor
     SerializedProperty propInputType;
     SerializedProperty propButtonName;
     SerializedProperty propKey;
+    SerializedProperty propAxis;
+    SerializedProperty propDeadArea;
     SerializedProperty propContinuous;
     SerializedProperty propNegate;
     SerializedProperty propUseCooldown;
@@ -22,6 +24,8 @@ public class TriggerOnInputEditor : TriggerEditor
         propInputType = serializedObject.FindProperty("inputType");
         propButtonName = serializedObject.FindProperty("buttonName");
         propKey = serializedObject.FindProperty("key");
+        propAxis = serializedObject.FindProperty("axis");
+        propDeadArea = serializedObject.FindProperty("deadArea");
         propContinuous = serializedObject.FindProperty("continuous");
         propNegate = serializedObject.FindProperty("negate");
         propUseCooldown = serializedObject.FindProperty("useCooldown");
@@ -58,13 +62,19 @@ public class TriggerOnInputEditor : TriggerEditor
             if (inputType == TriggerOnInput.InputType.Button)
             {
                 EditorGUILayout.PropertyField(propButtonName, new GUIContent("Button Name"));
-            } 
+                EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous"));
+            }
             else if (inputType == TriggerOnInput.InputType.Key)
             {
                 EditorGUILayout.PropertyField(propKey, new GUIContent("Key"));
+                EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous"));
             }
-            EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous"));
-            if (propContinuous.boolValue)
+            else if (inputType == TriggerOnInput.InputType.Axis)
+            {
+                EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis"));
+                EditorGUILayout.PropertyField(propDeadArea, new GUIContent("Dead Area"));
+            }
+            if ((propContinuous.boolValue) || (inputType == TriggerOnInput.InputType.Axis))
             {
                 EditorGUILayout.PropertyField(propNegate, new GUIContent("Negate"));
                 if (!propNegate.boolValue)
