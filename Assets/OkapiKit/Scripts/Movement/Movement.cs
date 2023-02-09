@@ -41,7 +41,7 @@ abstract public class Movement : MonoBehaviour
 
     protected void RotateZ(float angle)
     {
-        if (rb != null)
+        if ((rb != null) && (!rb.freezeRotation))
         {
             rb.MoveRotation(rb.rotation + angle);
         }
@@ -53,7 +53,7 @@ abstract public class Movement : MonoBehaviour
 
     protected void RotateTo(Vector2 upDir, float maxAngle)
     {
-        if (rb != null)
+        if ((rb != null) && (!rb.freezeRotation))
         {
             Quaternion target = Quaternion.LookRotation(Vector3.forward, upDir);
 

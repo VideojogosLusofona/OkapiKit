@@ -90,8 +90,8 @@ public static class HypertaggedExtension
 
     public static bool HasHypertags(this GameObject go, Hypertag[] tags)
     {
-        if (tags == null) return true;
-        if (tags.Length == 0) return true;
+        if (tags == null) return false;
+        if (tags.Length == 0) return false;
 
         foreach (var tag in tags)
         {
