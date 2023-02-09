@@ -7,26 +7,48 @@ using UnityEngine;
 public class MovementRotateEditor : MovementEditor
 {
     SerializedProperty propSpeed;
-    SerializedProperty propInputEnabled;
+    SerializedProperty propMode;
     SerializedProperty propInputType;
     SerializedProperty propRotationAxis;
+    SerializedProperty propRotationAxisX;
+    SerializedProperty propRotationAxisY;
     SerializedProperty propRotationButtonPositive;
     SerializedProperty propRotationButtonNegative;
+    SerializedProperty propRotationButtonPositiveX;
+    SerializedProperty propRotationButtonNegativeX;
+    SerializedProperty propRotationButtonPositiveY;
+    SerializedProperty propRotationButtonNegativeY;
     SerializedProperty propRotationKeyPositive;
     SerializedProperty propRotationKeyNegative;
+    SerializedProperty propRotationKeyPositiveX;
+    SerializedProperty propRotationKeyNegativeX;
+    SerializedProperty propRotationKeyPositiveY;
+    SerializedProperty propRotationKeyNegativeY;
+    SerializedProperty propAxisToAlign;
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
         propSpeed = serializedObject.FindProperty("speed");
-        propInputEnabled = serializedObject.FindProperty("inputEnabled");
+        propMode = serializedObject.FindProperty("mode");
         propInputType = serializedObject.FindProperty("inputType");
         propRotationAxis = serializedObject.FindProperty("rotationAxis");
+        propRotationAxisX = serializedObject.FindProperty("rotationAxisX");
+        propRotationAxisY = serializedObject.FindProperty("rotationAxisY");
         propRotationButtonPositive = serializedObject.FindProperty("rotationButtonPositive");
         propRotationButtonNegative = serializedObject.FindProperty("rotationButtonNegative");
+        propRotationButtonPositiveX = serializedObject.FindProperty("rotationButtonPositiveX");
+        propRotationButtonNegativeX = serializedObject.FindProperty("rotationButtonNegativeX");
+        propRotationButtonPositiveY = serializedObject.FindProperty("rotationButtonPositiveY");
+        propRotationButtonNegativeY = serializedObject.FindProperty("rotationButtonNegativeY");
         propRotationKeyPositive = serializedObject.FindProperty("rotationKeyPositive");
         propRotationKeyNegative = serializedObject.FindProperty("rotationKeyNegative");
+        propRotationKeyPositiveX = serializedObject.FindProperty("rotationKeyPositiveX");
+        propRotationKeyNegativeX = serializedObject.FindProperty("rotationKeyNegativeX");
+        propRotationKeyPositiveY = serializedObject.FindProperty("rotationKeyPositiveY");
+        propRotationKeyNegativeY = serializedObject.FindProperty("rotationKeyNegativeY");
+        propAxisToAlign = serializedObject.FindProperty("axisToAlign");
     }
 
     public override void OnInspectorGUI()
@@ -38,8 +60,37 @@ public class MovementRotateEditor : MovementEditor
             EditorGUI.BeginChangeCheck();
 
             EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed"));
-            EditorGUILayout.PropertyField(propInputEnabled, new GUIContent("Use Input?"));
-            if (propInputEnabled.boolValue)
+            EditorGUILayout.PropertyField(propMode, new GUIContent("Mode"));
+            if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.InputSet)
+            {
+                EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis to align"));
+                EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type"));
+
+                var inputType = (MovementXY.InputType)propInputType.enumValueIndex;
+
+                switch (inputType)
+                {
+                    case MovementXY.InputType.Axis:
+                        EditorGUILayout.PropertyField(propRotationAxisX, new GUIContent("Axis X"));
+                        EditorGUILayout.PropertyField(propRotationAxisY, new GUIContent("Axis Y"));
+                        break;
+                    case MovementXY.InputType.Button:
+                        EditorGUILayout.PropertyField(propRotationButtonPositiveX, new GUIContent("Positive X Button"));
+                        EditorGUILayout.PropertyField(propRotationButtonNegativeX, new GUIContent("Negative X Button"));
+                        EditorGUILayout.PropertyField(propRotationButtonPositiveY, new GUIContent("Positive Y Button"));
+                        EditorGUILayout.PropertyField(propRotationButtonNegativeY, new GUIContent("Negative Y Button"));
+                        break;
+                    case MovementXY.InputType.Key:
+                        EditorGUILayout.PropertyField(propRotationKeyPositiveX, new GUIContent("Positive X Key"));
+                        EditorGUILayout.PropertyField(propRotationKeyNegativeX, new GUIContent("Negative X Key"));
+                        EditorGUILayout.PropertyField(propRotationKeyPositiveY, new GUIContent("Positive Y Key"));
+                        EditorGUILayout.PropertyField(propRotationKeyNegativeY, new GUIContent("Negative Y Key"));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.InputDelta)
             {
                 EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type"));
 

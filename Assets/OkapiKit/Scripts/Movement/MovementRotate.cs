@@ -5,29 +5,50 @@ using NaughtyAttributes;
 
 public class MovementRotate : Movement
 {
+    public enum RotateMode { Auto = 0, InputSet = 1, InputDelta = 2/*, TargetObject = 3, TargetTag = 4 */};
     public enum InputType { Axis = 0, Button = 1, Key = 2};
+    public enum Axis { UpAxis = 0, RightAxis = 1 };
 
     [SerializeField] 
     private float       speed = 200.0f;
+    [SerializeField]    
+    RotateMode          mode = RotateMode.Auto;
     [SerializeField]
-    private bool        inputEnabled;
-    [SerializeField, ShowIf("inputEnabled")]
     private InputType   inputType;
-    [SerializeField, ShowIf("axisEnabled"), InputAxis]
+    [SerializeField, InputAxis]
     private string      rotationAxis = "Horizontal";
-    [SerializeField, ShowIf("buttonEnabled")]    
+    [SerializeField]
     private string      rotationButtonPositive = "Right";
-    [SerializeField, ShowIf("buttonEnabled")]    
+    [SerializeField]
     private string      rotationButtonNegative = "Left";
-    [SerializeField, ShowIf("keyEnabled")]    
+    [SerializeField]
     private KeyCode     rotationKeyPositive = KeyCode.RightArrow;
-    [SerializeField, ShowIf("keyEnabled")]
+    [SerializeField]
     private KeyCode     rotationKeyNegative = KeyCode.LeftArrow;
+    [SerializeField, InputAxis]
+    private string      rotationAxisX = "Horizontal";
+    [SerializeField, InputAxis]
+    private string      rotationAxisY = "Vertical";
+    [SerializeField]
+    private string      rotationButtonPositiveX = "Right";
+    [SerializeField]
+    private string      rotationButtonNegativeX = "Left";
+    [SerializeField]
+    private string      rotationButtonPositiveY = "Up";
+    [SerializeField]
+    private string      rotationButtonNegativeY = "Down";
+    [SerializeField]
+    private KeyCode     rotationKeyPositiveX = KeyCode.RightArrow;
+    [SerializeField]
+    private KeyCode     rotationKeyNegativeX = KeyCode.LeftArrow;
+    [SerializeField]
+    private KeyCode     rotationKeyPositiveY = KeyCode.UpArrow;
+    [SerializeField]
+    private KeyCode     rotationKeyNegativeY = KeyCode.DownArrow;
+    [SerializeField]
+    private Axis        axisToAlign = Axis.UpAxis;
 
-    private bool axisEnabled => inputEnabled && (inputType == InputType.Axis);
-    private bool buttonEnabled => inputEnabled && (inputType == InputType.Button);
-    private bool keyEnabled => inputEnabled && (inputType == InputType.Key);
-
+    private bool inputEnabled => (mode == RotateMode.InputSet) || (mode == RotateMode.InputDelta);
 
     public override Vector2 GetSpeed() => new Vector2(speed, speed);
     public override void SetSpeed(Vector2 speed) { this.speed = speed.x; }
@@ -39,10 +60,10 @@ public class MovementRotate : Movement
     public override string GetRawDescription()
     {
         string desc = "";
-        desc += $"Rotational movement, at {speed} degrees per second.\n";
 
-        if (inputEnabled)
+        if (mode == RotateMode.InputDelta)
         {
+            desc += $"Rotational movement, at a maximum of {speed} degrees per second.\n";
             if (inputType == InputType.Axis)
             {
                 if ((rotationAxis != "") && (rotationAxis != "None"))
@@ -65,12 +86,44 @@ public class MovementRotate : Movement
                 }
             }
         }
+        else if (mode == RotateMode.InputSet)
+        {
+            desc += $"Rotational movement, at a maximum of {speed} degrees per second.\n";
+
+            string axisName = (axisToAlign == Axis.UpAxis) ? ("up") : ("right");
+
+            if (inputType == InputType.Axis)
+            {
+                if ((rotationAxisX != "") && (rotationAxisX != "None") && (rotationAxisY != "") && (rotationAxisY != "None"))
+                {
+                    desc += $"Object's {axisName} axis will point in the direction given by axis [{rotationAxisX}] and [{rotationAxisY}].\n";
+                }
+            }
+            else if (inputType == InputType.Button)
+            {
+                if ((rotationButtonNegativeX != "") || (rotationButtonPositiveX != "") && (rotationButtonNegativeY != "") || (rotationButtonPositiveY != ""))
+                {
+                    desc += $"Object's {axisName} axis will point in the direction given by buttons [{rotationButtonNegativeX}], [{rotationButtonPositiveX}], [{rotationButtonNegativeY}] and [{rotationButtonPositiveY}].\n";
+                }
+            }
+            else if (inputType == InputType.Key)
+            {
+                if ((rotationKeyNegativeX != KeyCode.None) || (rotationKeyPositiveX != KeyCode.None) || (rotationKeyNegativeY != KeyCode.None) || (rotationKeyPositiveY != KeyCode.None))
+                {
+                    desc += $"Object's {axisName} axis will point in the direction given by keys [{rotationKeyNegativeX}], [{rotationKeyPositiveX}], [{rotationKeyNegativeY}] and [{rotationKeyPositiveY}].\n";
+                }
+            }
+        }
+        else
+        {
+            desc += $"Rotational movement, at {speed} degrees per second.\n";
+        }
         return desc;
     }
 
     void FixedUpdate()
     {
-        if (inputEnabled)
+        if (mode == RotateMode.InputDelta)
         {
             float rotationValue = 0.0f;
             switch (inputType)
@@ -106,6 +159,37 @@ public class MovementRotate : Movement
             }
 
             RotateZ(rotationValue);
+        }
+        else if (mode == RotateMode.InputSet)
+        {
+            Vector2 dir = Vector2.zero;
+
+            switch (inputType)
+            {
+                case InputType.Axis:
+                    dir.x = Input.GetAxis(rotationAxisX);
+                    dir.y = Input.GetAxis(rotationAxisY);
+                    break;
+                case InputType.Button:
+                    dir.x = (Input.GetButton(rotationButtonNegativeX) ? (-1.0f) : (0.0f)) + (Input.GetButton(rotationButtonPositiveX) ? (1.0f) : (0.0f));
+                    dir.y = (Input.GetButton(rotationButtonNegativeY) ? (-1.0f) : (0.0f)) + (Input.GetButton(rotationButtonPositiveY) ? (1.0f) : (0.0f));
+                    break;
+                case InputType.Key:
+                    dir.x = (Input.GetKey(rotationKeyNegativeX) ? (-1.0f) : (0.0f)) + (Input.GetKey(rotationKeyPositiveX) ? (1.0f) : (0.0f));
+                    dir.y = (Input.GetKey(rotationKeyNegativeY) ? (-1.0f) : (0.0f)) + (Input.GetKey(rotationKeyPositiveY) ? (1.0f) : (0.0f));
+                    break;
+                default:
+                    break;
+            }
+
+            if (dir.sqrMagnitude > 1e-6)
+            {
+                dir.Normalize();
+
+                if (axisToAlign == Axis.RightAxis) dir = new Vector2(-dir.y, dir.x);
+
+                RotateTo(dir, Time.fixedDeltaTime);
+            }
         }
         else
         {
