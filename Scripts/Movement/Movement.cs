@@ -21,7 +21,7 @@ abstract public class Movement : MonoBehaviour
 
     abstract public string GetTitle();
 
-    void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -51,13 +51,13 @@ abstract public class Movement : MonoBehaviour
         }
     }
 
-    protected void RotateTo(Vector2 upDir, float maxTime)
+    protected void RotateTo(Vector2 upDir, float maxAngle)
     {
         if (rb != null)
         {
             Quaternion target = Quaternion.LookRotation(Vector3.forward, upDir);
 
-            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, target, GetSpeed().x * maxTime);
+            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, target, maxAngle);
 
             rb.MoveRotation(newRotation);
         }
@@ -65,7 +65,7 @@ abstract public class Movement : MonoBehaviour
         {
             Quaternion target = Quaternion.LookRotation(Vector3.forward, upDir);
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, GetSpeed().x * maxTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, maxAngle);
         }
     }
 
