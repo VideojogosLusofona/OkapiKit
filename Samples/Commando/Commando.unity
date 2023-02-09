@@ -5115,6 +5115,7 @@ GameObject:
   - component: {fileID: 582547632}
   - component: {fileID: 582547631}
   - component: {fileID: 582547633}
+  - component: {fileID: 582547634}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5197,7 +5198,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582547630}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea683d36c47ccf34683c3029d2ae80df, type: 3}
   m_Name: 
@@ -5221,6 +5222,39 @@ MonoBehaviour:
   horizontalKeyNegative: 276
   verticalKeyPositive: 273
   verticalKeyNegative: 274
+--- !u!114 &582547634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582547630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 880a5ca005d24084a800be5935ef4bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
+  speed: 200
+  mode: 1
+  inputType: 1
+  rotationAxis: Horizontal
+  rotationButtonPositive: Right
+  rotationButtonNegative: Left
+  rotationKeyPositive: 275
+  rotationKeyNegative: 276
+  rotationAxisX: RightHorizontal
+  rotationAxisY: RightVertical
+  rotationButtonPositiveX: Right
+  rotationButtonNegativeX: Left
+  rotationButtonPositiveY: Up
+  rotationButtonNegativeY: Down
+  rotationKeyPositiveX: 275
+  rotationKeyNegativeX: 276
+  rotationKeyPositiveY: 273
+  rotationKeyNegativeY: 274
+  axisToAlign: 1
 --- !u!1 &639838108
 GameObject:
   m_ObjectHideFlags: 0
