@@ -5,10 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public struct Condition
 {
-    [System.Serializable] public enum ValueType { None, TagCount, 
-                                                  WorldPositionX, WorldPositionY, RelativePositionX, RelativePositionY,
-                                                  AbsoluteVelocityX, AbsoluteVelocityY };
-    [System.Serializable] public enum Comparison { Equal, Less, LessEqual, Greater, GreaterEqual };
+    [System.Serializable] public enum ValueType { None = 0, TagCount = 1, 
+                                                  WorldPositionX = 2, WorldPositionY = 3, RelativePositionX = 4, RelativePositionY = 5,
+                                                  AbsoluteVelocityX = 6, AbsoluteVelocityY = 7,
+                                                  Distance = 8, Angle = 9};
+    [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5};
+    [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
 
     public VariableInstance valueHandler;
     public Variable     variable;
@@ -16,6 +18,7 @@ public struct Condition
     public Hypertag     tag;
     public Transform    sourceTransform;
     public Rigidbody2D  rigidBody;
+    public Axis         axis;
     public Comparison   comparison;
     public float        value;
     public bool         percentageCompare;
@@ -58,6 +61,14 @@ public struct Condition
             case ValueType.AbsoluteVelocityY:
                 if (rigidBody) return $"{rigidBody.name}.velocity.y";
                 return $"{gameObject.name}.velocity.y";
+            case ValueType.Distance:
+                if (tag != null) return $"DistanceTo(Tag[{tag.name}])";
+                else if (sourceTransform) return $"DistanceTo({sourceTransform.name})";
+                return $"DistanceTo([UNDEFINED])";
+            case ValueType.Angle:
+                if (tag != null) return $"AngleBetween(Tag[{tag.name}], {axis})";
+                else if (sourceTransform) return $"AngleBetween({sourceTransform.name}, {axis})";
+                return $"AngleBetween([UNDEFINED], {axis})";
         }
 
         return "[Unknown]";
@@ -73,6 +84,7 @@ public struct Condition
             case Comparison.LessEqual: desc += " <= "; break;
             case Comparison.Greater: desc += " > "; break;
             case Comparison.GreaterEqual: desc += " >= "; break;
+            case Comparison.Different: desc += " <> "; break;
             default:
                 break;
         }
@@ -137,6 +149,58 @@ public struct Condition
                     minValue = 0;
                     maxValue = float.MaxValue;
                     break;
+                case Condition.ValueType.Distance:
+                case Condition.ValueType.Angle:
+                    {
+                        Transform target = null;
+
+                        currentValue = float.MaxValue;
+
+                        if (sourceTransform) target = sourceTransform;
+                        else if (tag)
+                        {
+                            var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(tag);
+                            foreach (var obj in potentialObjects)
+                            {
+                                var d = Vector3.Distance(obj.position, gameObject.transform.position);
+                                if (d < currentValue)
+                                {
+                                    currentValue = d;
+                                    target = obj;
+                                }
+                            }
+                        }
+                        if (valueType == ValueType.Distance)
+                        {
+                            if (target)
+                            {
+                                currentValue = Vector3.Distance(gameObject.transform.position, target.position);
+                            }
+                        }
+                        else if (valueType == ValueType.Angle)
+                        {
+                            if (target)
+                            {
+                                Vector3 toObject = target.position - gameObject.transform.position;
+                                if (toObject.sqrMagnitude > 1e-6)
+                                {
+                                    toObject.Normalize();
+
+                                    Vector3 mainAxis;
+                                    if (axis == Axis.UpAxis) mainAxis = gameObject.transform.up;
+                                    else if (axis == Axis.RightAxis) mainAxis = gameObject.transform.right;
+                                    else mainAxis = gameObject.transform.up;
+
+                                    float dp = Mathf.Clamp(Vector3.Dot(toObject, mainAxis), -1.0f, 1.0f);
+                                    currentValue = Mathf.Acos(dp);
+                                    currentValue *= Mathf.Rad2Deg;
+                                }
+                            }
+                        }
+                        minValue = 0;
+                        maxValue = float.MaxValue;
+                    }
+                    break;
                 default:
                     return false;
             }
@@ -170,6 +234,9 @@ public struct Condition
                 break;
             case Condition.Comparison.GreaterEqual:
                 b = (currentValue >= value);
+                break;
+            case Condition.Comparison.Different:
+                b = (currentValue != value);
                 break;
             default:
                 break;

@@ -1,6 +1,8 @@
 - Add tooltips to everything with explanations
 - Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
+- Add HueShift/Outline effect for sprites
+- Add LookAt action
 - Add a tree view to explore objects in the games
 - Samples games:
   - Flag Catcher
@@ -9,3 +11,17 @@
   - Platformer
 - Comment Code
 - Documentation
+
+Bugs:
+-----
+- Collision detection fails because of using RigidBody2D.MovePosition() instead of actual physics
+
+Games:
+------
+- Add sounds to most games
+- Add animations to Commando game
+- Create FlagCatcher game
+- Create UI game (strategy, need to think about this a lot)
+- Create Platformer (movement system, IsGrounded test)
+- Create SpyGame (add AI system - StateMachine)
+- Create Driving (add AI system - Markov chains)
