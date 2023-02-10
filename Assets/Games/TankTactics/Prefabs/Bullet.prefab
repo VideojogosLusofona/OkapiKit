@@ -22,8 +22,6 @@ GameObject:
   - component: {fileID: 2332827236971577460}
   - component: {fileID: 6493673961000930206}
   - component: {fileID: -7210514062832317456}
-  - component: {fileID: 8282609411875047909}
-  - component: {fileID: 6810422688004762215}
   - component: {fileID: 6678443412357394557}
   m_Layer: 0
   m_Name: Bullet
@@ -445,55 +443,6 @@ MonoBehaviour:
   triggerType: 0
   triggerTags:
   - {fileID: 11400000, guid: 10fa1ca39f9fece46a76fe6c0ff4d47a, type: 2}
---- !u!114 &8282609411875047909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2364777538405152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  description: Play sound when it hits the walls or the paddles
-  enableTrigger: 1
-  allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
-  actions:
-  - delay: 0
-    action: {fileID: 6810422688004762215}
-  _explanation: "Play sound when it hits the walls or the paddles\n----------------\nWhen
-    a collision with a bounding volume starts:\n First, \n          plays sound ball_hit
-    at volume 0.25 and a pitch in the range [0.75,1.25]\n"
-  isTrigger: 0
-  eventType: 0
-  tags: []
---- !u!114 &6810422688004762215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2364777538405152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: Plays sound ball_hit at volume 0.25 and a pitch in the range [0.75,1.25]
-  clip: {fileID: 8300000, guid: 253238038a40ffc49bcdb1066d04712b, type: 3}
-  volume: {x: 0.25, y: 0.25}
-  pitch: {x: 0.75, y: 1.25}
 --- !u!114 &6678443412357394557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,7 +457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   _description: 
-  axis: 0
+  axis: 1
   speed: 10
 --- !u!1 &2364777538626597467
 GameObject:
