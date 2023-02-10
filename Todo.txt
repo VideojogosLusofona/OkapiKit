@@ -4,11 +4,6 @@
 - Add HueShift/Outline effect for sprites
 - Add LookAt action
 - Add a tree view to explore objects in the games
-- Samples games:
-  - Flag Catcher
-  - UI Game
-  - Solid Spy
-  - Platformer
 - Comment Code
 - Documentation
 
@@ -25,3 +20,5 @@ Games:
 - Create Platformer (movement system, IsGrounded test)
 - Create SpyGame (add AI system - StateMachine)
 - Create Driving (add AI system - Markov chains)
+- Create Commando 2 game (add AI system - 2d path finding)
+- Create Visual Novel game
