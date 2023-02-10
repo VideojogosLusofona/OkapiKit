@@ -6,7 +6,7 @@ using NaughtyAttributes;
 public class MovementRotate : Movement
 {
     public enum RotateMode { Auto = 0, InputSet = 1, InputDelta = 2, Target = 3 };
-    public enum InputType { Axis = 0, Button = 1, Key = 2};
+    public enum InputType { Axis = 0, Button = 1, Key = 2, Mouse = 3 };
     public enum Axis { UpAxis = 0, RightAxis = 1 };
 
     [SerializeField] 
@@ -51,6 +51,10 @@ public class MovementRotate : Movement
     private Transform   targetObject;
     [SerializeField]
     private Hypertag    targetTag;
+    [SerializeField]
+    private Camera      cameraObject;
+    [SerializeField]
+    private Hypertag    cameraTag;
 
     private bool inputEnabled => (mode == RotateMode.InputSet) || (mode == RotateMode.InputDelta);
 
@@ -90,6 +94,10 @@ public class MovementRotate : Movement
                     desc += $"[{rotationKeyNegative}] will turn counter-clockwise, and [{rotationButtonPositive}] will turn clockwise.\n";
                 }
             }
+            else if (inputType == InputType.Mouse)
+            {
+                desc += $"Object's {axisName} axis will point in the direction of the mouse.\n";
+            }
         }
         else if (mode == RotateMode.InputSet)
         {
@@ -115,6 +123,10 @@ public class MovementRotate : Movement
                 {
                     desc += $"Object's {axisName} axis will point in the direction given by keys [{rotationKeyNegativeX}], [{rotationKeyPositiveX}], [{rotationKeyNegativeY}] and [{rotationKeyPositiveY}].\n";
                 }
+            }
+            else if (inputType == InputType.Mouse)
+            {
+                desc += $"Object's {axisName} axis will point in the direction of the mouse.\n";
             }
         }
         else if (mode == RotateMode.Target)
@@ -196,6 +208,17 @@ public class MovementRotate : Movement
                     dir.x = (Input.GetKey(rotationKeyNegativeX) ? (-1.0f) : (0.0f)) + (Input.GetKey(rotationKeyPositiveX) ? (1.0f) : (0.0f));
                     dir.y = (Input.GetKey(rotationKeyNegativeY) ? (-1.0f) : (0.0f)) + (Input.GetKey(rotationKeyPositiveY) ? (1.0f) : (0.0f));
                     break;
+                case InputType.Mouse:
+                    {
+                        var camera = GetCamera();
+                        if (camera == null) dir = Vector2.zero;
+                        else
+                        {
+                            Vector3 mp = camera.ScreenToWorldPoint(Input.mousePosition);
+                            dir = mp - transform.position;
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
@@ -249,5 +272,15 @@ public class MovementRotate : Movement
         {
             RotateZ(speed * Time.fixedDeltaTime);
         }
+    }
+
+    Camera GetCamera()
+    {
+        if (cameraTag)
+        {
+            return gameObject.FindObjectOfTypeWithHypertag<Camera>(cameraTag);
+        }
+
+        return cameraObject;
     }
 }

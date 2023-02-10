@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class MovementFollow : Movement
 {
+    public enum TargetType { Tag = 0, Object = 1, Mouse = 2 };
     public enum Axis { UpAxis = 0, RightAxis = 1 };
 
     [SerializeField] private float      speed = 200.0f;
+    [SerializeField] private TargetType targetType;
     [SerializeField] private Hypertag   targetTag;
     [SerializeField] private Transform  targetObject;
     [SerializeField] private bool       relativeMovement = false;
     [SerializeField] private bool       rotateTowardsDirection = false;
     [SerializeField] private Axis       alignAxis = Axis.UpAxis;
     [SerializeField] private float      maxRotationSpeed = 360.0f;
+    [SerializeField] private Camera     cameraObject;
+    [SerializeField] private Hypertag   cameraTag;
 
-    Transform   prevTransform;
+    Transform prevTransform;
     Vector3     offset;
 
     public override Vector2 GetSpeed() => new Vector2(speed, speed);
@@ -33,16 +37,26 @@ public class MovementFollow : Movement
         }
         else
         {
-            speedDesc += $", although {speed} is set to zero!\n";
+            speedDesc += ", immediately.\n";
         }
 
-        if (targetTag != null)
+        if (targetType == TargetType.Tag)
         {
-            desc += $"Follows the closest object tagged with [{targetTag.name}]{speedDesc}";
+            if (targetTag != null)
+                desc += $"Follows the closest object tagged with [{targetTag.name}]{speedDesc}";
+            else
+                desc += $"Follows the closest object tagged with [UNDEFINED]{speedDesc}";
         }
-        else if (targetObject != null)
+        else if (targetType == TargetType.Object)
         {
-            desc += $"Follows the {targetObject.name} object{speedDesc}";
+            if (targetObject != null)
+                desc += $"Follows the {targetObject.name} object{speedDesc}";
+            else
+                desc += $"Follows the [UNDEFINED] object{speedDesc}";
+        }
+        else if (targetType == TargetType.Mouse)
+        {
+            desc += $"Follows the mouse{speedDesc}";
         }
         else
         {
@@ -70,52 +84,84 @@ public class MovementFollow : Movement
 
     void FixedUpdate()
     {
-        Transform targetTransform = null;
+        Vector3     delta = Vector3.zero;
 
-        if (targetTag)
+        if (targetType != TargetType.Mouse)
         {
-            var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(targetTag);
-            var minDist = float.MaxValue;
-            foreach (var obj in potentialObjects)
+            Transform targetTransform = null;
+
+            if (targetTag)
             {
-                var d = Vector3.Distance(obj.position, transform.position);
-                if (d < minDist)
+                var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(targetTag);
+                var minDist = float.MaxValue;
+                foreach (var obj in potentialObjects)
                 {
-                    minDist = d;
-                    targetTransform = obj;
+                    var d = Vector3.Distance(obj.position, transform.position);
+                    if (d < minDist)
+                    {
+                        minDist = d;
+                        targetTransform = obj;
+                    }
                 }
             }
-        }
-        else if (targetObject)
-        {
-            targetTransform = targetObject;
-        }
-
-        if (targetTransform != null)
-        {
-            if (prevTransform != targetTransform)
+            else if (targetObject)
             {
-                offset = transform.position - targetTransform.position;
+                targetTransform = targetObject;
             }
 
-            Vector3 delta = Vector3.MoveTowards(transform.position, targetTransform.position + offset, Time.fixedDeltaTime * speed) - transform.position;
-
-            MoveDelta(delta);
-
-            if (rotateTowardsDirection)
+            if (targetTransform != null)
             {
-                if (delta.sqrMagnitude > 1e-6)
+                if (prevTransform != targetTransform)
                 {
-                    Vector2 dir = delta;
-                    dir.Normalize();
-
-                    if (alignAxis == Axis.RightAxis) dir = new Vector2(-dir.y, dir.x);
-
-                    RotateTo(delta, maxRotationSpeed * Time.fixedDeltaTime);
+                    offset = transform.position - targetTransform.position;
                 }
+
+                if (speed == 0.0f)
+                    delta = targetTransform.position + offset - transform.position;
+                else
+                    delta = Vector3.MoveTowards(transform.position, targetTransform.position + offset, Time.fixedDeltaTime * speed) - transform.position;
+            }
+
+            prevTransform = targetTransform;
+        }
+        else
+        {
+            Camera camera = GetCamera();
+            if (camera != null)
+            {
+                Vector3 mp = camera.ScreenToWorldPoint(Input.mousePosition);
+                mp.z = transform.position.z;
+                if (speed == 0.0f)
+                    delta = mp - transform.position;
+                else
+                    delta = Vector3.MoveTowards(transform.position, mp, Time.fixedDeltaTime * speed) - transform.position;
             }
         }
 
-        prevTransform = targetTransform;
+        MoveDelta(delta);
+
+        if (rotateTowardsDirection)
+        {
+            if (delta.sqrMagnitude > 1e-6)
+            {
+                Vector2 dir = delta;
+                dir.Normalize();
+
+                if (alignAxis == Axis.RightAxis) dir = new Vector2(-dir.y, dir.x);
+
+                RotateTo(delta, maxRotationSpeed * Time.fixedDeltaTime);
+            }
+        }
     }
+
+    Camera GetCamera()
+    {
+        if (cameraTag)
+        {
+            return gameObject.FindObjectOfTypeWithHypertag<Camera>(cameraTag);
+        }
+
+        return cameraObject;
+    }
+
 }
