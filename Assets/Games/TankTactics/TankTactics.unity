@@ -2575,6 +2575,7 @@ MonoBehaviour:
     tag: {fileID: 0}
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
+    axis: 0
     comparison: 0
     value: 0
     percentageCompare: 0
@@ -2610,6 +2611,8 @@ MonoBehaviour:
   inputType: 0
   buttonName: Fire1
   key: 0
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 0
   negate: 0
   useCooldown: 0
@@ -2647,6 +2650,8 @@ MonoBehaviour:
   rotationKeyPositiveY: 273
   rotationKeyNegativeY: 274
   axisToAlign: 1
+  targetObject: {fileID: 0}
+  targetTag: {fileID: 0}
 --- !u!212 &1906407541
 SpriteRenderer:
   m_ObjectHideFlags: 0
