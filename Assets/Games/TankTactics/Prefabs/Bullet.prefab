@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 83509944139819021}
   - component: {fileID: 6678443412357394557}
   - component: {fileID: 5363562014841957682}
-  - component: {fileID: 2364777538405152198}
   - component: {fileID: 2364777538405152177}
   - component: {fileID: 2364777538405152185}
   - component: {fileID: 2364777538405152184}
@@ -117,7 +116,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &4562496420405193958
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -128,7 +127,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.5}
@@ -180,55 +179,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   description: 
-  enableTrigger: 0
+  enableTrigger: 1
   allowRetrigger: 0
   hasPreconditions: 0
   preConditions: []
   actions:
   - delay: 0
-    action: {fileID: 307906404604448511}
-  _explanation: "When a collision with a bounding volume with tags [Wall] starts:\n
-    First, \n          select a random angle between 0 and 0 and set the velocity
-    of Bullet's movement towards that direction, with a magnitude of 10\n"
-  isTrigger: 0
+    action: {fileID: 2364777538405152177}
+  _explanation: "When a collision with a trigger with tags [Wall] starts:\n First,
+    \n          select a random angle between 135 and 135 and set the velocity of
+    Bullet's movement towards that direction, with a magnitude of 10\n"
+  isTrigger: 1
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 5009fc6200a650247b168e79eceb4906, type: 2}
---- !u!114 &2364777538405152198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2364777538405152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 597b94e489d16984395e6685f78929f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  enableAction: 0
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: "Select randomly between the following actions:\n  1. select a random
-    angle between 0 and 45 and set the velocity of Bullet's movement towards that
-    direction, with a magnitude of 100 (25%)\n  2. select a random angle between
-    90 and 135 and set the velocity of Bullet's movement towards that direction,
-    with a magnitude of 100 (25%)\n  3. select a random angle between 180 and 225
-    and set the velocity of Bullet's movement towards that direction, with a magnitude
-    of 100 (25%)\n  4. select a random angle between 270 and 315 and set the velocity
-    of Bullet's movement towards that direction, with a magnitude of 100 (25%)"
-  actions:
-  - action: {fileID: 2364777538405152177}
-    probability: 25
-  - action: {fileID: 2364777538405152185}
-    probability: 25
-  - action: {fileID: 2364777538405152184}
-    probability: 25
-  - action: {fileID: 2364777538405152187}
-    probability: 25
 --- !u!114 &2364777538405152177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,9 +211,8 @@ MonoBehaviour:
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Select a random angle between 45 and -90 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 10; angles are
-    relative to the object rotation
+  _explanation: Select a random angle between 135 and 135 and set the velocity of
+    Bullet's movement towards that direction, with a magnitude of 10
   movementComponent: {fileID: 0}
   rigidBodyComponent: {fileID: 0}
   changeType: 0
@@ -257,10 +220,10 @@ MonoBehaviour:
   percentageValue: {x: 1, y: 1}
   value: {x: 1, y: 1}
   axis: 0
-  useRotation: 1
+  useRotation: 0
   useRandom: 1
-  startAngle: 45
-  endAngle: -90
+  startAngle: 135
+  endAngle: 135
   speedRange: {x: 10, y: 10}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
