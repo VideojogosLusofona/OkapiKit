@@ -11,18 +11,17 @@ GameObject:
   - component: {fileID: 2364777538405152186}
   - component: {fileID: 2364777538405152189}
   - component: {fileID: 2364777538405152188}
-  - component: {fileID: 2364777538405152191}
+  - component: {fileID: 4562496420405193958}
   - component: {fileID: 83509944139819021}
+  - component: {fileID: 6678443412357394557}
   - component: {fileID: 5363562014841957682}
   - component: {fileID: 2364777538405152198}
   - component: {fileID: 2364777538405152177}
   - component: {fileID: 2364777538405152185}
   - component: {fileID: 2364777538405152184}
   - component: {fileID: 2364777538405152187}
-  - component: {fileID: 2332827236971577460}
+  - component: {fileID: 307906404604448511}
   - component: {fileID: 6493673961000930206}
-  - component: {fileID: -7210514062832317456}
-  - component: {fileID: 6678443412357394557}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -39,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 2364777538405152176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2364777538626597464}
@@ -87,7 +86,7 @@ SpriteRenderer:
   m_SortingLayerID: 5103727
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ec403d9daf2bfa14e82771bc49a4be1e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a55482220f0c3014cb2789070c69d22a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +96,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &2364777538405152188
 Rigidbody2D:
   serializedVersion: 4
@@ -119,8 +118,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!58 &2364777538405152191
-CircleCollider2D:
+--- !u!70 &4562496420405193958
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -132,9 +131,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 8
+  m_Offset: {x: 0, y: 0.5}
+  m_Size: {x: 0.6, y: 1}
+  m_Direction: 0
 --- !u!114 &83509944139819021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +149,23 @@ MonoBehaviour:
   _showInfo: 1
   _description: 
   hypertags:
-  - {fileID: 11400000, guid: fadc2229ceb691242bd4a57e8e52cd74, type: 2}
+  - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
+--- !u!114 &6678443412357394557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364777538405152176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84ea3f6d61de144eb7d72234be6e843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
+  axis: 0
+  speed: 10
 --- !u!114 &5363562014841957682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,24 +180,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   description: 
-  enableTrigger: 1
+  enableTrigger: 0
   allowRetrigger: 0
   hasPreconditions: 0
   preConditions: []
   actions:
   - delay: 0
-    action: {fileID: 2364777538405152198}
-  _explanation: "When a collision with a trigger with tags [Wall] starts:\n First,
-    \n          select randomly between the following actions:\n              1.
-    select a random angle between 30 and 60 and set the velocity of Bullet's movement
-    towards that direction, with a magnitude of 400 (25%)\n              2. select
-    a random angle between 120 and 150 and set the velocity of Bullet's movement
-    towards that direction, with a magnitude of 400 (25%)\n              3. select
-    a random angle between 210 and 240 and set the velocity of Bullet's movement
-    towards that direction, with a magnitude of 400 (25%)\n              4. select
-    a random angle between 300 and 330 and set the velocity of Bullet's movement
-    towards that direction, with a magnitude of 400 (25%)\n"
-  isTrigger: 1
+    action: {fileID: 307906404604448511}
+  _explanation: "When a collision with a bounding volume with tags [Wall] starts:\n
+    First, \n          select a random angle between 0 and 0 and set the velocity
+    of Bullet's movement towards that direction, with a magnitude of 10\n"
+  isTrigger: 0
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 5009fc6200a650247b168e79eceb4906, type: 2}
@@ -199,18 +207,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  enableAction: 1
+  enableAction: 0
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
   _explanation: "Select randomly between the following actions:\n  1. select a random
-    angle between 30 and 180 and set the velocity of Bullet's movement towards that
+    angle between 0 and 45 and set the velocity of Bullet's movement towards that
     direction, with a magnitude of 100 (25%)\n  2. select a random angle between
-    120 and 150 and set the velocity of Bullet's movement towards that direction,
-    with a magnitude of 100 (25%)\n  3. select a random angle between 210 and 240
+    90 and 135 and set the velocity of Bullet's movement towards that direction,
+    with a magnitude of 100 (25%)\n  3. select a random angle between 180 and 225
     and set the velocity of Bullet's movement towards that direction, with a magnitude
-    of 100 (25%)\n  4. select a random angle between 300 and 330 and set the velocity
+    of 100 (25%)\n  4. select a random angle between 270 and 315 and set the velocity
     of Bullet's movement towards that direction, with a magnitude of 100 (25%)"
   actions:
   - action: {fileID: 2364777538405152177}
@@ -239,8 +247,9 @@ MonoBehaviour:
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Select a random angle between 30 and 60 and set the velocity of Bullet's
-    movement towards that direction, with a magnitude of 100
+  _explanation: Select a random angle between 45 and -90 and set the velocity of
+    Bullet's movement towards that direction, with a magnitude of 10; angles are
+    relative to the object rotation
   movementComponent: {fileID: 0}
   rigidBodyComponent: {fileID: 0}
   changeType: 0
@@ -248,11 +257,11 @@ MonoBehaviour:
   percentageValue: {x: 1, y: 1}
   value: {x: 1, y: 1}
   axis: 0
-  useRotation: 0
+  useRotation: 1
   useRandom: 1
-  startAngle: 30
-  endAngle: 60
-  speedRange: {x: 100, y: 100}
+  startAngle: 45
+  endAngle: -90
+  speedRange: {x: 10, y: 10}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
   clampSpeed: 0
@@ -275,8 +284,8 @@ MonoBehaviour:
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Select a random angle between 120 and 150 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 100
+  _explanation: Select a random angle between 135 and 180 and set the velocity of
+    Bullet's movement towards that direction, with a magnitude of 10
   movementComponent: {fileID: 0}
   rigidBodyComponent: {fileID: 0}
   changeType: 0
@@ -286,9 +295,9 @@ MonoBehaviour:
   axis: 0
   useRotation: 0
   useRandom: 1
-  startAngle: 120
-  endAngle: 150
-  speedRange: {x: 100, y: 100}
+  startAngle: 135
+  endAngle: 180
+  speedRange: {x: 10, y: 10}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
   clampSpeed: 0
@@ -311,8 +320,8 @@ MonoBehaviour:
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Select a random angle between 210 and 240 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 100
+  _explanation: Select a random angle between 225 and 270 and set the velocity of
+    Bullet's movement towards that direction, with a magnitude of 10
   movementComponent: {fileID: 0}
   rigidBodyComponent: {fileID: 0}
   changeType: 0
@@ -322,9 +331,9 @@ MonoBehaviour:
   axis: 0
   useRotation: 0
   useRandom: 1
-  startAngle: 210
-  endAngle: 240
-  speedRange: {x: 100, y: 100}
+  startAngle: 225
+  endAngle: 270
+  speedRange: {x: 10, y: 10}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
   clampSpeed: 0
@@ -347,8 +356,8 @@ MonoBehaviour:
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Select a random angle between 300 and 330 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 100
+  _explanation: Select a random angle between 315 and 360 and set the velocity of
+    Bullet's movement towards that direction, with a magnitude of 10
   movementComponent: {fileID: 0}
   rigidBodyComponent: {fileID: 0}
   changeType: 0
@@ -358,14 +367,14 @@ MonoBehaviour:
   axis: 0
   useRotation: 0
   useRandom: 1
-  startAngle: 300
-  endAngle: 330
-  speedRange: {x: 100, y: 100}
+  startAngle: 315
+  endAngle: 360
+  speedRange: {x: 10, y: 10}
   minVelocity: {x: 0, y: 0}
   maxVelocity: {x: 0, y: 0}
   clampSpeed: 0
   clampTo: {x: 0, y: 0}
---- !u!114 &2332827236971577460
+--- !u!114 &307906404604448511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,28 +383,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 2364777538405152176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  description: Destroy ball and respawn when it enters one of the boundary areas
-  enableTrigger: 0
-  allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
-  actions:
-  - delay: 1
-    action: {fileID: 6493673961000930206}
-  - delay: 0.5
-    action: {fileID: -7210514062832317456}
-  _explanation: "Destroy ball and respawn when it enters one of the boundary areas\n----------------\nWhen
-    a collision with a trigger with tags [Tag_Goal] starts:\n At 0.5 seconds, \n         
-    find actions tagged with any of [Tag_Spawner] and execute all of them.\n then,
-    at 1 seconds, \n          destroys this object\n"
-  isTrigger: 1
-  eventType: 0
-  tags:
-  - {fileID: 11400000, guid: daf14f151d7a4754cadb3d997c2cc2de, type: 2}
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 0 and 0 and set the velocity of Bullet's
+    movement towards that direction, with a magnitude of 10
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
+  changeType: 0
+  operation: 0
+  percentageValue: {x: 1, y: 1}
+  value: {x: 10, y: 10}
+  axis: 2
+  useRotation: 0
+  useRandom: 1
+  startAngle: 0
+  endAngle: 0
+  speedRange: {x: 10, y: 10}
+  minVelocity: {x: 100, y: 100}
+  maxVelocity: {x: 100, y: 100}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &6493673961000930206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,47 +432,6 @@ MonoBehaviour:
   target: 0
   targetObject: {fileID: 0}
   tags: []
---- !u!114 &-7210514062832317456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2364777538405152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d5e16b163b1cd84eb48645e1b7ff1dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  enableAction: 1
-  hasTags: 1
-  actionTags: []
-  hasConditions: 1
-  actionConditions: []
-  _explanation: Find actions tagged with any of [Tag_Spawner] and execute all of
-    them.
-  searchType: 0
-  searchTags: []
-  triggerType: 0
-  triggerTags:
-  - {fileID: 11400000, guid: 10fa1ca39f9fece46a76fe6c0ff4d47a, type: 2}
---- !u!114 &6678443412357394557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2364777538405152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c84ea3f6d61de144eb7d72234be6e843, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  _description: 
-  axis: 1
-  speed: 10
 --- !u!1 &2364777538626597467
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,8 +505,8 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 5103727
   m_SortingLayer: 3
-  m_SortingOrder: -1
-  m_Time: 0.5
+  m_SortingOrder: 5
+  m_Time: 0.25
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 8
@@ -542,19 +515,28 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.29702982
+        value: 0.05099784
+        inSlope: -0.036761276
+        outSlope: -0.036761276
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.12316688
+      - serializedVersion: 3
+        time: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.9398438, b: 0, a: 1}
+      key0: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
