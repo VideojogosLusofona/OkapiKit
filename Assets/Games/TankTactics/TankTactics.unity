@@ -1616,11 +1616,11 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1906407538}
-  _explanation: "When axis RightTrigger is pressed:\n First, \n          spawns prefab
-    Bullet at the position of object with tag [PlayerBulletSpawner]\n"
-  inputType: 2
+  _explanation: "When key C is pressed:\n First, \n          spawns prefab Bullet
+    at the position of Bullet Spawner\n"
+  inputType: 1
   buttonName: Fire1
-  key: 0
+  key: 99
   axis: RightTrigger
   deadArea: {x: -0.2, y: 0.2}
   continuous: 0

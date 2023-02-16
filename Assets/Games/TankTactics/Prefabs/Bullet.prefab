@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2364777538405152188}
   - component: {fileID: 4562496420405193958}
   - component: {fileID: 83509944139819021}
-  - component: {fileID: 6678443412357394557}
+  - component: {fileID: 6933403823850466374}
+  - component: {fileID: 2148154528363793688}
   - component: {fileID: 5363562014841957682}
   - component: {fileID: 2364777538405152177}
   - component: {fileID: 2170571333267057846}
@@ -109,7 +110,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b7f3535ef82097c43ace0018269d2e32, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -124,7 +125,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.5}
@@ -146,7 +147,7 @@ MonoBehaviour:
   _description: 
   hypertags:
   - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
---- !u!114 &6678443412357394557
+--- !u!114 &6933403823850466374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,13 +156,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 2364777538405152176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c84ea3f6d61de144eb7d72234be6e843, type: 3}
+  m_Script: {fileID: 11500000, guid: fe33e4a0e2979294d8e04d307e34bb03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 0
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 2148154528363793688}
+  _explanation: 
+--- !u!114 &2148154528363793688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364777538405152176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Select a random angle between 90 and 90 and set the velocity of Bullet's
+    rigid body towards that direction, with a magnitude of 10; angles are relative
+    to the object rotation
+  movementComponent: {fileID: 0}
+  rigidBodyComponent: {fileID: 0}
+  changeType: 0
+  operation: 0
+  percentageValue: {x: 1, y: 1}
+  value: {x: 1, y: 1}
   axis: 0
-  speed: 10
+  useRotation: 1
+  useRandom: 1
+  startAngle: 90
+  endAngle: 90
+  speedRange: {x: 10, y: 10}
+  minVelocity: {x: 10, y: 10}
+  maxVelocity: {x: 10, y: 10}
+  clampSpeed: 0
+  clampTo: {x: 0, y: 0}
 --- !u!114 &5363562014841957682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,17 +220,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   description: 
-  enableTrigger: 1
+  enableTrigger: 0
   allowRetrigger: 0
   hasPreconditions: 0
   preConditions: []
   actions:
   - delay: 0
     action: {fileID: 2364777538405152177}
-  _explanation: "When a collision with a trigger with tags [Wall] starts:\n First,
-    \n          select a random angle between 135 and 135 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 10\n"
-  isTrigger: 1
+  _explanation: "When a collision with a bounding volume with tags [Wall] starts:\n
+    First, \n          select a random velocity between (10.00, 10.00) and (10.00,
+    10.00) and set it to Bullet's rigid body.\n"
+  isTrigger: 0
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 5009fc6200a650247b168e79eceb4906, type: 2}
@@ -208,8 +252,8 @@ MonoBehaviour:
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Select a random angle between 135 and 135 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 10
+  _explanation: Select a random velocity between (10.00, 10.00) and (10.00, 10.00)
+    and set it to Bullet's movement.
   movementComponent: {fileID: 0}
   rigidBodyComponent: {fileID: 0}
   changeType: 0
@@ -218,12 +262,12 @@ MonoBehaviour:
   value: {x: 1, y: 1}
   axis: 0
   useRotation: 0
-  useRandom: 1
+  useRandom: 0
   startAngle: 135
   endAngle: 135
   speedRange: {x: 10, y: 10}
-  minVelocity: {x: 0, y: 0}
-  maxVelocity: {x: 0, y: 0}
+  minVelocity: {x: 10, y: 10}
+  maxVelocity: {x: 10, y: 10}
   clampSpeed: 0
   clampTo: {x: 0, y: 0}
 --- !u!114 &2170571333267057846
