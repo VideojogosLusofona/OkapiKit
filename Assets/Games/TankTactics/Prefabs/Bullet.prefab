@@ -16,10 +16,7 @@ GameObject:
   - component: {fileID: 6678443412357394557}
   - component: {fileID: 5363562014841957682}
   - component: {fileID: 2364777538405152177}
-  - component: {fileID: 2364777538405152185}
-  - component: {fileID: 2364777538405152184}
-  - component: {fileID: 2364777538405152187}
-  - component: {fileID: 307906404604448511}
+  - component: {fileID: 2170571333267057846}
   - component: {fileID: 6493673961000930206}
   m_Layer: 0
   m_Name: Bullet
@@ -112,7 +109,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: b7f3535ef82097c43ace0018269d2e32, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -229,7 +226,7 @@ MonoBehaviour:
   maxVelocity: {x: 0, y: 0}
   clampSpeed: 0
   clampTo: {x: 0, y: 0}
---- !u!114 &2364777538405152185
+--- !u!114 &2170571333267057846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -238,141 +235,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2364777538405152176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 46216fa097ecb754babda0f26d640422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: Select a random angle between 135 and 180 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 10
-  movementComponent: {fileID: 0}
-  rigidBodyComponent: {fileID: 0}
-  changeType: 0
-  operation: 0
-  percentageValue: {x: 1, y: 1}
-  value: {x: 1, y: 1}
-  axis: 0
-  useRotation: 0
-  useRandom: 1
-  startAngle: 135
-  endAngle: 180
-  speedRange: {x: 10, y: 10}
-  minVelocity: {x: 0, y: 0}
-  maxVelocity: {x: 0, y: 0}
-  clampSpeed: 0
-  clampTo: {x: 0, y: 0}
---- !u!114 &2364777538405152184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2364777538405152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: Select a random angle between 225 and 270 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 10
-  movementComponent: {fileID: 0}
-  rigidBodyComponent: {fileID: 0}
-  changeType: 0
-  operation: 0
-  percentageValue: {x: 1, y: 1}
-  value: {x: 1, y: 1}
-  axis: 0
-  useRotation: 0
-  useRandom: 1
-  startAngle: 225
-  endAngle: 270
-  speedRange: {x: 10, y: 10}
-  minVelocity: {x: 0, y: 0}
-  maxVelocity: {x: 0, y: 0}
-  clampSpeed: 0
-  clampTo: {x: 0, y: 0}
---- !u!114 &2364777538405152187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2364777538405152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: Select a random angle between 315 and 360 and set the velocity of
-    Bullet's movement towards that direction, with a magnitude of 10
-  movementComponent: {fileID: 0}
-  rigidBodyComponent: {fileID: 0}
-  changeType: 0
-  operation: 0
-  percentageValue: {x: 1, y: 1}
-  value: {x: 1, y: 1}
-  axis: 0
-  useRotation: 0
-  useRandom: 1
-  startAngle: 315
-  endAngle: 360
-  speedRange: {x: 10, y: 10}
-  minVelocity: {x: 0, y: 0}
-  maxVelocity: {x: 0, y: 0}
-  clampSpeed: 0
-  clampTo: {x: 0, y: 0}
---- !u!114 &307906404604448511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2364777538405152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498532aa2f19d4942a1eb319f65735d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  _explanation: Select a random angle between 0 and 0 and set the velocity of Bullet's
-    movement towards that direction, with a magnitude of 10
-  movementComponent: {fileID: 0}
-  rigidBodyComponent: {fileID: 0}
-  changeType: 0
-  operation: 0
-  percentageValue: {x: 1, y: 1}
-  value: {x: 10, y: 10}
-  axis: 2
-  useRotation: 0
-  useRandom: 1
-  startAngle: 0
-  endAngle: 0
-  speedRange: {x: 10, y: 10}
-  minVelocity: {x: 100, y: 100}
-  maxVelocity: {x: 100, y: 100}
-  clampSpeed: 0
-  clampTo: {x: 0, y: 0}
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 6493673961000930206}
+  _explanation: 
+  startTriggered: 0
+  timeInterval: {x: 5, y: 5}
 --- !u!114 &6493673961000930206
 MonoBehaviour:
   m_ObjectHideFlags: 0
