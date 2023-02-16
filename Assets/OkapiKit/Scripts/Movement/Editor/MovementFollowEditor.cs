@@ -7,24 +7,30 @@ using UnityEngine;
 public class MovementFollowEditor : MovementEditor
 {
     SerializedProperty propSpeed;
+    SerializedProperty propTargetType;
     SerializedProperty propTargetTag;
     SerializedProperty propTargetObject;
     SerializedProperty propRelativeMovement;
     SerializedProperty propRotateTowardsDirection;
     SerializedProperty propAlignAxis;
     SerializedProperty propMaxRotationSpeed;
+    SerializedProperty propCameraObject;
+    SerializedProperty propCameraTag;
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
         propSpeed = serializedObject.FindProperty("speed");
+        propTargetType = serializedObject.FindProperty("targetType"); ;
         propTargetTag = serializedObject.FindProperty("targetTag"); ;
         propTargetObject = serializedObject.FindProperty("targetObject"); ;
         propRelativeMovement = serializedObject.FindProperty("relativeMovement"); ;
         propRotateTowardsDirection = serializedObject.FindProperty("rotateTowardsDirection"); ;
         propAlignAxis = serializedObject.FindProperty("alignAxis"); ;
         propMaxRotationSpeed = serializedObject.FindProperty("maxRotationSpeed"); ;
+        propCameraObject = serializedObject.FindProperty("cameraObject"); ;
+        propCameraTag = serializedObject.FindProperty("cameraTag"); ;
     }
 
     public override void OnInspectorGUI()
@@ -36,23 +42,43 @@ public class MovementFollowEditor : MovementEditor
             EditorGUI.BeginChangeCheck();
 
             EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed"));
-            if (propTargetTag.objectReferenceValue == null)
+            EditorGUILayout.PropertyField(propTargetType, new GUIContent("Target Type"));
+
+            MovementFollow.TargetType type = (MovementFollow.TargetType)propTargetType.enumValueIndex;
+            switch (type)
             {
-                if (propTargetObject.objectReferenceValue == null)
-                {
+                case MovementFollow.TargetType.Tag:
                     EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
+                    break;
+                case MovementFollow.TargetType.Object:
                     EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
-                }
-                else
-                {
-                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
-                }
+                    break;
+                case MovementFollow.TargetType.Mouse:
+                    if (propCameraTag.objectReferenceValue == null)
+                    {
+                        if (propCameraObject.objectReferenceValue == null)
+                        {
+                            EditorGUILayout.PropertyField(propCameraTag, new GUIContent("Camera Tag"));
+                            EditorGUILayout.PropertyField(propCameraObject, new GUIContent("Camera Object"));
+                        }
+                        else
+                        {
+                            EditorGUILayout.PropertyField(propCameraObject, new GUIContent("Camera Object"));
+                        }
+                    }
+                    else
+                    {
+                        EditorGUILayout.PropertyField(propCameraTag, new GUIContent("Camera Tag"));
+                    }
+                    break;
+                default:
+                    break;
             }
-            else
+
+            if (type != MovementFollow.TargetType.Mouse)
             {
-                EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
+                EditorGUILayout.PropertyField(propRelativeMovement, new GUIContent("Relative Movement"));
             }
-            EditorGUILayout.PropertyField(propRelativeMovement, new GUIContent("Relative Movement"));
             EditorGUILayout.PropertyField(propRotateTowardsDirection, new GUIContent("Align With Direction"));
             if (propRotateTowardsDirection.boolValue)
             {

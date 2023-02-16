@@ -5531,6 +5531,8 @@ GameObject:
   - component: {fileID: 582547632}
   - component: {fileID: 582547631}
   - component: {fileID: 582547634}
+  - component: {fileID: 582547635}
+  - component: {fileID: 582547636}
   m_Layer: 0
   m_Name: Rotation
   m_TagString: Untagged
@@ -5615,13 +5617,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582547630}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 880a5ca005d24084a800be5935ef4bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _description: 'This part of the example shows 3 ways of controlling rotation, twin-stick
+    shooter like:
+
+    This one is by using the right analog stick on the controller'
   speed: 200
   mode: 1
   inputType: 0
@@ -5643,6 +5648,87 @@ MonoBehaviour:
   axisToAlign: 1
   targetObject: {fileID: 0}
   targetTag: {fileID: 0}
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 0}
+--- !u!114 &582547635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582547630}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 880a5ca005d24084a800be5935ef4bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 'This part of the example shows 3 ways of controlling rotation, twin-stick
+    shooter like:
+
+    This one is by using mouse input on the rotate movement'
+  speed: 200
+  mode: 1
+  inputType: 3
+  rotationAxis: Horizontal
+  rotationButtonPositive: Right
+  rotationButtonNegative: Left
+  rotationKeyPositive: 275
+  rotationKeyNegative: 276
+  rotationAxisX: Horizontal
+  rotationAxisY: Vertical
+  rotationButtonPositiveX: Right
+  rotationButtonNegativeX: Left
+  rotationButtonPositiveY: Up
+  rotationButtonNegativeY: Down
+  rotationKeyPositiveX: 275
+  rotationKeyNegativeX: 276
+  rotationKeyPositiveY: 273
+  rotationKeyNegativeY: 274
+  axisToAlign: 1
+  targetObject: {fileID: 0}
+  targetTag: {fileID: 0}
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 11400000, guid: 2f478aa6dec00f3449f3977690be69d6, type: 2}
+--- !u!114 &582547636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582547630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 880a5ca005d24084a800be5935ef4bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: "This part of the example shows 3 ways of controlling rotation, twin-stick
+    shooter like:\nThis one is by aiming towards an object that is tagged with mouse
+    cursor. In this case, that's an actual \ncursor object (Crosshair)"
+  speed: 200
+  mode: 3
+  inputType: 0
+  rotationAxis: Horizontal
+  rotationButtonPositive: Right
+  rotationButtonNegative: Left
+  rotationKeyPositive: 275
+  rotationKeyNegative: 276
+  rotationAxisX: Horizontal
+  rotationAxisY: Vertical
+  rotationButtonPositiveX: Right
+  rotationButtonNegativeX: Left
+  rotationButtonPositiveY: Up
+  rotationButtonNegativeY: Down
+  rotationKeyPositiveX: 275
+  rotationKeyNegativeX: 276
+  rotationKeyPositiveY: 273
+  rotationKeyNegativeY: 274
+  axisToAlign: 1
+  targetObject: {fileID: 0}
+  targetTag: {fileID: 11400000, guid: 0592c610a1215f84582e72c26d3529a0, type: 2}
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 0}
 --- !u!4 &585726458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6331027738892186350, guid: 5867fe65c3ef5684b8eb275e6304b371, type: 3}
@@ -6861,7 +6947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea683d36c47ccf34683c3029d2ae80df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   _description: 
   speed: {x: 400, y: 400}
   useRotation: 0
@@ -6910,7 +6996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -6935,7 +7021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 1
+  _showInfo: 0
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -7389,6 +7475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1482789966}
   - component: {fileID: 1482789969}
+  - component: {fileID: 1482789972}
   - component: {fileID: 1482789968}
   - component: {fileID: 1482789971}
   m_Layer: 0
@@ -7495,11 +7582,218 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   strength: 2
   duration: 0.05
+--- !u!114 &1482789972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482789965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1482789968}
+  - delay: 0
+    action: {fileID: 1482789971}
+  _explanation: "When button Fire1 is held (this can only happen every 0.15 seconds):\n
+    First, \n          spawns prefab PlayerBullet at the position of this object
+    (Shooter)\n          shakes the object with tag [Camera] with intensity 2 for
+    0.05 seconds\n"
+  inputType: 0
+  buttonName: Fire1
+  key: 0
+  axis: RightTrigger
+  deadArea: {x: -0.2, y: 0.2}
+  continuous: 1
+  negate: 0
+  useCooldown: 1
+  cooldown: 0.15
 --- !u!4 &1503336612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8910345220579811354, guid: 4ab1524b21c8ee9429c1ce3d221f1b38, type: 3}
   m_PrefabInstance: {fileID: 740096773865433664}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1534015948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1534015951}
+  - component: {fileID: 1534015950}
+  - component: {fileID: 1534015952}
+  - component: {fileID: 1534015949}
+  - component: {fileID: 1534015954}
+  - component: {fileID: 1534015953}
+  m_Layer: 0
+  m_Name: Crosshair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1534015949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534015948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a821a52a563d1854e98869fa6bd62ee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
+  speed: 0
+  targetType: 2
+  targetTag: {fileID: 0}
+  targetObject: {fileID: 0}
+  relativeMovement: 0
+  rotateTowardsDirection: 0
+  alignAxis: 0
+  maxRotationSpeed: 360
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 11400000, guid: 2f478aa6dec00f3449f3977690be69d6, type: 2}
+--- !u!212 &1534015950
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534015948}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: 1788cdc424d6db447abd98e1ba4271a3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 32, y: 32}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1534015951
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534015948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4453, y: -2257, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1534015952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534015948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
+  hypertags:
+  - {fileID: 11400000, guid: 0592c610a1215f84582e72c26d3529a0, type: 2}
+--- !u!114 &1534015953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534015948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b2252041373d44cbdba7fe2e166dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  _explanation: Disables mouse cursor
+  changeType: 0
+  state: 1
+--- !u!114 &1534015954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534015948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe33e4a0e2979294d8e04d307e34bb03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1534015953}
+  _explanation: "When Start is called:\n First, \n          disables mouse cursor\n"
 --- !u!4 &1540358567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8612933414904547691, guid: caaecf73e9281744385a8659b802987c, type: 3}

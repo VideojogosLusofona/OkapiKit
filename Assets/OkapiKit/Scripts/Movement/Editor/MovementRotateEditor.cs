@@ -27,6 +27,8 @@ public class MovementRotateEditor : MovementEditor
     SerializedProperty propAxisToAlign;
     SerializedProperty propTargetTag;
     SerializedProperty propTargetObject;
+    SerializedProperty propCameraTag;
+    SerializedProperty propCameraObject;
 
     protected override void OnEnable()
     {
@@ -53,6 +55,8 @@ public class MovementRotateEditor : MovementEditor
         propAxisToAlign = serializedObject.FindProperty("axisToAlign");
         propTargetTag = serializedObject.FindProperty("targetTag"); ;
         propTargetObject = serializedObject.FindProperty("targetObject"); ;
+        propCameraTag = serializedObject.FindProperty("cameraTag"); ;
+        propCameraObject = serializedObject.FindProperty("cameraObject"); ;
     }
 
     public override void OnInspectorGUI()
@@ -70,25 +74,43 @@ public class MovementRotateEditor : MovementEditor
                 EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align"));
                 EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type"));
 
-                var inputType = (MovementXY.InputType)propInputType.enumValueIndex;
+                var inputType = (MovementRotate.InputType)propInputType.enumValueIndex;
 
                 switch (inputType)
                 {
-                    case MovementXY.InputType.Axis:
+                    case MovementRotate.InputType.Axis:
                         EditorGUILayout.PropertyField(propRotationAxisX, new GUIContent("Axis X"));
                         EditorGUILayout.PropertyField(propRotationAxisY, new GUIContent("Axis Y"));
                         break;
-                    case MovementXY.InputType.Button:
+                    case MovementRotate.InputType.Button:
                         EditorGUILayout.PropertyField(propRotationButtonPositiveX, new GUIContent("Positive X Button"));
                         EditorGUILayout.PropertyField(propRotationButtonNegativeX, new GUIContent("Negative X Button"));
                         EditorGUILayout.PropertyField(propRotationButtonPositiveY, new GUIContent("Positive Y Button"));
                         EditorGUILayout.PropertyField(propRotationButtonNegativeY, new GUIContent("Negative Y Button"));
                         break;
-                    case MovementXY.InputType.Key:
+                    case MovementRotate.InputType.Key:
                         EditorGUILayout.PropertyField(propRotationKeyPositiveX, new GUIContent("Positive X Key"));
                         EditorGUILayout.PropertyField(propRotationKeyNegativeX, new GUIContent("Negative X Key"));
                         EditorGUILayout.PropertyField(propRotationKeyPositiveY, new GUIContent("Positive Y Key"));
                         EditorGUILayout.PropertyField(propRotationKeyNegativeY, new GUIContent("Negative Y Key"));
+                        break;
+                    case MovementRotate.InputType.Mouse:
+                        if (propCameraTag.objectReferenceValue == null)
+                        {
+                            if (propCameraObject.objectReferenceValue == null)
+                            {
+                                EditorGUILayout.PropertyField(propCameraTag, new GUIContent("Camera Tag"));
+                                EditorGUILayout.PropertyField(propCameraObject, new GUIContent("Camera Object"));
+                            }
+                            else
+                            {
+                                EditorGUILayout.PropertyField(propCameraObject, new GUIContent("Camera Object"));
+                            }
+                        }
+                        else
+                        {
+                            EditorGUILayout.PropertyField(propCameraTag, new GUIContent("Camera Tag"));
+                        }
                         break;
                     default:
                         break;
@@ -98,20 +120,38 @@ public class MovementRotateEditor : MovementEditor
             {
                 EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type"));
 
-                var inputType = (MovementXY.InputType)propInputType.enumValueIndex;
+                var inputType = (MovementRotate.InputType)propInputType.enumValueIndex;
 
                 switch (inputType)
                 {
-                    case MovementXY.InputType.Axis:
+                    case MovementRotate.InputType.Axis:
                         EditorGUILayout.PropertyField(propRotationAxis, new GUIContent("Rotation Axis"));
                         break;
-                    case MovementXY.InputType.Button:
+                    case MovementRotate.InputType.Button:
                         EditorGUILayout.PropertyField(propRotationButtonPositive, new GUIContent("Counter-Clockwise Button"));
                         EditorGUILayout.PropertyField(propRotationButtonNegative, new GUIContent("Clockwise Button"));
                         break;
-                    case MovementXY.InputType.Key:
+                    case MovementRotate.InputType.Key:
                         EditorGUILayout.PropertyField(propRotationKeyPositive, new GUIContent("Counter-Clockwise Key"));
                         EditorGUILayout.PropertyField(propRotationKeyNegative, new GUIContent("Clockwise Key"));
+                        break;
+                    case MovementRotate.InputType.Mouse:
+                        if (propCameraTag.objectReferenceValue == null)
+                        {
+                            if (propCameraObject.objectReferenceValue == null)
+                            {
+                                EditorGUILayout.PropertyField(propCameraTag, new GUIContent("Camera Tag"));
+                                EditorGUILayout.PropertyField(propCameraObject, new GUIContent("Camera Object"));
+                            }
+                            else
+                            {
+                                EditorGUILayout.PropertyField(propCameraObject, new GUIContent("Camera Object"));
+                            }
+                        }
+                        else
+                        {
+                            EditorGUILayout.PropertyField(propCameraTag, new GUIContent("Camera Tag"));
+                        }
                         break;
                     default:
                         break;
