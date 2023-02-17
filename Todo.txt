@@ -4,6 +4,8 @@
 - Unify ValueHandler/Value with single selector that can take any of them
 - Add HueShift/Outline effect for sprites
 - Add LookAt action
+- Add common code to Editor (all objects derive from it)
+- Common class to all Okapi systems
 - Warning/Error system
   - Error: Set scene object to prefab
   - Warning: No actions
@@ -39,6 +41,11 @@ Bugs:
 - Some text gets wrapped instead of clipped on titles of text boxes
 - Be consistent in use of Self/This
 - Preserve velocity with Movement
+- Refresh on OnTriggerReset is not working properly
+
+Polish:
+-------
+- Rounded corners on title boxes
 
 Games:
 ------
