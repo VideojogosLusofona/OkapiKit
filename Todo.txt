@@ -4,7 +4,6 @@
 - Unify ValueHandler/Value with single selector that can take any of them
 - Add HueShift/Outline effect for sprites
 - Add LookAt action
-- Add a tree view to explore objects in the games
 - Warning/Error system
   - Error: Set scene object to prefab
   - Warning: No actions
@@ -21,6 +20,11 @@ Usability:
 - Enable drag/drop of action into actions (ActionRandom, Triggers)
 - Highlight action by clicking/scroll there (not sure if possible)
 - How to make simple actions more accessible? (see Simple Usage)
+- Add a tree view to explore objects in the games
+  - Add triggers/actions directly in the objects
+  - Have the ability to have custom adds (SetVisibility, SetVelocity, etc)
+- Add node ID property to actions/triggers
+- Enable debug system for nodes 
 
 Simple usage:
 -------------
