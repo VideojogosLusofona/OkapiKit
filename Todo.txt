@@ -1,15 +1,40 @@
 - Add tooltips to everything with explanations
 - Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
+- Unify ValueHandler/Value with single selector that can take any of them
 - Add HueShift/Outline effect for sprites
 - Add LookAt action
 - Add a tree view to explore objects in the games
+- Warning/Error system
+  - Error: Set scene object to prefab
+  - Warning: No actions
+  - Warning: No probabilities set for ActionRandom
+  - Warning: No tags set for OnCollision
+- Remove TriggerRandom
+- Icons on Okapi scripts
+- Replace code icons with actual icons (polutes images, but it's faster and less error prone)
 - Comment Code
 - Documentation
+
+Usability:
+----------
+- Enable drag/drop of action into actions (ActionRandom, Triggers)
+- Highlight action by clicking/scroll there (not sure if possible)
+- How to make simple actions more accessible? (see Simple Usage)
+
+Simple usage:
+-------------
+- Maybe create a wizard?
+- Set object visible/invisible
+- Set object velocity
 
 Bugs:
 -----
 - Collision detection fails because of using RigidBody2D.MovePosition() instead of actual physics
+- Set defaults for ActionRandom to 1 instead of 0 (change text)
+- Some text gets wrapped instead of clipped on titles of text boxes
+- Be consistent in use of Self/This
+- Preserve velocity with Movement
 
 Games:
 ------
