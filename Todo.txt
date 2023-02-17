@@ -11,6 +11,7 @@
   - Warning: No actions
   - Warning: No probabilities set for ActionRandom
   - Warning: No tags set for OnCollision
+  - Warning: Change values with deltaValue = 0
 - Remove TriggerRandom
 - Icons on Okapi scripts
 - Replace code icons with actual icons (polutes images, but it's faster and less error prone)
