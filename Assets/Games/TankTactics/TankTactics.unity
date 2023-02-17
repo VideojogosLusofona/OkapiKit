@@ -402,45 +402,14 @@ GameObject:
   - component: {fileID: 446667230}
   - component: {fileID: 446667229}
   - component: {fileID: 446667228}
-  - component: {fileID: 446667227}
+  - component: {fileID: 446667231}
   m_Layer: 0
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &446667227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446667226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea683d36c47ccf34683c3029d2ae80df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  _description: 
-  speed: {x: 0, y: 0}
-  useRotation: 0
-  turnToDirection: 0
-  axisToAlign: 0
-  maxTurnSpeed: 360
-  inputEnabled: 1
-  inputType: 0
-  horizontalAxis: Mouse X
-  verticalAxis: Mouse Y
-  horizontalButtonPositive: Right
-  horizontalButtonNegative: Left
-  verticalButtonPositive: Up
-  verticalButtonNegative: Down
-  horizontalKeyPositive: 275
-  horizontalKeyNegative: 276
-  verticalKeyPositive: 273
-  verticalKeyNegative: 274
+  m_IsActive: 1
 --- !u!114 &446667228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,6 +493,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &446667231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446667226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a821a52a563d1854e98869fa6bd62ee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _description: 
+  speed: 0
+  targetType: 2
+  targetTag: {fileID: 0}
+  targetObject: {fileID: 0}
+  relativeMovement: 0
+  rotateTowardsDirection: 0
+  alignAxis: 0
+  maxRotationSpeed: 360
+  cameraObject: {fileID: 162631899}
+  cameraTag: {fileID: 0}
 --- !u!1 &835268121
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,6 +622,8 @@ MonoBehaviour:
   axisToAlign: 0
   targetObject: {fileID: 0}
   targetTag: {fileID: 11400000, guid: 1e7c9d7a9c88a3b41bc3a78e56999984, type: 2}
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 0}
 --- !u!212 &835268126
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1616,9 +1611,9 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1906407538}
-  _explanation: "When key C is pressed:\n First, \n          spawns prefab Bullet
-    at the position of Bullet Spawner\n"
-  inputType: 1
+  _explanation: "When button Fire1 is pressed:\n First, \n          spawns prefab
+    Bullet at the position of Bullet Spawner\n"
+  inputType: 0
   buttonName: Fire1
   key: 99
   axis: RightTrigger
@@ -1642,7 +1637,7 @@ MonoBehaviour:
   _showInfo: 1
   _description: 
   speed: 1000
-  mode: 1
+  mode: 3
   inputType: 0
   rotationAxis: Mouse X
   rotationButtonPositive: Right
@@ -1661,7 +1656,9 @@ MonoBehaviour:
   rotationKeyNegativeY: 274
   axisToAlign: 0
   targetObject: {fileID: 0}
-  targetTag: {fileID: 0}
+  targetTag: {fileID: 11400000, guid: be6b7975d21e46240a04fa5bac0e2745, type: 2}
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 0}
 --- !u!212 &1906407541
 SpriteRenderer:
   m_ObjectHideFlags: 0
