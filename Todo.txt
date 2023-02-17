@@ -14,6 +14,7 @@
 - Remove TriggerRandom
 - Icons on Okapi scripts
 - Replace code icons with actual icons (polutes images, but it's faster and less error prone)
+- Rotate Towards Movement Direction
 - Comment Code
 - Documentation
 
@@ -27,12 +28,19 @@ Usability:
   - Have the ability to have custom adds (SetVisibility, SetVelocity, etc)
 - Add node ID property to actions/triggers
 - Enable debug system for nodes 
+- No info on tagged actions
+- Value Display Text should use a formatting string instead the text in the edit box
 
 Simple usage:
 -------------
 - Maybe create a wizard?
 - Set object visible/invisible
 - Set object velocity
+
+Videos:
+-------
+- Ricochet bullet
+- Look at player
 
 Bugs:
 -----
@@ -42,6 +50,8 @@ Bugs:
 - Be consistent in use of Self/This
 - Preserve velocity with Movement
 - Refresh on OnTriggerReset is not working properly
+- Refresh on OnTriggerInput is not working properly
+
 
 Polish:
 -------
