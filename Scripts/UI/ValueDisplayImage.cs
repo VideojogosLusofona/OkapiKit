@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ValueDisplayImage : ValueDisplay
 {
+    public override string GetRawDescription(string ident, GameObject refObject)
+    {
+        return "This component turns the children of this object on/off depending on the value of the variable.";
+    }
+
     // Update is called once per frame
     void Update()
     {

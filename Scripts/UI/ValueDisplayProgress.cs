@@ -10,7 +10,7 @@ public class ValueDisplayProgress : ValueDisplay
     private RectTransform  fill;
     [SerializeField] 
     private bool           setColor;
-    [SerializeField, ShowIf("setColor")] 
+    [SerializeField] 
     private Gradient       color;
 
     private Image fillImage;
@@ -34,4 +34,17 @@ public class ValueDisplayProgress : ValueDisplay
             fillImage.color = color.Evaluate(t);
         }
     }
+
+    public override string GetRawDescription(string ident, GameObject refObject)
+    {
+        var desc = "This component displays the value as a progress bar.";
+
+        if (setColor)
+        {
+            desc += "\nIt also sets the color of the fill rectangle according to the gradient.";
+        }
+
+        return desc;
+    }
+
 }

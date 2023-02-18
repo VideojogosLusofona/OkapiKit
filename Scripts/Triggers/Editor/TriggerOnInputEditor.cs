@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.MaterialProperty;
 
 [CustomEditor(typeof(TriggerOnInput))]
 public class TriggerOnInputEditor : TriggerEditor
@@ -32,13 +31,9 @@ public class TriggerOnInputEditor : TriggerEditor
         propCooldown = serializedObject.FindProperty("cooldown");
     }
 
-    public override Texture2D GetIcon()
+    protected override Texture2D GetIcon()
     {
-        var varTexture = GUIUtils.GetTexture("InputTexture");
-        if (varTexture == null)
-        {
-            varTexture = GUIUtils.AddTexture("InputTexture", new CodeBitmaps.Input());
-        }
+        var varTexture = GUIUtils.GetTexture("Input");
 
         return varTexture;
     }
@@ -87,11 +82,7 @@ public class TriggerOnInputEditor : TriggerEditor
                 }
             }
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Trigger).UpdateExplanation();
-            }
+            EditorGUI.EndChangeCheck();
 
             ActionPanel();
         }

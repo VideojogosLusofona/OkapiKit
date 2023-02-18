@@ -37,4 +37,10 @@ public class ValueDisplayText : ValueDisplay
         if (textGUI) textGUI.text = txt;
         if (textScene) textScene.text = txt;
     }
+
+    public override string GetRawDescription(string ident, GameObject refObject)
+    {
+        return "This component displays the variable as text.\nThere has to be a text component on this object with the C# text formatter string set.";
+    }
+
 }

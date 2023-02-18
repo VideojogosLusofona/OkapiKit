@@ -16,7 +16,7 @@ public class TriggerOnCollision : Trigger
 
     public override string GetTriggerTitle() { return "On Collision"; }
 
-    protected override string GetRawDescription()
+    public override string GetRawDescription(string ident, GameObject refObject)
     {
         var desc = "";
         if (eventType == CollisionEvent.Stay) desc = "While a collision with ";

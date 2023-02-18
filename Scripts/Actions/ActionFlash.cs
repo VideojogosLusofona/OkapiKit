@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
-using static UnityEngine.CullingGroup;
 
 public class ActionFlash : Action
 {

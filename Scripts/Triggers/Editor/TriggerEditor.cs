@@ -1,27 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using static UnityEngine.Rendering.DebugUI.MessageBox;
 using System.Linq;
 
 [CustomEditor(typeof(Trigger))]
-public class TriggerEditor : Editor
+public class TriggerEditor : OkapiBaseEditor
 {
-    SerializedProperty propShowInfo;
-    SerializedProperty propDescription;
-    SerializedProperty propExplanation;
     SerializedProperty propEnableTrigger;
     SerializedProperty propAllowRetrigger;
     SerializedProperty propHasConditions;
     SerializedProperty propConditions;
     SerializedProperty propActions;
 
-    protected virtual void OnEnable()
+    protected override void OnEnable()
     {
-        propShowInfo = serializedObject.FindProperty("_showInfo");
-        propDescription = serializedObject.FindProperty("description");
-        propExplanation = serializedObject.FindProperty("_explanation");
+        base.OnEnable();
+
         propEnableTrigger = serializedObject.FindProperty("enableTrigger");
         propAllowRetrigger = serializedObject.FindProperty("allowRetrigger");
         propHasConditions = serializedObject.FindProperty("hasPreconditions");
@@ -37,103 +30,12 @@ public class TriggerEditor : Editor
         }
     }
 
-    public virtual Texture2D GetIcon()
+    protected override Texture2D GetIcon()
     {
-        var varTexture = GUIUtils.GetTexture("TriggerTexture");
-        if (varTexture == null)
-        {
-            varTexture = GUIUtils.AddTexture("TriggerTexture", new CodeBitmaps.Trigger());
-        }
+        var varTexture = GUIUtils.GetTexture("Trigger");
 
         return varTexture;
     }
-
-
-    protected virtual bool WriteTitle()
-    {
-        Trigger trigger = target as Trigger;
-        if (trigger == null) { return true; }
-
-        GUIStyle styleTitle = GUIUtils.GetTriggerTitleStyle();
-        GUIStyle explanationStyle = GUIUtils.GetTriggerExplanationStyle();
-
-        var backgroundColor = GUIUtils.ColorFromHex("#D0FFFF");
-        var textColor = GUIUtils.ColorFromHex("#2f4858");
-        var separatorColor = GUIUtils.ColorFromHex("#86CBFF");
-
-        // Compute explanation text height
-        string explanation = propExplanation.stringValue;
-        int explanationLines = explanation.Count((c) => c == '\n') + 1;
-        int explanationTextHeight = explanationLines * (explanationStyle.fontSize + 2) + 6;
-
-        // Background and title
-        float inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
-        Rect titleRect = EditorGUILayout.BeginVertical("box");
-        Rect rect = new Rect(titleRect.x, titleRect.y, inspectorWidth - titleRect.x, styleTitle.fontSize + 14);
-        Rect fullRect = rect;
-        if (explanation != "")
-        {
-            fullRect.height = rect.height + 6 + explanationTextHeight;
-        }
-        EditorGUI.DrawRect(fullRect, backgroundColor);
-        var prevColor = styleTitle.normal.textColor;
-        styleTitle.normal.textColor = textColor;
-        GUI.DrawTexture(new Rect(titleRect.x + 10, titleRect.y + 4, 32, 32), GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
-        EditorGUI.LabelField(new Rect(titleRect.x + 50, titleRect.y + 6, inspectorWidth - 20 - titleRect.x - 4, styleTitle.fontSize), trigger.GetTriggerTitle(), styleTitle);
-        styleTitle.normal.textColor = prevColor;
-        EditorGUILayout.EndVertical();
-        EditorGUILayout.Space(fullRect.height);
-
-        if (explanation != "")
-        {
-            // Separator
-            Rect separatorRect = new Rect(titleRect.x + 4, titleRect.y + rect.height, inspectorWidth - 20 - 8, 4);
-            EditorGUI.DrawRect(separatorRect, separatorColor);
-
-            // Explanation
-            EditorGUI.LabelField(new Rect(titleRect.x + 10, separatorRect.y + separatorRect.height + 4 , inspectorWidth - 20 - titleRect.x - 4, explanationTextHeight), explanation, explanationStyle);
-        }
-
-
-        bool toggle = false;
-        bool refreshExplanation = false;
-        if (trigger.showInfo)
-        {
-            toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("EyeClose", BuildEyeClose));
-        }
-        else
-        {
-            toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("EyeOpen", BuildEyeOpen));
-        }
-        refreshExplanation = GUI.Button(new Rect(rect.x + rect.width - 26, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("Refresh", BuildRefresh));
-        if (toggle)
-        {
-            refreshExplanation = true;
-            propShowInfo.boolValue = !propShowInfo.boolValue;
-
-            Event e = Event.current;
-            if (e.shift)
-            {
-                // Affect all the triggers in this object
-                var allTriggers = trigger.GetComponents<Trigger>();
-                foreach (var t in allTriggers)
-                {
-                    t.showInfo = propShowInfo.boolValue;
-                    t.UpdateExplanation();
-                }
-            }
-
-            serializedObject.ApplyModifiedProperties();
-        }
-        if (refreshExplanation)
-        {
-            propExplanation.stringValue = trigger.GetDescription();
-            serializedObject.ApplyModifiedProperties();
-        }
-
-        return propShowInfo.boolValue;
-    }
-
 
     protected void StdEditor(bool useOriginalEditor = true)
     {
@@ -166,9 +68,13 @@ public class TriggerEditor : Editor
 
     protected void ActionPanel()
     {
+        serializedObject.ApplyModifiedProperties();
+
         serializedObject.Update();
         EditorGUILayout.PropertyField(propActions, new GUIContent("Actions"), true);
+        
         serializedObject.ApplyModifiedProperties();
+        (target as Trigger).UpdateExplanation();
     }
 
     private bool CheckBox(string label, float x, float y, float width, bool initialValue)
@@ -186,39 +92,30 @@ public class TriggerEditor : Editor
         return ret;
     }
 
-    private void BuildEyeOpen(string name)
+    protected override GUIStyle GetTitleSyle()
     {
-        BuildTitleButton(name, new CodeBitmaps.EyeOpen());
+        return GUIUtils.GetTriggerTitleStyle();
     }
 
-    private void BuildEyeClose(string name)
+    protected override GUIStyle GetExplanationStyle()
     {
-        BuildTitleButton(name, new CodeBitmaps.EyeClose());
+        return GUIUtils.GetTriggerExplanationStyle();
     }
 
-    private void BuildRefresh(string name)
+    protected override string GetTitle()
     {
-        BuildTitleButton(name, new CodeBitmaps.Refresh());
+        return (target as Trigger).GetTriggerTitle();
     }
 
-    private void BuildTitleButton(string name, GUIBitmap bitmap)
+    protected override (Color, Color, Color) GetColors()
     {
-        Color iconColor = GUIUtils.ColorFromHex("#2f4858");
-        Color borderColor = GUIUtils.ColorFromHex("#2f4858");
-        Color normalBackColor = GUIUtils.ColorFromHex("#a8b591");
-        Color hoverBackColor = GUIUtils.ColorFromHex("#cbdbaf");
-
-        var bitmap_normal = new GUIBitmap(bitmap);
-        bitmap_normal.Multiply(iconColor);
-        bitmap_normal.Border(borderColor);
-        bitmap_normal.FillAlpha(normalBackColor);
-        GUIUtils.BitmapToTexture($"{name}:normal", bitmap_normal);
-
-        var bitmap_highlight = new GUIBitmap(bitmap);
-        bitmap_normal.Multiply(iconColor);
-        bitmap_normal.Border(borderColor);
-        bitmap_highlight.FillAlpha(hoverBackColor);
-        GUIUtils.BitmapToTexture($"{name}:hover", bitmap_highlight);
+        if (propEnableTrigger.boolValue)
+        {
+            return (GUIUtils.ColorFromHex("#D0FFFF"), GUIUtils.ColorFromHex("#2f4858"), GUIUtils.ColorFromHex("#86CBFF"));
+        }
+        else
+        {
+            return (GUIUtils.ColorFromHex("#80c5c5"), GUIUtils.ColorFromHex("#2f4858"), GUIUtils.ColorFromHex("#4e7694"));
+        }
     }
-
 }

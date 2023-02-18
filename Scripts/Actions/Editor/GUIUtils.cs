@@ -38,7 +38,7 @@ static class GUIUtils
             titleStyle.fixedHeight = 24;
             titleStyle.normal.textColor = ColorFromHex("#0e1a51");
             titleStyle.clipping = TextClipping.Overflow;
-            titleStyle.wordWrap = true;
+            titleStyle.wordWrap = false;
             styles.Add("ActionTitle", titleStyle);
         }
         return titleStyle;
@@ -57,7 +57,7 @@ static class GUIUtils
             titleStyle.fixedHeight = 24;
             titleStyle.normal.textColor = ColorFromHex("#0e1a51");
             titleStyle.clipping = TextClipping.Overflow;
-            titleStyle.wordWrap = true;
+            titleStyle.wordWrap = false;
             styles.Add("TriggerTitle", titleStyle);
         }
         return titleStyle;
@@ -123,7 +123,7 @@ static class GUIUtils
         return explanationStyle;
     }
 
-    static public GUIStyle GetButtonStyle(string name, GenTexture gen_texture)
+    static public GUIStyle GetButtonStyle(string name)
     {
         if (styles == null) styles = new Dictionary<string, GUIStyle>();
 
@@ -131,24 +131,29 @@ static class GUIUtils
         styles.TryGetValue(name, out style);
         if (style == null)
         {
-            style = CreateButtonStyle(name, gen_texture);
+            style = CreateButtonStyle(name);
             styles.Add(name, style);
+        }
+        else
+        {
+            // Check if style has become invalid (no textures)
+            if ((style.normal.background == null) ||
+                (style.hover.background == null))
+            {
+                styles.Remove(name);
+                style = CreateButtonStyle(name);
+                styles.Add(name, style);
+            }
         }
         return style;
     }
 
-    static public GUIStyle CreateButtonStyle(string name, GenTexture gen_textures)
+    static public GUIStyle CreateButtonStyle(string name)
     {
-        var activeTexture = GetTexture(name + ":normal");
-        if (activeTexture == null)
-        {
-            gen_textures(name);
-        }
-
         var style = new GUIStyle("Button");
-        style.normal.background = GetTexture(name + ":normal");
+        style.normal.background = GetTexture($"{name}Normal");
         style.normal.scaledBackgrounds = null;
-        style.hover.background = GetTexture(name + ":hover");
+        style.hover.background = GetTexture($"{name}Hover");
         style.hover.scaledBackgrounds = null;
 
         return style;
@@ -190,12 +195,19 @@ static class GUIUtils
 
     static public Texture2D GetTexture(string name)
     {
-        if (textures == null) return null;
+        if (textures == null) textures = new Dictionary<string, Texture2D>();
 
         Texture2D texture;
         if (textures.TryGetValue(name, out texture))
         {
             return texture;
+        }
+
+        texture = new Texture2D(1, 1);
+        if (texture.LoadImage(System.IO.File.ReadAllBytes($"Assets/OkapiKit/UI/{name}.png")))
+        {
+            texture.Apply();
+            AddTexture(name, texture);
         }
 
         return null;

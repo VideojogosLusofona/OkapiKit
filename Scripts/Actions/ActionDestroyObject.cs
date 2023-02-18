@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class ActionDestroyObject : Action
 {
-    public enum Target { Self = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4 };
+    public enum Target { This = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4 };
 
     [SerializeField]
     private Target      target = Target.Object;
@@ -26,7 +26,7 @@ public class ActionDestroyObject : Action
 
         switch (target)
         {
-            case Target.Self:
+            case Target.This:
                 desc += $"destroys this object";
                 break;
             case Target.Topmost:
@@ -69,7 +69,7 @@ public class ActionDestroyObject : Action
 
         switch (target)
         {
-            case Target.Self:
+            case Target.This:
                 Destroy(gameObject);
                 break;
             case Target.Topmost:

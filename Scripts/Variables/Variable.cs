@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System;
-using static UnityEngine.Rendering.DebugUI;
-using Unity.VisualScripting;
 
 [CreateAssetMenu(menuName = "Okapi Kit/Variable")]
 public class Variable : ScriptableObject

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : OkapiElement
 {
     public static SoundManager instance;
 
@@ -73,5 +73,18 @@ public class SoundManager : MonoBehaviour
     static public void PlaySound(AudioClip clip, float volume = 1.0f, float pitch = 1.0f)
     {
         instance._PlaySound(clip, volume, pitch);
+    }
+
+    public override string GetRawDescription(string ident, GameObject refObject)
+    {
+        return "(UNUSED) SoundManager.GetRawDescription";
+    }
+
+    public override string UpdateExplanation()
+    {
+        if (description != "") _explanation = description;
+        else _explanation = "";
+
+        return _explanation;
     }
 }

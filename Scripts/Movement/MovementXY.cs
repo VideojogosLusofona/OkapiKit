@@ -50,7 +50,7 @@ public class MovementXY : Movement
 
     override public string GetTitle() => "XY Movement";
 
-    public override string GetRawDescription()
+    public override string GetRawDescription(string ident, GameObject refObject)
     {
         string desc = "";
         if (speed.x != 0.0f)
