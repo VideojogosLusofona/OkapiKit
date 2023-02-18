@@ -4,18 +4,12 @@
 - Unify ValueHandler/Value with single selector that can take any of them
 - Add HueShift/Outline effect for sprites
 - Add LookAt action
-- Add common code to Editor (all objects derive from it)
-- Common class to all Okapi systems
 - Warning/Error system
   - Error: Set scene object to prefab
   - Warning: No actions
   - Warning: No probabilities set for ActionRandom
   - Warning: No tags set for OnCollision
   - Warning: Change values with deltaValue = 0
-- Remove TriggerRandom
-- Icons on Okapi scripts
-- Replace code icons with actual icons (polutes images, but it's faster and less error prone)
-- Rotate Towards Movement Direction
 - Comment Code
 - Documentation
 
@@ -46,12 +40,7 @@ Videos:
 Bugs:
 -----
 - Collision detection fails because of using RigidBody2D.MovePosition() instead of actual physics
-- Set defaults for ActionRandom to 1 instead of 0 (change text)
-- Some text gets wrapped instead of clipped on titles of text boxes
-- Be consistent in use of Self/This
 - Preserve velocity with Movement
-- Refresh on OnTriggerReset is not working properly
-- Refresh on OnTriggerInput is not working properly
 
 
 Polish:

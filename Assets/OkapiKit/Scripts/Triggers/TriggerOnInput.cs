@@ -30,7 +30,7 @@ public class TriggerOnInput : Trigger
 
     public override string GetTriggerTitle() => "On Input";
 
-    protected override string GetRawDescription()
+    public override string GetRawDescription(string ident, GameObject refObject)
     {
         string desc = "When ";
         if (inputType == InputType.Button) desc += $"button {buttonName} ";

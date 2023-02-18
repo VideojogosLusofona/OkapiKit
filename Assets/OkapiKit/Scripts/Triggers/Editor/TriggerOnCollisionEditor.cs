@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static TriggerOnCollision;
 
 [CustomEditor(typeof(TriggerOnCollision))]
 public class TriggerOnCollisionEditor : TriggerEditor
@@ -20,17 +19,12 @@ public class TriggerOnCollisionEditor : TriggerEditor
         propTags = serializedObject.FindProperty("tags");
     }
 
-    public override Texture2D GetIcon()
+    protected override Texture2D GetIcon()
     {
-        var varTexture = GUIUtils.GetTexture("CollisionTexture");
-        if (varTexture == null)
-        {
-            varTexture = GUIUtils.AddTexture("CollisionTexture", new CodeBitmaps.Collision());
-        }
+        var varTexture = GUIUtils.GetTexture("Collision");
 
         return varTexture;
     }
-
 
     public override void OnInspectorGUI()
     {
@@ -47,9 +41,7 @@ public class TriggerOnCollisionEditor : TriggerEditor
             EditorGUILayout.PropertyField(propIsTrigger, new GUIContent("Collider Is Trigger?"));
             EditorGUILayout.PropertyField(propEventType, new GUIContent("Event type"));
             EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
-
-            serializedObject.ApplyModifiedProperties();
-            (target as Trigger).UpdateExplanation();
+            EditorGUI.EndChangeCheck();
 
             ActionPanel();
         }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static TriggerOnCollision;
 
 [CustomEditor(typeof(TriggerOnCondition))]
 public class TriggerOnConditionEditor : TriggerEditor
@@ -16,13 +15,9 @@ public class TriggerOnConditionEditor : TriggerEditor
         propConditions = serializedObject.FindProperty("conditions");
     }
 
-    public override Texture2D GetIcon()
+    protected override Texture2D GetIcon()
     {
-        var varTexture = GUIUtils.GetTexture("ConditionTexture");
-        if (varTexture == null)
-        {
-            varTexture = GUIUtils.AddTexture("ConditionTexture", new CodeBitmaps.Condition());
-        }
+        var varTexture = GUIUtils.GetTexture("Condition");
 
         return varTexture;
     }
@@ -41,11 +36,7 @@ public class TriggerOnConditionEditor : TriggerEditor
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions"));
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Trigger).UpdateExplanation();
-            }
+            EditorGUI.EndChangeCheck();
 
             ActionPanel();
         }

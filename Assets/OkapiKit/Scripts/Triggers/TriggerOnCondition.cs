@@ -12,7 +12,7 @@ public class TriggerOnCondition: Trigger
 
     public override string GetTriggerTitle() => "On Condition";
 
-    protected override string GetRawDescription()
+    public override string GetRawDescription(string ident, GameObject refObject)
     {
         string desc = "When ";
         if ((conditions == null) || (conditions.Length == 0))

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static TriggerOnCollision;
 
 [CustomEditor(typeof(TriggerOnTimer))]
 public class TriggerOnTimerEditor : TriggerEditor
@@ -18,13 +17,9 @@ public class TriggerOnTimerEditor : TriggerEditor
         propTimeInterval = serializedObject.FindProperty("timeInterval");
     }
 
-    public override Texture2D GetIcon()
+    protected override Texture2D GetIcon()
     {
-        var varTexture = GUIUtils.GetTexture("TimerTexture");
-        if (varTexture == null)
-        {
-            varTexture = GUIUtils.AddTexture("TimerTexture", new CodeBitmaps.Timer());
-        }
+        var varTexture = GUIUtils.GetTexture("Timer");
 
         return varTexture;
     }
@@ -44,11 +39,7 @@ public class TriggerOnTimerEditor : TriggerEditor
             EditorGUILayout.PropertyField(propStartTriggered, new GUIContent("Trigger At Start?"));
             EditorGUILayout.PropertyField(propTimeInterval, new GUIContent("Time interval (random between [X..Y]"));
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Trigger).UpdateExplanation();
-            }
+            EditorGUI.EndChangeCheck();
 
             ActionPanel();
         }

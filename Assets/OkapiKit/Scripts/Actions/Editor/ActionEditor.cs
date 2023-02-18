@@ -1,25 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using static UnityEngine.Rendering.DebugUI.MessageBox;
 using System.Linq;
 
 [CustomEditor(typeof(Action))]
-public class ActionEditor : Editor
+public class ActionEditor : OkapiBaseEditor
 {
-    SerializedProperty propShowInfo;
-    SerializedProperty propExplanation;
     SerializedProperty propEnableAction;
     SerializedProperty propHasTags;
     SerializedProperty propHasConditions;
     SerializedProperty propTags;
     SerializedProperty propConditions;
 
-    protected virtual void OnEnable()
+    protected override void OnEnable()
     {
-        propShowInfo = serializedObject.FindProperty("_showInfo");
-        propExplanation = serializedObject.FindProperty("_explanation");
+        base.OnEnable();
         propEnableAction = serializedObject.FindProperty("enableAction");
         propHasTags = serializedObject.FindProperty("hasTags");
         propHasConditions = serializedObject.FindProperty("hasConditions");
@@ -35,102 +29,24 @@ public class ActionEditor : Editor
         }
     }
 
-    public virtual Texture2D GetIcon()
+    protected override Texture2D GetIcon()
     {
-        var varTexture = GUIUtils.GetTexture("ActionTexture");
-        if (varTexture == null)
-        {
-            varTexture = GUIUtils.AddTexture("ActionTexture", new CodeBitmaps.Action());
-        }
+        var varTexture = GUIUtils.GetTexture("Action");
 
         return varTexture;
     }
 
-    protected virtual bool WriteTitle()
+    protected override (Color, Color, Color) GetColors()
     {
-        Action action = target as Action;
-        if (action == null) { return true; }
-
-        GUIStyle styleTitle = GUIUtils.GetActionTitleStyle();
-        GUIStyle explanationStyle = GUIUtils.GetActionExplanationStyle();
-
-        var backgroundColor = GUIUtils.ColorFromHex("#D7E8BA");
-        var textColor = GUIUtils.ColorFromHex("#2f4858");
-        var separatorColor = GUIUtils.ColorFromHex("#86CB92");
-
-        // Compute explanation text height
-        string explanation = propExplanation.stringValue;
-        int explanationLines = explanation.Count((c) => c == '\n');
-        explanationLines += 1;
-        int explanationTextHeight = explanationLines * explanationStyle.fontSize + 6;
-
-        // Background and title
-        float inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
-        Rect titleRect = EditorGUILayout.BeginVertical("box");
-        Rect rect = new Rect(titleRect.x, titleRect.y, inspectorWidth - titleRect.x, styleTitle.fontSize + 16);
-        Rect fullRect = rect;
-        if (explanation != "")
+        if (propEnableAction.boolValue)
         {
-            fullRect.height = rect.height + 8 + explanationTextHeight;
-        }
-        EditorGUI.DrawRect(fullRect, backgroundColor);
-        var prevColor = styleTitle.normal.textColor;
-        styleTitle.normal.textColor = textColor;
-        GUI.DrawTexture(new Rect(titleRect.x + 10, titleRect.y + 4, 32, 32), GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
-        EditorGUI.LabelField(new Rect(titleRect.x + 50, titleRect.y + 6, inspectorWidth - 20 - titleRect.x - 4, styleTitle.fontSize), action.GetActionTitle(), styleTitle);
-        styleTitle.normal.textColor = prevColor;
-        EditorGUILayout.EndVertical();
-        EditorGUILayout.Space(fullRect.height);
-
-        if (explanation != "")
-        {
-            // Separator
-            Rect separatorRect = new Rect(titleRect.x + 4, titleRect.y + rect.height, inspectorWidth - 20 - 8, 4);
-            EditorGUI.DrawRect(separatorRect, separatorColor);
-
-            // Explanation
-            EditorGUI.LabelField(new Rect(titleRect.x + 10, separatorRect.y + separatorRect.height + 4 , inspectorWidth - 20 - titleRect.x - 4, explanationTextHeight), explanation, explanationStyle);
-        }
-
-
-        bool toggle = false;
-        bool refreshExplanation = false;
-        if (action.showInfo)
-        {
-            toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("EyeClose", BuildEyeClose));
+            return (GUIUtils.ColorFromHex("#D7E8BA"), GUIUtils.ColorFromHex("#2f4858"), GUIUtils.ColorFromHex("#86CB92"));
         }
         else
         {
-            toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("EyeOpen", BuildEyeOpen));
+            return (GUIUtils.ColorFromHex("#94ad69"), GUIUtils.ColorFromHex("#2f4858"), GUIUtils.ColorFromHex("#3e894b"));
         }
-        refreshExplanation = GUI.Button(new Rect(rect.x + rect.width - 26, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("Refresh", BuildRefresh));
-        if (toggle)
-        {
-            refreshExplanation = true;
-            propShowInfo.boolValue = !propShowInfo.boolValue;
-
-            Event e = Event.current;
-            if (e.shift)
-            {
-                // Affect all the Actions in this object
-                var allActions = action.GetComponents<Action>();
-                foreach (var a in allActions)
-                {
-                    a.showInfo = propShowInfo.boolValue;
-                    a.UpdateExplanation();
-                }
-            }
-
-            serializedObject.ApplyModifiedProperties();
-        }
-        if (refreshExplanation)
-        {
-            action.UpdateExplanation();
-        }
-
-        return propShowInfo.boolValue;
     }
-
 
     protected void StdEditor(bool useOriginalEditor = true)
     {
@@ -181,39 +97,18 @@ public class ActionEditor : Editor
         return ret;
     }
 
-    private void BuildEyeOpen(string name)
+    protected override GUIStyle GetTitleSyle()
     {
-        BuildTitleButton(name, new CodeBitmaps.EyeOpen());
+        return GUIUtils.GetActionTitleStyle();
     }
 
-    private void BuildEyeClose(string name)
+    protected override GUIStyle GetExplanationStyle()
     {
-        BuildTitleButton(name, new CodeBitmaps.EyeClose());
+        return GUIUtils.GetActionExplanationStyle();
     }
 
-    private void BuildRefresh(string name)
+    protected override string GetTitle()
     {
-        BuildTitleButton(name, new CodeBitmaps.Refresh());
+        return (target as Action).GetActionTitle();
     }
-
-    private void BuildTitleButton(string name, GUIBitmap bitmap)
-    {
-        Color iconColor = GUIUtils.ColorFromHex("#2f4858");
-        Color borderColor = GUIUtils.ColorFromHex("#2f4858");
-        Color normalBackColor = GUIUtils.ColorFromHex("#a8b591");
-        Color hoverBackColor = GUIUtils.ColorFromHex("#cbdbaf");
-
-        var bitmap_normal = new GUIBitmap(bitmap);
-        bitmap_normal.Multiply(iconColor);
-        bitmap_normal.Border(borderColor);
-        bitmap_normal.FillAlpha(normalBackColor);
-        GUIUtils.BitmapToTexture($"{name}:normal", bitmap_normal);
-
-        var bitmap_highlight = new GUIBitmap(bitmap);
-        bitmap_normal.Multiply(iconColor);
-        bitmap_normal.Border(borderColor);
-        bitmap_highlight.FillAlpha(hoverBackColor);
-        GUIUtils.BitmapToTexture($"{name}:hover", bitmap_highlight);
-    }
-
 }

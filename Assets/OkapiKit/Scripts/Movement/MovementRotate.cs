@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 public class MovementRotate : Movement
 {
-    public enum RotateMode { Auto = 0, InputSet = 1, InputDelta = 2, Target = 3 };
+    public enum RotateMode { Auto = 0, InputSet = 1, InputDelta = 2, Target = 3, Movement = 4 };
     public enum InputType { Axis = 0, Button = 1, Key = 2, Mouse = 3 };
     public enum Axis { UpAxis = 0, RightAxis = 1 };
 
@@ -56,7 +56,7 @@ public class MovementRotate : Movement
     [SerializeField]
     private Hypertag    cameraTag;
 
-    private bool inputEnabled => (mode == RotateMode.InputSet) || (mode == RotateMode.InputDelta);
+    Vector3 prevPosition;
 
     public override Vector2 GetSpeed() => new Vector2(speed, speed);
     public override void SetSpeed(Vector2 speed) { this.speed = speed.x; }
@@ -65,7 +65,7 @@ public class MovementRotate : Movement
 
     override public string GetTitle() => "Rotate";
 
-    public override string GetRawDescription()
+    public override string GetRawDescription(string ident, GameObject refObject)
     {
         string desc = "";
         string axisName = (axisToAlign == Axis.UpAxis) ? ("up") : ("right");
@@ -133,16 +133,20 @@ public class MovementRotate : Movement
         {
             if (targetObject)
             {
-                desc += $"This object will align its {axisName} with the direction towards {targetObject.name}, at a maximum {speed} degrees per second.\n";
+                desc += $"This object will align its {axisName} axis with the direction towards {targetObject.name}, at a maximum {speed} degrees per second.\n";
             }
             else if (targetTag)
             {
-                desc += $"This object will align its {axisName} with the direction towards the closest object tagged with {targetTag.name}, at a maximum {speed} degrees per second.\n";
+                desc += $"This object will align its {axisName} axis with the direction towards the closest object tagged with {targetTag.name}, at a maximum {speed} degrees per second.\n";
             }
             else
             {
-                desc += $"This object will align its {axisName} with the direction towards [UNDEFINED], at a maximum {speed} degrees per second.\n";
+                desc += $"This object will align its {axisName} axis with the direction towards [UNDEFINED], at a maximum {speed} degrees per second.\n";
             }
+        }
+        else if (mode == RotateMode.Movement)
+        {
+            desc += $"This object will align its {axisName} axis with the movement direction, at a maximum {speed} degrees per second.\n";
         }
         else
         {
@@ -259,7 +263,7 @@ public class MovementRotate : Movement
             {
                 Vector2 dir = (targetTransform.position - transform.position);
                 if (dir.sqrMagnitude > 1e-6)
-                { 
+                {
                     dir.Normalize();
 
                     if (axisToAlign == Axis.RightAxis) dir = new Vector2(-dir.y, dir.x);
@@ -268,9 +272,32 @@ public class MovementRotate : Movement
                 }
             }
         }
+        else if (mode == RotateMode.Movement)
+        {
+            Vector3 dir = Vector3.zero;
+            if (rb) dir = rb.velocity;
+            if (dir.sqrMagnitude < 1e-6)
+            {
+                dir = transform.position - prevPosition;
+            }
+            if (dir.sqrMagnitude > 1e-6)
+            {
+                dir.Normalize();
+
+                if (axisToAlign == Axis.RightAxis) dir = new Vector2(-dir.y, dir.x);
+
+                RotateTo(dir, speed * Time.fixedDeltaTime);
+            }
+        }
         else
         {
             RotateZ(speed * Time.fixedDeltaTime);
+        }
+
+        Vector3 deltaPos = transform.position - prevPosition;
+        if (deltaPos.sqrMagnitude > 1e-6)
+        {
+            prevPosition = transform.position;
         }
     }
 

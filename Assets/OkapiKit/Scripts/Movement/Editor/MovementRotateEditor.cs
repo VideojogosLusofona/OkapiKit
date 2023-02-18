@@ -177,12 +177,17 @@ public class MovementRotateEditor : MovementEditor
                     EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
                 }
             }
+            else if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.Movement)
+            {
+                EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align"));
+            }
+                
             EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-            }
+            EditorGUI.EndChangeCheck();
+
+            serializedObject.ApplyModifiedProperties();
+            (target as OkapiElement).UpdateExplanation();
 
             StdEditor(false);
         }

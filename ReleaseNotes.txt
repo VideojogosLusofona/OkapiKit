@@ -1,0 +1,14 @@
+V1.1.0
+- Common class to all Okapi systems (OkapiElement)
+  - Added common code to Editor (all objects derive from it)
+- Removed TriggerRandom
+- There are now special icons on all Okapi scripts
+- Replace code icons with actual icons (polutes images, but it's faster and less error prone)
+- Rotate Towards Movement Direction implemented (on MovementRotate component)
+- Probability on Action Random equal to zero no longer shows wrong text
+- Fixed some text getting wrapped instead of clipped on titles of text boxes
+- Changed references to "self" to "this"
+- Refresh on OnTriggerReset and OnTriggerInput is now working properly
+
+V1.0.0
+- Initial version

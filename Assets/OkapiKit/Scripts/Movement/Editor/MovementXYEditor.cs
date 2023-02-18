@@ -99,10 +99,10 @@ public class MovementXYEditor : MovementEditor
             }
             EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-            }
+            EditorGUI.EndChangeCheck();
+
+            serializedObject.ApplyModifiedProperties();
+            (target as OkapiElement).UpdateExplanation();
 
             StdEditor(false);
         }
