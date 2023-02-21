@@ -208,6 +208,7 @@ static class GUIUtils
         {
             texture.Apply();
             AddTexture(name, texture);
+            return texture;
         }
 
         return null;
