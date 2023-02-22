@@ -4,12 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using NaughtyAttributes;
 
-public class VariableInstance : MonoBehaviour
+public class VariableInstance : OkapiElement
 {
-    [SerializeField, HideInInspector] 
-    private bool            _showInfo = true;
-    [SerializeField, ResizableTextArea] 
-    private string          _description = "";
     public  Variable.Type   type = Variable.Type.Float;
     public  float           currentValue = 0;
     public  float           defaultValue = 0;
@@ -21,8 +17,6 @@ public class VariableInstance : MonoBehaviour
     public  float           maxValue = float.MaxValue;
 
     private Variable value;
-
-    public bool showInfo { get; set; }
 
     void Start()
     {
@@ -67,5 +61,18 @@ public class VariableInstance : MonoBehaviour
         }
 
         return value.GetValueString();
+    }
+
+    public override string GetRawDescription(string ident, GameObject refObject)
+    {
+        if (description != "") return description;
+
+        return "";
+    }
+
+    public override string UpdateExplanation()
+    {
+        _explanation = GetRawDescription("", gameObject);
+        return _explanation;
     }
 }

@@ -14,7 +14,7 @@ public class TriggerOnTimer : Trigger
 
     public override string GetTriggerTitle() => "On Timer";
 
-    protected override string GetRawDescription()
+    public override string GetRawDescription(string ident, GameObject refObject)
     {
         if (timeInterval.x == timeInterval.y)
         {

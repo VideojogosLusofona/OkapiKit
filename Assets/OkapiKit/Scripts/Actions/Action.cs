@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using NaughtyAttributes;
 
-abstract public class Action : MonoBehaviour
+abstract public class Action : OkapiElement
 {
-    [SerializeField, HideInInspector]
-    protected bool      _showInfo = true;
     [SerializeField]
     protected bool      enableAction = true;
     [SerializeField]
@@ -19,24 +17,11 @@ abstract public class Action : MonoBehaviour
     [SerializeField, ShowIf("hasConditions")]
     private Condition[] actionConditions;
 
-    [SerializeField, ResizableTextArea, ReadOnly]
-    private string      _explanation;
-
-    public string explanation => _explanation;
-
     public bool isActionEnabled { get { return enableAction; } set { enableAction = value; } }
-
-    public abstract string GetRawDescription(string ident, GameObject gameObject);
 
     public abstract void Execute();
 
     public virtual string GetActionTitle() { return "Action"; }
-
-    public bool showInfo
-    {
-        get { return _showInfo; }
-        set { _showInfo = value; }
-    }
 
     public bool HasTag(Hypertag[] tags)
     {
@@ -92,7 +77,8 @@ abstract public class Action : MonoBehaviour
         }
         return desc;
     }
-    public void UpdateExplanation()
+
+    public override string UpdateExplanation()
     {
         string e = GetRawDescription("", gameObject);
 
@@ -109,8 +95,6 @@ abstract public class Action : MonoBehaviour
                 _explanation += e[i];
             }
         }
-
-        
-    } 
-
+        return _explanation;
+    }
 }

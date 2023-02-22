@@ -3,15 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueDisplay : MonoBehaviour
+public class ValueDisplay : OkapiElement
 {
-    [SerializeField, ShowIf("needValueHandler")]
+    [SerializeField]
     protected VariableInstance valueHandler;
-    [SerializeField, ShowIf("needValueVariable")]
+    [SerializeField]
     protected Variable variable;
 
-    private bool needValueHandler => (variable == null);
-    private bool needValueVariable => (valueHandler == null);
+    public override string GetRawDescription(string ident, GameObject refObject)
+    {
+        return "";
+    }
+
+    public override string UpdateExplanation()
+    {
+        _explanation = "";
+
+        if (description != "") _explanation += description + "\n----------------\n";
+
+        _explanation += GetRawDescription("", gameObject);
+
+        return _explanation;
+    }
 
     protected Variable GetVariable()
     {

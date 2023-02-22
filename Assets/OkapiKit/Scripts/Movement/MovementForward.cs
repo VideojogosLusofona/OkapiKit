@@ -14,7 +14,7 @@ public class MovementForward : Movement
 
     override public string GetTitle() => "Forward Movement";
 
-    public override string GetRawDescription()
+    public override string GetRawDescription(string ident, GameObject refObject)
     {
         string desc = "";
         if (speed != 0.0f)

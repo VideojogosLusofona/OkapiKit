@@ -1,15 +1,51 @@
 - Add tooltips to everything with explanations
 - Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
+- Unify ValueHandler/Value with single selector that can take any of them
 - Add HueShift/Outline effect for sprites
 - Add LookAt action
-- Add a tree view to explore objects in the games
+- Warning/Error system
+  - Error: Set scene object to prefab
+  - Warning: No actions
+  - Warning: No probabilities set for ActionRandom
+  - Warning: No tags set for OnCollision
+  - Warning: Change values with deltaValue = 0
 - Comment Code
 - Documentation
+
+Usability:
+----------
+- Enable drag/drop of action into actions (ActionRandom, Triggers)
+- Highlight action by clicking/scroll there (not sure if possible)
+- How to make simple actions more accessible? (see Simple Usage)
+- Add a tree view to explore objects in the games
+  - Add triggers/actions directly in the objects
+  - Have the ability to have custom adds (SetVisibility, SetVelocity, etc)
+- Add node ID property to actions/triggers
+- Enable debug system for nodes 
+- No info on tagged actions
+- Value Display Text should use a formatting string instead the text in the edit box
+
+Simple usage:
+-------------
+- Maybe create a wizard?
+- Set object visible/invisible
+- Set object velocity
+
+Videos:
+-------
+- Ricochet bullet
+- Look at player
 
 Bugs:
 -----
 - Collision detection fails because of using RigidBody2D.MovePosition() instead of actual physics
+- Preserve velocity with Movement
+
+
+Polish:
+-------
+- Rounded corners on title boxes
 
 Games:
 ------

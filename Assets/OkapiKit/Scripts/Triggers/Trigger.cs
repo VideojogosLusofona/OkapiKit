@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 
-public abstract class Trigger : MonoBehaviour
+public abstract class Trigger : OkapiElement
 {
     [System.Serializable]
     public struct ActionTrigger
@@ -15,10 +15,6 @@ public abstract class Trigger : MonoBehaviour
         public Action   action;
     }
 
-    [SerializeField, HideInInspector]
-    protected   bool            _showInfo = true;
-    [SerializeField, ResizableTextArea]
-    public      string          description;
     [SerializeField]
     public      bool            enableTrigger = true;
     [SerializeField]
@@ -30,16 +26,8 @@ public abstract class Trigger : MonoBehaviour
     [SerializeField]
     protected   ActionTrigger[] actions;
 
-    [SerializeField, ResizableTextArea, ReadOnly]
-    private string _explanation;
-
     private bool alreadyTriggered = false;
 
-    public bool showInfo
-    {
-        get { return _showInfo; }
-        set { _showInfo = value; }
-    }
     public bool isTriggerEnabled
     {
         get { return enableTrigger; }
@@ -48,24 +36,25 @@ public abstract class Trigger : MonoBehaviour
 
     public virtual string GetTriggerTitle() { return "Trigger"; }
 
-    public string GetDescription()
+    public override string UpdateExplanation()
     {
-        string desc = "";
-        if (description != "") desc += description + "\n----------------\n";
+        _explanation = "";
+
+        if (description != "") _explanation += description + "\n----------------\n";
 
         if (hasPreconditions)
         {
             if ((preConditions != null) && (preConditions.Length > 0))
             {
-                desc += "If ";
+                _explanation += "If ";
                 for (int i = 0; i < preConditions.Length; i++)
                 {
-                    desc += preConditions[i].GetRawDescription(gameObject) + " and ";
+                    _explanation += preConditions[i].GetRawDescription(gameObject) + " and ";
                 }
             }
         }
 
-        desc += GetRawDescription() + ":\n";
+        _explanation += GetRawDescription("", gameObject) + ":\n";
 
         if (actions != null)
         {
@@ -107,22 +96,15 @@ public abstract class Trigger : MonoBehaviour
                     actionDesc = action.action.GetRawDescription("  ", gameObject);
                     actionDesc = actionDesc.Replace("\n", "\n" + spaces);
                 }
-                
-                desc += $"{timeString}{actionDesc}\n";
+
+                _explanation += $"{timeString}{actionDesc}\n";
 
                 lastTime = action.delay;
             }
         }
 
-        return desc;
+        return _explanation;
     }
-
-    public void UpdateExplanation()
-    {
-        _explanation = GetDescription();
-    }
-
-    protected abstract string GetRawDescription();
 
     protected bool EvaluatePreconditions()
     {

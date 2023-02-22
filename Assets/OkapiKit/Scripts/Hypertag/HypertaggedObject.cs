@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class HypertaggedObject : MonoBehaviour
+public class HypertaggedObject : OkapiElement
 {
-    [SerializeField, HideInInspector] 
-    private bool        _showInfo = true;
-    [SerializeField, ResizableTextArea] 
-    private string      _description = "";
     [SerializeField] 
     private Hypertag[]  hypertags;
 
@@ -88,5 +84,32 @@ public class HypertaggedObject : MonoBehaviour
         }
 
         return null;
+    }
+
+    public override string GetRawDescription(string ident, GameObject refObject)
+    {
+        if (description != "") return description;
+        
+        return "";
+    }
+
+    public override string UpdateExplanation()
+    {
+        string e = GetRawDescription("", gameObject);
+
+        _explanation = "";
+        for (int i = 0; i < e.Length; i++)
+        {
+            if (i != ' ')
+            {
+                _explanation += char.ToUpper(e[i]) + e.Substring(i + 1);
+                break;
+            }
+            else
+            {
+                _explanation += e[i];
+            }
+        }
+        return _explanation;
     }
 }

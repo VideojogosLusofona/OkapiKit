@@ -5,12 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-abstract public class Movement : MonoBehaviour
+abstract public class Movement : OkapiElement
 {
-    [SerializeField, HideInInspector]
-    private bool            _showInfo = true;
-    [SerializeField, ResizableTextArea]
-    private string          _description = "";
     protected Rigidbody2D   rb;
     protected Vector3       lastDelta;    
 
@@ -24,6 +20,7 @@ abstract public class Movement : MonoBehaviour
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        UpdateExplanation();
     }
 
     protected void MoveDelta(Vector3 delta)
@@ -69,15 +66,13 @@ abstract public class Movement : MonoBehaviour
         }
     }
 
-    public virtual string GetRawDescription() => "MOVEMENT AUTO DESCRIPTION";
-
-    virtual public string UpdateDescription()
+    override public string UpdateExplanation()
     {
-        string desc = "";
-        if (_description != "") desc += _description + "\n----------------\n";
+        _explanation = "";
+        if (description != "") _explanation += description + "\n----------------\n";
 
-        desc = desc + GetRawDescription();
+        _explanation += GetRawDescription("", gameObject);
 
-        return desc;
+        return _explanation;
     }
 }

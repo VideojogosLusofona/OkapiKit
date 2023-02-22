@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class CameraFollow2d : MonoBehaviour
+public class CameraFollow2d : OkapiElement
 {
     public enum Mode { SimpleFeedbackLoop = 0, Box = 1};
 
@@ -14,48 +14,43 @@ public class CameraFollow2d : MonoBehaviour
     [SerializeField] Rect           rect = new Rect(-100.0f, -100.0f, 200.0f, 200.0f);
     [SerializeField] BoxCollider2D  cameraLimits;
 
-    [SerializeField, HideInInspector]
-    private bool            _showInfo = true;
-    [SerializeField, ResizableTextArea]
-    private string          _description = "";
-
     new Camera camera;
 
-    virtual public string UpdateDescription()
-    {
-        string desc = "";
-        if (_description != "") desc += _description + "\n----------------\n";
+    public override string UpdateExplanation()
+    { 
+        _explanation = "";
+        if (description != "") _explanation += description + "\n----------------\n";
 
         if (targetTag == null)
         {
             if (targetObject == null)
             {
-                desc += "Camera follows [UNDEFINED] target.\n";
+                _explanation += "Camera follows [UNDEFINED] target.\n";
             }
             else
             {
-                desc += $"Camera follows [{targetObject.name}] target.\n";
+                _explanation += $"Camera follows [{targetObject.name}] target.\n";
             }
         }
         else
         {
-            desc += $"Camera follows the closest object tagged with [{targetTag.name}].\n";
+            _explanation += $"Camera follows the closest object tagged with [{targetTag.name}].\n";
         }
         if (mode == Mode.SimpleFeedbackLoop)
         {
-            desc += $"It will trail the target, closing {100 * followSpeed}% of the distance each frame.\n";
+            _explanation += $"It will trail the target, closing {100 * followSpeed}% of the distance each frame.\n";
         }
         else
         {
-            desc += $"It will box the target within the given rect.\n";
+            _explanation += $"It will box the target within the given rect.\n";
         }
 
         if (cameraLimits)
         {
-            desc += $"The camera won't leave the area defined by {cameraLimits.name}.";
+            _explanation += $"The camera won't leave the area defined by {cameraLimits.name}.";
         }
 
-        return desc;
+        return _explanation;
     }
 
     void Start()
@@ -195,4 +190,10 @@ public class CameraFollow2d : MonoBehaviour
             Gizmos.DrawLine(new Vector2(r.min.x, r.max.y), new Vector2(r.min.x, r.min.y));
         }
     }
+
+    public override string GetRawDescription(string ident, GameObject refObject)
+    {
+        return "(UNUSED) CameraFollow2d.GetRawDescription";
+    }
+
 }

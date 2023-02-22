@@ -28,6 +28,7 @@ public class ActionRandom : Action
         {
             total += action.probability;
         }
+        if (total == 0) total = 1;
 
         for (int i = 0; i < actions.Length; i++)
         {

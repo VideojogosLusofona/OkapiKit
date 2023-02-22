@@ -26,7 +26,7 @@ public class MovementFollow : Movement
 
     override public string GetTitle() => "Follow";
 
-    public override string GetRawDescription()
+    public override string GetRawDescription(string ident, GameObject refObject)
     {
         string desc = "";
         string speedDesc = "";
@@ -163,5 +163,4 @@ public class MovementFollow : Movement
 
         return cameraObject;
     }
-
 }
