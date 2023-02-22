@@ -274,7 +274,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 5009fc6200a650247b168e79eceb4906, type: 2}
 --- !u!61 &237870404
@@ -423,7 +424,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: be6b7975d21e46240a04fa5bac0e2745, type: 2}
 --- !u!212 &446667229
@@ -506,7 +508,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 'Follows the mouse, immediately.
+
+'
+  description: 
   speed: 0
   targetType: 2
   targetTag: {fileID: 0}
@@ -566,6 +571,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Spawns prefab Bullet at the position of Bullet Spawner
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -581,7 +588,6 @@ MonoBehaviour:
     comparison: 0
     value: 0
     percentageCompare: 0
-  _explanation: Spawns prefab Bullet at the position of Bullet Spawner
   prefabObject: {fileID: 2364777538405152176, guid: 92a4ce0d5cbf3d647b7915488f695c58, type: 3}
   spawnPosition: 2
   targetPosition: {fileID: 1362194419}
@@ -600,7 +606,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   speed: 100
   mode: 3
   inputType: 0
@@ -689,6 +696,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "Every [3,5] seconds, trigger the actions::\n First, \n         
+    spawns prefab Bullet at the position of object with tag [BulletSpawner]\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -697,8 +706,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 835268123}
-  _explanation: "Every [3,5] seconds, trigger the actions::\n First, \n         
-    spawns prefab Bullet at the position of object with tag [BulletSpawner]\n"
   startTriggered: 0
   timeInterval: {x: 3, y: 5}
 --- !u!1 &848018464
@@ -734,7 +741,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 5009fc6200a650247b168e79eceb4906, type: 2}
 --- !u!61 &848018466
@@ -885,7 +893,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   speed: {x: 0, y: 0}
   useRotation: 0
   turnToDirection: 1
@@ -916,7 +925,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 419bb0c4c960c1843b8184c6d8c41fa7, type: 2}
 --- !u!58 &993275001
@@ -1268,7 +1278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 1e7c9d7a9c88a3b41bc3a78e56999984, type: 2}
 --- !u!114 &1191260119
@@ -1284,7 +1295,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   speed: {x: 4, y: 4}
   useRotation: 0
   turnToDirection: 1
@@ -1372,7 +1384,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 5009fc6200a650247b168e79eceb4906, type: 2}
 --- !u!61 &1321774370
@@ -1569,6 +1582,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Spawns prefab Bullet at the position of Bullet Spawner
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
@@ -1584,7 +1599,6 @@ MonoBehaviour:
     comparison: 0
     value: 0
     percentageCompare: 0
-  _explanation: Spawns prefab Bullet at the position of Bullet Spawner
   prefabObject: {fileID: 2364777538405152176, guid: 92a4ce0d5cbf3d647b7915488f695c58, type: 3}
   spawnPosition: 2
   targetPosition: {fileID: 1184718143}
@@ -1603,6 +1617,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When button Fire1 is pressed:\n First, \n          spawns prefab
+    Bullet at the position of Bullet Spawner\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1611,8 +1627,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1906407538}
-  _explanation: "When button Fire1 is pressed:\n First, \n          spawns prefab
-    Bullet at the position of Bullet Spawner\n"
   inputType: 0
   buttonName: Fire1
   key: 99
@@ -1635,8 +1649,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
-  speed: 1000
+  _explanation: 'This object will align its up axis with the direction towards the
+    closest object tagged with Mouse, at a maximum 100000 degrees per second.
+
+'
+  description: 
+  speed: 100000
   mode: 3
   inputType: 0
   rotationAxis: Mouse X
