@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2364777538405152186}
   - component: {fileID: 2364777538405152189}
   - component: {fileID: 2364777538405152188}
-  - component: {fileID: 4562496420405193958}
+  - component: {fileID: 2803021594663769236}
   - component: {fileID: 83509944139819021}
   - component: {fileID: 3172719178892815514}
   - component: {fileID: 6933403823850466374}
@@ -117,8 +117,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!70 &4562496420405193958
-CapsuleCollider2D:
+--- !u!58 &2803021594663769236
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -130,9 +130,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_Size: {x: 0.6, y: 1}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0.4}
+  serializedVersion: 2
+  m_Radius: 0.18
 --- !u!114 &83509944139819021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,8 +298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   _explanation: "Destroys bullet when colliding with a Tank\n----------------\nWhen
-    a collision with a bounding volume with tags [Tank,Bullet] starts:\n First, \n         
-    destroys this object\n"
+    a collision with a bounding volume with tags [Tank,Bullet,Destructable] starts:\n
+    First, \n          destroys this object\n"
   description: Destroys bullet when colliding with a Tank
   enableTrigger: 1
   allowRetrigger: 0
@@ -313,6 +313,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 037282bf9c2be624db5e4dcee420102a, type: 2}
   - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
+  - {fileID: 11400000, guid: f1bf613cb53582041bf2e99c2eaa77e5, type: 2}
 --- !u!114 &6493673961000930206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,7 +470,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.05099784
+        value: 0.045947336
         inSlope: -0.036761276
         outSlope: -0.036761276
         tangentMode: 0
@@ -490,7 +491,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+      key0: {r: 0.9245283, g: 0.5498747, b: 0.004360993, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
