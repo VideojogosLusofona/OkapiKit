@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 2031341793152110034}
   - component: {fileID: 2347895089571103617}
   - component: {fileID: 6493673961000930206}
+  - component: {fileID: 7239150850540514488}
+  - component: {fileID: 7254154097235373484}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -296,7 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   _explanation: "Destroys bullet when colliding with a Tank\n----------------\nWhen
-    a collision with a bounding volume with tags [Tank] starts:\n First, \n         
+    a collision with a bounding volume with tags [Tank,Bullet] starts:\n First, \n         
     destroys this object\n"
   description: Destroys bullet when colliding with a Tank
   enableTrigger: 1
@@ -310,6 +312,7 @@ MonoBehaviour:
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 037282bf9c2be624db5e4dcee420102a, type: 2}
+  - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
 --- !u!114 &6493673961000930206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +336,56 @@ MonoBehaviour:
   target: 0
   targetObject: {fileID: 0}
   tags: []
+--- !u!114 &7239150850540514488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364777538405152176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When a collision with a bounding volume with tags [Wall] starts:\n
+    First, \n          plays sound ricochet_sound at volume 1 and at pitch 1\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 7254154097235373484}
+  isTrigger: 0
+  eventType: 0
+  tags:
+  - {fileID: 11400000, guid: 5009fc6200a650247b168e79eceb4906, type: 2}
+--- !u!114 &7254154097235373484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364777538405152176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Plays sound ricochet_sound at volume 1 and at pitch 1
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  clip: {fileID: 8300000, guid: 575e27378dd9cd24bbcff980d82af4a7, type: 3}
+  volume: {x: 1, y: 1}
+  pitch: {x: 1, y: 1}
 --- !u!1 &2364777538626597467
 GameObject:
   m_ObjectHideFlags: 0

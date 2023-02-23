@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OkapiKit/Samples/Commando/Commando.unity
     guid: fd707bc1ef9c7d94bb739a1e9b66193d
+  - enabled: 1
+    path: Assets/Games/TankTactics/TankTactics.unity
+    guid: 9a97f4c478efd404d968b50c4c45b52e
   m_configObjects: {}
