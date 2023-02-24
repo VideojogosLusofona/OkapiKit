@@ -43,7 +43,7 @@ Bugs:
 - Collision detection fails because of using RigidBody2D.MovePosition() instead of actual physics
 - Preserve velocity with Movement
 - Cooldown on input only shows up if continuous is active
-
+- Camera shake initialization need to be done on Awake, not start
 
 Polish:
 -------
