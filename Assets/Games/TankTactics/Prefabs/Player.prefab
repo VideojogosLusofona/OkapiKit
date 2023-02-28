@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 8382344259849635924}
   - component: {fileID: 8382344259849635927}
   - component: {fileID: 8382344259849635930}
+  - component: {fileID: 7737948151685174011}
   - component: {fileID: 8382344259849635934}
   - component: {fileID: 8382344259849635933}
   - component: {fileID: 8382344259849635935}
@@ -401,8 +402,8 @@ MonoBehaviour:
   _showInfo: 1
   _explanation: "When a collision with a bounding volume with tags [Bullet] starts:\n
     First, \n          plays sound explosion_sound at volume 1 and at pitch 1\n         
-    enables trigger GameRestart.On Timer\n          destroys this object\n         
-    Destroys object Crosshair\n"
+    enables trigger UNDEFINED\n          destroys this object\n          Destroys
+    object Crosshair\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -421,6 +422,41 @@ MonoBehaviour:
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
+--- !u!114 &7737948151685174011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382344259849635919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When a collision with a trigger with tags [Mine Explosion] starts:\n
+    First, \n          plays sound explosion_sound at volume 1 and at pitch 1\n         
+    enables trigger UNDEFINED\n          destroys this object\n          Destroys
+    object Crosshair\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 8382344259849635934}
+  - delay: 0
+    action: {fileID: 8382344259849635933}
+  - delay: 0
+    action: {fileID: 8382344259849635935}
+  - delay: 0
+    action: {fileID: 8382344259849635936}
+  isTrigger: 1
+  eventType: 0
+  tags:
+  - {fileID: 11400000, guid: 7b6614cbd7549a4409447c67edf9f5f0, type: 2}
 --- !u!114 &8382344259849635934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,7 +692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   _explanation: "When button Fire1 is held (this can only happen every 1 seconds):\n
-    First, \n          spawns prefab Bullet_Default at the position of Bullet Spawner\n         
+    First, \n          spawns prefab _B_Default at the position of Bullet Spawner\n         
     plays sound shoot_sound at volume 1 and at pitch 1\n"
   description: 
   enableTrigger: 1
