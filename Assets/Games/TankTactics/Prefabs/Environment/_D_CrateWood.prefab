@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2276509485843872287}
   - component: {fileID: 7565831206837395591}
   m_Layer: 0
-  m_Name: CrateWood
+  m_Name: _D_CrateWood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
