@@ -7,17 +7,31 @@ using NaughtyAttributes;
 abstract public class Action : OkapiElement
 {
     [SerializeField]
-    protected bool      enableAction = true;
+    protected bool enableAction = true;
     [SerializeField]
-    protected bool      hasTags = false;
+    protected bool hasTags = false;
     [SerializeField, FormerlySerializedAsAttribute("tags"), ShowIf("hasTags")]
-    private Hypertag[]  actionTags;
+    private Hypertag[] actionTags;
     [SerializeField]
-    private bool        hasConditions = false;
+    private bool hasConditions = false;
     [SerializeField, ShowIf("hasConditions")]
     private Condition[] actionConditions;
 
     public bool isActionEnabled { get { return enableAction; } set { enableAction = value; } }
+    public bool isTagged
+    {
+        get
+        {
+            if (hasTags)
+            {
+                if (actionTags == null) return false;
+                return (actionTags.Length > 0);
+            }
+            return false;
+        }
+    }
+
+    public Hypertag[]   GetActionTags() => actionTags;
 
     public abstract void Execute();
 

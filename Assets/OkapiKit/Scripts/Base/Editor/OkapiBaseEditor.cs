@@ -35,6 +35,8 @@ public abstract class OkapiBaseEditor : Editor
         propExplanation = serializedObject.FindProperty("_explanation");
     }
 
+    protected Rect titleRect;
+
     protected virtual bool WriteTitle()
     {
         GUIStyle styleTitle = GetTitleSyle();
@@ -49,7 +51,7 @@ public abstract class OkapiBaseEditor : Editor
 
         // Background and title
         float inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
-        Rect titleRect = EditorGUILayout.BeginVertical("box");
+        titleRect = EditorGUILayout.BeginVertical("box");
         Rect rect = new Rect(titleRect.x, titleRect.y, inspectorWidth - titleRect.x, styleTitle.fontSize + 14);
         Rect fullRect = rect;
         if (explanation != "")

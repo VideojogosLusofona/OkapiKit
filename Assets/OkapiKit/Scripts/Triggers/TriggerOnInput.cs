@@ -58,6 +58,7 @@ public class TriggerOnInput : Trigger
 
     void Update()
     {
+        if (!isTriggerEnabled) return;
         if (!EvaluatePreconditions()) return;
 
         if (cooldownTimer >= 0.0f)

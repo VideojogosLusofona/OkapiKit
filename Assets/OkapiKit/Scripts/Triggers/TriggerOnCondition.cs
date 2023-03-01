@@ -30,6 +30,7 @@ public class TriggerOnCondition: Trigger
 
     private void Update()
     {
+        if (!isTriggerEnabled) return;
         if (!EvaluatePreconditions()) return;
 
         bool b = true;
