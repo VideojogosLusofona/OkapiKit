@@ -8,6 +8,7 @@ using UnityEngine;
 public class ActionBlinkEditor : ActionEditor
 {
     SerializedProperty propTarget;
+    SerializedProperty propIncludeChildren;
     SerializedProperty propBlinkTimeOn;
     SerializedProperty propBlinkTimeOff;
     SerializedProperty propDuration;
@@ -17,6 +18,7 @@ public class ActionBlinkEditor : ActionEditor
         base.OnEnable();
 
         propTarget = serializedObject.FindProperty("target");
+        propIncludeChildren = serializedObject.FindProperty("includeChildren");
         propBlinkTimeOn = serializedObject.FindProperty("blinkTimeOn");
         propBlinkTimeOff = serializedObject.FindProperty("blinkTimeOff");
         propDuration = serializedObject.FindProperty("duration");
@@ -35,6 +37,7 @@ public class ActionBlinkEditor : ActionEditor
 
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
+            EditorGUILayout.PropertyField(propIncludeChildren, new GUIContent("Include Children?"));
             EditorGUILayout.PropertyField(propBlinkTimeOn, new GUIContent("On Duration"));
             EditorGUILayout.PropertyField(propBlinkTimeOff, new GUIContent("Off Duration"));
             EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration"));
