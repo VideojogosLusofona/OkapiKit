@@ -23,7 +23,7 @@ public class ActionBlink : Action
 
         timer = duration;
         startState = target.enabled;
-        SetRenderers(!startState);
+        EnableRenderers(!startState);
         timer = duration;
         blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
     }
@@ -52,8 +52,10 @@ public class ActionBlink : Action
         return desc;
     }
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (target == null)
         {
             target = GetComponent<Renderer>();
@@ -89,21 +91,21 @@ public class ActionBlink : Action
             timer -= Time.deltaTime;
             if (timer  <= 0)
             {
-                SetRenderers(startState);
+                EnableRenderers(startState);
             }
             else
             {
                 blinkPhaseTimer -= Time.deltaTime;
                 if (blinkPhaseTimer <= 0)
                 {
-                    SetRenderers(!target.enabled);
+                    EnableRenderers(!target.enabled);
                     blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
                 }
             }
         }
     }
 
-    void SetRenderers(bool b)
+    void EnableRenderers(bool b)
     {
         foreach (var r in renderers)
         {

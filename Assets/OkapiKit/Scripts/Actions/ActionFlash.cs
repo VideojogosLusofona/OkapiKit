@@ -63,8 +63,10 @@ public class ActionFlash : Action
         return desc;
     }
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (target == null)
         {
             target = GetComponent<Renderer>();
