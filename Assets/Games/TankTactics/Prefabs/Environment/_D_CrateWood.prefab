@@ -145,12 +145,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When a collision with a bounding volume with tags [Bullet] starts:\n
-    First, \n          plays sound crate_break_sound at volume 1 and at pitch 1\n         
-    destroys this object\n"
+  _explanation: "When a collision with a bounding volume with tags [Bullet,Explosion]
+    starts:\n First, \n          plays sound crate_break_sound at volume 1 and at
+    pitch 1\n          destroys this object\n"
   description: 
   enableTrigger: 1
-  allowRetrigger: 1
+  allowRetrigger: 0
   hasPreconditions: 0
   preConditions: []
   actions:
@@ -162,6 +162,7 @@ MonoBehaviour:
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
+  - {fileID: 11400000, guid: 7b6614cbd7549a4409447c67edf9f5f0, type: 2}
 --- !u!114 &2276509485843872287
 MonoBehaviour:
   m_ObjectHideFlags: 0

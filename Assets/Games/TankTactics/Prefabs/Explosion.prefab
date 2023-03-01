@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5739637227751177026}
   - component: {fileID: 5739637227751177027}
   - component: {fileID: 5739637227751177030}
+  - component: {fileID: 5453970492710467352}
+  - component: {fileID: 4886101675570915789}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -4893,7 +4895,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!58 &5739637227751177027
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4904,7 +4906,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.005703509, y: 0.009126663}
@@ -4927,3 +4929,51 @@ MonoBehaviour:
   description: Mine
   hypertags:
   - {fileID: 11400000, guid: 7b6614cbd7549a4409447c67edf9f5f0, type: 2}
+--- !u!114 &5453970492710467352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739637227751177036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46216fa097ecb754babda0f26d640422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "Every 0,25 seconds, trigger the actions::\n First, \n          destroys
+    this object\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 0
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 4886101675570915789}
+  startTriggered: 0
+  timeInterval: {x: 0.25, y: 0.25}
+--- !u!114 &4886101675570915789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739637227751177036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Destroys this object
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: 0
+  targetObject: {fileID: 0}
+  tags: []

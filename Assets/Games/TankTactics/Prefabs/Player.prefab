@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3751555957052873269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5507678308887715000}
+  m_Layer: 0
+  m_Name: Bullet Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5507678308887715000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3751555957052873269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2189518846523045834}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8382344258430041690
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +240,6 @@ GameObject:
   - component: {fileID: 8382344259849635924}
   - component: {fileID: 8382344259849635927}
   - component: {fileID: 8382344259849635930}
-  - component: {fileID: 7737948151685174011}
   - component: {fileID: 8382344259849635934}
   - component: {fileID: 8382344259849635933}
   - component: {fileID: 8382344259849635935}
@@ -234,6 +264,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8382344260229210097}
+  - {fileID: 2189518846523045834}
   m_Father: {fileID: 8382344258456899129}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -400,13 +431,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When a collision with a bounding volume with tags [Bullet] starts:\n
-    First, \n          plays sound explosion_sound at volume 1 and at pitch 1\n         
-    enables trigger UNDEFINED\n          destroys this object\n          Destroys
-    object Crosshair\n"
+  _explanation: "When a collision with a bounding volume with tags [Bullet,Explosion]
+    starts:\n First, \n          plays sound explosion_sound at volume 1 and at pitch
+    1\n          enables trigger UNDEFINED\n          destroys this object\n         
+    Destroys object Crosshair\n"
   description: 
   enableTrigger: 1
-  allowRetrigger: 1
+  allowRetrigger: 0
   hasPreconditions: 0
   preConditions: []
   actions:
@@ -422,40 +453,6 @@ MonoBehaviour:
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
---- !u!114 &7737948151685174011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8382344259849635919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  _explanation: "When a collision with a trigger with tags [Mine Explosion] starts:\n
-    First, \n          plays sound explosion_sound at volume 1 and at pitch 1\n         
-    enables trigger UNDEFINED\n          destroys this object\n          Destroys
-    object Crosshair\n"
-  description: 
-  enableTrigger: 1
-  allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
-  actions:
-  - delay: 0
-    action: {fileID: 8382344259849635934}
-  - delay: 0
-    action: {fileID: 8382344259849635933}
-  - delay: 0
-    action: {fileID: 8382344259849635935}
-  - delay: 0
-    action: {fileID: 8382344259849635936}
-  isTrigger: 1
-  eventType: 0
-  tags:
   - {fileID: 11400000, guid: 7b6614cbd7549a4409447c67edf9f5f0, type: 2}
 --- !u!114 &8382344259849635934
 MonoBehaviour:
@@ -691,8 +688,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When button Fire1 is held (this can only happen every 1 seconds):\n
-    First, \n          spawns prefab _B_Default at the position of Bullet Spawner\n         
+  _explanation: "When button Fire1 is held (this can only happen every 1 seconds):\nFirst,
+    \n          spawns prefab _B_Default at the position of Bullet Spawner\n         
     plays sound shoot_sound at volume 1 and at pitch 1\n"
   description: 
   enableTrigger: 1
@@ -755,6 +752,134 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8382344260229210096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Plays sound shoot_sound at volume 1 and at pitch 1
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  clip: {fileID: 8300000, guid: 9a7412deda79a0c4b9329ec79063ce22, type: 3}
+  volume: {x: 1, y: 1}
+  pitch: {x: 1, y: 1}
+--- !u!1 &9134530172014872595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2189518846523045834}
+  - component: {fileID: 606096469615333577}
+  - component: {fileID: 2899477625395972195}
+  - component: {fileID: 399910421985837064}
+  m_Layer: 0
+  m_Name: Mine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2189518846523045834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134530172014872595}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5507678308887715000}
+  m_Father: {fileID: 8382344259849635923}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &606096469615333577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134530172014872595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When button Fire2 is held (this can only happen every 1 seconds):\nFirst,
+    \n          spawns prefab Mine at the position of this object (Mine)\n         
+    plays sound shoot_sound at volume 1 and at pitch 1\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 2899477625395972195}
+  - delay: 0
+    action: {fileID: 399910421985837064}
+  inputType: 0
+  buttonName: Fire2
+  key: 99
+  axis: RightTrigger
+  deadArea: {x: -0.2, y: 0.2}
+  continuous: 1
+  negate: 0
+  useCooldown: 1
+  cooldown: 1
+--- !u!114 &2899477625395972195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134530172014872595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Spawns prefab Mine at the position of this object (Mine)
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions:
+  - valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 0
+    tag: {fileID: 0}
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
+    axis: 0
+    comparison: 0
+    value: 0
+    percentageCompare: 0
+  prefabObject: {fileID: 1759605071955664596, guid: d6712322cd5fa654089efb5844448587, type: 3}
+  spawnPosition: 1
+  targetPosition: {fileID: 5507678308887715000}
+  targetTag: {fileID: 11400000, guid: 754dfd693c5604158853a531c7936935, type: 2}
+  setParent: 0
+--- !u!114 &399910421985837064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134530172014872595}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}

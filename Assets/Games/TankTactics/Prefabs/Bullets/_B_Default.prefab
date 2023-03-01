@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6933403823850466374}
   - component: {fileID: 2148154528363793688}
   - component: {fileID: 2347895089571103617}
+  - component: {fileID: 4194539480950360033}
   - component: {fileID: 1507535145854569937}
   - component: {fileID: 6493673961000930206}
   - component: {fileID: 7239150850540514488}
@@ -235,7 +236,7 @@ MonoBehaviour:
   _showInfo: 1
   _explanation: "Initialize bullet angle, velocity and ricochet counter when it spawns\n----------------\nWhen
     this object is created:\n First, \n          select a random angle between 90
-    and 90 and set the velocity of Bullet_Default's rigid body towards that direction,
+    and 90 and set the velocity of _B_Default's rigid body towards that direction,
     with a magnitude of 10; angles are relative to the object rotation\n"
   description: Initialize bullet angle, velocity and ricochet counter when it spawns
   enableTrigger: 1
@@ -298,7 +299,8 @@ MonoBehaviour:
   _showInfo: 1
   _explanation: "Destroys bullet when colliding with a Tank, Bullet or a Destructable
     object.\n----------------\nWhen a collision with a bounding volume with tags
-    [Tank,Bullet,Destructable] starts:\n First, \n          destroys this object\n"
+    [Tank,Bullet,Destructable,Explosion] starts:\n First, \n          destroys this
+    object\n"
   description: Destroys bullet when colliding with a Tank, Bullet or a Destructable
     object.
   enableTrigger: 1
@@ -314,6 +316,34 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 037282bf9c2be624db5e4dcee420102a, type: 2}
   - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
   - {fileID: 11400000, guid: f1bf613cb53582041bf2e99c2eaa77e5, type: 2}
+  - {fileID: 11400000, guid: 7b6614cbd7549a4409447c67edf9f5f0, type: 2}
+--- !u!114 &4194539480950360033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364777538405152176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b66a51b7fe64c4390ac471b7df316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When a collision with a trigger with tags [Mine] starts:\n First,
+    \n          destroys this object\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 6493673961000930206}
+  isTrigger: 1
+  eventType: 0
+  tags:
+  - {fileID: 11400000, guid: f90f1732b9d544e43a32c5c49bf9be5a, type: 2}
 --- !u!114 &1507535145854569937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "If (Bullet_Default == 0) and When a collision with a bounding volume
+  _explanation: "If (_B_Default == 0) and When a collision with a bounding volume
     with tags [Wall] starts:\n First, \n          destroys this object\n"
   description: 
   enableTrigger: 1
@@ -387,10 +417,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "Ricochet off walls.\n----------------\nIf (Bullet_Default > 0) and
-    When a collision with a bounding volume with tags [Wall] starts:\n First, \n         
+  _explanation: "Ricochet off walls.\n----------------\nIf (_B_Default > 0) and When
+    a collision with a bounding volume with tags [Wall] starts:\n First, \n         
     plays sound ricochet_sound at volume 1 and at pitch 1\n          adds -1 to variable
-    Bullet_Default\n"
+    _B_Default\n"
   description: Ricochet off walls.
   enableTrigger: 1
   allowRetrigger: 1
