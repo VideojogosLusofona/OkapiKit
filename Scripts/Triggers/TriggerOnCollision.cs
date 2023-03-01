@@ -48,6 +48,7 @@ public class TriggerOnCollision : Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isTrigger) return;
+        if (!isTriggerEnabled) return;
         if (eventType != CollisionEvent.Enter) return;
         if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
@@ -59,6 +60,7 @@ public class TriggerOnCollision : Trigger
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isTrigger) return;
+        if (!isTriggerEnabled) return;
         if (eventType != CollisionEvent.Enter) return;
         if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
@@ -68,6 +70,7 @@ public class TriggerOnCollision : Trigger
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!isTrigger) return;
+        if (!isTriggerEnabled) return;
         if (eventType != CollisionEvent.Stay) return;
         if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
@@ -79,6 +82,7 @@ public class TriggerOnCollision : Trigger
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (isTrigger) return;
+        if (!isTriggerEnabled) return;
         if (eventType != CollisionEvent.Stay) return;
         if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
@@ -89,6 +93,7 @@ public class TriggerOnCollision : Trigger
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!isTrigger) return;
+        if (!isTriggerEnabled) return;
         if (eventType != CollisionEvent.Exit) return;
         if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;
@@ -100,6 +105,7 @@ public class TriggerOnCollision : Trigger
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (isTrigger) return;
+        if (!isTriggerEnabled) return;
         if (eventType != CollisionEvent.Exit) return;
         if (!collision.gameObject.HasHypertags(tags)) return;
         if (!EvaluatePreconditions()) return;

@@ -13,6 +13,7 @@ public class TriggerOnStart : Trigger
 
     private void Start()
     {
+        if (!isTriggerEnabled) return;
         if (!EvaluatePreconditions()) return;
 
         ExecuteTrigger();

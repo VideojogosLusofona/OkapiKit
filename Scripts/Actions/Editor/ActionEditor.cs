@@ -21,6 +21,39 @@ public class ActionEditor : OkapiBaseEditor
         propConditions = serializedObject.FindProperty("actionConditions");
     }
 
+
+    protected override bool WriteTitle()
+    {
+        bool ret = base.WriteTitle();
+
+        var action = target as Action;
+        if (action != null)
+        {
+            var width = EditorGUIUtility.currentViewWidth;
+
+            if ((action.isTagged) && (width > 400.0f))
+            {
+                var tags = action.GetActionTags();
+                var tagTexture = GUIUtils.GetTexture("Tag");
+                var x = titleRect.x + width - 48 - 200.0f;
+                GUIStyle explanationStyle = GetExplanationStyle();
+
+                float y = titleRect.y = titleRect.y + 5;
+                foreach (var t in tags)
+                {
+                    if (t == null) continue;
+
+                    GUI.DrawTexture(new Rect(x, y, 16, 16), tagTexture, ScaleMode.ScaleToFit, true, 1.0f);
+                    EditorGUI.LabelField(new Rect(x + 18, y, width, 20.0f), t.name, explanationStyle);
+
+                    y += 18;
+                }
+            }
+        }
+
+        return ret;
+    }
+
     public override void OnInspectorGUI()
     {
         if (WriteTitle())

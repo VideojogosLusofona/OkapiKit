@@ -11,6 +11,7 @@ public class ActionTaggedEditor : ActionEditor
     SerializedProperty propSearchTags;
     SerializedProperty propTriggerType;
     SerializedProperty propTriggerTags;
+    SerializedProperty propColliders;
 
     protected override void OnEnable()
     {
@@ -20,6 +21,7 @@ public class ActionTaggedEditor : ActionEditor
         propSearchTags = serializedObject.FindProperty("searchTags");
         propTriggerType = serializedObject.FindProperty("triggerType");
         propTriggerTags = serializedObject.FindProperty("triggerTags");
+        propColliders = serializedObject.FindProperty("colliders");
     }
 
     public override void OnInspectorGUI()
@@ -39,14 +41,18 @@ public class ActionTaggedEditor : ActionEditor
             {
                 EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags"));
             }
+            if (propSearchType.enumValueIndex == (int)ActionTagged.SearchType.WithinCollider)
+            {
+                EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags"));
+                EditorGUILayout.PropertyField(propColliders, new GUIContent("Search Colliders"));
+            }
             EditorGUILayout.PropertyField(propTriggerType, new GUIContent("Trigger Type"));
             EditorGUILayout.PropertyField(propTriggerTags, new GUIContent("Trigger Tags"));
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
-            }
+            EditorGUI.EndChangeCheck();
+
+            serializedObject.ApplyModifiedProperties();
+            (target as Action).UpdateExplanation();
         }
     }
 }

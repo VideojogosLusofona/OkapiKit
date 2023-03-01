@@ -13,6 +13,7 @@ public class TriggerOnEveryFrame : Trigger
 
     private void Update()
     {
+        if (!isTriggerEnabled) return;
         if (!EvaluatePreconditions()) return;
 
         ExecuteTrigger();
