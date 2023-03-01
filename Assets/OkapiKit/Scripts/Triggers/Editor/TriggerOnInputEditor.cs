@@ -72,14 +72,12 @@ public class TriggerOnInputEditor : TriggerEditor
             if ((propContinuous.boolValue) || (inputType == TriggerOnInput.InputType.Axis))
             {
                 EditorGUILayout.PropertyField(propNegate, new GUIContent("Negate"));
-                if (!propNegate.boolValue)
-                {
-                    EditorGUILayout.PropertyField(propUseCooldown, new GUIContent("Use Cooldown"));
-                    if (propUseCooldown.boolValue)
-                    {
-                        EditorGUILayout.PropertyField(propCooldown, new GUIContent("Cooldown"));
-                    }
-                }
+            }
+
+            EditorGUILayout.PropertyField(propUseCooldown, new GUIContent("Use Cooldown"));
+            if (propUseCooldown.boolValue)
+            {
+                EditorGUILayout.PropertyField(propCooldown, new GUIContent("Cooldown"));
             }
 
             EditorGUI.EndChangeCheck();
