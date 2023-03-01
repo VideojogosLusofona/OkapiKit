@@ -5,13 +5,15 @@ using UnityEngine;
 public class ActionBlink : Action
 {
     [SerializeField] private Renderer   target;
+    [SerializeField] private bool       includeChildren;
     [SerializeField] private float      blinkTimeOn = 0.2f;
     [SerializeField] private float      blinkTimeOff = 0.2f;
     [SerializeField] private float      duration = 2.0f;
 
-    bool    startState;
-    float   timer;
-    float   blinkPhaseTimer;
+    bool            startState;
+    float           timer;
+    float           blinkPhaseTimer;
+    List<Renderer>  renderers;
 
     public override void Execute()
     {
@@ -21,7 +23,7 @@ public class ActionBlink : Action
 
         timer = duration;
         startState = target.enabled;
-        target.enabled = !startState;
+        EnableRenderers(!startState);
         timer = duration;
         blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
     }
@@ -34,18 +36,26 @@ public class ActionBlink : Action
 
         if (target == null)
         {
-            desc += $"blinks this renderer for {duration} seconds";
+            if (includeChildren)
+                desc += $"blinks the renderers below this object for {duration} seconds";
+            else
+                desc += $"blinks this renderer for {duration} seconds";
         }
         else
         {
-            desc += $"blinks renderer {target.name} for {duration} seconds";
+            if (includeChildren)
+                desc += $"blinks renderer {target.name} and all his children for {duration} seconds";
+            else
+                desc += $"blinks renderer {target.name} for {duration} seconds";
         }
 
         return desc;
     }
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (target == null)
         {
             target = GetComponent<Renderer>();
@@ -54,6 +64,21 @@ public class ActionBlink : Action
                 target = GetComponentInChildren<Renderer>();
             }
         }
+        if (target)
+        {
+            renderers = new List<Renderer>();
+            renderers.Add(target);
+
+            if (includeChildren)
+            {
+                var allRenderers = target.GetComponentsInChildren<Renderer>();
+                foreach (var r in allRenderers)
+                {
+                    if (!renderers.Contains(r)) renderers.Add(r);
+                }
+            }
+        }
+        timer = 0;
     }
 
     // Update is called once per frame
@@ -61,22 +86,30 @@ public class ActionBlink : Action
     {
         if (target == null) return;
 
-        if (duration > 0)
+        if (timer > 0)
         {
-            duration -= Time.deltaTime;
-            if (duration <= 0)
+            timer -= Time.deltaTime;
+            if (timer  <= 0)
             {
-                target.enabled = startState;
+                EnableRenderers(startState);
             }
             else
             {
                 blinkPhaseTimer -= Time.deltaTime;
                 if (blinkPhaseTimer <= 0)
                 {
-                    target.enabled = !target.enabled;
+                    EnableRenderers(!target.enabled);
                     blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
                 }
             }
+        }
+    }
+
+    void EnableRenderers(bool b)
+    {
+        foreach (var r in renderers)
+        {
+            r.enabled = b;
         }
     }
 }

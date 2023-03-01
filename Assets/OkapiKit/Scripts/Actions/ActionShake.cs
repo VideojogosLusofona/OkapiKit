@@ -67,8 +67,10 @@ public class ActionShake : Action
         return desc;
     }
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         prevDelta = Vector3.zero;
         timer = 0;
         target = null;

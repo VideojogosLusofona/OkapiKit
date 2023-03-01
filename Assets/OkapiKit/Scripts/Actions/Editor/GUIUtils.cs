@@ -200,7 +200,7 @@ static class GUIUtils
         Texture2D texture;
         if (textures.TryGetValue(name, out texture))
         {
-            return texture;
+            if (texture) return texture;
         }
 
         texture = new Texture2D(1, 1);

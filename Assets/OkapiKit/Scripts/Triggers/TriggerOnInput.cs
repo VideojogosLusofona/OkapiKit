@@ -45,10 +45,13 @@ public class TriggerOnInput : Trigger
             else
             {
                 desc += "is held";
-                if (useCooldown) desc += " (this can only happen every " + cooldown + " seconds)";
             }
         }
-        else desc += "is pressed";
+        else
+        {
+            desc += "is pressed";
+        }
+        if (useCooldown) desc += " (this can only happen every " + cooldown + " seconds)";
 
         return desc;
     }

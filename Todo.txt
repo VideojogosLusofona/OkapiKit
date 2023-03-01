@@ -11,6 +11,7 @@
   - Warning: No tags set for OnCollision
   - Warning: Change values with deltaValue = 0
 - Figure out a way to change responsibility (i.e. bullet causes damage to object, not object detects bullet and cause itself damage)
+- Movement targets should be redefinable
 - Comment Code
 - Documentation
 
@@ -42,8 +43,6 @@ Bugs:
 -----
 - Collision detection fails because of using RigidBody2D.MovePosition() instead of actual physics
 - Preserve velocity with Movement
-- Cooldown on input only shows up if continuous is active
-- Camera shake initialization need to be done on Awake, not start
 
 Polish:
 -------
