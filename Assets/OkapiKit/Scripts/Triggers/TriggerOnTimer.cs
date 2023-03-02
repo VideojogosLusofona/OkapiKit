@@ -18,17 +18,26 @@ public class TriggerOnTimer : Trigger
     {
         if (timeInterval.x == timeInterval.y)
         {
-            return $"Every {timeInterval.x} seconds, trigger the actions:";
+            if (allowRetrigger)
+                return $"Every {timeInterval.x} seconds, trigger the actions:";
+            else
+                return $"After {timeInterval.x} seconds, trigger the actions:";
         }
 
-        return $"Every [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
+        if (allowRetrigger)
+            return $"Every [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
+        else
+            return $"After [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
     }
 
     void Start()
     {
-        if (startTriggered)
+        if (isTriggerEnabled)
         {
-            ExecuteTrigger();
+            if (startTriggered)
+            {
+                ExecuteTrigger();
+            }
         }
         timer = Random.Range(timeInterval.x, timeInterval.y);        
     }
@@ -36,6 +45,8 @@ public class TriggerOnTimer : Trigger
     // Update is called once per frame
     void Update()
     {
+        if (!isTriggerEnabled) return;
+
         timer -= Time.deltaTime;
 
         if (timer <= 0)

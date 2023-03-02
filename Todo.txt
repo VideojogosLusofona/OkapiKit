@@ -10,7 +10,6 @@
   - Warning: No probabilities set for ActionRandom
   - Warning: No tags set for OnCollision
   - Warning: Change values with deltaValue = 0
-- Figure out a way to change responsibility (i.e. bullet causes damage to object, not object detects bullet and cause itself damage)
 - Movement targets should be redefinable
 - Comment Code
 - Documentation

@@ -21,7 +21,6 @@ public class ActionBlink : Action
         if (!EvaluatePreconditions()) return;
         if (target == null) return;
 
-        timer = duration;
         startState = target.enabled;
         EnableRenderers(!startState);
         timer = duration;
