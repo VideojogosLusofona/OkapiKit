@@ -371,6 +371,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 86df63b147ed4bb4daa97acb26380862, type: 2}
 --- !u!1 &460038260
@@ -403,14 +406,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880a5ca005d24084a800be5935ef4bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   speed: 2
-  inputEnabled: 0
+  mode: 0
   inputType: 0
   rotationAxis: Horizontal
   rotationButtonPositive: Right
   rotationButtonNegative: Left
   rotationKeyPositive: 275
   rotationKeyNegative: 276
+  rotationAxisX: Horizontal
+  rotationAxisY: Vertical
+  rotationButtonPositiveX: Right
+  rotationButtonNegativeX: Left
+  rotationButtonPositiveY: Up
+  rotationButtonNegativeY: Down
+  rotationKeyPositiveX: 275
+  rotationKeyNegativeX: 276
+  rotationKeyPositiveY: 273
+  rotationKeyNegativeY: 274
+  axisToAlign: 0
+  targetObject: {fileID: 0}
+  targetTag: {fileID: 0}
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 0}
 --- !u!212 &460038262
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -800,8 +821,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea683d36c47ccf34683c3029d2ae80df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   speed: {x: 800, y: 0}
   useRotation: 0
+  turnToDirection: 0
+  axisToAlign: 0
+  maxTurnSpeed: 360
   inputEnabled: 1
   inputType: 0
   horizontalAxis: Horizontal
@@ -941,6 +968,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 259a32814b3c4184582fbcab805c809a, type: 2}
 --- !u!58 &905503547
@@ -1082,12 +1112,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: ' switches to scene Samples'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' switches to scene Samples'
   sceneName: Samples
 --- !u!114 &1062124230
 MonoBehaviour:
@@ -1102,6 +1133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "When key Escape is held:\n First, \n           switches to scene
+    Samples\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1110,11 +1143,11 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124229}
-  _explanation: "When key Escape is held:\n First, \n           switches to scene
-    Samples\n"
   inputType: 1
   buttonName: 
   key: 27
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 1
   negate: 0
   useCooldown: 0
@@ -1132,12 +1165,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Enables object Congratulations
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Enables object Congratulations
   target: {fileID: 1110339606}
   state: 0
 --- !u!114 &1062124232
@@ -1153,6 +1187,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "When there are no more bricks, show message and exit to menu\n----------------\nWhen
+    (TagCount(Tag_Bricks) <= 0):\n First, \n          enables object Congratulations\n"
   description: When there are no more bricks, show message and exit to menu
   enableTrigger: 1
   allowRetrigger: 1
@@ -1161,8 +1197,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124231}
-  _explanation: "When there are no more bricks, show message and exit to menu\n----------------\nWhen
-    (TagCount(Tag_Bricks) <= 0):\n First, \n          enables object Congratulations\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 0}
@@ -1170,6 +1204,7 @@ MonoBehaviour:
     tag: {fileID: 11400000, guid: b2bb66f99c083a645bc4043daf03e1b6, type: 2}
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
+    axis: 0
     comparison: 2
     value: 0
     percentageCompare: 0
@@ -1185,13 +1220,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488abfd6b407c474a9a49a61995d4bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Resets variable Lives
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Resets variable Lives
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: fb13fed526333984185b5996de505241, type: 2}
   operation: 2
@@ -1211,6 +1247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "When Start is called:\n First, \n          resets variable Lives\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1219,7 +1256,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124233}
-  _explanation: "When Start is called:\n First, \n          resets variable Lives\n"
 --- !u!1 &1110339606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,12 +1289,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: ' Switches to scene Breakout'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' Switches to scene Breakout'
   sceneName: Breakout
 --- !u!114 &1110339608
 MonoBehaviour:
@@ -1273,6 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When key Space is pressed:\n At 0 seconds,  Switches to scene Breakout\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 0
@@ -1281,10 +1319,11 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1110339607}
-  _explanation: "When key Space is pressed:\n At 0 seconds,  Switches to scene Breakout\n"
   inputType: 1
   buttonName: 
   key: 32
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 0
   negate: 0
   useCooldown: 0
@@ -1754,6 +1793,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: fb3017d777dc13541bbde190984d4bff, type: 2}
 --- !u!1 &1486943413
@@ -1809,6 +1851,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113865366a5e79348bad1ea24ba078d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: fb13fed526333984185b5996de505241, type: 2}
 --- !u!114 &1486943416
@@ -1875,6 +1920,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 0b86c48eb5b088f45a7d07b7ae12d647, type: 2}
 --- !u!61 &1632317747
@@ -1952,13 +2000,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Spawns prefab Ball at the position of object with tag [Tag_BallSpawn],
+    setting it as parent
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Ball at the position of object with tag [Tag_BallSpawn],
-    setting it as parent
   prefabObject: {fileID: 67971990859066617, guid: 999f53ea85182054798d7026c73a8718, type: 3}
   spawnPosition: 3
   targetPosition: {fileID: 0}
@@ -1977,12 +2026,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: 'Destroys objects with tags [Tag_Ball] '
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: 'Destroys objects with tags [Tag_Ball] '
   target: 4
   targetObject: {fileID: 0}
   tags:
@@ -2000,12 +2050,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Adds -1 to variable Lives
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Adds -1 to variable Lives
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: fb13fed526333984185b5996de505241, type: 2}
   operation: 1
@@ -2025,6 +2076,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When ball hits trigger area, reduce one life and respawn\n----------------\nWhen
+    a collision with a trigger with tags [Tag_Ball] starts:\n At 0 seconds, Adds
+    -1 to variable Lives\n At 0 seconds, Destroys objects with tags [Tag_Ball] \nAt
+    1 seconds, Spawns prefab Ball at the position of object with tag [Tag_BallSpawn],
+    setting it as parent\n"
   description: When ball hits trigger area, reduce one life and respawn
   enableTrigger: 1
   allowRetrigger: 1
@@ -2037,11 +2093,6 @@ MonoBehaviour:
     action: {fileID: 1632317751}
   - delay: 1
     action: {fileID: 1632317750}
-  _explanation: "When ball hits trigger area, reduce one life and respawn\n----------------\nWhen
-    a collision with a trigger with tags [Tag_Ball] starts:\n At 0 seconds, Adds
-    -1 to variable Lives\n At 0 seconds, Destroys objects with tags [Tag_Ball] \nAt
-    1 seconds, Spawns prefab Ball at the position of object with tag [Tag_BallSpawn],
-    setting it as parent\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -2059,13 +2110,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Disables action [Spawns prefab Ball at the position of object with
+    tag [Tag_BallSpawn], setting it as parent]
+  description: 
   enableAction: 0
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables action [Spawns prefab Ball at the position of object with
-    tag [Tag_BallSpawn], setting it as parent]
   target: {fileID: 1632317750}
   state: 1
 --- !u!114 &1632317755
@@ -2081,12 +2133,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Enables object GameOver
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Enables object GameOver
   target: {fileID: 1721419922}
   state: 0
 --- !u!114 &1632317756
@@ -2102,6 +2155,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "If there are no more lives, show Game Over and stop spawning\n----------------\nWhen
+    (Lives <= 0):\n At 0 seconds, Enables object GameOver\n At 0 seconds, Disables
+    action [Spawns prefab Ball at the position of object with tag [Tag_BallSpawn],
+    setting it as parent]\n"
   description: If there are no more lives, show Game Over and stop spawning
   enableTrigger: 1
   allowRetrigger: 1
@@ -2112,10 +2169,6 @@ MonoBehaviour:
     action: {fileID: 1632317755}
   - delay: 0
     action: {fileID: 1632317754}
-  _explanation: "If there are no more lives, show Game Over and stop spawning\n----------------\nWhen
-    (Lives <= 0):\n At 0 seconds, Enables object GameOver\n At 0 seconds, Disables
-    action [Spawns prefab Ball at the position of object with tag [Tag_BallSpawn],
-    setting it as parent]\n"
   conditions:
   - valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: fb13fed526333984185b5996de505241, type: 2}
@@ -2123,6 +2176,7 @@ MonoBehaviour:
     tag: {fileID: 0}
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
+    axis: 0
     comparison: 2
     value: 0
     percentageCompare: 0
@@ -2180,12 +2234,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: ' Switches to scene Breakout'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' Switches to scene Breakout'
   sceneName: Breakout
 --- !u!114 &1721419925
 MonoBehaviour:
@@ -2200,6 +2255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When key Space is pressed:\n At 0 seconds,  Switches to scene Breakout\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 0
@@ -2208,10 +2264,11 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1721419924}
-  _explanation: "When key Space is pressed:\n At 0 seconds,  Switches to scene Breakout\n"
   inputType: 1
   buttonName: 
   key: 32
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 0
   negate: 0
   useCooldown: 0
