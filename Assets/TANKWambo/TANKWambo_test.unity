@@ -14505,63 +14505,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7565831206837395644, guid: 8068e3a902d338541b50ad0bf648b903, type: 3}
   m_PrefabInstance: {fileID: 1920009894}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2036017210
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664584, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759605071955664596, guid: d6712322cd5fa654089efb5844448587, type: 3}
-      propertyPath: m_Name
-      value: Mine
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d6712322cd5fa654089efb5844448587, type: 3}
 --- !u!1001 &8382344258859722624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14569,31 +14512,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 606096469615333577, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
-      propertyPath: cooldown
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 606096469615333577, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
-      propertyPath: _explanation
-      value: "When button Fire2 is held (this can only happen every 3 seconds):\n
-        First, \n          spawns prefab Mine at the position of this object (Mine)\n         
-        plays sound shoot_sound at volume 1 and at pitch 1\n"
-      objectReference: {fileID: 0}
-    - target: {fileID: 7737948151685174011, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
-      propertyPath: isTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7737948151685174011, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
-      propertyPath: _explanation
-      value: "When a collision with a trigger with tags [Explosion] starts:\n First,
-        \n          plays sound explosion_sound at volume 1 and at pitch 1\n         
-        enables trigger GameRestart.On Timer\n          destroys this object\n         
-        Destroys object Crosshair\n"
-      objectReference: {fileID: 0}
-    - target: {fileID: 8382344258430041694, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8382344258430041695, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
       propertyPath: cameraObject
       value: 
@@ -14646,9 +14564,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8382344259849635933, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 94019394}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}

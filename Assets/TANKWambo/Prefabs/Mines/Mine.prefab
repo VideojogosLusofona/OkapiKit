@@ -14,10 +14,8 @@ GameObject:
   - component: {fileID: 1759605071955664599}
   - component: {fileID: 1759605071955664581}
   - component: {fileID: 1759605071955664590}
-  - component: {fileID: 1759605071955664588}
-  - component: {fileID: 1759605071955664591}
-  - component: {fileID: 1759605071955664589}
   - component: {fileID: 1759605071955664578}
+  - component: {fileID: 1759605071955664591}
   - component: {fileID: 1759605071955664576}
   - component: {fileID: 1759605071955664579}
   - component: {fileID: 1759605071955664577}
@@ -162,9 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "Mine Time\n----------------\nEvery 6 seconds, trigger the actions::\n
-    First, \n          enables trigger Mine.On Timer\n          blinks renderer Mine
-    for 3 seconds\n"
+  _explanation: "Mine Time\n----------------\nAfter 5 seconds, trigger the actions::\n
+    First, \n          blinks renderer Mine for 3 seconds\n then, at 3 seconds, \n         
+    spawns prefab Explosion at the position of this object (Mine)\n          plays
+    sound explosion_sound at volume 1 and at pitch 1\n          destroys this object\n"
   description: Mine Time
   enableTrigger: 1
   allowRetrigger: 0
@@ -172,89 +171,15 @@ MonoBehaviour:
   preConditions: []
   actions:
   - delay: 0
-    action: {fileID: 1759605071955664588}
-  - delay: 0
     action: {fileID: 1759605071955664591}
-  startTriggered: 0
-  timeInterval: {x: 6, y: 6}
---- !u!114 &1759605071955664588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759605071955664596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92c8e5ca8f3d04141b3e3ca48a91ebb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  _explanation: Enables trigger mine.On Timer
-  description: 
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  target: {fileID: 1759605071955664589}
-  state: 0
---- !u!114 &1759605071955664591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759605071955664596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7194731d179090d42868566f363fe11e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  _explanation: Blinks renderer Mine for 3 seconds
-  description: 
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  target: {fileID: 1759605071955664585}
-  includeChildren: 0
-  blinkTimeOn: 0.2
-  blinkTimeOff: 0.2
-  duration: 3
---- !u!114 &1759605071955664589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759605071955664596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46216fa097ecb754babda0f26d640422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  _explanation: "Mine Blinking Time\n----------------\nEvery 3 seconds, trigger the
-    actions::\n First, \n          spawns prefab Explosion at the position of this
-    object (Mine)\n          plays sound explosion_sound at volume 1 and at pitch
-    1\n          destroys this object\n"
-  description: Mine Blinking Time
-  enableTrigger: 0
-  allowRetrigger: 0
-  hasPreconditions: 0
-  preConditions: []
-  actions:
-  - delay: 0
+  - delay: 3
     action: {fileID: 1759605071955664576}
-  - delay: 0
+  - delay: 3
     action: {fileID: 1759605071955664579}
-  - delay: 0
+  - delay: 3
     action: {fileID: 1759605071955664577}
   startTriggered: 0
-  timeInterval: {x: 3, y: 3}
+  timeInterval: {x: 5, y: 5}
 --- !u!114 &1759605071955664578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +213,31 @@ MonoBehaviour:
   eventType: 0
   tags:
   - {fileID: 11400000, guid: 5dd3ea1295091a146a4601c96116d46b, type: 2}
+--- !u!114 &1759605071955664591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759605071955664596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7194731d179090d42868566f363fe11e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Blinks renderer Mine for 3 seconds
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: {fileID: 1759605071955664585}
+  includeChildren: 0
+  blinkTimeOn: 0.2
+  blinkTimeOff: 0.2
+  duration: 3
 --- !u!114 &1759605071955664576
 MonoBehaviour:
   m_ObjectHideFlags: 0
