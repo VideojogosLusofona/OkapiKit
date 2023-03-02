@@ -155,8 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   _explanation: "Reset game when player is killed. Trigger is called from player
-    collision.\n----------------\nEvery [0,5,5] seconds, trigger the actions::\nFirst,
-    \n           switches to scene TankTactics\n"
+    collision.\n----------------\nEvery [0,5,5] seconds, trigger the actions::\n
+    First, \n           switches to scene TANKWambo_test\n"
   description: Reset game when player is killed. Trigger is called from player collision.
   enableTrigger: 0
   allowRetrigger: 1
@@ -195,14 +195,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: ' switches to scene TankTactics'
+  _explanation: ' switches to scene TANKWambo_test'
   description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  sceneName: TankTactics
+  sceneName: TANKWambo_test
 --- !u!1 &162631897
 GameObject:
   m_ObjectHideFlags: 0
@@ -14564,5 +14564,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8382344259849635933, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 94019394}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dedd07ba83556f428fda5713bec7920, type: 3}
