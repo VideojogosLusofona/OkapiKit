@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 1759605071955664579}
   - component: {fileID: 1759605071955664577}
   m_Layer: 0
-  m_Name: Mine
+  m_Name: _M_Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,11 +160,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "Mine Time\n----------------\nAfter 5 seconds, trigger the actions::\n
-    First, \n          blinks renderer Mine for 3 seconds\n then, at 3 seconds, \n         
-    spawns prefab Explosion at the position of this object (Mine)\n          plays
-    sound explosion_sound at volume 1 and at pitch 1\n          destroys this object\n"
-  description: Mine Time
+  _explanation: "Active Time (5s) & Warning Time (3s)\n----------------\nAfter 5
+    seconds, trigger the actions::\n First, \n          blinks renderer _M_Default
+    for 3 seconds\n then, at 3 seconds, \n          spawns prefab Explosion at the
+    position of this object (_M_Default)\n          plays sound explosion_sound at
+    volume 1 and at pitch 1\n          destroys this object\n"
+  description: Active Time (5s) & Warning Time (3s)
   enableTrigger: 1
   allowRetrigger: 0
   hasPreconditions: 0
