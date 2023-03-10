@@ -40,10 +40,13 @@ public class TriggerOnConditionEditor : TriggerEditor
 
             EditorGUI.EndChangeCheck();
 
-            serializedObject.ApplyModifiedProperties();
+            ActionPanel();
 
-            serializedObject.Update();
-            EditorGUILayout.PropertyField(propActions, new GUIContent("Actions"), true);
+            var actionsRect = GUILayoutUtility.GetLastRect();
+            actionsRect = new Rect(actionsRect.xMin, actionsRect.yMax, actionsRect.width, 20.0f);
+
+            TryDragActionToActionDelayList(actionsRect, propElseActions);
+
             EditorGUILayout.PropertyField(propElseActions, new GUIContent("Else Actions"), true);
 
             serializedObject.ApplyModifiedProperties();
