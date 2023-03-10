@@ -25,6 +25,24 @@ static class GUIUtils
 
     static Dictionary<string, GUIStyle> styles;
 
+    static public GUIStyle GetActionDelayTextStyle()
+    {
+        if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+        GUIStyle titleStyle;
+        styles.TryGetValue("ActionDelayText", out titleStyle);
+        if (titleStyle == null)
+        {
+            titleStyle = new GUIStyle(GUI.skin.label);
+            titleStyle.fontSize = 8;
+            titleStyle.fixedHeight = 8;
+            titleStyle.clipping = TextClipping.Overflow;
+            styles.Add("ActionDelayText", titleStyle);
+        }
+        return titleStyle;
+    }
+
+
     static public GUIStyle GetActionTitleStyle()
     {
         if (styles == null) styles = new Dictionary<string, GUIStyle>();
