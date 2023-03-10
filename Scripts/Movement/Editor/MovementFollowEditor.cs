@@ -16,21 +16,23 @@ public class MovementFollowEditor : MovementEditor
     SerializedProperty propMaxRotationSpeed;
     SerializedProperty propCameraObject;
     SerializedProperty propCameraTag;
+    SerializedProperty propStoppingDistance;
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
         propSpeed = serializedObject.FindProperty("speed");
-        propTargetType = serializedObject.FindProperty("targetType"); ;
-        propTargetTag = serializedObject.FindProperty("targetTag"); ;
-        propTargetObject = serializedObject.FindProperty("targetObject"); ;
-        propRelativeMovement = serializedObject.FindProperty("relativeMovement"); ;
-        propRotateTowardsDirection = serializedObject.FindProperty("rotateTowardsDirection"); ;
-        propAlignAxis = serializedObject.FindProperty("alignAxis"); ;
-        propMaxRotationSpeed = serializedObject.FindProperty("maxRotationSpeed"); ;
-        propCameraObject = serializedObject.FindProperty("cameraObject"); ;
-        propCameraTag = serializedObject.FindProperty("cameraTag"); ;
+        propTargetType = serializedObject.FindProperty("targetType");
+        propTargetTag = serializedObject.FindProperty("targetTag");
+        propTargetObject = serializedObject.FindProperty("targetObject");
+        propRelativeMovement = serializedObject.FindProperty("relativeMovement");
+        propRotateTowardsDirection = serializedObject.FindProperty("rotateTowardsDirection");
+        propAlignAxis = serializedObject.FindProperty("alignAxis");
+        propMaxRotationSpeed = serializedObject.FindProperty("maxRotationSpeed");
+        propCameraObject = serializedObject.FindProperty("cameraObject");
+        propCameraTag = serializedObject.FindProperty("cameraTag");
+        propStoppingDistance = serializedObject.FindProperty("stoppingDistance");
     }
 
     public override void OnInspectorGUI()
@@ -79,6 +81,12 @@ public class MovementFollowEditor : MovementEditor
             {
                 EditorGUILayout.PropertyField(propRelativeMovement, new GUIContent("Relative Movement"));
             }
+            if (((type == MovementFollow.TargetType.Mouse) || (!propRelativeMovement.boolValue)) &&
+                (propSpeed.floatValue > 0.0f))
+            {
+                EditorGUILayout.PropertyField(propStoppingDistance, new GUIContent("Stopping Distance"));
+            }
+
             EditorGUILayout.PropertyField(propRotateTowardsDirection, new GUIContent("Align With Direction"));
             if (propRotateTowardsDirection.boolValue)
             {

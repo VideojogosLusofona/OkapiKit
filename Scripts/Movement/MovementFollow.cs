@@ -11,6 +11,7 @@ public class MovementFollow : Movement
     [SerializeField] private TargetType targetType;
     [SerializeField] private Hypertag   targetTag;
     [SerializeField] private Transform  targetObject;
+    [SerializeField] private float      stoppingDistance = 0;
     [SerializeField] private bool       relativeMovement = false;
     [SerializeField] private bool       rotateTowardsDirection = false;
     [SerializeField] private Axis       alignAxis = Axis.UpAxis;
@@ -33,7 +34,10 @@ public class MovementFollow : Movement
 
         if (speed != 0.0f)
         {
-            speedDesc = $", at {speed} units per second.\n";
+            if ((stoppingDistance > 0) && (!relativeMovement))
+                speedDesc = $", at {speed} units per second, up to a distance of {stoppingDistance} units.\n";
+            else
+                speedDesc = $", at {speed} units per second.\n";
         }
         else
         {
@@ -84,6 +88,7 @@ public class MovementFollow : Movement
 
     void FixedUpdate()
     {
+        Vector3     target = Vector3.zero;
         Vector3     delta = Vector3.zero;
 
         if (targetType != TargetType.Mouse)
@@ -123,10 +128,16 @@ public class MovementFollow : Movement
                     }
                 }
 
+                target = targetTransform.position + offset;
+
                 if (speed == 0.0f)
-                    delta = targetTransform.position + offset - transform.position;
+                {
+                    delta = target - transform.position;
+                }
                 else
-                    delta = Vector3.MoveTowards(transform.position, targetTransform.position + offset, Time.fixedDeltaTime * speed) - transform.position;
+                {
+                    delta = Vector3.MoveTowards(transform.position, target, Time.fixedDeltaTime * speed) - transform.position;
+                }
             }
 
             prevTransform = targetTransform;
@@ -145,7 +156,10 @@ public class MovementFollow : Movement
             }
         }
 
-        MoveDelta(delta);
+        if ((Vector3.Distance(transform.position, target) > stoppingDistance) || (speed == 0.0f) || (relativeMovement))
+        {
+            MoveDelta(delta);
+        }
 
         if (rotateTowardsDirection)
         {
