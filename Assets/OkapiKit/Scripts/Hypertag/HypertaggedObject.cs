@@ -35,6 +35,22 @@ public class HypertaggedObject : OkapiElement
         return false;
     }
 
+    public bool Has(Hypertag[] tags)
+    {
+        if (hypertags == null) return false;
+        if (tags == null) return false;
+
+        foreach (var t1 in tags)
+        {
+            foreach (var t2 in hypertags)
+            {
+                if (t1 == t2) return true;
+            }
+        }
+
+        return false;
+    }
+
     public static List<GameObject> FindGameObjectsWithHypertag(Hypertag[] tags)
     {
         List<GameObject> ret = new List<GameObject>();

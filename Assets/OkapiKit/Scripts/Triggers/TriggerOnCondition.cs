@@ -13,6 +13,18 @@ public class TriggerOnCondition: Trigger
 
     public override string GetTriggerTitle() => "On Condition";
 
+    public override string UpdateExplanation()
+    {
+        base.UpdateExplanation();
+
+        if ((elseActions != null) && (elseActions.Length > 0)) 
+        {
+            _explanation += "else\n" + GetDescriptionActions(elseActions);
+        }
+
+        return _explanation;
+    }
+
     public override string GetRawDescription(string ident, GameObject refObject)
     {
         string desc = "When ";
