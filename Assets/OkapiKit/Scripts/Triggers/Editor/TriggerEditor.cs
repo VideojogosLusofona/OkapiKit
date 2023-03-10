@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 [CustomEditor(typeof(Trigger))]
 public class TriggerEditor : OkapiBaseEditor
@@ -72,12 +73,76 @@ public class TriggerEditor : OkapiBaseEditor
     protected void ActionPanel()
     {
         serializedObject.ApplyModifiedProperties();
-
         serializedObject.Update();
+
+        var actionsRect = GUILayoutUtility.GetLastRect();
+        actionsRect = new Rect(actionsRect.xMin, actionsRect.yMax, actionsRect.width, 20.0f);
+
+        TryDragActionToActionDelayList(actionsRect, propActions);
+
         EditorGUILayout.PropertyField(propActions, new GUIContent("Actions"), true);
-        
+
         serializedObject.ApplyModifiedProperties();
         (target as Trigger).UpdateExplanation();
+    }
+
+    protected void TryDragActionToActionDelayList(Rect rect, SerializedProperty actionList)
+    {
+        Event evt = Event.current;
+        if ((evt.type == EventType.DragUpdated || evt.type == EventType.DragPerform) &&
+            (rect.Contains(evt.mousePosition)))
+        {
+            bool checkIfAction = true;
+            foreach (Object obj in DragAndDrop.objectReferences)
+            {
+                if (obj is not Action)
+                {
+                    checkIfAction = false;
+                    break;
+                }
+            }
+
+            if (checkIfAction)
+            {
+                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+
+                if (evt.type == EventType.DragPerform)
+                {
+                    DragAndDrop.AcceptDrag();
+
+                    // Get max delay
+                    float d = 0.0f;
+                    for (int i = 0; i < actionList.arraySize; i++)
+                    {
+                        var elem = actionList.GetArrayElementAtIndex(i);
+                        var propDelay = elem.FindPropertyRelative("delay");
+                        if (propDelay != null)
+                        {
+                            if (d < propDelay.floatValue) d = propDelay.floatValue;
+                        }
+                    }
+
+                    foreach (Object obj in DragAndDrop.objectReferences)
+                    {
+                        if (obj is Action)
+                        {
+                            // Add element to the array
+                            actionList.arraySize++;
+                            var newElement = actionList.GetArrayElementAtIndex(actionList.arraySize - 1);
+                            if (newElement != null)
+                            {
+                                var propDelay = newElement.FindPropertyRelative("delay");
+                                var propAction = newElement.FindPropertyRelative("action");
+                                if (propDelay != null) propDelay.floatValue = d;
+                                if (propAction != null) propAction.objectReferenceValue = obj as Action;
+                            }
+                        }
+                    }
+                }
+
+                evt.Use();
+            }
+        }
     }
 
     private bool CheckBox(string label, float x, float y, float width, bool initialValue)
