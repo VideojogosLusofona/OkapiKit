@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Linq;
 
 [CustomEditor(typeof(HypertaggedObject))]
+[CanEditMultipleObjects]
 public class HypertaggedObjectEditor : OkapiBaseEditor
 {
     SerializedProperty propHypertags;

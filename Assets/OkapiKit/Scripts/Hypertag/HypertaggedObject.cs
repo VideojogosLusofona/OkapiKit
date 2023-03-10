@@ -6,11 +6,11 @@ using NaughtyAttributes;
 public class HypertaggedObject : OkapiElement
 {
     [SerializeField] 
-    private Hypertag[]  hypertags;
+    private List<Hypertag>  hypertags;
 
     public string GetTagString()
     {
-        if ((hypertags == null) || (hypertags.Length == 0)) return "Hypertag";
+        if ((hypertags == null) || (hypertags.Count == 0)) return "Hypertag";
 
         string ret = "";
         foreach (var tag in hypertags)
@@ -24,6 +24,32 @@ public class HypertaggedObject : OkapiElement
 
         return ret;
     }
+
+    public void AddTag(Hypertag tag)
+    {
+        if (hypertags == null) hypertags = new List<Hypertag>();
+
+        if (!hypertags.Contains(tag)) hypertags.Add(tag);
+    }
+
+    public void AddTag(Hypertag[] tags)
+    {
+        foreach (var t in tags)
+        {
+            AddTag(t);
+        }
+    }
+
+    public void AddTag(List<Hypertag> tags)
+    {
+        foreach (var t in tags)
+        {
+            AddTag(t);
+        }
+    }
+
+
+
     public bool Has(Hypertag tag)
     {
         if (hypertags == null) return false;
