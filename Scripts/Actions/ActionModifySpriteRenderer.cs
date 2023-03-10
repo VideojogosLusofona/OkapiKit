@@ -5,15 +5,17 @@ using NaughtyAttributes;
 
 public class ActionModifySpriteRenderer : Action
 {
-    public enum ChangeType { Sprite = 0 };
+    public enum ChangeType { Sprite = 0, Color = 1 };
     public enum StateChange { Enable = 0, Disable = 1, Toggle = 2};
 
     [SerializeField]
-    private SpriteRenderer       target;
+    private SpriteRenderer      target;
     [SerializeField] 
     private ChangeType          changeType;
     [SerializeField]
     private Sprite              sprite;
+    [SerializeField]
+    private Color               color = Color.white;
 
     public override void Execute()
     {
@@ -28,6 +30,9 @@ public class ActionModifySpriteRenderer : Action
         {
             case ChangeType.Sprite:
                 sr.sprite = sprite;
+                break;
+            case ChangeType.Color:
+                sr.color = color;
                 break;
             default:
                 break;
@@ -47,6 +52,9 @@ public class ActionModifySpriteRenderer : Action
             case ChangeType.Sprite:
                 string spriteName = (sprite) ? (sprite.name) : ("UNDEFINED");
                 desc += $"sets {targetName}'s sprite to [{spriteName}]";
+                break;
+            case ChangeType.Color:
+                desc += $"sets {targetName}'s sprite color to {color}";
                 break;
         }
 

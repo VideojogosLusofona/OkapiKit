@@ -10,6 +10,7 @@ public class ActionModifySpriteRendererEditor : ActionEditor
     SerializedProperty propTarget;
     SerializedProperty propChangeType;
     SerializedProperty propSprite;
+    SerializedProperty propColor;
 
     protected override void OnEnable()
     {
@@ -18,6 +19,7 @@ public class ActionModifySpriteRendererEditor : ActionEditor
         propTarget = serializedObject.FindProperty("target");
         propChangeType = serializedObject.FindProperty("changeType");
         propSprite = serializedObject.FindProperty("sprite");
+        propColor = serializedObject.FindProperty("color");
     }
 
     public override void OnInspectorGUI()
@@ -38,6 +40,10 @@ public class ActionModifySpriteRendererEditor : ActionEditor
             if (propChangeType.enumValueIndex == (int)ActionModifySpriteRenderer.ChangeType.Sprite)
             {
                 EditorGUILayout.PropertyField(propSprite, new GUIContent("Sprite"));
+            }
+            if (propChangeType.enumValueIndex == (int)ActionModifySpriteRenderer.ChangeType.Color)
+            {
+                EditorGUILayout.PropertyField(propColor, new GUIContent("Color"));
             }
 
             if (EditorGUI.EndChangeCheck())

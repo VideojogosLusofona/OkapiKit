@@ -8,9 +8,12 @@ public struct Condition
     [System.Serializable] public enum ValueType { None = 0, TagCount = 1, 
                                                   WorldPositionX = 2, WorldPositionY = 3, RelativePositionX = 4, RelativePositionY = 5,
                                                   AbsoluteVelocityX = 6, AbsoluteVelocityY = 7,
-                                                  Distance = 8, Angle = 9};
+                                                  Distance = 8, Angle = 9,
+                                                  Probe = 10, ProbeDistance = 11 };
     [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5};
     [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
+
+    [System.Serializable] public enum DataType { Number = 0, Boolean = 1};
 
     public VariableInstance valueHandler;
     public Variable     variable;
@@ -19,9 +22,16 @@ public struct Condition
     public Transform    sourceTransform;
     public Rigidbody2D  rigidBody;
     public Axis         axis;
+    public Probe        probe;
     public Comparison   comparison;
     public float        value;
     public bool         percentageCompare;
+
+    public DataType GetDataType()
+    {
+        if (valueType == ValueType.Probe) return DataType.Boolean;
+        else return DataType.Number;
+    }
 
     public Variable GetVariable()
     {
@@ -69,6 +79,12 @@ public struct Condition
                 if (tag != null) return $"AngleBetween(Tag[{tag.name}], {axis})";
                 else if (sourceTransform) return $"AngleBetween({sourceTransform.name}, {axis})";
                 return $"AngleBetween([UNDEFINED], {axis})";
+            case ValueType.Probe:
+                if (probe != null) return $"ProbeIntersect([{probe.name}])";
+                return $"ProbeIntersect([UNDEFINED])";
+            case ValueType.ProbeDistance:
+                if (probe != null) return $"ProbeIntersectionDistance([{probe.name}])";
+                return $"ProbeIntersectionDistance([UNDEFINED])";
         }
 
         return "[Unknown]";

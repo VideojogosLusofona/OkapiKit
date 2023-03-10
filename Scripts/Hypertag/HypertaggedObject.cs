@@ -98,16 +98,19 @@ public class HypertaggedObject : OkapiElement
         string e = GetRawDescription("", gameObject);
 
         _explanation = "";
-        for (int i = 0; i < e.Length; i++)
+        if (e != null)
         {
-            if (i != ' ')
+            for (int i = 0; i < e.Length; i++)
             {
-                _explanation += char.ToUpper(e[i]) + e.Substring(i + 1);
-                break;
-            }
-            else
-            {
-                _explanation += e[i];
+                if (i != ' ')
+                {
+                    _explanation += char.ToUpper(e[i]) + e.Substring(i + 1);
+                    break;
+                }
+                else
+                {
+                    _explanation += e[i];
+                }
             }
         }
         return _explanation;
