@@ -21,7 +21,7 @@ public abstract class Trigger : OkapiElement
     public      bool            allowRetrigger = true;
     [SerializeField]
     private     bool            hasPreconditions = false;
-    [SerializeField, ShowIf("hasPreconditions")] 
+    [SerializeField] 
     private     Condition[]     preConditions;
     [SerializeField]
     protected   ActionTrigger[] actions;
@@ -142,7 +142,7 @@ public abstract class Trigger : OkapiElement
         alreadyTriggered = true;
     }
 
-    IEnumerator ExecuteTriggerCR(ActionTrigger action)
+    protected IEnumerator ExecuteTriggerCR(ActionTrigger action)
     {
         yield return new WaitForSeconds(action.delay);
 
