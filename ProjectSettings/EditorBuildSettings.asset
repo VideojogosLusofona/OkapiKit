@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OkapiKit/Samples/Commando/Commando.unity
     guid: fd707bc1ef9c7d94bb739a1e9b66193d
+  - enabled: 1
+    path: Assets/IgnoreThis/TestScene.unity
+    guid: 83a7a178af9ce05448682b9715b5f58b
   m_configObjects: {}

@@ -18,7 +18,7 @@ public class MovementFollow : Movement
     [SerializeField] private Camera     cameraObject;
     [SerializeField] private Hypertag   cameraTag;
 
-    Transform prevTransform;
+    Transform   prevTransform;
     Vector3     offset;
 
     public override Vector2 GetSpeed() => new Vector2(speed, speed);
@@ -113,7 +113,14 @@ public class MovementFollow : Movement
             {
                 if (prevTransform != targetTransform)
                 {
-                    offset = transform.position - targetTransform.position;
+                    if (relativeMovement)
+                    {
+                        offset = transform.position - targetTransform.position;
+                    }
+                    else
+                    {
+                        offset = Vector3.zero;
+                    }
                 }
 
                 if (speed == 0.0f)
