@@ -16,16 +16,23 @@ public class Trigger_ActionTriggerDrawer : PropertyDrawer
         // prefab override logic works on the entire property.
         EditorGUI.BeginProperty(position, label, property);
 
-        // Draw label
-        position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+        // Draw label - NO LABEL
+        //position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
         // Don't make child fields be indented
         var indent = EditorGUI.indentLevel;
         EditorGUI.indentLevel = 0;
 
         // Calculate rects
-        var delayRect = new Rect(position.x, position.y, 50, 18);
-        var actionRect = new Rect(position.x + 55, position.y, position.width - 55, 18);
+        var delayTextRect = new Rect(position.x, position.y + 6, 25, 18);
+        var delayRect = new Rect(delayTextRect.xMax + 5, position.y, 50, 18);
+        var actionTextRect = new Rect(delayRect.xMax + 10, position.y + 6, 25, 18);
+        var actionRect = new Rect(actionTextRect.xMax + 5, position.y, position.width - (25 + 50 + 25 + 20), 18);
+
+        GUIStyle textStyle = GUIUtils.GetActionDelayTextStyle();
+
+        EditorGUI.LabelField(delayTextRect, "Delay", textStyle);
+        EditorGUI.LabelField(actionTextRect, "Action", textStyle);
 
         var propAction = property.FindPropertyRelative("action");
 
