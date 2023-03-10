@@ -5,11 +5,11 @@ using System.Linq;
 [CustomEditor(typeof(Trigger))]
 public class TriggerEditor : OkapiBaseEditor
 {
-    SerializedProperty propEnableTrigger;
-    SerializedProperty propAllowRetrigger;
-    SerializedProperty propHasConditions;
-    SerializedProperty propConditions;
-    SerializedProperty propActions;
+    protected SerializedProperty propEnableTrigger;
+    protected SerializedProperty propAllowRetrigger;
+    protected SerializedProperty propHasConditions;
+    protected SerializedProperty propPreConditions;
+    protected SerializedProperty propActions;
 
     protected override void OnEnable()
     {
@@ -18,7 +18,7 @@ public class TriggerEditor : OkapiBaseEditor
         propEnableTrigger = serializedObject.FindProperty("enableTrigger");
         propAllowRetrigger = serializedObject.FindProperty("allowRetrigger");
         propHasConditions = serializedObject.FindProperty("hasPreconditions");
-        propConditions = serializedObject.FindProperty("preConditions");
+        propPreConditions = serializedObject.FindProperty("preConditions");
         propActions = serializedObject.FindProperty("actions");
     }
 
@@ -37,7 +37,7 @@ public class TriggerEditor : OkapiBaseEditor
         return varTexture;
     }
 
-    protected void StdEditor(bool useOriginalEditor = true)
+    protected void StdEditor(bool useOriginalEditor = true, bool allowConditions = true)
     {
         Rect rect = EditorGUILayout.BeginHorizontal();
         rect.height = 20;
@@ -45,7 +45,10 @@ public class TriggerEditor : OkapiBaseEditor
         float elemWidth = totalWidth / 3;
         propEnableTrigger.boolValue = CheckBox("Active", rect.x, rect.y, elemWidth, propEnableTrigger.boolValue);
         propAllowRetrigger.boolValue = CheckBox("Allow Retrigger", rect.x + elemWidth, rect.y, elemWidth, propAllowRetrigger.boolValue);
-        propHasConditions.boolValue = CheckBox("Conditions", rect.x + elemWidth * 2, rect.y, elemWidth, propHasConditions.boolValue);
+        if (allowConditions)
+        {
+            propHasConditions.boolValue = CheckBox("Conditions", rect.x + elemWidth * 2, rect.y, elemWidth, propHasConditions.boolValue);
+        }
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(rect.height);
         EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
@@ -53,7 +56,7 @@ public class TriggerEditor : OkapiBaseEditor
         if (propHasConditions.boolValue)
         {
             // Display tags
-            EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions"), true);
+            EditorGUILayout.PropertyField(propPreConditions, new GUIContent("Conditions"), true);
         }
 
         serializedObject.ApplyModifiedProperties();

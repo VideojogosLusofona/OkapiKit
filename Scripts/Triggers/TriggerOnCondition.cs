@@ -5,7 +5,8 @@ using NaughtyAttributes;
 
 public class TriggerOnCondition: Trigger
 {
-    [SerializeField] private Condition[] conditions;
+    [SerializeField] private    Condition[]     conditions;
+    [SerializeField] protected  ActionTrigger[] elseActions;
 
     private bool firstTime = true;
     private bool prevValue = false;
@@ -46,8 +47,32 @@ public class TriggerOnCondition: Trigger
             if (firstTime) ExecuteTrigger();
             else if (!prevValue) ExecuteTrigger();
         }
+        else
+        {
+            if (prevValue) ExecuteElseTrigger();
+        }
 
         prevValue = b;
         firstTime = false;
+    }
+
+    public virtual void ExecuteElseTrigger()
+    {
+        if (!enableTrigger) return;
+
+        foreach (var action in elseActions)
+        {
+            if (action.action.isActionEnabled)
+            {
+                if (action.delay > 0)
+                {
+                    StartCoroutine(ExecuteTriggerCR(action));
+                }
+                else
+                {
+                    action.action.Execute();
+                }
+            }
+        }
     }
 }
