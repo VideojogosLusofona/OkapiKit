@@ -1,3 +1,4 @@
+using NaughtyAttributes.Test;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ public class ConditionDrawer : PropertyDrawer
         var propTransform = property.FindPropertyRelative("sourceTransform");
         var propRB = property.FindPropertyRelative("rigidBody");
         var propAxis = property.FindPropertyRelative("axis");
+        var propProbe = property.FindPropertyRelative("probe");
 
         var propComparison = property.FindPropertyRelative("comparison");
         var propValue = property.FindPropertyRelative("value");
@@ -42,6 +44,8 @@ public class ConditionDrawer : PropertyDrawer
         var extra_width = (width - 150 - 110 - 60 - 20 - 30);
         var extra_width_variable = extra_width * 2.0f / 3.0f;
         var extra_width_value = extra_width / 3.0f;
+
+        Condition.DataType dataType = Condition.DataType.Number;
 
         if (propValueHandler.objectReferenceValue == null)
         {
@@ -130,6 +134,18 @@ public class ConditionDrawer : PropertyDrawer
                             EditorGUI.PropertyField(rect, propTransform, GUIContent.none);
                         }
                     }
+                    else if ((valueType == Condition.ValueType.Probe) || (valueType == Condition.ValueType.ProbeDistance))
+                    {
+                        var elemHeight = position.height / 2.0f;
+
+                        var valueTypeRect = new Rect(position.x, position.y, 150 + extra_width_variable, elemHeight);
+                        var probeRect = new Rect(position.x, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+
+                        EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        EditorGUI.PropertyField(probeRect, propProbe, GUIContent.none);
+
+                        if (valueType == Condition.ValueType.Probe) dataType = Condition.DataType.Boolean;
+                    }
                 }
             }
             else
@@ -144,15 +160,18 @@ public class ConditionDrawer : PropertyDrawer
             EditorGUI.PropertyField(valueHandlerRect, propValueHandler, GUIContent.none);
         }
 
-        var propComparisonRect = new Rect(position.x + 155 + extra_width_variable, position.y + offset_y, 110, height);
-        var propValueRect = new Rect(propComparisonRect.max.x + 5, position.y, 60 + extra_width_value, height);
-        var propPercentageLabelRect = new Rect(propValueRect.max.x + 10, position.y + offset_y, 20, height);
-        var propPercentageRect = new Rect(propPercentageLabelRect.max.x, position.y + offset_y, 30, height);
+        if (dataType == Condition.DataType.Number)
+        {
+            var propComparisonRect = new Rect(position.x + 155 + extra_width_variable, position.y + offset_y, 110, height);
+            var propValueRect = new Rect(propComparisonRect.max.x + 5, position.y, 60 + extra_width_value, height);
+            var propPercentageLabelRect = new Rect(propValueRect.max.x + 10, position.y + offset_y, 20, height);
+            var propPercentageRect = new Rect(propPercentageLabelRect.max.x, position.y + offset_y, 30, height);
 
-        EditorGUI.PropertyField(propComparisonRect, propComparison, GUIContent.none);
-        EditorGUI.PropertyField(propValueRect, propValue, GUIContent.none);
-        EditorGUI.LabelField(propPercentageLabelRect, "%");
-        EditorGUI.PropertyField(propPercentageRect, propPercentage, GUIContent.none);
+            EditorGUI.PropertyField(propComparisonRect, propComparison, GUIContent.none);
+            EditorGUI.PropertyField(propValueRect, propValue, GUIContent.none);
+            EditorGUI.LabelField(propPercentageLabelRect, "%");
+            EditorGUI.PropertyField(propPercentageRect, propPercentage, GUIContent.none);
+        }
 
         // Set indent back to what it was
         EditorGUI.indentLevel = indent;
@@ -197,6 +216,12 @@ public class ConditionDrawer : PropertyDrawer
                     if (tagVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 3;
                     else if (transformVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 3;
                     else return base.GetPropertyHeight(property, label) * 4;
+                }
+                else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.Probe) ||
+                         (systemVariable.enumValueIndex == (int)Condition.ValueType.ProbeDistance))
+
+                {
+                    return base.GetPropertyHeight(property, label) * 2;
                 }
             }
         }
