@@ -81,6 +81,9 @@ public class Probe : OkapiElement
     }
 
     public bool     GetIntersectionState() => intersectionState;
+    public float    GetIntersectionDistance() => closestIntersectionDistance;
+    public float    GetMinDistance() => minDistance;
+    public float    GetMaxDistance() => maxDistance;
     public Vector3  GetStart() => transform.position + minDistance * transform.up;
     public Vector3  GetEnd() => transform.position + maxDistance * transform.up;
 
