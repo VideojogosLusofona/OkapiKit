@@ -568,7 +568,7 @@ Transform:
   m_Children:
   - {fileID: 694867911}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1429778254
 GameObject:
@@ -578,9 +578,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+  - component: {fileID: 1429778260}
   - component: {fileID: 1429778258}
   - component: {fileID: 1429778256}
-  - component: {fileID: 1429778260}
+  - component: {fileID: 1429778259}
   m_Layer: 0
   m_Name: Obstacle3
   m_TagString: Untagged
@@ -666,7 +667,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1429778260
+--- !u!114 &1429778259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -683,6 +684,21 @@ MonoBehaviour:
   description: 
   hypertags:
   - {fileID: 11400000, guid: 3138ad8dc4cf4f74a98c1580707d1de8, type: 2}
+--- !u!4 &1429778260
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429778254}
+  m_LocalRotation: {x: -0, y: -0, z: -0.24343267, w: 0.96991783}
+  m_LocalPosition: {x: 209, y: 248, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -28.178}
 --- !u!1 &1507752128
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,7 +942,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1646311778
 MonoBehaviour:
@@ -1253,5 +1269,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
