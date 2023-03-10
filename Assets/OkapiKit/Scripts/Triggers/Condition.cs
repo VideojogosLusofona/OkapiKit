@@ -15,17 +15,18 @@ public struct Condition
 
     [System.Serializable] public enum DataType { Number = 0, Boolean = 1};
 
+    public bool             negate;
     public VariableInstance valueHandler;
-    public Variable     variable;
-    public ValueType    valueType;
-    public Hypertag     tag;
-    public Transform    sourceTransform;
-    public Rigidbody2D  rigidBody;
-    public Axis         axis;
-    public Probe        probe;
-    public Comparison   comparison;
-    public float        value;
-    public bool         percentageCompare;
+    public Variable         variable;
+    public ValueType        valueType;
+    public Hypertag         tag;
+    public Transform        sourceTransform;
+    public Rigidbody2D      rigidBody;
+    public Axis             axis;
+    public Probe            probe;
+    public Comparison       comparison;
+    public float            value;
+    public bool             percentageCompare;
 
     public DataType GetDataType()
     {
@@ -92,7 +93,9 @@ public struct Condition
 
     public string GetRawDescription(GameObject gameObject)
     {
-        string desc = $"({GetVariableName(gameObject)}";
+        string desc = "(";
+        if (negate) desc += "not ";
+        desc += $"({GetVariableName(gameObject)}";
         if (GetDataType() == DataType.Number)
         {
             switch (comparison)
@@ -238,6 +241,20 @@ public struct Condition
                             maxValue = float.MaxValue;
                         }
                         break;
+                    case Condition.ValueType.ProbeDistance:
+                        if (probe == null)
+                        {
+                            currentValue = float.MaxValue;
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+                        }
+                        else
+                        {
+                            currentValue = probe.GetIntersectionDistance();
+                            minValue = probe.GetMinDistance();
+                            maxValue = probe.GetMaxDistance();
+                        }
+                        break;
                     default:
                         return false;
                 }
@@ -279,6 +296,8 @@ public struct Condition
                     break;
             }
         }
+
+        if (negate) b = !b;
 
         return b;
     }
