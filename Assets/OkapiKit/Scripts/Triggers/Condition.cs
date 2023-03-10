@@ -80,10 +80,10 @@ public struct Condition
                 else if (sourceTransform) return $"AngleBetween({sourceTransform.name}, {axis})";
                 return $"AngleBetween([UNDEFINED], {axis})";
             case ValueType.Probe:
-                if (probe != null) return $"ProbeIntersect([{probe.name}])";
+                if (probe != null) return $"ProbeIntersect({probe.name},{probe.GetTags()})";
                 return $"ProbeIntersect([UNDEFINED])";
             case ValueType.ProbeDistance:
-                if (probe != null) return $"ProbeIntersectionDistance([{probe.name}])";
+                if (probe != null) return $"ProbeIntersectionDistance({probe.name}, {probe.GetTags()})";
                 return $"ProbeIntersectionDistance([UNDEFINED])";
         }
 
@@ -93,169 +93,191 @@ public struct Condition
     public string GetRawDescription(GameObject gameObject)
     {
         string desc = $"({GetVariableName(gameObject)}";
-        switch (comparison)
+        if (GetDataType() == DataType.Number)
         {
-            case Comparison.Equal: desc += " == "; break;
-            case Comparison.Less: desc += " < "; break;
-            case Comparison.LessEqual: desc += " <= "; break;
-            case Comparison.Greater: desc += " > "; break;
-            case Comparison.GreaterEqual: desc += " >= "; break;
-            case Comparison.Different: desc += " <> "; break;
-            default:
-                break;
+            switch (comparison)
+            {
+                case Comparison.Equal: desc += " == "; break;
+                case Comparison.Less: desc += " < "; break;
+                case Comparison.LessEqual: desc += " <= "; break;
+                case Comparison.Greater: desc += " > "; break;
+                case Comparison.GreaterEqual: desc += " >= "; break;
+                case Comparison.Different: desc += " <> "; break;
+                default:
+                    break;
+            }
+            desc += value;
+            if (percentageCompare) desc += "%";
+            desc += ")";
         }
-        desc += value;
-        if (percentageCompare) desc += "%";
-        desc += ")";
 
         return desc;
     }
 
     public bool Evaluate(GameObject gameObject)
     {
-        var currentVar = GetVariable();
+        bool b = false;
 
-        float       currentValue = 0.0f;
-        float       minValue = 0;
-        float       maxValue = 0;
-        Transform   t;
-        Rigidbody2D rb;
-        if (currentVar == null)
+        if (GetDataType() == DataType.Boolean)
         {
             switch (valueType)
             {
-                case Condition.ValueType.TagCount:
-                    currentValue = HypertaggedObject.FindGameObjectsWithHypertag(tag).Count;
-                    minValue = 0;
-                    maxValue = float.MaxValue;
-                    break;
-                case Condition.ValueType.WorldPositionX:
-                    t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
-                    currentValue = t.position.x;
-                    minValue = 0;
-                    maxValue = float.MaxValue;
-                    break;
-                case Condition.ValueType.WorldPositionY:
-                    t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
-                    currentValue = t.position.y;
-                    minValue = 0;
-                    maxValue = float.MaxValue;
-                    break;
-                case Condition.ValueType.RelativePositionX:
-                    t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
-                    currentValue = t.localPosition.x;
-                    minValue = 0;
-                    maxValue = float.MaxValue;
-                    break;
-                case Condition.ValueType.RelativePositionY:
-                    t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
-                    currentValue = t.localPosition.y;
-                    minValue = 0;
-                    maxValue = float.MaxValue;
-                    break;
-                case Condition.ValueType.AbsoluteVelocityX:
-                    rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
-                    if (rb) currentValue = rb.velocity.x;
-                    minValue = 0;
-                    maxValue = float.MaxValue;
-                    break;
-                case Condition.ValueType.AbsoluteVelocityY:
-                    rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
-                    if (rb) currentValue = rb.velocity.y;
-                    minValue = 0;
-                    maxValue = float.MaxValue;
-                    break;
-                case Condition.ValueType.Distance:
-                case Condition.ValueType.Angle:
+                case ValueType.Probe:
+                    if (probe)
                     {
-                        Transform target = null;
-
-                        currentValue = float.MaxValue;
-
-                        if (sourceTransform) target = sourceTransform;
-                        else if (tag)
-                        {
-                            var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(tag);
-                            foreach (var obj in potentialObjects)
-                            {
-                                var d = Vector3.Distance(obj.position, gameObject.transform.position);
-                                if (d < currentValue)
-                                {
-                                    currentValue = d;
-                                    target = obj;
-                                }
-                            }
-                        }
-                        if (valueType == ValueType.Distance)
-                        {
-                            if (target)
-                            {
-                                currentValue = Vector3.Distance(gameObject.transform.position, target.position);
-                            }
-                        }
-                        else if (valueType == ValueType.Angle)
-                        {
-                            if (target)
-                            {
-                                Vector3 toObject = target.position - gameObject.transform.position;
-                                if (toObject.sqrMagnitude > 1e-6)
-                                {
-                                    toObject.Normalize();
-
-                                    Vector3 mainAxis;
-                                    if (axis == Axis.UpAxis) mainAxis = gameObject.transform.up;
-                                    else if (axis == Axis.RightAxis) mainAxis = gameObject.transform.right;
-                                    else mainAxis = gameObject.transform.up;
-
-                                    float dp = Mathf.Clamp(Vector3.Dot(toObject, mainAxis), -1.0f, 1.0f);
-                                    currentValue = Mathf.Acos(dp);
-                                    currentValue *= Mathf.Rad2Deg;
-                                }
-                            }
-                        }
-                        minValue = 0;
-                        maxValue = float.MaxValue;
+                        b = probe.GetIntersectionState();
                     }
                     break;
                 default:
-                    return false;
+                    break;
             }
         }
         else
         {
-            currentValue = currentVar.currentValue;
-            minValue = currentVar.minValue;
-            maxValue = currentVar.maxValue;
-        }
+            var currentVar = GetVariable();
 
-        if (percentageCompare)
-        {
-            currentValue = 100 * (currentValue - minValue) / (maxValue - minValue);
-        }
+            float currentValue = 0.0f;
+            float minValue = 0;
+            float maxValue = 0;
+            Transform t;
+            Rigidbody2D rb;
+            if (currentVar == null)
+            {
+                switch (valueType)
+                {
+                    case Condition.ValueType.TagCount:
+                        currentValue = HypertaggedObject.FindGameObjectsWithHypertag(tag).Count;
+                        minValue = 0;
+                        maxValue = float.MaxValue;
+                        break;
+                    case Condition.ValueType.WorldPositionX:
+                        t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
+                        currentValue = t.position.x;
+                        minValue = 0;
+                        maxValue = float.MaxValue;
+                        break;
+                    case Condition.ValueType.WorldPositionY:
+                        t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
+                        currentValue = t.position.y;
+                        minValue = 0;
+                        maxValue = float.MaxValue;
+                        break;
+                    case Condition.ValueType.RelativePositionX:
+                        t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
+                        currentValue = t.localPosition.x;
+                        minValue = 0;
+                        maxValue = float.MaxValue;
+                        break;
+                    case Condition.ValueType.RelativePositionY:
+                        t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
+                        currentValue = t.localPosition.y;
+                        minValue = 0;
+                        maxValue = float.MaxValue;
+                        break;
+                    case Condition.ValueType.AbsoluteVelocityX:
+                        rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
+                        if (rb) currentValue = rb.velocity.x;
+                        minValue = 0;
+                        maxValue = float.MaxValue;
+                        break;
+                    case Condition.ValueType.AbsoluteVelocityY:
+                        rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
+                        if (rb) currentValue = rb.velocity.y;
+                        minValue = 0;
+                        maxValue = float.MaxValue;
+                        break;
+                    case Condition.ValueType.Distance:
+                    case Condition.ValueType.Angle:
+                        {
+                            Transform target = null;
 
-        bool b = false;
-        switch (comparison)
-        {
-            case Condition.Comparison.Equal:
-                b = (currentValue == value);
-                break;
-            case Condition.Comparison.Less:
-                b = (currentValue < value);
-                break;
-            case Condition.Comparison.LessEqual:
-                b = (currentValue <= value);
-                break;
-            case Condition.Comparison.Greater:
-                b = (currentValue > value);
-                break;
-            case Condition.Comparison.GreaterEqual:
-                b = (currentValue >= value);
-                break;
-            case Condition.Comparison.Different:
-                b = (currentValue != value);
-                break;
-            default:
-                break;
+                            currentValue = float.MaxValue;
+
+                            if (sourceTransform) target = sourceTransform;
+                            else if (tag)
+                            {
+                                var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(tag);
+                                foreach (var obj in potentialObjects)
+                                {
+                                    var d = Vector3.Distance(obj.position, gameObject.transform.position);
+                                    if (d < currentValue)
+                                    {
+                                        currentValue = d;
+                                        target = obj;
+                                    }
+                                }
+                            }
+                            if (valueType == ValueType.Distance)
+                            {
+                                if (target)
+                                {
+                                    currentValue = Vector3.Distance(gameObject.transform.position, target.position);
+                                }
+                            }
+                            else if (valueType == ValueType.Angle)
+                            {
+                                if (target)
+                                {
+                                    Vector3 toObject = target.position - gameObject.transform.position;
+                                    if (toObject.sqrMagnitude > 1e-6)
+                                    {
+                                        toObject.Normalize();
+
+                                        Vector3 mainAxis;
+                                        if (axis == Axis.UpAxis) mainAxis = gameObject.transform.up;
+                                        else if (axis == Axis.RightAxis) mainAxis = gameObject.transform.right;
+                                        else mainAxis = gameObject.transform.up;
+
+                                        float dp = Mathf.Clamp(Vector3.Dot(toObject, mainAxis), -1.0f, 1.0f);
+                                        currentValue = Mathf.Acos(dp);
+                                        currentValue *= Mathf.Rad2Deg;
+                                    }
+                                }
+                            }
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+                        }
+                        break;
+                    default:
+                        return false;
+                }
+            }
+            else
+            {
+                currentValue = currentVar.currentValue;
+                minValue = currentVar.minValue;
+                maxValue = currentVar.maxValue;
+            }
+
+            if (percentageCompare)
+            {
+                currentValue = 100 * (currentValue - minValue) / (maxValue - minValue);
+            }
+
+            b = false;
+            switch (comparison)
+            {
+                case Condition.Comparison.Equal:
+                    b = (currentValue == value);
+                    break;
+                case Condition.Comparison.Less:
+                    b = (currentValue < value);
+                    break;
+                case Condition.Comparison.LessEqual:
+                    b = (currentValue <= value);
+                    break;
+                case Condition.Comparison.Greater:
+                    b = (currentValue > value);
+                    break;
+                case Condition.Comparison.GreaterEqual:
+                    b = (currentValue >= value);
+                    break;
+                case Condition.Comparison.Different:
+                    b = (currentValue != value);
+                    break;
+                default:
+                    break;
+            }
         }
 
         return b;
