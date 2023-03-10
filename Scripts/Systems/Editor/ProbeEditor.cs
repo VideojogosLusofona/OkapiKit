@@ -7,9 +7,12 @@ using UnityEditor;
 public class ProbeEditor : OkapiBaseEditor
 {
     SerializedProperty propType;
+    SerializedProperty propDirection;
     SerializedProperty propRadius;
     SerializedProperty propMinDistance;
     SerializedProperty propMaxDistance;
+    SerializedProperty propTargetObject;
+    SerializedProperty propTargetTag;
     SerializedProperty propTags;
     SerializedProperty propTargetTransform;
 
@@ -18,9 +21,12 @@ public class ProbeEditor : OkapiBaseEditor
         base.OnEnable();
 
         propType = serializedObject.FindProperty("type");
+        propDirection = serializedObject.FindProperty("direction");
         propRadius = serializedObject.FindProperty("radius");
         propMinDistance = serializedObject.FindProperty("minDistance");
         propMaxDistance = serializedObject.FindProperty("maxDistance");
+        propTargetObject = serializedObject.FindProperty("dirTransform");
+        propTargetTag = serializedObject.FindProperty("dirTag");
         propTags = serializedObject.FindProperty("tags");
         propTargetTransform = serializedObject.FindProperty("targetTransform");
     }
@@ -38,8 +44,29 @@ public class ProbeEditor : OkapiBaseEditor
             {
                 EditorGUILayout.PropertyField(propRadius, new GUIContent("Radius"));
             }
-            EditorGUILayout.PropertyField(propMinDistance, new GUIContent("Min Distance"));
-            EditorGUILayout.PropertyField(propMaxDistance, new GUIContent("Max Distance"));
+            EditorGUILayout.PropertyField(propDirection, new GUIContent("Direction"));
+            Probe.Direction direction = (Probe.Direction)propDirection.enumValueIndex;
+
+            switch (direction)
+            {
+                case Probe.Direction.Up:
+                case Probe.Direction.Down:
+                case Probe.Direction.Right:
+                case Probe.Direction.Left:
+                    EditorGUILayout.PropertyField(propMinDistance, new GUIContent("Min Distance"));
+                    EditorGUILayout.PropertyField(propMaxDistance, new GUIContent("Max Distance"));
+                    break;
+                case Probe.Direction.TargetObject:
+                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                    EditorGUILayout.PropertyField(propMinDistance, new GUIContent("Min Distance"));
+                    break;
+                case Probe.Direction.TargetTag:
+                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
+                    EditorGUILayout.PropertyField(propMinDistance, new GUIContent("Min Distance"));
+                    break;
+                default:
+                    break;
+            }
             EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
             EditorGUILayout.PropertyField(propTargetTransform, new GUIContent("Target Transform"));
 

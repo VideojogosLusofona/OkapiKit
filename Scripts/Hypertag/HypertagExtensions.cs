@@ -51,12 +51,31 @@ public static class HypertaggedExtension
         return ret.ToArray();
     }
 
-    public static T FindObjectOfTypeWithHypertag<T>(this MonoBehaviour go, Hypertag tag) where T : Component
+    public static T[] FindObjectsOfTypeWithHypertag<T>(this Object go, Hypertag[] tags) where T : Component
+    {
+        var objects = Object.FindObjectsOfType<HypertaggedObject>();
+        var ret = new List<T>();
+        foreach (var obj in objects)
+        {
+            if (obj.Has(tags))
+            {
+                var comp = obj.GetComponent<T>();
+                if (comp)
+                {
+                    ret.Add(comp);
+                }
+            }
+        }
+
+        return ret.ToArray();
+    }
+
+    public static T FindObjectOfTypeWithHypertag<T>(this MonoBehaviour go, Hypertag[] tags) where T : Component
     {
         var objects = Object.FindObjectsOfType<HypertaggedObject>();
         foreach (var obj in objects)
         {
-            if (obj.Has(tag))
+            if (obj.Has(tags))
             {
                 var ret = obj.GetComponent<T>();
                 if (ret)
@@ -69,7 +88,7 @@ public static class HypertaggedExtension
         return null;
     }
 
-    public static T[] FindObjectsOfTypeWithHypertag<T>(this MonoBehaviour go, Hypertag tag) where T : Component
+    public static T[] FindObjectsOfTypeWithHypertag<T>(this MonoBehaviour go, Hypertag tag, bool sortByDistance = false) where T : Component
     {
         var objects = Object.FindObjectsOfType<HypertaggedObject>();
         var ret = new List<T>();
@@ -84,8 +103,47 @@ public static class HypertaggedExtension
                 }
             }
         }
+        if (sortByDistance)
+        {
+            SortObjects(go.transform.position, ret);
+        }
 
         return ret.ToArray();
+    }
+
+    public static T[] FindObjectsOfTypeWithHypertag<T>(this MonoBehaviour go, Hypertag[] tags, bool sortByDistance = false) where T : Component
+    {
+        var objects = Object.FindObjectsOfType<HypertaggedObject>();
+        var ret = new List<T>();
+        foreach (var obj in objects)
+        {
+            if (obj.Has(tags))
+            {
+                var comp = obj.GetComponent<T>();
+                if (comp)
+                {
+                    ret.Add(comp);
+                }
+            }
+        }
+        if (sortByDistance)
+        {
+            SortObjects(go.transform.position, ret);
+        }
+
+        return ret.ToArray();
+    }
+
+    public static void SortObjects<T>(Vector3 position, List<T> objects) where T: Component
+    {
+        objects.Sort(delegate(T o1, T o2) 
+        {
+            float d1 = Vector3.Distance(o1.transform.position, position);
+            float d2 = Vector3.Distance(o2.transform.position, position);
+            if (d1 < d2) return -1;
+            else if (d1 > d2) return 1;
+            return 0;
+        });
     }
 
     public static bool HasHypertags(this GameObject go, Hypertag[] tags)
