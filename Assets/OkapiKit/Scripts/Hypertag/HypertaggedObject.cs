@@ -84,13 +84,9 @@ public class HypertaggedObject : OkapiElement
         var objs = FindObjectsOfType<HypertaggedObject>();
         foreach (var obj in objs)
         {
-            foreach (var t in tags)
+            if (obj.Has(tags))
             {
-                if (obj.Has(t))
-                {
-                    ret.Add(obj.gameObject);
-                    break;
-                }
+                ret.Add(obj.gameObject);
             }
         }
 
@@ -107,7 +103,6 @@ public class HypertaggedObject : OkapiElement
             if (obj.Has(tag))
             {
                 ret.Add(obj.gameObject);
-                break;
             }
         }
 

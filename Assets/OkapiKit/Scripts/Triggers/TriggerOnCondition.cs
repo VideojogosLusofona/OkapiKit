@@ -61,7 +61,8 @@ public class TriggerOnCondition: Trigger
         }
         else
         {
-            if (prevValue) ExecuteElseTrigger();
+            if (firstTime) ExecuteElseTrigger();
+            else if (prevValue) ExecuteElseTrigger();
         }
 
         prevValue = b;
