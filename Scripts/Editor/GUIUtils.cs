@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 static class GUIUtils
 {
@@ -221,8 +222,19 @@ static class GUIUtils
             if (texture) return texture;
         }
 
+        // Find path
+        string path = $"Assets/OkapiKit/UI/{name}.png";
+        if (!File.Exists(path))
+        {
+            path = System.IO.Path.GetFullPath($"Packages/com.videojogoslusofona.okapikit/UI/{name}.png");
+            if (!File.Exists(path))
+            {
+                return null;
+            }
+        }
+
         texture = new Texture2D(1, 1);
-        if (texture.LoadImage(System.IO.File.ReadAllBytes($"Assets/OkapiKit/UI/{name}.png")))
+        if (texture.LoadImage(File.ReadAllBytes(path)))
         {
             texture.Apply();
             AddTexture(name, texture);
