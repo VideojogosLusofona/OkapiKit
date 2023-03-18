@@ -1,0 +1,16 @@
+{
+    "name": "OkapiKitEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c21b42cd8434c154e9ec88e56326e04b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
