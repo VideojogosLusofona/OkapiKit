@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class ActionSequence : Action
 {
-    [System.Serializable]
-    public struct ActionTrigger
-    {
-        public float delay;
-        public Action action;
-    }
-
     [SerializeField]
     protected ActionTrigger[] actions;
 

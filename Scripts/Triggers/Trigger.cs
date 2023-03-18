@@ -8,13 +8,6 @@ using Unity.VisualScripting;
 
 public abstract class Trigger : OkapiElement
 {
-    [System.Serializable]
-    public struct ActionTrigger
-    {
-        public float    delay;
-        public Action   action;
-    }
-
     [SerializeField]
     public      bool            enableTrigger = true;
     [SerializeField]
