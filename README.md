@@ -6,6 +6,49 @@ This is a series of premade scripts intended for kit bashing of quick game devel
 
 It's currently still under development, and eventually will be commented properly, and have a manual.
 
+#
+# Installation
+
+## Option 1 - Super-simple, less useful
+You can simply create a fork of this repository or download it and start working!
+
+## Option 2 - Unity Package Manager
+Use the Unity Package Manager to install the OkapiKit:
+ 
+1. Open the Unity Package Manager
+
+![Install1](Screenshots/install01.png)
+
+2. Select "Add package from git URL"
+
+![Install1](Screenshots/install02.png)
+
+3. First install Naughty Attributes, by pasting the URL "https://github.com/dbrizov/NaughtyAttributes.git#upm"
+
+4. You can now install the OkapiKit, selecting again "Add package from git URL", and pasting the URL "https://github.com/VideojogosLusofona/OkapiKit.git#upm"
+
+5. With this option, everytime you want to update the package, you will have to remove it and re-add it (the Update option doesn't work properly in this context)
+
+## Option 3 - More complicated, best option - UpmGitExtension
+Use the UPM Git extension to install the OkapiKit:
+
+1. Open the Unity Package Manager
+
+![Install1](Screenshots/install01.png)
+
+2. Select "Add package from git URL"
+
+![Install1](Screenshots/install02.png)
+
+3. Install the UPM Git Extension, by pasting the URL "https://github.com/mob-sakai/UpmGitExtension.git"
+
+4. You can now install Naughty Attributes, selecting again "Add package from git URL", and pasting the URL "https://github.com/dbrizov/NaughtyAttributes.git#upm"
+
+5. Finally, install the OkapiKit, selecting again "Add package from git URL", and pasting the URL "https://github.com/VideojogosLusofona/OkapiKit.git#upm"
+
+6. When you want to update, just use the Update button.
+
+#
 # Samples
 
 It currently has six sample 'games' (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
@@ -28,6 +71,7 @@ It currently has six sample 'games' (each a Scene under the Samples directory), 
 ## Commando
 ![CommandoImage](Screenshots/commando.png)
 
+#
 # Documentation
 
 For now, there's no documentation yet, but everything has custom editors, which display information on what each thing is doing (dynamically, depending on options selected):
@@ -39,6 +83,7 @@ several Okapi Kit components (identifiable by the large title). We have a moveme
 as targets for operations), we have a collision Trigger (with the text that explains when it triggers,
 and what happens), and finally we have several Action scripts (used by the Triggers), that also explain what they're doing.
 
+#
 # Licenses
 
 * All source code by Diogo Andrade is licensed under the MIT license.
@@ -59,6 +104,7 @@ and what happens), and finally we have several Action scripts (used by the Trigg
 * Title imagem from [Midjourney]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
 
+#
 # Metadata
 
 * Autor: [Diogo Andrade]
