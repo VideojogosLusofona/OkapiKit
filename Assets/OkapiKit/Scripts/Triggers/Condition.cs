@@ -9,28 +9,32 @@ public struct Condition
                                                   WorldPositionX = 2, WorldPositionY = 3, RelativePositionX = 4, RelativePositionY = 5,
                                                   AbsoluteVelocityX = 6, AbsoluteVelocityY = 7,
                                                   Distance = 8, Angle = 9,
-                                                  Probe = 10, ProbeDistance = 11 };
+                                                  Probe = 10, ProbeDistance = 11,
+                                                  IsGrounded = 12, IsGliding = 13 };
     [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5};
     [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
 
     [System.Serializable] public enum DataType { Number = 0, Boolean = 1};
 
-    public bool             negate;
-    public VariableInstance valueHandler;
-    public Variable         variable;
-    public ValueType        valueType;
-    public Hypertag         tag;
-    public Transform        sourceTransform;
-    public Rigidbody2D      rigidBody;
-    public Axis             axis;
-    public Probe            probe;
-    public Comparison       comparison;
-    public float            value;
-    public bool             percentageCompare;
+    public bool                 negate;
+    public VariableInstance     valueHandler;
+    public Variable             variable;
+    public ValueType            valueType;
+    public Hypertag             tag;
+    public Transform            sourceTransform;
+    public Rigidbody2D          rigidBody;
+    public Axis                 axis;
+    public Probe                probe;
+    public MovementPlatformer   movementPlatformer;
+    public Comparison           comparison;
+    public float                value;
+    public bool                 percentageCompare;
 
     public DataType GetDataType()
     {
         if (valueType == ValueType.Probe) return DataType.Boolean;
+        if (valueType == ValueType.IsGrounded) return DataType.Boolean;
+        if (valueType == ValueType.IsGliding) return DataType.Boolean;
         else return DataType.Number;
     }
 
@@ -86,6 +90,12 @@ public struct Condition
             case ValueType.ProbeDistance:
                 if (probe != null) return $"ProbeIntersectionDistance({probe.name}, {probe.GetTags()})";
                 return $"ProbeIntersectionDistance([UNDEFINED])";
+            case ValueType.IsGrounded:
+                if (movementPlatformer != null) return $"IsGrounded({movementPlatformer.name})";
+                return $"IsGrounded([UNDEFINED])";
+            case ValueType.IsGliding:
+                if (movementPlatformer != null) return $"IsGliding({movementPlatformer.name})";
+                return $"IsGliding([UNDEFINED])";
         }
 
         return "[Unknown]";
@@ -129,6 +139,18 @@ public struct Condition
                     if (probe)
                     {
                         b = probe.GetIntersectionState();
+                    }
+                    break;
+                case Condition.ValueType.IsGrounded:
+                    if (movementPlatformer)
+                    {
+                        b = movementPlatformer.isGrounded;
+                    }
+                    break;
+                case Condition.ValueType.IsGliding:
+                    if (movementPlatformer)
+                    {
+                        b = movementPlatformer.isGliding;
                     }
                     break;
                 default:

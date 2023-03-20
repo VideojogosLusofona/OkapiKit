@@ -5,56 +5,57 @@ using NaughtyAttributes;
 
 public class ActionModifyMovement : Action
 {
-    public enum ChangeType { Velocity = 0 };
+    public enum ChangeType { 
+        Velocity = 0,
+        GravityScale = 1,
+        MaxJumpCount = 2,
+        JumpHoldTime = 3,
+        GlideMaxTime = 4
+    };
 
     public enum VelocityOperation { Set = 0, PercentageModify = 1, AbsoluteModify = 2 };
+    public enum FloatPlatformerPropertyOperation { Set = 0, PercentageModify = 1 };
     public enum Axis { AbsoluteRight = 0, AbsoluteLeft = 1, AbsoluteUp = 2, AbsoluteDown = 3, RelativeRight = 4, RelativeLeft = 5, RelativeUp = 6, RelativeDown = 7, Current = 8, InverseCurrent = 9 };
 
-    [SerializeField, ShowIf("needMovementComponent")]
+    [SerializeField]
     private Movement            movementComponent;
-    [SerializeField, ShowIf("needRigidBodyComponent")]
+    [SerializeField]
     private Rigidbody2D         rigidBodyComponent;
 
     [SerializeField]
     private ChangeType          changeType = ChangeType.Velocity;
-    [SerializeField, ShowIf("isChangeVelocity")] 
+    [SerializeField] 
     private VelocityOperation   operation = VelocityOperation.Set;
-    [SerializeField, ShowIf("isPercentageModify")]
+    [SerializeField]
+    private FloatPlatformerPropertyOperation floatPlatformerOperation = FloatPlatformerPropertyOperation.Set;
+    [SerializeField]
     private Vector2             percentageValue = new Vector2(1.0f, 1.0f);
-    [SerializeField, ShowIf("isAbsoluteModify")]
+    [SerializeField]
     private Vector2             value = new Vector2(1.0f, 1.0f);
-    [SerializeField, ShowIf("isAbsoluteModify")]
+    [SerializeField]
     private Axis                axis;
-    [SerializeField, ShowIf("isSet")] 
+    [SerializeField]
     private bool                useRotation = false;
-    [SerializeField, ShowIf("isSet")]
+    [SerializeField]
     private bool                useRandom = false;
-    [SerializeField, ShowIf("isSet")]
+    [SerializeField]
     private float               startAngle = 0.0f;
-    [SerializeField, ShowIf("isSet")]
+    [SerializeField]
     private float               endAngle = 360.0f;
-    [SerializeField, ShowIf("isSet")]
+    [SerializeField]
     private Vector2             speedRange = new Vector2(100, 100);
-    [SerializeField, ShowIf("isSetNotRandom")]
+    [SerializeField]
     private Vector2             minVelocity = new Vector2(100, 100);
-    [SerializeField, ShowIf("isSetNotRandom")]
+    [SerializeField]
     private Vector2             maxVelocity = new Vector2(100, 100);
-    [SerializeField, ShowIf("isModify")]
+    [SerializeField]
     private bool                clampSpeed;
-    [SerializeField, ShowIf("hasClamp")]
+    [SerializeField]
     private Vector2             clampTo;
-
-    private bool isChangeVelocity => (changeType == ChangeType.Velocity);
-    private bool isSet => isChangeVelocity && (operation == VelocityOperation.Set) && (useRandom);
-    private bool isSetNotRandom => isChangeVelocity && (operation == VelocityOperation.Set) && (!useRandom);
-    private bool isPercentageModify => isChangeVelocity && (operation == VelocityOperation.PercentageModify);
-    private bool isAbsoluteModify => isChangeVelocity && (operation == VelocityOperation.AbsoluteModify);
-    private bool isModify => isChangeVelocity && ((operation == VelocityOperation.PercentageModify) || (operation == VelocityOperation.AbsoluteModify));
-    private bool hasClamp => isModify && clampSpeed;
-
-    private bool needMovementComponent => rigidBodyComponent == null;
-    private bool needRigidBodyComponent => movementComponent == null;
-
+    [SerializeField]
+    private float               fValue;
+    [SerializeField]
+    private int                 iValue;
 
     public override string GetActionTitle() { return "Modify Movement"; }
 
@@ -187,6 +188,40 @@ public class ActionModifyMovement : Action
                 desc += ".";
             }
         }
+        else if ((changeType == ChangeType.GravityScale) || (changeType == ChangeType.JumpHoldTime) || (changeType == ChangeType.GlideMaxTime))
+        {
+            string propName = "[UNKNOWN]";
+            switch (changeType)
+            {
+                case ChangeType.GravityScale: propName = "gravity scale"; break;
+                case ChangeType.JumpHoldTime: propName = "jump hold time"; break;
+                case ChangeType.GlideMaxTime: propName = "glide maximum time"; break;
+                default:
+                    break;
+            }
+            if (floatPlatformerOperation == FloatPlatformerPropertyOperation.Set)
+            {
+                if (percentageValue.x != percentageValue.y)
+                    desc += $"select a random {propName} between {percentageValue.x} and {percentageValue.y} and set it to {targetName}";
+                else
+                    desc += $"sets the {propName} to {percentageValue.x} on {targetName}";
+            }
+            else if (floatPlatformerOperation == FloatPlatformerPropertyOperation.PercentageModify)
+            {
+                if (percentageValue.x == percentageValue.y)
+                {
+                    desc += $"changes the {propName} of {targetName} by {percentageValue.x * 100}%";
+                }
+                else
+                {
+                    desc += $"changes the {propName} of {targetName} by a percentage in the [{percentageValue.x * 100}%,{percentageValue.y * 100}%] range";
+                }
+            }
+        }
+        else if (changeType == ChangeType.MaxJumpCount)
+        {
+            desc += $"sets the maximum jump count of {targetName} to {iValue}";
+        }
         else
         {
             desc += $"UNDEFINED CHANGE TYPE ${changeType}";
@@ -202,8 +237,8 @@ public class ActionModifyMovement : Action
 
         if (changeType == ChangeType.Velocity)
         {
-            Movement movement = null;
-            Rigidbody2D rb = null;
+            Movement    movement;
+            Rigidbody2D rb;
 
             (movement, rb) = GetTarget();
 
@@ -310,6 +345,81 @@ public class ActionModifyMovement : Action
             else if (rb)
             {
                 rb.velocity = velocity;
+            }
+        }
+        else if (changeType == ChangeType.GravityScale)
+        {
+            Rigidbody2D rb;
+            Movement    movement;
+
+            (movement, rb) = GetTarget();
+            if (movement == null) return;
+            MovementPlatformer platMovement = movement as MovementPlatformer;
+            if (platMovement != null) return;
+
+            if (floatPlatformerOperation == FloatPlatformerPropertyOperation.Set)
+            {
+                var value = Random.Range(percentageValue.x, percentageValue.y);
+                platMovement.SetGravityScale(value);
+            }
+            else if (floatPlatformerOperation == FloatPlatformerPropertyOperation.PercentageModify)
+            {
+                float r = Random.Range(percentageValue.x, percentageValue.y);
+                platMovement.SetGravityScale(r * platMovement.GetGravityScale());
+            }
+        }
+        else if (changeType == ChangeType.MaxJumpCount)
+        {
+            Rigidbody2D rb;
+            Movement movement;
+
+            (movement, rb) = GetTarget();
+            if (movement == null) return;
+            MovementPlatformer platMovement = movement as MovementPlatformer;
+            if (platMovement != null) return;
+
+            platMovement.SetMaxJumpCount(iValue);
+        }
+        else if (changeType == ChangeType.JumpHoldTime)
+        {
+            Rigidbody2D rb;
+            Movement movement;
+
+            (movement, rb) = GetTarget();
+            if (movement == null) return;
+            MovementPlatformer platMovement = movement as MovementPlatformer;
+            if (platMovement != null) return;
+
+            if (floatPlatformerOperation == FloatPlatformerPropertyOperation.Set)
+            {
+                var value = Random.Range(percentageValue.x, percentageValue.y);
+                platMovement.SetJumpHoldTime(value);
+            }
+            else if (floatPlatformerOperation == FloatPlatformerPropertyOperation.PercentageModify)
+            {
+                float r = Random.Range(percentageValue.x, percentageValue.y);
+                platMovement.SetJumpHoldTime(r * platMovement.GetJumpHoldTime());
+            }
+        }
+        else if (changeType == ChangeType.GlideMaxTime)
+        {
+            Rigidbody2D rb;
+            Movement movement;
+
+            (movement, rb) = GetTarget();
+            if (movement == null) return;
+            MovementPlatformer platMovement = movement as MovementPlatformer;
+            if (platMovement != null) return;
+
+            if (floatPlatformerOperation == FloatPlatformerPropertyOperation.Set)
+            {
+                var value = Random.Range(percentageValue.x, percentageValue.y);
+                platMovement.SetGlideMaxTime(value);
+            }
+            else if (floatPlatformerOperation == FloatPlatformerPropertyOperation.PercentageModify)
+            {
+                float r = Random.Range(percentageValue.x, percentageValue.y);
+                platMovement.SetGlideMaxTime(r * platMovement.GetGlideMaxTime());
             }
         }
     }
