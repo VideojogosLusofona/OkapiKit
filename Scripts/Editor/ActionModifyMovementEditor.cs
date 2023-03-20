@@ -10,6 +10,7 @@ public class ActionModifyMovementEditor : ActionEditor
     SerializedProperty propRigidBodyComponent;
     SerializedProperty propChangeType;
     SerializedProperty propOperation;
+    SerializedProperty propFloatPlatformerOperation;
     SerializedProperty propPercentageValue;
     SerializedProperty propValue;
     SerializedProperty propAxis;
@@ -22,6 +23,7 @@ public class ActionModifyMovementEditor : ActionEditor
     SerializedProperty propMaxVelocity;
     SerializedProperty propClampSpeed;
     SerializedProperty propClampTo;
+    SerializedProperty propIValue;
 
     protected override void OnEnable()
     {
@@ -31,6 +33,7 @@ public class ActionModifyMovementEditor : ActionEditor
         propRigidBodyComponent = serializedObject.FindProperty("rigidBodyComponent");
         propChangeType = serializedObject.FindProperty("changeType");
         propOperation = serializedObject.FindProperty("operation");
+        propFloatPlatformerOperation = serializedObject.FindProperty("floatPlatformerOperation");
         propPercentageValue = serializedObject.FindProperty("percentageValue");
         propValue = serializedObject.FindProperty("value");
         propAxis = serializedObject.FindProperty("axis");
@@ -43,6 +46,7 @@ public class ActionModifyMovementEditor : ActionEditor
         propMaxVelocity = serializedObject.FindProperty("maxVelocity");
         propClampSpeed = serializedObject.FindProperty("clampSpeed");
         propClampTo = serializedObject.FindProperty("clampTo");
+        propIValue = serializedObject.FindProperty("iValue");
     }
 
     public override void OnInspectorGUI()
@@ -120,6 +124,43 @@ public class ActionModifyMovementEditor : ActionEditor
                     {
                         EditorGUILayout.PropertyField(propClampTo, new GUIContent("Clamp To"));
                     }
+                }
+            }
+            else if ((propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.GravityScale) ||
+                     (propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.JumpHoldTime) ||
+                     (propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.GlideMaxTime))
+            {
+                MovementPlatformer platMovement = null;
+                if (propMovementComponent.objectReferenceValue != null)
+                {
+                    platMovement = propMovementComponent.objectReferenceValue as MovementPlatformer;
+                }
+                if (platMovement)
+                {
+                    EditorGUILayout.PropertyField(propFloatPlatformerOperation, new GUIContent("Operation"));
+
+                    var operation = (ActionModifyMovement.FloatPlatformerPropertyOperation)propFloatPlatformerOperation.enumValueIndex;
+
+                    if (operation == ActionModifyMovement.FloatPlatformerPropertyOperation.Set)
+                    {
+                        EditorGUILayout.PropertyField(propPercentageValue, new GUIContent("Value"));
+                    }
+                    else if (operation == ActionModifyMovement.FloatPlatformerPropertyOperation.PercentageModify)
+                    {
+                        EditorGUILayout.PropertyField(propPercentageValue, new GUIContent("Percentage Value [0 to 1]"));
+                    }                
+                }
+            }
+            else if (propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.MaxJumpCount)
+            {
+                MovementPlatformer platMovement = null;
+                if (propMovementComponent.objectReferenceValue != null)
+                {
+                    platMovement = propMovementComponent.objectReferenceValue as MovementPlatformer;
+                }
+                if (platMovement)
+                {
+                    EditorGUILayout.PropertyField(propIValue, new GUIContent("Value"));
                 }
             }
 

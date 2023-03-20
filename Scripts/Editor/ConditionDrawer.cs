@@ -34,6 +34,7 @@ public class ConditionDrawer : PropertyDrawer
         var propRB = property.FindPropertyRelative("rigidBody");
         var propAxis = property.FindPropertyRelative("axis");
         var propProbe = property.FindPropertyRelative("probe");
+        var propMovementPlatformer = property.FindPropertyRelative("movementPlatformer");
 
         var propComparison = property.FindPropertyRelative("comparison");
         var propValue = property.FindPropertyRelative("value");
@@ -152,6 +153,30 @@ public class ConditionDrawer : PropertyDrawer
 
                         if (valueType == Condition.ValueType.Probe) dataType = Condition.DataType.Boolean;
                     }
+                    else if (valueType == Condition.ValueType.IsGrounded)
+                    {
+                        var elemHeight = position.height / 2.0f;
+
+                        var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                        var movementRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+
+                        EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        EditorGUI.PropertyField(movementRect, propMovementPlatformer, GUIContent.none);
+
+                        dataType = Condition.DataType.Boolean;
+                    }
+                    else if (valueType == Condition.ValueType.IsGliding)
+                    {
+                        var elemHeight = position.height / 2.0f;
+
+                        var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                        var movementRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+
+                        EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        EditorGUI.PropertyField(movementRect, propMovementPlatformer, GUIContent.none);
+
+                        dataType = Condition.DataType.Boolean;
+                    }
                 }
             }
             else
@@ -225,7 +250,11 @@ public class ConditionDrawer : PropertyDrawer
                 }
                 else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.Probe) ||
                          (systemVariable.enumValueIndex == (int)Condition.ValueType.ProbeDistance))
-
+                {
+                    return base.GetPropertyHeight(property, label) * 2;
+                }
+                else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.IsGrounded) ||
+                         (systemVariable.enumValueIndex == (int)Condition.ValueType.IsGliding))
                 {
                     return base.GetPropertyHeight(property, label) * 2;
                 }
