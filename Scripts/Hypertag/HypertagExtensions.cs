@@ -174,4 +174,28 @@ public static class HypertaggedExtension
 
         return false;
     }
+
+    public static Hypertag[] GetTags(this GameObject go)
+    {
+        var hos = go.GetComponent<HypertaggedObject>();
+
+        if (hos == null)
+        {
+            return null;
+        }
+
+        return hos.GetTags();
+    }
+
+    public static string GetTagsString(this GameObject go)
+    {
+        var ret = new List<Hypertag>();
+        var hos = go.GetComponent<HypertaggedObject>();
+        if (hos == null)
+        {
+            return "";
+        }
+
+        return hos.GetTagString();
+    }
 }
