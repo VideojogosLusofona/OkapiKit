@@ -15,7 +15,7 @@ public class OkapiDisplayHierarchy
     {
         if (selectionRect.width < 200) return;
 
-        float controlsWidth = 5 * 10;
+        float controlsWidth = 6 * 10;
         float xBase = selectionRect.x + selectionRect.width - controlsWidth;
 
         if (selectionRect.Contains(Event.current.mousePosition))
@@ -31,15 +31,14 @@ public class OkapiDisplayHierarchy
             var triggers = go.GetComponents<Trigger>();
             var actions = go.GetComponents<Action>();
             var path = go.GetComponent<Path>();
+            var probes = go.GetComponents<Probe>();
 
             if (variable) DrawCircle(xBase, selectionRect.y, GUIUtils.ColorFromHex("#fffaa7"));
             if (movement) DrawCircle(xBase + 10, selectionRect.y, GUIUtils.ColorFromHex("#ffcaca"));
             if ((triggers != null) && (triggers.Length > 0)) DrawCircle(xBase + 20, selectionRect.y, GUIUtils.ColorFromHex("#D0FFFF"));
-            if ((actions != null) && (actions.Length > 0))
-            {
-                DrawCircle(xBase + 30, selectionRect.y, GUIUtils.ColorFromHex("#D7E8BA"));
-            }
-            if (path) DrawCircle(xBase + 40, selectionRect.y, GUIUtils.ColorFromHex("#ff8040"));
+            if ((actions != null) && (actions.Length > 0)) DrawCircle(xBase + 30, selectionRect.y, GUIUtils.ColorFromHex("#D7E8BA"));
+            if ((probes != null) && (probes.Length > 0)) DrawCircle(xBase + 40, selectionRect.y, GUIUtils.ColorFromHex("#ffd283"));
+            if (path) DrawCircle(xBase + 50, selectionRect.y, GUIUtils.ColorFromHex("#ff8040"));
 
             var tags = go.GetTagsString();
             if (tags != "")
@@ -49,13 +48,14 @@ public class OkapiDisplayHierarchy
             }
 
             if ((variable) && (HasTooltip(xBase, selectionRect.y))) SetTooltip(GUIUtils.ColorFromHex("#fffaa7"), "Variable", $"{variable.name}");
-            if ((movement) && (HasTooltip(xBase + 10, selectionRect.y))) SetTooltip(GUIUtils.ColorFromHex("#ffcaca"), "Movement", $"Movement: {movement.GetTitle()}");
+            if ((movement) && (HasTooltip(xBase + 10, selectionRect.y))) SetTooltip(GUIUtils.ColorFromHex("#ffcaca"), $"{movement.GetTitle()}", $"Movement: {movement.UpdateExplanation()}");
             if ((triggers != null) && (triggers.Length > 0) && (HasTooltip(xBase + 20, selectionRect.y)))
             {
                 string tooltip = "";
                 for (int i = 0; i < triggers.Length; i++)
                 {
-                    if (tooltip != "") tooltip += "\n---------------\n";
+                    if (tooltip != "") tooltip += $"\n";
+                    tooltip += $"Trigger {i + 1}:\n";
                     tooltip += triggers[i].UpdateExplanation();
                 }
                 tooltip.Remove(tooltip.Length - 1);
@@ -73,7 +73,20 @@ public class OkapiDisplayHierarchy
 
                 SetTooltip(GUIUtils.ColorFromHex("#D7E8BA"), "Actions", tooltip);
             }
-            if ((path) && (HasTooltip(xBase + 40, selectionRect.y))) SetTooltip(GUIUtils.ColorFromHex("#ffcaca"), "Path", "");
+            if ((probes != null) && (probes.Length > 0) && (HasTooltip(xBase + 40, selectionRect.y)))
+            {
+                string tooltip = "";
+                for (int i = 0; i < probes.Length; i++)
+                {
+                    if (tooltip != "") tooltip += $"\n\n";
+                    tooltip += $"Probe {i + 1}:\n";
+                    tooltip += probes[i].UpdateExplanation();
+                }
+                tooltip.Remove(tooltip.Length - 1);
+
+                SetTooltip(GUIUtils.ColorFromHex("#d1d283"), "Probes", tooltip);
+            }
+            if ((path) && (HasTooltip(xBase + 50, selectionRect.y))) SetTooltip(GUIUtils.ColorFromHex("#ffcaca"), "Path", "");
 
             if (tags != "")
             {

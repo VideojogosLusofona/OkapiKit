@@ -43,6 +43,7 @@ public class Probe : OkapiElement
 
         return desc;
     }
+
     public override string GetRawDescription(string ident, GameObject refObject)
     {
         string desc = ident;

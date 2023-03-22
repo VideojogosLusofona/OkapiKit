@@ -52,6 +52,7 @@ Use the UPM Git extension to install the OkapiKit:
 # Samples
 
 It currently has six sample 'games' (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
+There are also some code snippets demonstrating some of the features, but devoid of any meaningful context. The Snippets menu can be accessed through the Samples scene.
 
 ## Pong 
 ![PongImage](Screenshots/pong.png)
@@ -70,6 +71,11 @@ It currently has six sample 'games' (each a Scene under the Samples directory), 
 
 ## Commando
 ![CommandoImage](Screenshots/commando.png)
+
+## Snippets
+### Probe: Shows probe usage
+### StoppingDistance: Shows how to use the Stopping Distance property on the Follow movement
+### Platformer: Shows the Platformer movement controller
 
 #
 # Documentation

@@ -70,6 +70,8 @@ public class ProbeEditor : OkapiBaseEditor
             EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
             EditorGUILayout.PropertyField(propTargetTransform, new GUIContent("Target Transform"));
 
+            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+
             EditorGUI.EndChangeCheck();
 
             serializedObject.ApplyModifiedProperties();
