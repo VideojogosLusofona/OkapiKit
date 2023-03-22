@@ -88,7 +88,7 @@ There's also some icons on the Hierarchy view, indicating which type of Okapi ob
 ![InspectorImage](Screenshots/hierarchy01.png)
 
 Placing the mouse cursor on top of any of the icons will display additional information. For example, here we placed the
-cursor on top of the Trigger icon (blue dot) on the LevelManager object and we can see all the triggers that it has.
+cursor on top of the Trigger icon (blue dot) on the Player object and we can see all the triggers that it has.
 
 ![InspectorImage](Screenshots/hierarchy02.png)
 
