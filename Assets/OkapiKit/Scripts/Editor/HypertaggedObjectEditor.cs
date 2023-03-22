@@ -57,7 +57,11 @@ public class HypertaggedObjectEditor : OkapiBaseEditor
 
     protected override string GetTitle()
     {
-        return (target as HypertaggedObject).GetTagString();
+        string ret = (target as HypertaggedObject).GetTagString();
+
+        if (ret == "") return "Hypertag";
+
+        return ret;
     }
 
     protected override Texture2D GetIcon()

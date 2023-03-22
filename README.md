@@ -83,6 +83,15 @@ several Okapi Kit components (identifiable by the large title). We have a moveme
 as targets for operations), we have a collision Trigger (with the text that explains when it triggers,
 and what happens), and finally we have several Action scripts (used by the Triggers), that also explain what they're doing.
 
+There's also some icons on the Hierarchy view, indicating which type of Okapi object that objects has:
+
+![InspectorImage](Screenshots/hierarchy01.png)
+
+Placing the mouse cursor on top of any of the icons will display additional information. For example, here we placed the
+cursor on top of the Trigger icon (blue dot) on the LevelManager object and we can see all the triggers that it has.
+
+![InspectorImage](Screenshots/hierarchy02.png)
+
 #
 # Licenses
 

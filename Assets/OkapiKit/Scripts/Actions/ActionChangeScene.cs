@@ -12,7 +12,7 @@ public class ActionChangeScene : Action
 
     public override string GetRawDescription(string ident, GameObject gameObject)
     {
-        return $"{GetPreconditionsString(gameObject)} switches to scene {sceneName}";
+        return $"{GetPreconditionsString(gameObject)}switches to scene {sceneName}";
     }
 
     public override void Execute()

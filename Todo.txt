@@ -16,7 +16,6 @@
 
 Usability:
 ----------
-- Enable drag/drop of action into actions (ActionRandom, Triggers)
 - Highlight action by clicking/scroll there (not sure if possible)
 - How to make simple actions more accessible? (see Simple Usage)
 - Add a tree view to explore objects in the games
@@ -53,7 +52,6 @@ Games:
 - Add animations to Commando game
 - Create FlagCatcher game
 - Create UI game (strategy, need to think about this a lot)
-- Create Platformer (movement system, IsGrounded test)
 - Create SpyGame (add AI system - StateMachine)
 - Create Driving (add AI system - Markov chains)
 - Create Commando 2 game (add AI system - 2d path finding)

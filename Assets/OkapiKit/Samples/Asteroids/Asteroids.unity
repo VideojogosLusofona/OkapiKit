@@ -455,20 +455,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  description: Asteroid Spawner
-  forceCount: 0
-  numberOfEntities: 3
-  usePulsePattern: 1
-  pulsePattern: xxxx
-  pulseTime: 0
-  prefabs:
-  - {fileID: 6678966174736319234, guid: 3788322c7ae70db47b000f3c3efa4309, type: 3}
-  spawnPoints: []
-  spawnPointType: 0
-  modifiers: 0
-  scaleVariance: {x: 1, y: 1}
-  speedVariance: {x: 1, y: 1}
-  setParent: 0
   _explanation: 'Asteroid Spawner
 
     ----------------
@@ -491,6 +477,20 @@ MonoBehaviour:
     attached to this object.
 
 '
+  description: Asteroid Spawner
+  forceCount: 0
+  numberOfEntities: 3
+  usePulsePattern: 1
+  pulsePattern: xxxx
+  pulseTime: 0
+  prefabs:
+  - {fileID: 6678966174736319234, guid: 3788322c7ae70db47b000f3c3efa4309, type: 3}
+  spawnPoints: []
+  spawnPointType: 0
+  modifiers: 0
+  scaleVariance: {x: 1, y: 1}
+  speedVariance: {x: 1, y: 1}
+  setParent: 0
 --- !u!4 &128201712
 Transform:
   m_ObjectHideFlags: 0
@@ -519,12 +519,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Spawns an entity using spawner AsteroidSpawner
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns an entity using spawner AsteroidSpawner
   prefabObject: {fileID: 0}
   spawnPosition: 0
   targetPosition: {fileID: 0}
@@ -543,6 +544,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "When ((TagCount(Asteroid) == 0):\n          spawns an entity using
+    spawner AsteroidSpawner\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -551,18 +554,21 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 128201713}
-  _explanation: "When (TagCount(Asteroid) == 0):\n First, \n          spawns an entity
-    using spawner AsteroidSpawner\n"
   conditions:
-  - valueHandler: {fileID: 0}
+  - negate: 0
+    valueHandler: {fileID: 0}
     variable: {fileID: 0}
     valueType: 1
     tag: {fileID: 11400000, guid: d5958356fcc685946af4e76d64830e68, type: 2}
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 0
     value: 0
     percentageCompare: 0
+  elseActions: []
 --- !u!1 &163392474
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,161 +646,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 163392474}
   m_CullTransparentMesh: 1
---- !u!1 &163414684
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 163414687}
-  - component: {fileID: 163414686}
-  - component: {fileID: 163414685}
-  - component: {fileID: 163414688}
-  m_Layer: 0
-  m_Name: TestObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!50 &163414685
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163414684}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &163414686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163414684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  description: 
-  enableTrigger: 1
-  allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
-  actions: []
-  _explanation: 'When (Lives == 0) and (TestObject.x == 0) and (TestObject == 0)
-    and (TestObject.y == 0) and (TestObject.velocity.x == 0) and (TestObject.velocity.y
-    == 0):
-
-'
-  conditions:
-  - valueHandler: {fileID: 0}
-    variable: {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
-    valueType: 0
-    tag: {fileID: 0}
-    sourceTransform: {fileID: 0}
-    rigidBody: {fileID: 0}
-    comparison: 0
-    value: 0
-    percentageCompare: 0
-  - valueHandler: {fileID: 0}
-    variable: {fileID: 0}
-    valueType: 2
-    tag: {fileID: 0}
-    sourceTransform: {fileID: 163414687}
-    rigidBody: {fileID: 0}
-    comparison: 0
-    value: 0
-    percentageCompare: 0
-  - valueHandler: {fileID: 163414688}
-    variable: {fileID: 0}
-    valueType: 0
-    tag: {fileID: 0}
-    sourceTransform: {fileID: 0}
-    rigidBody: {fileID: 0}
-    comparison: 0
-    value: 0
-    percentageCompare: 0
-  - valueHandler: {fileID: 0}
-    variable: {fileID: 0}
-    valueType: 3
-    tag: {fileID: 0}
-    sourceTransform: {fileID: 0}
-    rigidBody: {fileID: 0}
-    comparison: 0
-    value: 0
-    percentageCompare: 0
-  - valueHandler: {fileID: 0}
-    variable: {fileID: 0}
-    valueType: 6
-    tag: {fileID: 0}
-    sourceTransform: {fileID: 0}
-    rigidBody: {fileID: 163414685}
-    comparison: 0
-    value: 0
-    percentageCompare: 0
-  - valueHandler: {fileID: 0}
-    variable: {fileID: 0}
-    valueType: 7
-    tag: {fileID: 0}
-    sourceTransform: {fileID: 0}
-    rigidBody: {fileID: 0}
-    comparison: 0
-    value: 0
-    percentageCompare: 0
---- !u!4 &163414687
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163414684}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.496393, y: 41.78714, z: -19.869228}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &163414688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163414684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56c124f990a067b478caf900b6cb6d30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 1
-  _description: 
-  type: 0
-  currentValue: 0
-  defaultValue: 0
-  isInteger: 0
-  hasLimits: 0
-  minValue: -3.4028235e+38
-  maxValue: 3.4028235e+38
 --- !u!1 &184645929
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,7 +763,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
 --- !u!1 &423473767
@@ -1038,7 +890,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 1a78b44e20b30794b8b40dbd522adbba, type: 2}
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
@@ -1271,7 +1124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: d86af5fd4f0cd564e8a0b38658546618, type: 2}
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
@@ -1521,7 +1375,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 3f1db2282755626448862f9b0a85d92a, type: 2}
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
@@ -1709,12 +1564,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Switches to scene Samples
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' switches to scene Samples'
   sceneName: Samples
 --- !u!114 &1062124230
 MonoBehaviour:
@@ -1729,6 +1585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "When key Escape is held:\n          switches to scene Samples\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1737,11 +1594,11 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124229}
-  _explanation: "When key Escape is held:\n First, \n           switches to scene
-    Samples\n"
   inputType: 1
   buttonName: 
   key: 27
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 1
   negate: 0
   useCooldown: 0
@@ -1759,12 +1616,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Enables object GameOver
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Enables object GameOver
   target: {fileID: 1721419922}
   state: 0
 --- !u!114 &1062124234
@@ -1780,6 +1638,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "If it runs out of lives, game over!\n----------------\nWhen ((Lives
+    <= 0):\n          enables object GameOver\n"
   description: If it runs out of lives, game over!
   enableTrigger: 1
   allowRetrigger: 1
@@ -1788,18 +1648,21 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124233}
-  _explanation: "If it runs out of lives, game over!\n----------------\nWhen (Lives
-    <= 0):\n First, \n          enables object GameOver\n"
   conditions:
-  - valueHandler: {fileID: 0}
+  - negate: 0
+    valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
     valueType: 0
     tag: {fileID: 0}
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
+  elseActions: []
 --- !u!114 &1062124235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1813,12 +1676,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Spawns prefab Player at original position
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Player at original position
   prefabObject: {fileID: 1014014148773522024, guid: e371979db9738534eaa19b62be84a435, type: 3}
   spawnPosition: 0
   targetPosition: {fileID: 0}
@@ -1837,38 +1701,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "If there's no player ship and there's enough lives, respawn\n----------------\nIf
+    ((Lives > 0) and ((TagCount(Player) == 0) and When key Space is pressed:\n         
+    spawns prefab Player at original position\n"
   description: If there's no player ship and there's enough lives, respawn
   enableTrigger: 1
   allowRetrigger: 1
   hasPreconditions: 1
   preConditions:
-  - valueHandler: {fileID: 0}
+  - negate: 0
+    valueHandler: {fileID: 0}
     variable: {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
     valueType: 0
     tag: {fileID: 0}
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 3
     value: 0
     percentageCompare: 0
-  - valueHandler: {fileID: 0}
+  - negate: 0
+    valueHandler: {fileID: 0}
     variable: {fileID: 0}
     valueType: 1
     tag: {fileID: 11400000, guid: b51e68d37579c9a49bcc68ee51a9cc67, type: 2}
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 0
     value: 0
     percentageCompare: 0
   actions:
   - delay: 0
     action: {fileID: 1062124235}
-  _explanation: "If there's no player ship and there's enough lives, respawn\n----------------\nIf
-    (Lives > 0) and (TagCount(Player) == 0) and When key Space is pressed:\n First,
-    \n          spawns prefab Player at original position\n"
   inputType: 1
   buttonName: 
   key: 32
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 0
   negate: 0
   useCooldown: 0
@@ -1886,12 +1760,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Resets variable ShieldCharge
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Resets variable ShieldCharge
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: a2d42889e8a380c4588011f485d0b496, type: 2}
   operation: 2
@@ -1911,12 +1786,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Resets variable Lives
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Resets variable Lives
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
   operation: 2
@@ -1936,6 +1812,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When this object is created:\n          resets variable Lives\n         
+    resets variable ShieldCharge\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1946,7 +1824,6 @@ MonoBehaviour:
     action: {fileID: 1062124238}
   - delay: 0
     action: {fileID: 1062124237}
-  _explanation: "When Start is called:\n First, \n          resets variable Lives\n"
 --- !u!1 &1294020097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2199,6 +2076,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325523b87d87de346baade62e2b79aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: a2d42889e8a380c4588011f485d0b496, type: 2}
   fill: {fileID: 791014613}
@@ -2387,6 +2267,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113865366a5e79348bad1ea24ba078d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   valueHandler: {fileID: 0}
   variable: {fileID: 11400000, guid: 41c335ef6d4fd5c4e8ba97e794e7edfc, type: 2}
 --- !u!114 &1486943416
@@ -2444,6 +2327,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2693f9c8caf81046837996718175889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   defaultMixerOutput: {fileID: 24300002, guid: 6a1577f2cb8eb4e4da9e8873a2e32a54, type: 2}
 --- !u!4 &1549534342
 Transform:
@@ -2514,12 +2400,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: ' Switches to scene Asteroids'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' Switches to scene Asteroids'
   sceneName: Asteroids
 --- !u!114 &1721419925
 MonoBehaviour:
@@ -2534,6 +2421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When key Space is pressed:\n At 0 seconds,  Switches to scene Asteroids\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 0
@@ -2542,10 +2430,11 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1721419924}
-  _explanation: "When key Space is pressed:\n At 0 seconds,  Switches to scene Asteroids\n"
   inputType: 1
   buttonName: 
   key: 32
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
   continuous: 0
   negate: 0
   useCooldown: 0
@@ -2965,7 +2854,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: d1bc12c6888803a46859c5ae4beca2b3, type: 2}
   - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
@@ -3147,6 +3037,40 @@ PrefabInstance:
     - target: {fileID: 1014014148773522026, guid: e371979db9738534eaa19b62be84a435, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014014148773522027, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: inputType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014014148773522027, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: _explanation
+      value: 'Rotational movement, at a maximum of 200 degrees per second.
+
+        Rotation
+        will be controlled by the [Horizontal] axis.
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3765603767776046026, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915059012136663514, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915059012136663514, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: description
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915059012136663514, guid: e371979db9738534eaa19b62be84a435, type: 3}
+      propertyPath: _explanation
+      value: "When a collision with a trigger with tags [Asteroid] starts:\n         
+        adds -1 to variable Lives\n          spawns prefab Explosion at the position
+        of this object (Player)\n          disables component Player (UnityEngine.CircleCollider2D)
+        on Player\n          disables renderer Player\n          disables renderer
+        Thruster1\n          disables renderer Thruster2\n          disables renderer
+        ActualShield\n then, at 2 seconds, \n          destroys this object\n"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e371979db9738534eaa19b62be84a435, type: 3}

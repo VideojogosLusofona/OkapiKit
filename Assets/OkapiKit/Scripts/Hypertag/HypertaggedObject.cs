@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
+[DisallowMultipleComponent]
 public class HypertaggedObject : OkapiElement
 {
     [SerializeField] 
     private List<Hypertag>  hypertags;
 
+    public Hypertag[] GetTags() {  return hypertags.ToArray(); }
+
     public string GetTagString()
     {
-        if ((hypertags == null) || (hypertags.Count == 0)) return "Hypertag";
+        if ((hypertags == null) || (hypertags.Count == 0)) return "";
 
         string ret = "";
         foreach (var tag in hypertags)

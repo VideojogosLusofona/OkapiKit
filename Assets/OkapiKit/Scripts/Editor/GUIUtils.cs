@@ -26,6 +26,27 @@ static class GUIUtils
 
     static Dictionary<string, GUIStyle> styles;
 
+    static public GUIStyle GetTooltipTextStyle()
+    {
+        if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+        GUIStyle titleStyle;
+        styles.TryGetValue("TooltipTextStyle", out titleStyle);
+        if (titleStyle == null)
+        {
+            titleStyle = new GUIStyle(GUI.skin.label);
+            titleStyle.fontSize = 12;
+            titleStyle.fixedHeight = 12;
+            titleStyle.clipping = TextClipping.Overflow;
+            titleStyle.alignment = TextAnchor.UpperLeft;
+            titleStyle.normal.textColor = new Color(0.3f, 0.3f, 0.3f, 1.0f);
+            titleStyle.hover.textColor = new Color(0.3f, 0.3f, 0.3f, 1.0f);
+            titleStyle.wordWrap = true;
+            styles.Add("TooltipTextStyle", titleStyle);
+        }
+        return titleStyle;
+    }
+
     static public GUIStyle GetActionDelayTextStyle()
     {
         if (styles == null) styles = new Dictionary<string, GUIStyle>();
