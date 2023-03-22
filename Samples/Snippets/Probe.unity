@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: ' switches to scene Snippets'
+  _explanation: Switches to scene Snippets
   description: 
   enableAction: 1
   hasTags: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When key Escape is pressed:\n           switches to scene Snippets\n"
+  _explanation: "When key Escape is pressed:\n          switches to scene Snippets\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1

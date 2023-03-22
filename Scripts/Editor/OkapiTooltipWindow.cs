@@ -35,7 +35,7 @@ public class OkapiTooltipWindow : EditorWindow
         size.y = lines.Length * (style.fixedHeight + 2);
 
         size.x += 10;
-        size.y += 10;
+        size.y += 15;
 
         var newPos = GUIUtility.GUIToScreenPoint(Event.current.mousePosition);
         newPos.x -= 5;
