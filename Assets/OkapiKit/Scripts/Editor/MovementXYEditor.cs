@@ -23,6 +23,8 @@ public class MovementXYEditor : MovementEditor
     SerializedProperty propHorizontalKeyNegative;
     SerializedProperty propVerticalKeyPositive;
     SerializedProperty propVerticalKeyNegative;
+    SerializedProperty propInertiaEnable;
+    SerializedProperty propInertiaStopTime;
 
     protected override void OnEnable()
     {
@@ -45,6 +47,8 @@ public class MovementXYEditor : MovementEditor
         propHorizontalKeyNegative = serializedObject.FindProperty("horizontalKeyNegative");
         propVerticalKeyPositive = serializedObject.FindProperty("verticalKeyPositive");
         propVerticalKeyNegative = serializedObject.FindProperty("verticalKeyNegative");
+        propInertiaEnable = serializedObject.FindProperty("inertiaEnable");
+        propInertiaStopTime = serializedObject.FindProperty("inertiaStopTime");
     }
 
     public override void OnInspectorGUI()
@@ -66,6 +70,12 @@ public class MovementXYEditor : MovementEditor
                     EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis to align"));
                     EditorGUILayout.PropertyField(propMaxTurnSpeed, new GUIContent("Max turn speed"));
                 }
+            }
+
+            EditorGUILayout.PropertyField(propInertiaEnable, new GUIContent("Use Inertia?"));
+            if (propInertiaEnable.boolValue)
+            {
+                EditorGUILayout.PropertyField(propInertiaStopTime, new GUIContent("Stop Time"));
             }
 
             EditorGUILayout.PropertyField(propInputEnabled, new GUIContent("Use Input?"));
