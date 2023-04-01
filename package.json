@@ -1,7 +1,7 @@
 {
     "name": "com.videojogoslusofona.okapikit",
     "displayName": "OkapiKit",
-    "version": "1.6.0",
+    "version": "1.6.1",
     "unity": "2021.3",
     "description": "OkapiKit is a toolkit for creation of simple games without code.",
     "keywords": [ "kit" ],
