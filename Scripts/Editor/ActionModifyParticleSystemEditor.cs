@@ -1,46 +1,49 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionModifyParticleSystem))]
-public class ActionModifyParticleSystemEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propParticleSystem;
-    SerializedProperty propChangeType;
-    SerializedProperty propEmission;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionModifyParticleSystem))]
+    public class ActionModifyParticleSystemEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propParticleSystem;
+        SerializedProperty propChangeType;
+        SerializedProperty propEmission;
 
-        propParticleSystem = serializedObject.FindProperty("particleSystem");
-        propChangeType = serializedObject.FindProperty("changeType");
-        propEmission = serializedObject.FindProperty("emission");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionModifyParticleSystem);
-            if (action == null) return;
+            propParticleSystem = serializedObject.FindProperty("particleSystem");
+            propChangeType = serializedObject.FindProperty("changeType");
+            propEmission = serializedObject.FindProperty("emission");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propParticleSystem, new GUIContent("Particle System"));
-            EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            if (propChangeType.enumValueIndex == (int)ActionModifyParticleSystem.ChangeType.Emission)
+            if (WriteTitle())
             {
-                EditorGUILayout.PropertyField(propEmission, new GUIContent("Emission"));
-            }
+                StdEditor(false);
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                var action = (target as ActionModifyParticleSystem);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propParticleSystem, new GUIContent("Particle System"));
+                EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
+
+                if (propChangeType.enumValueIndex == (int)ActionModifyParticleSystem.ChangeType.Emission)
+                {
+                    EditorGUILayout.PropertyField(propEmission, new GUIContent("Emission"));
+                }
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

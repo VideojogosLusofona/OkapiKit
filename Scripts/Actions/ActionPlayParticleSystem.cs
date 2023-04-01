@@ -2,31 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionPlayParticleSystem : Action
+namespace OkapiKit
 {
-    [SerializeField] private ParticleSystem target;
 
-    public override string GetActionTitle() => "Play Particle System";
-
-    public override void Execute()
+    public class ActionPlayParticleSystem : Action
     {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
+        [SerializeField] private ParticleSystem target;
 
-        if (target == null)
+        public override string GetActionTitle() => "Play Particle System";
+
+        public override void Execute()
         {
-            target = GetComponent<ParticleSystem>();
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
+
+            if (target == null)
+            {
+                target = GetComponent<ParticleSystem>();
+            }
+            if (target)
+            {
+                target.Play();
+            }
         }
-        if (target)
+
+        public override string GetRawDescription(string ident, GameObject gameObject)
         {
-            target.Play();
+            string targetName = (target) ? (target.name) : (name);
+
+            return $"{GetPreconditionsString(gameObject)}play particle system {targetName}";
         }
-    }
-
-    public override string GetRawDescription(string ident, GameObject gameObject)
-    {
-        string targetName = (target) ? (target.name) : (name);
-
-        return $"{GetPreconditionsString(gameObject)}play particle system {targetName}";
     }
 }

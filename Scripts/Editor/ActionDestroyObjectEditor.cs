@@ -3,49 +3,52 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionDestroyObject))]
-public class ActionDestroyObjectEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propTarget;
-    SerializedProperty propTargetObject;
-    SerializedProperty propTags;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionDestroyObject))]
+    public class ActionDestroyObjectEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propTarget;
+        SerializedProperty propTargetObject;
+        SerializedProperty propTags;
 
-        propTarget = serializedObject.FindProperty("target");
-        propTargetObject = serializedObject.FindProperty("targetObject");
-        propTags = serializedObject.FindProperty("tags");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionDestroyObject);
-            if (action == null) return;
+            propTarget = serializedObject.FindProperty("target");
+            propTargetObject = serializedObject.FindProperty("targetObject");
+            propTags = serializedObject.FindProperty("tags");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            if (propTarget.enumValueIndex == (int)ActionDestroyObject.Target.Object)
+            if (WriteTitle())
             {
-                EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target"));
-            }
-            else if (propTarget.enumValueIndex == (int)ActionDestroyObject.Target.Tag)
-            {
-                EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
-            }
+                StdEditor(false);
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                var action = (target as ActionDestroyObject);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
+
+                if (propTarget.enumValueIndex == (int)ActionDestroyObject.Target.Object)
+                {
+                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target"));
+                }
+                else if (propTarget.enumValueIndex == (int)ActionDestroyObject.Target.Tag)
+                {
+                    EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
+                }
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

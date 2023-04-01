@@ -1,43 +1,46 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionModifySystem))]
-public class ActionModifySystemEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propChangeType;
-    SerializedProperty propState;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionModifySystem))]
+    public class ActionModifySystemEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propChangeType;
+        SerializedProperty propState;
 
-        propChangeType = serializedObject.FindProperty("changeType");
-        propState = serializedObject.FindProperty("state");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionModifySystem);
-            if (action == null) return;
+            propChangeType = serializedObject.FindProperty("changeType");
+            propState = serializedObject.FindProperty("state");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            if (propChangeType.enumValueIndex == (int)ActionModifySystem.ChangeType.MouseCursorVisibility)
+            if (WriteTitle())
             {
-                EditorGUILayout.PropertyField(propState, new GUIContent("Mouse Cursor"));
-            }
+                StdEditor(false);
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                var action = (target as ActionModifySystem);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
+
+                if (propChangeType.enumValueIndex == (int)ActionModifySystem.ChangeType.MouseCursorVisibility)
+                {
+                    EditorGUILayout.PropertyField(propState, new GUIContent("Mouse Cursor"));
+                }
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

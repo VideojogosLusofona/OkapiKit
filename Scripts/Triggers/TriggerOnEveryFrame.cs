@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerOnEveryFrame : Trigger
+namespace OkapiKit
 {
-    public override string GetTriggerTitle() => "Every frame";
-
-    public override string GetRawDescription(string ident, GameObject refObject)
+    public class TriggerOnEveryFrame : Trigger
     {
-        return "Every frame";
-    }
+        public override string GetTriggerTitle() => "Every frame";
 
-    private void Update()
-    {
-        if (!isTriggerEnabled) return;
-        if (!EvaluatePreconditions()) return;
+        public override string GetRawDescription(string ident, GameObject refObject)
+        {
+            return "Every frame";
+        }
 
-        ExecuteTrigger();
+        private void Update()
+        {
+            if (!isTriggerEnabled) return;
+            if (!EvaluatePreconditions()) return;
+
+            ExecuteTrigger();
+        }
     }
 }

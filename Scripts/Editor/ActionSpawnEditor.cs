@@ -1,65 +1,68 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionSpawn))]
-public class ActionSpawnEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propPrefabObject;
-    SerializedProperty propSpawnPosition;
-    SerializedProperty propTargetPosition;
-    SerializedProperty propTargetTag;
-    SerializedProperty propSetParent;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionSpawn))]
+    public class ActionSpawnEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propPrefabObject;
+        SerializedProperty propSpawnPosition;
+        SerializedProperty propTargetPosition;
+        SerializedProperty propTargetTag;
+        SerializedProperty propSetParent;
 
-        propPrefabObject = serializedObject.FindProperty("prefabObject");
-        propSpawnPosition = serializedObject.FindProperty("spawnPosition");
-        propTargetPosition = serializedObject.FindProperty("targetPosition");
-        propTargetTag = serializedObject.FindProperty("targetTag");
-        propSetParent = serializedObject.FindProperty("setParent");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionSpawn);
-            if (action == null) return;
+            propPrefabObject = serializedObject.FindProperty("prefabObject");
+            propSpawnPosition = serializedObject.FindProperty("spawnPosition");
+            propTargetPosition = serializedObject.FindProperty("targetPosition");
+            propTargetTag = serializedObject.FindProperty("targetTag");
+            propSetParent = serializedObject.FindProperty("setParent");
+        }
 
-            Spawner spawner = action.GetComponent<Spawner>();
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
-            if (spawner == null)
+            if (WriteTitle())
             {
-                EditorGUILayout.PropertyField(propPrefabObject, new GUIContent("Prefab Object"));
+                StdEditor(false);
 
-                if (propPrefabObject.objectReferenceValue != null)
+                var action = (target as ActionSpawn);
+                if (action == null) return;
+
+                Spawner spawner = action.GetComponent<Spawner>();
+
+                EditorGUI.BeginChangeCheck();
+                if (spawner == null)
                 {
-                    EditorGUILayout.PropertyField(propSpawnPosition, new GUIContent("Position"));
-                    if (propSpawnPosition.enumValueIndex == (int)ActionSpawn.SpawnPosition.Target)
+                    EditorGUILayout.PropertyField(propPrefabObject, new GUIContent("Prefab Object"));
+
+                    if (propPrefabObject.objectReferenceValue != null)
                     {
-                        EditorGUILayout.PropertyField(propTargetPosition, new GUIContent("Target"));
+                        EditorGUILayout.PropertyField(propSpawnPosition, new GUIContent("Position"));
+                        if (propSpawnPosition.enumValueIndex == (int)ActionSpawn.SpawnPosition.Target)
+                        {
+                            EditorGUILayout.PropertyField(propTargetPosition, new GUIContent("Target"));
+                        }
+                        else if (propSpawnPosition.enumValueIndex == (int)ActionSpawn.SpawnPosition.Tag)
+                        {
+                            EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Tag"));
+                        }
                     }
-                    else if (propSpawnPosition.enumValueIndex == (int)ActionSpawn.SpawnPosition.Tag)
+                    if (propSpawnPosition.enumValueIndex != (int)ActionSpawn.SpawnPosition.Default)
                     {
-                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Tag"));
+                        EditorGUILayout.PropertyField(propSetParent, new GUIContent("Set Parent"));
                     }
                 }
-                if (propSpawnPosition.enumValueIndex != (int)ActionSpawn.SpawnPosition.Default)
+                if (EditorGUI.EndChangeCheck())
                 {
-                    EditorGUILayout.PropertyField(propSetParent, new GUIContent("Set Parent"));
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
                 }
-            }
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
             }
         }
     }

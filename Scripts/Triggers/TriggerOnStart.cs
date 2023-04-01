@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerOnStart : Trigger
+namespace OkapiKit
 {
-    public override string GetTriggerTitle() => "On Start";
-
-    public override string GetRawDescription(string ident, GameObject refObject)
+    public class TriggerOnStart : Trigger
     {
-        return "When this object is created";
-    }
+        public override string GetTriggerTitle() => "On Start";
 
-    private void Start()
-    {
-        if (!isTriggerEnabled) return;
-        if (!EvaluatePreconditions()) return;
+        public override string GetRawDescription(string ident, GameObject refObject)
+        {
+            return "When this object is created";
+        }
 
-        ExecuteTrigger();
+        private void Start()
+        {
+            if (!isTriggerEnabled) return;
+            if (!EvaluatePreconditions()) return;
+
+            ExecuteTrigger();
+        }
     }
 }

@@ -1,38 +1,41 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionPlayParticleSystem))]
-public class ActionPlayParticleSystemEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propTarget;
-    SerializedProperty propState;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionPlayParticleSystem))]
+    public class ActionPlayParticleSystemEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propTarget;
+        SerializedProperty propState;
 
-        propTarget = serializedObject.FindProperty("target");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionPlayParticleSystem);
-            if (action == null) return;
+            propTarget = serializedObject.FindProperty("target");
+        }
 
-            EditorGUI.BeginChangeCheck();
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            EditorGUILayout.PropertyField(propTarget, new GUIContent("Particle System"));
-
-            if (EditorGUI.EndChangeCheck())
+            if (WriteTitle())
             {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                StdEditor(false);
+
+                var action = (target as ActionPlayParticleSystem);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Particle System"));
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

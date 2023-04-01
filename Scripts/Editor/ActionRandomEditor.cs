@@ -1,36 +1,39 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionRandom))]
-public class ActionRandomEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propActions;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionRandom))]
+    public class ActionRandomEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propActions;
 
-        propActions = serializedObject.FindProperty("actions");        
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionRandom);
-            if (action == null) return;
+            propActions = serializedObject.FindProperty("actions");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propActions, new GUIContent("Choices"));
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            if (EditorGUI.EndChangeCheck())
+            if (WriteTitle())
             {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                StdEditor(false);
+
+                var action = (target as ActionRandom);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propActions, new GUIContent("Choices"));
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

@@ -1,55 +1,58 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionTagged))]
-public class ActionTaggedEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propSearchType;
-    SerializedProperty propSearchTags;
-    SerializedProperty propTriggerType;
-    SerializedProperty propTriggerTags;
-    SerializedProperty propColliders;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionTagged))]
+    public class ActionTaggedEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propSearchType;
+        SerializedProperty propSearchTags;
+        SerializedProperty propTriggerType;
+        SerializedProperty propTriggerTags;
+        SerializedProperty propColliders;
 
-        propSearchType = serializedObject.FindProperty("searchType");
-        propSearchTags = serializedObject.FindProperty("searchTags");
-        propTriggerType = serializedObject.FindProperty("triggerType");
-        propTriggerTags = serializedObject.FindProperty("triggerTags");
-        propColliders = serializedObject.FindProperty("colliders");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionTagged);
-            if (action == null) return;
+            propSearchType = serializedObject.FindProperty("searchType");
+            propSearchTags = serializedObject.FindProperty("searchTags");
+            propTriggerType = serializedObject.FindProperty("triggerType");
+            propTriggerTags = serializedObject.FindProperty("triggerTags");
+            propColliders = serializedObject.FindProperty("colliders");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propSearchType, new GUIContent("Search Type"));
-            if (propSearchType.enumValueIndex == (int)ActionTagged.SearchType.Tagged)
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+
+            if (WriteTitle())
             {
-                EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags"));
-            }
-            if (propSearchType.enumValueIndex == (int)ActionTagged.SearchType.WithinCollider)
-            {
-                EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags"));
-                EditorGUILayout.PropertyField(propColliders, new GUIContent("Search Colliders"));
-            }
-            EditorGUILayout.PropertyField(propTriggerType, new GUIContent("Trigger Type"));
-            EditorGUILayout.PropertyField(propTriggerTags, new GUIContent("Trigger Tags"));
+                StdEditor(false);
 
-            EditorGUI.EndChangeCheck();
+                var action = (target as ActionTagged);
+                if (action == null) return;
 
-            serializedObject.ApplyModifiedProperties();
-            (target as Action).UpdateExplanation();
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propSearchType, new GUIContent("Search Type"));
+                if (propSearchType.enumValueIndex == (int)ActionTagged.SearchType.Tagged)
+                {
+                    EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags"));
+                }
+                if (propSearchType.enumValueIndex == (int)ActionTagged.SearchType.WithinCollider)
+                {
+                    EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags"));
+                    EditorGUILayout.PropertyField(propColliders, new GUIContent("Search Colliders"));
+                }
+                EditorGUILayout.PropertyField(propTriggerType, new GUIContent("Trigger Type"));
+                EditorGUILayout.PropertyField(propTriggerTags, new GUIContent("Trigger Tags"));
+
+                EditorGUI.EndChangeCheck();
+
+                serializedObject.ApplyModifiedProperties();
+                (target as Action).UpdateExplanation();
+            }
         }
     }
 }

@@ -5623,10 +5623,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 'This part of the example shows 3 ways of controlling rotation, twin-stick
-    shooter like:
-
-    This one is by using the right analog stick on the controller'
+  _explanation: 
+  description: 
   speed: 200
   mode: 1
   inputType: 0
@@ -5663,10 +5661,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 'This part of the example shows 3 ways of controlling rotation, twin-stick
-    shooter like:
-
-    This one is by using mouse input on the rotate movement'
+  _explanation: 
+  description: 
   speed: 200
   mode: 1
   inputType: 3
@@ -5703,9 +5699,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: "This part of the example shows 3 ways of controlling rotation, twin-stick
-    shooter like:\nThis one is by aiming towards an object that is tagged with mouse
-    cursor. In this case, that's an actual \ncursor object (Crosshair)"
+  _explanation: 
+  description: 
   speed: 200
   mode: 3
   inputType: 0
@@ -6167,7 +6162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 693704083fea7a844aa44060b8ce07db, type: 2}
 --- !u!4 &731496901 stripped
@@ -6812,12 +6808,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: ' switches to scene Samples'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' switches to scene Samples'
   sceneName: Samples
 --- !u!114 &1062124230
 MonoBehaviour:
@@ -6832,6 +6829,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "When key Escape is held:\n First, \n           switches to scene
+    Samples\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -6840,8 +6839,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1062124229}
-  _explanation: "When key Escape is held:\n First, \n           switches to scene
-    Samples\n"
   inputType: 1
   buttonName: 
   key: 27
@@ -6948,8 +6945,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
-  _description: 
+  _explanation: 
+  description: 
   speed: {x: 400, y: 400}
+  limitSpeed: 0
+  speedLimit: 100
   useRotation: 0
   turnToDirection: 0
   axisToAlign: 1
@@ -6966,6 +6966,8 @@ MonoBehaviour:
   horizontalKeyNegative: 276
   verticalKeyPositive: 273
   verticalKeyNegative: 274
+  inertiaEnable: 0
+  inertiaStopTime: 0
 --- !u!4 &1180085494
 Transform:
   m_ObjectHideFlags: 0
@@ -6997,12 +6999,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Adds -20 to variable Health
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Adds -20 to variable Health
   valueHandler: {fileID: 1582900975}
   variable: {fileID: 0}
   operation: 1
@@ -7022,6 +7025,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "When a collision with a trigger with tags [EnemyBullet] starts:\nFirst,
+    \n          adds -20 to variable Health\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -7030,8 +7035,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1180085495}
-  _explanation: "When a collision with a trigger with tags [EnemyBullet] starts:\n
-    First, \n          adds -20 to variable Health\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -7049,7 +7052,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 8efa30800e1db9e479bbdb4f1d5d1aa1, type: 2}
 --- !u!58 &1180085498
@@ -7513,12 +7517,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Spawns prefab Bullet at the position of this object (Shooter)
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Bullet at the position of this object (Shooter)
   prefabObject: {fileID: 8000608644733957495, guid: 19448aa84423ebe4d8a1361910cdf954, type: 3}
   spawnPosition: 1
   targetPosition: {fileID: 0}
@@ -7537,6 +7542,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When axis RightTrigger is held (this can only happen every 0.15
+    seconds):\n First, \n          spawns prefab Bullet at the position of this object
+    (Shooter)\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -7547,9 +7555,6 @@ MonoBehaviour:
     action: {fileID: 1482789968}
   - delay: 0
     action: {fileID: 1482789971}
-  _explanation: "When axis RightTrigger is held (this can only happen every 0.15
-    seconds):\n First, \n          spawns prefab Bullet at the position of this object
-    (Shooter)\n"
   inputType: 2
   buttonName: Fire1
   key: 0
@@ -7572,12 +7577,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Shakes the object with tag [Camera] with intensity 2 for 0.05 seconds
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Shakes the object with tag [Camera] with intensity 2 for 0.05 seconds
   targetTag: {fileID: 11400000, guid: 2f478aa6dec00f3449f3977690be69d6, type: 2}
   targetObject: {fileID: 0}
   strength: 2
@@ -7595,6 +7601,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When button Fire1 is held (this can only happen every 0.15 seconds):\nFirst,
+    \n          spawns prefab PlayerBullet at the position of this object (Shooter)\n         
+    shakes the object with tag [Camera] with intensity 2 for 0.05 seconds\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -7605,10 +7614,6 @@ MonoBehaviour:
     action: {fileID: 1482789968}
   - delay: 0
     action: {fileID: 1482789971}
-  _explanation: "When button Fire1 is held (this can only happen every 0.15 seconds):\n
-    First, \n          spawns prefab PlayerBullet at the position of this object
-    (Shooter)\n          shakes the object with tag [Camera] with intensity 2 for
-    0.05 seconds\n"
   inputType: 0
   buttonName: Fire1
   key: 0
@@ -7657,11 +7662,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 'Follows the mouse, immediately.
+
+'
+  description: 
   speed: 0
   targetType: 2
   targetTag: {fileID: 0}
   targetObject: {fileID: 0}
+  stoppingDistance: 0
   relativeMovement: 0
   rotateTowardsDirection: 0
   alignAxis: 0
@@ -7748,7 +7757,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 0592c610a1215f84582e72c26d3529a0, type: 2}
 --- !u!114 &1534015953
@@ -7764,12 +7774,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Disables mouse cursor
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables mouse cursor
   changeType: 0
   state: 1
 --- !u!114 &1534015954
@@ -7785,6 +7796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When this object is created:\n          disables mouse cursor\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -7793,7 +7805,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1534015953}
-  _explanation: "When Start is called:\n First, \n          disables mouse cursor\n"
 --- !u!4 &1540358567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8612933414904547691, guid: caaecf73e9281744385a8659b802987c, type: 3}
@@ -7885,6 +7896,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2693f9c8caf81046837996718175889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   defaultMixerOutput: {fileID: 24300002, guid: 6a1577f2cb8eb4e4da9e8873a2e32a54, type: 2}
 --- !u!4 &1549534342
 Transform:
@@ -8022,7 +8036,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   type: 0
   currentValue: 100
   defaultValue: 100
@@ -8058,14 +8073,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Find actions tagged with any of [GameOver] and execute all of them.
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Find actions tagged with any of [GameOver] and execute all of them.
   searchType: 0
   searchTags: []
+  colliders: []
   triggerType: 0
   triggerTags:
   - {fileID: 11400000, guid: 1f4fe9a669e2b524c91a10e25b6ec9ba, type: 2}
@@ -8082,12 +8099,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Destroys the parent of this object
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Destroys the parent of this object
   target: 1
   targetObject: {fileID: 0}
   tags: []
@@ -8104,12 +8122,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Spawns prefab Explosion at the position of this object (Health)
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Explosion at the position of this object (Health)
   prefabObject: {fileID: 5363241896603793910, guid: 0bc1535a61d6dbc46b6a175863825d14, type: 3}
   spawnPosition: 1
   targetPosition: {fileID: 0}
@@ -8128,6 +8147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: 'When (Health <= 0):
+
+'
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -8140,20 +8162,21 @@ MonoBehaviour:
     action: {fileID: 1582900978}
   - delay: 0.2
     action: {fileID: 1582900977}
-  _explanation: 'When (Health <= 0):
-
-'
   conditions:
-  - valueHandler: {fileID: 1582900975}
+  - negate: 0
+    valueHandler: {fileID: 1582900975}
     variable: {fileID: 0}
     valueType: 0
     tag: {fileID: 0}
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
     axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 2
     value: 0
     percentageCompare: 0
+  elseActions: []
 --- !u!4 &1613916526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6331027738892186350, guid: 5867fe65c3ef5684b8eb275e6304b371, type: 3}
@@ -8280,12 +8303,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: ' switches to scene Commando'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: ' switches to scene Commando'
   sceneName: Commando
 --- !u!114 &1721419925
 MonoBehaviour:
@@ -8300,6 +8324,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When axis RightTrigger is pressed:\n First, \n           switches
+    to scene Commando\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 0
@@ -8308,8 +8334,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1721419924}
-  _explanation: "When axis RightTrigger is pressed:\n First, \n           switches
-    to scene Commando\n"
   inputType: 2
   buttonName: 
   key: 32
@@ -8646,12 +8670,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Enables object GameOver
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Enables object GameOver
   target: {fileID: 1721419922}
   state: 0
 --- !u!114 &1759768229
@@ -8667,13 +8692,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: " At 0 seconds, \n          enables object GameOver\n"
+  description: 
   enableAction: 1
   hasTags: 1
   actionTags:
   - {fileID: 11400000, guid: 1f4fe9a669e2b524c91a10e25b6ec9ba, type: 2}
   hasConditions: 0
   actionConditions: []
-  _explanation: " At 0 seconds, \n          enables object GameOver\n"
   actions:
   - delay: 0
     action: {fileID: 1759768228}
@@ -8738,6 +8764,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325523b87d87de346baade62e2b79aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   valueHandler: {fileID: 1582900975}
   variable: {fileID: 0}
   fill: {fileID: 1859031944}
@@ -8957,6 +8986,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9acff5f09ab58e479b806a70160b1c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   mode: 1
   targetTag: {fileID: 11400000, guid: 8efa30800e1db9e479bbdb4f1d5d1aa1, type: 2}
   targetObject: {fileID: 0}
@@ -8968,8 +9000,6 @@ MonoBehaviour:
     width: 400
     height: 400
   cameraLimits: {fileID: 0}
-  _showInfo: 1
-  _description: 
 --- !u!114 &1963678304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8983,7 +9013,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 2f478aa6dec00f3449f3977690be69d6, type: 2}
 --- !u!4 &1975225501 stripped

@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ValueDisplayText))]
-public class ValueDisplayTextEditor : ValueDisplayEditor
+namespace OkapiKit
 {
-    protected override string typeOfDisplay { get => "text"; }
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ValueDisplayText))]
+    public class ValueDisplayTextEditor : ValueDisplayEditor
     {
-        base.OnEnable();
-    }
+        protected override string typeOfDisplay { get => "text"; }
 
-    protected override void StdEditor(bool useOriginalEditor = true, bool isFinal = true)
-    {
-        base.StdEditor(useOriginalEditor, true);
-    }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+        }
 
+        protected override void StdEditor(bool useOriginalEditor = true, bool isFinal = true)
+        {
+            base.StdEditor(useOriginalEditor, true);
+        }
+
+    }
 }

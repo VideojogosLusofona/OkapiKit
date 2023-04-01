@@ -3,38 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueDisplay : OkapiElement
+namespace OkapiKit
 {
-    [SerializeField]
-    protected VariableInstance valueHandler;
-    [SerializeField]
-    protected Variable variable;
-
-    public override string GetRawDescription(string ident, GameObject refObject)
+    public class ValueDisplay : OkapiElement
     {
-        return "";
-    }
+        [SerializeField]
+        protected VariableInstance valueHandler;
+        [SerializeField]
+        protected Variable variable;
 
-    public override string UpdateExplanation()
-    {
-        _explanation = "";
-
-        if (description != "") _explanation += description + "\n----------------\n";
-
-        _explanation += GetRawDescription("", gameObject);
-
-        return _explanation;
-    }
-
-    protected Variable GetVariable()
-    {
-        if (variable) return variable;
-
-        if (valueHandler)
+        public override string GetRawDescription(string ident, GameObject refObject)
         {
-            return valueHandler.GetVariable();
+            return "";
         }
 
-        return null;
+        public override string UpdateExplanation()
+        {
+            _explanation = "";
+
+            if (description != "") _explanation += description + "\n----------------\n";
+
+            _explanation += GetRawDescription("", gameObject);
+
+            return _explanation;
+        }
+
+        protected Variable GetVariable()
+        {
+            if (variable) return variable;
+
+            if (valueHandler)
+            {
+                return valueHandler.GetVariable();
+            }
+
+            return null;
+        }
     }
 }

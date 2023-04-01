@@ -1,46 +1,49 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionModifyTrailRenderer))]
-public class ActionModifyTrailRendererEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propTarget;
-    SerializedProperty propChangeType;
-    SerializedProperty propEmitter;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionModifyTrailRenderer))]
+    public class ActionModifyTrailRendererEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propTarget;
+        SerializedProperty propChangeType;
+        SerializedProperty propEmitter;
 
-        propTarget = serializedObject.FindProperty("target");
-        propChangeType = serializedObject.FindProperty("changeType");
-        propEmitter = serializedObject.FindProperty("emitter");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionModifyTrailRenderer);
-            if (action == null) return;
+            propTarget = serializedObject.FindProperty("target");
+            propChangeType = serializedObject.FindProperty("changeType");
+            propEmitter = serializedObject.FindProperty("emitter");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
-            EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            if (propChangeType.enumValueIndex == (int)ActionModifyTrailRenderer.ChangeType.Emitter)
+            if (WriteTitle())
             {
-                EditorGUILayout.PropertyField(propEmitter, new GUIContent("Emitter"));
-            }
+                StdEditor(false);
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                var action = (target as ActionModifyTrailRenderer);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
+                EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
+
+                if (propChangeType.enumValueIndex == (int)ActionModifyTrailRenderer.ChangeType.Emitter)
+                {
+                    EditorGUILayout.PropertyField(propEmitter, new GUIContent("Emitter"));
+                }
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

@@ -3,60 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class TriggerOnTimer : Trigger
+namespace OkapiKit
 {
-    [SerializeField]
-    private bool    startTriggered = false;
-    [SerializeField, MinMaxSlider(0.0f, 10.0f)]
-    private Vector2 timeInterval = new Vector2(5.0f, 5.0f);
-
-    private float timer;
-
-    public override string GetTriggerTitle() => "On Timer";
-
-    public override string GetRawDescription(string ident, GameObject refObject)
+    public class TriggerOnTimer : Trigger
     {
-        if (timeInterval.x == timeInterval.y)
+        [SerializeField]
+        private bool startTriggered = false;
+        [SerializeField, MinMaxSlider(0.0f, 10.0f)]
+        private Vector2 timeInterval = new Vector2(5.0f, 5.0f);
+
+        private float timer;
+
+        public override string GetTriggerTitle() => "On Timer";
+
+        public override string GetRawDescription(string ident, GameObject refObject)
         {
+            if (timeInterval.x == timeInterval.y)
+            {
+                if (allowRetrigger)
+                    return $"Every {timeInterval.x} seconds, trigger the actions:";
+                else
+                    return $"After {timeInterval.x} seconds, trigger the actions:";
+            }
+
             if (allowRetrigger)
-                return $"Every {timeInterval.x} seconds, trigger the actions:";
+                return $"Every [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
             else
-                return $"After {timeInterval.x} seconds, trigger the actions:";
+                return $"After [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
         }
 
-        if (allowRetrigger)
-            return $"Every [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
-        else
-            return $"After [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
-    }
-
-    void Start()
-    {
-        if (isTriggerEnabled)
+        void Start()
         {
-            if (startTriggered)
+            if (isTriggerEnabled)
             {
-                ExecuteTrigger();
+                if (startTriggered)
+                {
+                    ExecuteTrigger();
+                }
             }
+            timer = Random.Range(timeInterval.x, timeInterval.y);
         }
-        timer = Random.Range(timeInterval.x, timeInterval.y);        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isTriggerEnabled) return;
-
-        timer -= Time.deltaTime;
-
-        if (timer <= 0)
+        // Update is called once per frame
+        void Update()
         {
-            if (EvaluatePreconditions())
-            {
-                ExecuteTrigger();
-            }
+            if (!isTriggerEnabled) return;
 
-            timer += Random.Range(timeInterval.x, timeInterval.y);
+            timer -= Time.deltaTime;
+
+            if (timer <= 0)
+            {
+                if (EvaluatePreconditions())
+                {
+                    ExecuteTrigger();
+                }
+
+                timer += Random.Range(timeInterval.x, timeInterval.y);
+            }
         }
     }
 }

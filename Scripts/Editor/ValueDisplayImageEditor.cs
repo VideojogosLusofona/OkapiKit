@@ -1,13 +1,16 @@
 using UnityEditor;
 
-[CustomEditor(typeof(ValueDisplayImage))]
-public class ValueDisplayImageEditor : ValueDisplayEditor
+namespace OkapiKit
 {
-    protected override string typeOfDisplay { get => "a set of images"; }
-
-    protected override void StdEditor(bool useOriginalEditor = true, bool isFinal = true)
+    [CustomEditor(typeof(ValueDisplayImage))]
+    public class ValueDisplayImageEditor : ValueDisplayEditor
     {
-        base.StdEditor(useOriginalEditor, isFinal);
-    }
+        protected override string typeOfDisplay { get => "a set of images"; }
 
+        protected override void StdEditor(bool useOriginalEditor = true, bool isFinal = true)
+        {
+            base.StdEditor(useOriginalEditor, isFinal);
+        }
+
+    }
 }

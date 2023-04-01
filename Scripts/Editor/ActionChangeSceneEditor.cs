@@ -1,36 +1,39 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionChangeScene))]
-public class ActionChangeSceneEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propSceneName;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionChangeScene))]
+    public class ActionChangeSceneEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propSceneName;
 
-        propSceneName = serializedObject.FindProperty("sceneName");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionChangeScene);
-            if (action == null) return;
+            propSceneName = serializedObject.FindProperty("sceneName");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propSceneName, new GUIContent("Scene"));
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            if (EditorGUI.EndChangeCheck())
+            if (WriteTitle())
             {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                StdEditor(false);
+
+                var action = (target as ActionChangeScene);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propSceneName, new GUIContent("Scene"));
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

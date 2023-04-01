@@ -3,57 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class ActionModifySystem : Action
+namespace OkapiKit
 {
-    public enum ChangeType { MouseCursorVisibility = 0 };
-    public enum StateChange { Enable = 0, Disable = 1, Toggle = 2};
-
-    [SerializeField] 
-    private ChangeType          changeType;
-    [SerializeField]
-    private StateChange         state;
-
-    public override void Execute()
+    public class ActionModifySystem : Action
     {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
+        public enum ChangeType { MouseCursorVisibility = 0 };
+        public enum StateChange { Enable = 0, Disable = 1, Toggle = 2 };
 
-        switch (changeType)
+        [SerializeField]
+        private ChangeType changeType;
+        [SerializeField]
+        private StateChange state;
+
+        public override void Execute()
         {
-            case ChangeType.MouseCursorVisibility:
-                if (state == StateChange.Enable) Cursor.visible = true;
-                else if (state == StateChange.Disable) Cursor.visible = false;
-                else Cursor.visible = !Cursor.visible;
-                break;
-            default:
-                break;
-        }
-    }
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
 
-    public override string GetActionTitle() => "Modify System";
-
-    public override string GetRawDescription(string ident, GameObject gameObject)
-    {
-        var desc = GetPreconditionsString(gameObject);
-
-        switch (changeType)
-        {
-            case ChangeType.MouseCursorVisibility:
-                switch (state)
-                {
-                    case StateChange.Enable:
-                        desc += $"enables mouse cursor";
-                        break;
-                    case StateChange.Disable:
-                        desc += $"disables mouse cursor";
-                        break;
-                    case StateChange.Toggle:
-                        desc += $"toggles mouse cursor";
-                        break;
-                }
-                break;
+            switch (changeType)
+            {
+                case ChangeType.MouseCursorVisibility:
+                    if (state == StateChange.Enable) Cursor.visible = true;
+                    else if (state == StateChange.Disable) Cursor.visible = false;
+                    else Cursor.visible = !Cursor.visible;
+                    break;
+                default:
+                    break;
+            }
         }
 
-        return desc;
+        public override string GetActionTitle() => "Modify System";
+
+        public override string GetRawDescription(string ident, GameObject gameObject)
+        {
+            var desc = GetPreconditionsString(gameObject);
+
+            switch (changeType)
+            {
+                case ChangeType.MouseCursorVisibility:
+                    switch (state)
+                    {
+                        case StateChange.Enable:
+                            desc += $"enables mouse cursor";
+                            break;
+                        case StateChange.Disable:
+                            desc += $"disables mouse cursor";
+                            break;
+                        case StateChange.Toggle:
+                            desc += $"toggles mouse cursor";
+                            break;
+                    }
+                    break;
+            }
+
+            return desc;
+        }
     }
 }
