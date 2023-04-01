@@ -1,59 +1,62 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionShake))]
-public class ActionShakeEditor : ActionEditor
+namespace OkapiKit
 {
-    private SerializedProperty propTargetTag;
-    private SerializedProperty propTargetObject;
-    private SerializedProperty propStrength;
-    private SerializedProperty propDuration;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionShake))]
+    public class ActionShakeEditor : ActionEditor
     {
-        base.OnEnable();
+        private SerializedProperty propTargetTag;
+        private SerializedProperty propTargetObject;
+        private SerializedProperty propStrength;
+        private SerializedProperty propDuration;
 
-        propTargetTag = serializedObject.FindProperty("targetTag");
-        propTargetObject = serializedObject.FindProperty("targetObject");
-        propStrength = serializedObject.FindProperty("strength");
-        propDuration = serializedObject.FindProperty("duration");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionShake);
-            if (action == null) return;
+            propTargetTag = serializedObject.FindProperty("targetTag");
+            propTargetObject = serializedObject.FindProperty("targetObject");
+            propStrength = serializedObject.FindProperty("strength");
+            propDuration = serializedObject.FindProperty("duration");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            if (propTargetTag.objectReferenceValue == null)
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+
+            if (WriteTitle())
             {
+                StdEditor(false);
+
+                var action = (target as ActionShake);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
                 if (propTargetTag.objectReferenceValue == null)
                 {
-                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
-                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                    if (propTargetTag.objectReferenceValue == null)
+                    {
+                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                    }
+                    else
+                    {
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                    }
                 }
                 else
                 {
-                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
                 }
-            }
-            else
-            {
-                EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
-            }
-            EditorGUILayout.PropertyField(propStrength, new GUIContent("Strength"));
-            EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration"));
+                EditorGUILayout.PropertyField(propStrength, new GUIContent("Strength"));
+                EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration"));
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

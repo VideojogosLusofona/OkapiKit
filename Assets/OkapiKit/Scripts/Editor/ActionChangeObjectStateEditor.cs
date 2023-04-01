@@ -1,39 +1,43 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionChangeObjectState))]
-public class ActionChangeObjectStateEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propTarget;
-    SerializedProperty propState;
 
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionChangeObjectState))]
+    public class ActionChangeObjectStateEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propTarget;
+        SerializedProperty propState;
 
-        propTarget = serializedObject.FindProperty("target");
-        propState = serializedObject.FindProperty("state");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionChangeObjectState);
-            if (action == null) return;
+            propTarget = serializedObject.FindProperty("target");
+            propState = serializedObject.FindProperty("state");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
-            EditorGUILayout.PropertyField(propState, new GUIContent("State"));
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            if (EditorGUI.EndChangeCheck())
+            if (WriteTitle())
             {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                StdEditor(false);
+
+                var action = (target as ActionChangeObjectState);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
+                EditorGUILayout.PropertyField(propState, new GUIContent("State"));
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

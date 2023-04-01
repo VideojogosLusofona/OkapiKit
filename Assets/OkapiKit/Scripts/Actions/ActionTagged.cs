@@ -3,220 +3,223 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class ActionTagged : Action
+namespace OkapiKit
 {
-    public enum SearchType { Global = 0, Tagged = 1, Children = 2, WithinCollider = 3 };
-    public enum TriggerType { All = 0, Sequence = 1, Random = 2 };
-
-    [SerializeField] 
-    private SearchType      searchType = SearchType.Global;
-    [SerializeField] 
-    private Hypertag[]      searchTags;
-    [SerializeField]
-    private Collider2D[]    colliders;
-    [SerializeField]
-    private TriggerType     triggerType = TriggerType.All;
-    [SerializeField] 
-    private Hypertag[]      triggerTags;
-
-    private int sequenceIndex = 0;
-
-    public override string GetActionTitle() => "Execute Tagged Action";
-
-    public override string GetRawDescription(string ident, GameObject gameObject)
+    public class ActionTagged : Action
     {
-        var desc = GetPreconditionsString(gameObject);
+        public enum SearchType { Global = 0, Tagged = 1, Children = 2, WithinCollider = 3 };
+        public enum TriggerType { All = 0, Sequence = 1, Random = 2 };
 
-        if (searchType == SearchType.Global)
-        {
-            desc = "find actions tagged with any of ["; ;
-        }
-        else if (searchType == SearchType.Children)
-        {
-            desc = "find actions underneath this object tagged with any of ["; ;
-        }
-        else if (searchType == SearchType.Tagged)
-        {
-            desc = "find all objects tagged with any of [";
+        [SerializeField]
+        private SearchType searchType = SearchType.Global;
+        [SerializeField]
+        private Hypertag[] searchTags;
+        [SerializeField]
+        private Collider2D[] colliders;
+        [SerializeField]
+        private TriggerType triggerType = TriggerType.All;
+        [SerializeField]
+        private Hypertag[] triggerTags;
 
-            if ((searchTags != null) && (searchTags.Length > 0))
+        private int sequenceIndex = 0;
+
+        public override string GetActionTitle() => "Execute Tagged Action";
+
+        public override string GetRawDescription(string ident, GameObject gameObject)
+        {
+            var desc = GetPreconditionsString(gameObject);
+
+            if (searchType == SearchType.Global)
             {
-                for (int i = 0; i < searchTags.Length; i++)
+                desc = "find actions tagged with any of ["; ;
+            }
+            else if (searchType == SearchType.Children)
+            {
+                desc = "find actions underneath this object tagged with any of ["; ;
+            }
+            else if (searchType == SearchType.Tagged)
+            {
+                desc = "find all objects tagged with any of [";
+
+                if ((searchTags != null) && (searchTags.Length > 0))
                 {
-                    desc += searchTags[i].name;
-                    if (i < searchTags.Length - 1) desc += ",";
+                    for (int i = 0; i < searchTags.Length; i++)
+                    {
+                        desc += searchTags[i].name;
+                        if (i < searchTags.Length - 1) desc += ",";
+                    }
+                }
+                else desc += "UNDEFINED";
+
+                desc += "] and in them find actions tagged with any of ["; ;
+            }
+            else if (searchType == SearchType.WithinCollider)
+            {
+                desc = "find all objects tagged with any of [";
+
+                if ((searchTags != null) && (searchTags.Length > 0))
+                {
+                    for (int i = 0; i < searchTags.Length; i++)
+                    {
+                        desc += searchTags[i].name;
+                        if (i < searchTags.Length - 1) desc += ",";
+                    }
+                }
+                else desc += "UNDEFINED";
+
+                int nColliders = (colliders != null) ? (colliders.Length) : (0);
+                if (nColliders == 0)
+                {
+                    desc += $"] within any of the undefined colliders and in them \nfind actions tagged with any of [";
+                }
+                else if (nColliders == 1)
+                {
+                    string cname = (colliders[0]) ? (colliders[0].name) : ("UNDEFINED");
+                    desc += $"] inside the collider [{cname}] and in them \nfind actions tagged with any of [";
+                }
+                else
+                {
+                    desc += $"] inside any of the colliders defined and in them \nfind actions tagged with any of [";
                 }
             }
-            else desc += "UNDEFINED";
 
-            desc += "] and in them find actions tagged with any of ["; ;
-        }
-        else if (searchType == SearchType.WithinCollider)
-        {
-            desc = "find all objects tagged with any of [";
-
-            if ((searchTags != null) && (searchTags.Length > 0))
+            if ((triggerTags != null) && (triggerTags.Length > 0))
             {
-                for (int i = 0; i < searchTags.Length; i++)
+                for (int i = 0; i < triggerTags.Length; i++)
                 {
-                    desc += searchTags[i].name;
-                    if (i < searchTags.Length - 1) desc += ",";
+                    if (triggerTags != null)
+                    {
+                        desc += triggerTags[i].name;
+                        if (i < triggerTags.Length - 1) desc += ",";
+                    }
                 }
             }
-            else desc += "UNDEFINED";
+            else desc += "MISSING";
 
-            int nColliders = (colliders != null) ? (colliders.Length) : (0);
-            if (nColliders == 0)
+            switch (triggerType)
             {
-                desc += $"] within any of the undefined colliders and in them \nfind actions tagged with any of [";
+                case TriggerType.All:
+                    desc += "] and execute all of them.";
+                    break;
+                case TriggerType.Sequence:
+                    desc += "] and execute each of them in sequence each time this action is executed.";
+                    break;
+                case TriggerType.Random:
+                    desc += "] and choose one randomly to execute.";
+                    break;
+                default:
+                    break;
             }
-            else if (nColliders == 1)
-            {
-                string cname = (colliders[0]) ? (colliders[0].name) : ("UNDEFINED");
-                desc += $"] inside the collider [{cname}] and in them \nfind actions tagged with any of [";
-            }
-            else
-            {
-                desc += $"] inside any of the colliders defined and in them \nfind actions tagged with any of [";
-            }
+
+            return desc;
         }
 
-        if ((triggerTags != null) && (triggerTags.Length > 0))
+        List<Action> targetActions = null;
+
+        public override void Execute()
         {
-            for (int i = 0; i < triggerTags.Length; i++)
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
+
+            if ((targetActions == null) || (triggerType != TriggerType.Sequence))
             {
-                if (triggerTags != null)
-                {
-                    desc += triggerTags[i].name;
-                    if (i < triggerTags.Length - 1) desc += ",";
-                }
+                RefreshActions();
             }
-        }
-        else desc += "MISSING";
 
-        switch (triggerType)
-        {
-            case TriggerType.All:
-                desc += "] and execute all of them.";
-                break;
-            case TriggerType.Sequence:
-                desc += "] and execute each of them in sequence each time this action is executed.";
-                break;
-            case TriggerType.Random:
-                desc += "] and choose one randomly to execute.";
-                break;
-            default:
-                break;
-        }
-
-        return desc;
-    }
-
-    List<Action> targetActions = null;
-
-    public override void Execute()
-    {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
-
-        if ((targetActions == null) || (triggerType != TriggerType.Sequence))
-        {
-            RefreshActions();
-        }
-
-        if (targetActions != null)
-        {
-            if ((searchType == SearchType.Global) ||
-                (triggerType == TriggerType.All))
+            if (targetActions != null)
             {
-                foreach (var action in targetActions)
+                if ((searchType == SearchType.Global) ||
+                    (triggerType == TriggerType.All))
                 {
-                    action.Execute();
-                }
-            }
-            else if (triggerType == TriggerType.Random)
-            {
-                targetActions.RemoveAll((t) => (t == null) || (!t.isActionEnabled));
-                if (targetActions.Count > 0)
-                {
-                    int r = Random.Range(0, targetActions.Count);
-                    targetActions[r].Execute();
-                }
-            }
-            else if (triggerType == TriggerType.Sequence)
-            {
-                bool actionDone = false;
-                bool restarted = false;
-                while (!actionDone)
-                {
-                    var action = targetActions[sequenceIndex];
-                    if ((action) && (action.isActionEnabled))
+                    foreach (var action in targetActions)
                     {
                         action.Execute();
-                        actionDone = true;
                     }
-                    sequenceIndex++;
-                    if (sequenceIndex >= targetActions.Count)
+                }
+                else if (triggerType == TriggerType.Random)
+                {
+                    targetActions.RemoveAll((t) => (t == null) || (!t.isActionEnabled));
+                    if (targetActions.Count > 0)
                     {
-                        if (restarted)
+                        int r = Random.Range(0, targetActions.Count);
+                        targetActions[r].Execute();
+                    }
+                }
+                else if (triggerType == TriggerType.Sequence)
+                {
+                    bool actionDone = false;
+                    bool restarted = false;
+                    while (!actionDone)
+                    {
+                        var action = targetActions[sequenceIndex];
+                        if ((action) && (action.isActionEnabled))
                         {
-                            // Couldn't find a valid action
-                            break;
+                            action.Execute();
+                            actionDone = true;
                         }
-                        else
+                        sequenceIndex++;
+                        if (sequenceIndex >= targetActions.Count)
                         {
-                            RefreshActions();
-                            restarted = true;
+                            if (restarted)
+                            {
+                                // Couldn't find a valid action
+                                break;
+                            }
+                            else
+                            {
+                                RefreshActions();
+                                restarted = true;
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
-    void RefreshActions()
-    {
-        if (searchType == SearchType.Global)
+        void RefreshActions()
         {
-            targetActions = new List<Action>(GameObject.FindObjectsOfType<Action>());
-
-            targetActions.RemoveAll((action) => !action.HasTag(triggerTags));
-        }
-        else if (searchType == SearchType.Children)
-        {
-            targetActions = new List<Action>(GetComponentsInChildren<Action>());
-
-            targetActions.RemoveAll((action) => !action.HasTag(triggerTags));
-        }
-        else if (searchType == SearchType.WithinCollider)
-        {
-            if (colliders.Length > 0)
+            if (searchType == SearchType.Global)
             {
-                var contactFilter = new ContactFilter2D();
-                contactFilter.NoFilter();
-                contactFilter.useTriggers = true;
+                targetActions = new List<Action>(GameObject.FindObjectsOfType<Action>());
 
-                targetActions = new List<Action>();
-                
-                List<Collider2D> results = new List<Collider2D>();
+                targetActions.RemoveAll((action) => !action.HasTag(triggerTags));
+            }
+            else if (searchType == SearchType.Children)
+            {
+                targetActions = new List<Action>(GetComponentsInChildren<Action>());
 
-                foreach (var c in colliders)
+                targetActions.RemoveAll((action) => !action.HasTag(triggerTags));
+            }
+            else if (searchType == SearchType.WithinCollider)
+            {
+                if (colliders.Length > 0)
                 {
-                    if (c == null) return;
+                    var contactFilter = new ContactFilter2D();
+                    contactFilter.NoFilter();
+                    contactFilter.useTriggers = true;
 
-                    if (Physics2D.OverlapCollider(c, contactFilter, results) > 0)
+                    targetActions = new List<Action>();
+
+                    List<Collider2D> results = new List<Collider2D>();
+
+                    foreach (var c in colliders)
                     {
-                        foreach (var r in results)
-                        {
-                            if (r.gameObject.HasHypertags(searchTags))
-                            {
-                                var actions = r.GetComponents<Action>();
+                        if (c == null) return;
 
-                                foreach (var a in actions)
+                        if (Physics2D.OverlapCollider(c, contactFilter, results) > 0)
+                        {
+                            foreach (var r in results)
+                            {
+                                if (r.gameObject.HasHypertags(searchTags))
                                 {
-                                    if (a.HasTag(triggerTags))
+                                    var actions = r.GetComponents<Action>();
+
+                                    foreach (var a in actions)
                                     {
-                                        targetActions.Add(a);
+                                        if (a.HasTag(triggerTags))
+                                        {
+                                            targetActions.Add(a);
+                                        }
                                     }
                                 }
                             }
@@ -224,34 +227,34 @@ public class ActionTagged : Action
                     }
                 }
             }
-        }
-        else
-        {
-            targetActions = new List<Action>();
-
-            var objects = HypertaggedObject.FindGameObjectsWithHypertag(searchTags);
-            if (objects != null)
+            else
             {
-                foreach (var obj in objects)
+                targetActions = new List<Action>();
+
+                var objects = HypertaggedObject.FindGameObjectsWithHypertag(searchTags);
+                if (objects != null)
                 {
-                    var actions = obj.GetComponentsInChildren<Action>();
-                    foreach (var action in actions)
+                    foreach (var obj in objects)
                     {
-                        if (action.isActionEnabled)
+                        var actions = obj.GetComponentsInChildren<Action>();
+                        foreach (var action in actions)
                         {
-                            if (action.HasTag(triggerTags))
+                            if (action.isActionEnabled)
                             {
-                                if (targetActions.IndexOf(action) == -1)
+                                if (action.HasTag(triggerTags))
                                 {
-                                    targetActions.Add(action);
+                                    if (targetActions.IndexOf(action) == -1)
+                                    {
+                                        targetActions.Add(action);
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
 
-        sequenceIndex = 0;
+            sequenceIndex = 0;
+        }
     }
 }

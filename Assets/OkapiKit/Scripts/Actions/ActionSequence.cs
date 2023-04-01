@@ -2,81 +2,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionSequence : Action
+namespace OkapiKit
 {
-    [SerializeField]
-    protected ActionTrigger[] actions;
-
-    public override void Execute()
+    public class ActionSequence : Action
     {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
+        [SerializeField]
+        protected ActionTrigger[] actions;
 
-        if (actions == null) return;
-
-        foreach (var action in actions)
+        public override void Execute()
         {
-            if (action.delay > 0)
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
+
+            if (actions == null) return;
+
+            foreach (var action in actions)
             {
-                StartCoroutine(ExecuteCR(action));
-            }
-            else
-            {
-                action.action.Execute();
-            }
-        }
-    }
-
-    IEnumerator ExecuteCR(ActionTrigger action)
-    {
-        yield return new WaitForSeconds(action.delay);
-
-        action.action.Execute();
-    }
-
-    public override string GetActionTitle() => "Sequence";
-
-    public override string GetRawDescription(string ident, GameObject gameObject)
-    {
-        string desc = GetPreconditionsString(gameObject);
-
-        if (actions != null)
-        {
-            List<ActionTrigger> sortedActions = new List<ActionTrigger>(actions);
-            sortedActions.Sort((e1, e2) => (e1.delay == e2.delay) ? (0) : ((e1.delay < e2.delay) ? (-1) : (1)));
-
-            float lastTime = -float.MaxValue;
-            for (int i = 0; i < sortedActions.Count; i++)
-            {
-                var action = sortedActions[i];
-                string actionDesc = "[NULL]";
-                string timeString = $" At {action.delay} seconds, \n";
-
-                string spaces = "";
-
-                for (int k = 0; k < 10; k++) spaces += " ";
-
-                if (lastTime == action.delay)
+                if (action.delay > 0)
                 {
-                    timeString = spaces;
+                    StartCoroutine(ExecuteCR(action));
                 }
                 else
                 {
-                    timeString += spaces;
+                    action.action.Execute();
                 }
-
-                if (action.action != null)
-                {
-                    actionDesc = action.action.GetRawDescription("  ", gameObject);
-                    actionDesc = actionDesc.Replace("\n", "\n" + spaces);
-                }
-
-                desc += $"{timeString}{actionDesc}\n";
-
-                lastTime = action.delay;
             }
         }
 
-        return desc;
+        IEnumerator ExecuteCR(ActionTrigger action)
+        {
+            yield return new WaitForSeconds(action.delay);
+
+            action.action.Execute();
+        }
+
+        public override string GetActionTitle() => "Sequence";
+
+        public override string GetRawDescription(string ident, GameObject gameObject)
+        {
+            string desc = GetPreconditionsString(gameObject);
+
+            if (actions != null)
+            {
+                List<ActionTrigger> sortedActions = new List<ActionTrigger>(actions);
+                sortedActions.Sort((e1, e2) => (e1.delay == e2.delay) ? (0) : ((e1.delay < e2.delay) ? (-1) : (1)));
+
+                float lastTime = -float.MaxValue;
+                for (int i = 0; i < sortedActions.Count; i++)
+                {
+                    var action = sortedActions[i];
+                    string actionDesc = "[NULL]";
+                    string timeString = $" At {action.delay} seconds, \n";
+
+                    string spaces = "";
+
+                    for (int k = 0; k < 10; k++) spaces += " ";
+
+                    if (lastTime == action.delay)
+                    {
+                        timeString = spaces;
+                    }
+                    else
+                    {
+                        timeString += spaces;
+                    }
+
+                    if (action.action != null)
+                    {
+                        actionDesc = action.action.GetRawDescription("  ", gameObject);
+                        actionDesc = actionDesc.Replace("\n", "\n" + spaces);
+                    }
+
+                    desc += $"{timeString}{actionDesc}\n";
+
+                    lastTime = action.delay;
+                }
+            }
+
+            return desc;
+        }
     }
 }

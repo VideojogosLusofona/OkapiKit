@@ -1,41 +1,44 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ValueDisplayProgress))]
-public class ValueDisplayProgressEditor : ValueDisplayEditor
+namespace OkapiKit
 {
-    protected SerializedProperty propFill;
-    protected SerializedProperty propSetColor;
-    protected SerializedProperty propColor;
-
-    protected override string typeOfDisplay { get => "a progress bar"; }
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ValueDisplayProgress))]
+    public class ValueDisplayProgressEditor : ValueDisplayEditor
     {
-        base.OnEnable();
+        protected SerializedProperty propFill;
+        protected SerializedProperty propSetColor;
+        protected SerializedProperty propColor;
 
-        propFill = serializedObject.FindProperty("fill");
-        propSetColor = serializedObject.FindProperty("setColor");
-        propColor = serializedObject.FindProperty("color");
-    }
+        protected override string typeOfDisplay { get => "a progress bar"; }
 
-    protected override void StdEditor(bool useOriginalEditor = true, bool isFinal = true)
-    {
-        base.StdEditor(useOriginalEditor, false);
-
-        EditorGUILayout.PropertyField(propFill, new GUIContent("Fill"), true);
-        EditorGUILayout.PropertyField(propSetColor, new GUIContent("Set color?"), true);
-        if (propSetColor.boolValue)
+        protected override void OnEnable()
         {
-            EditorGUILayout.PropertyField(propColor, new GUIContent("Color Gradient"), true);
+            base.OnEnable();
+
+            propFill = serializedObject.FindProperty("fill");
+            propSetColor = serializedObject.FindProperty("setColor");
+            propColor = serializedObject.FindProperty("color");
         }
 
-        EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"), true);
+        protected override void StdEditor(bool useOriginalEditor = true, bool isFinal = true)
+        {
+            base.StdEditor(useOriginalEditor, false);
 
-        EditorGUI.EndChangeCheck();
+            EditorGUILayout.PropertyField(propFill, new GUIContent("Fill"), true);
+            EditorGUILayout.PropertyField(propSetColor, new GUIContent("Set color?"), true);
+            if (propSetColor.boolValue)
+            {
+                EditorGUILayout.PropertyField(propColor, new GUIContent("Color Gradient"), true);
+            }
 
-        serializedObject.ApplyModifiedProperties();
-        (target as OkapiElement).UpdateExplanation();
+            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"), true);
+
+            EditorGUI.EndChangeCheck();
+
+            serializedObject.ApplyModifiedProperties();
+            (target as OkapiElement).UpdateExplanation();
+        }
+
     }
-
 }

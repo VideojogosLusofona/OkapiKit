@@ -1,99 +1,102 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionSequence))]
-public class ActionSequenceEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propActions;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionSequence))]
+    public class ActionSequenceEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propActions;
 
-        propActions = serializedObject.FindProperty("actions");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionSequence);
-            if (action == null) return;
-
-            var actionsRect = GUILayoutUtility.GetLastRect();
-            actionsRect = new Rect(actionsRect.xMin, actionsRect.yMax, actionsRect.width, 20.0f);
-
-            TryDragActionToActionDelayList(actionsRect, propActions);
-
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propActions, new GUIContent("Action Sequence"));
-
-            EditorGUI.EndChangeCheck();
-
-            serializedObject.ApplyModifiedProperties();
-            (target as Action).UpdateExplanation();
+            propActions = serializedObject.FindProperty("actions");
         }
-    }
 
-    protected void TryDragActionToActionDelayList(Rect rect, SerializedProperty actionList)
-    {
-        Event evt = Event.current;
-        if ((evt.type == EventType.DragUpdated || evt.type == EventType.DragPerform) &&
-            (rect.Contains(evt.mousePosition)))
+        public override void OnInspectorGUI()
         {
-            bool checkIfAction = true;
-            foreach (Object obj in DragAndDrop.objectReferences)
+            serializedObject.Update();
+
+            if (WriteTitle())
             {
-                if (obj is not Action)
-                {
-                    checkIfAction = false;
-                    break;
-                }
+                StdEditor(false);
+
+                var action = (target as ActionSequence);
+                if (action == null) return;
+
+                var actionsRect = GUILayoutUtility.GetLastRect();
+                actionsRect = new Rect(actionsRect.xMin, actionsRect.yMax, actionsRect.width, 20.0f);
+
+                TryDragActionToActionDelayList(actionsRect, propActions);
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propActions, new GUIContent("Action Sequence"));
+
+                EditorGUI.EndChangeCheck();
+
+                serializedObject.ApplyModifiedProperties();
+                (target as Action).UpdateExplanation();
             }
+        }
 
-            if (checkIfAction)
+        protected void TryDragActionToActionDelayList(Rect rect, SerializedProperty actionList)
+        {
+            Event evt = Event.current;
+            if ((evt.type == EventType.DragUpdated || evt.type == EventType.DragPerform) &&
+                (rect.Contains(evt.mousePosition)))
             {
-                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
-
-                if (evt.type == EventType.DragPerform)
+                bool checkIfAction = true;
+                foreach (Object obj in DragAndDrop.objectReferences)
                 {
-                    DragAndDrop.AcceptDrag();
-
-                    // Get max delay
-                    float d = 0.0f;
-                    for (int i = 0; i < actionList.arraySize; i++)
+                    if (obj is not Action)
                     {
-                        var elem = actionList.GetArrayElementAtIndex(i);
-                        var propDelay = elem.FindPropertyRelative("delay");
-                        if (propDelay != null)
-                        {
-                            if (d < propDelay.floatValue) d = propDelay.floatValue;
-                        }
+                        checkIfAction = false;
+                        break;
                     }
+                }
 
-                    foreach (Object obj in DragAndDrop.objectReferences)
+                if (checkIfAction)
+                {
+                    DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+
+                    if (evt.type == EventType.DragPerform)
                     {
-                        if (obj is Action)
+                        DragAndDrop.AcceptDrag();
+
+                        // Get max delay
+                        float d = 0.0f;
+                        for (int i = 0; i < actionList.arraySize; i++)
                         {
-                            // Add element to the array
-                            actionList.arraySize++;
-                            var newElement = actionList.GetArrayElementAtIndex(actionList.arraySize - 1);
-                            if (newElement != null)
+                            var elem = actionList.GetArrayElementAtIndex(i);
+                            var propDelay = elem.FindPropertyRelative("delay");
+                            if (propDelay != null)
                             {
-                                var propDelay = newElement.FindPropertyRelative("delay");
-                                var propAction = newElement.FindPropertyRelative("action");
-                                if (propDelay != null) propDelay.floatValue = d;
-                                if (propAction != null) propAction.objectReferenceValue = obj as Action;
+                                if (d < propDelay.floatValue) d = propDelay.floatValue;
+                            }
+                        }
+
+                        foreach (Object obj in DragAndDrop.objectReferences)
+                        {
+                            if (obj is Action)
+                            {
+                                // Add element to the array
+                                actionList.arraySize++;
+                                var newElement = actionList.GetArrayElementAtIndex(actionList.arraySize - 1);
+                                if (newElement != null)
+                                {
+                                    var propDelay = newElement.FindPropertyRelative("delay");
+                                    var propAction = newElement.FindPropertyRelative("action");
+                                    if (propDelay != null) propDelay.floatValue = d;
+                                    if (propAction != null) propAction.objectReferenceValue = obj as Action;
+                                }
                             }
                         }
                     }
-                }
 
-                evt.Use();
+                    evt.Use();
+                }
             }
         }
     }

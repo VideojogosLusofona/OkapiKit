@@ -2,77 +2,80 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionFlash : Action
+namespace OkapiKit
 {
-    [SerializeField] private Renderer   target;
-    [SerializeField] private Gradient   color;
-    [SerializeField] private float      duration = 1.0f;
-
-    float       timer;
-
-    public override void Execute()
+    public class ActionFlash : Action
     {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
-        if (target == null) return;
+        [SerializeField] private Renderer target;
+        [SerializeField] private Gradient color;
+        [SerializeField] private float duration = 1.0f;
 
-        timer = duration;
+        float timer;
 
-        StartCoroutine(FlashCR());
-    }
-
-    IEnumerator FlashCR()
-    {
-        var originalMaterial = target.material;
-
-        Material newMaterial = new Material(originalMaterial);
-        newMaterial.shader = Shader.Find("Shader Graphs/FlashShader");
-        target.material = newMaterial;
-        
-        timer = duration;
-
-        while (timer > 0)
+        public override void Execute()
         {
-            float t = 1.0f - (timer / duration);
-            Color c = color.Evaluate(t);
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
+            if (target == null) return;
 
-            newMaterial.SetColor("_FlashColor", c);
+            timer = duration;
 
-            timer -= Time.deltaTime;
-
-            yield return null;
+            StartCoroutine(FlashCR());
         }
 
-        target.material = originalMaterial;
-    }
-
-    public override string GetActionTitle() => "Flash";
-    public override string GetRawDescription(string ident, GameObject gameObject)
-    {
-        string desc = GetPreconditionsString(gameObject);
-
-        if (target == null)
+        IEnumerator FlashCR()
         {
-            desc += $"flashes this renderer for {duration} seconds";
+            var originalMaterial = target.material;
+
+            Material newMaterial = new Material(originalMaterial);
+            newMaterial.shader = Shader.Find("Shader Graphs/FlashShader");
+            target.material = newMaterial;
+
+            timer = duration;
+
+            while (timer > 0)
+            {
+                float t = 1.0f - (timer / duration);
+                Color c = color.Evaluate(t);
+
+                newMaterial.SetColor("_FlashColor", c);
+
+                timer -= Time.deltaTime;
+
+                yield return null;
+            }
+
+            target.material = originalMaterial;
         }
-        else
+
+        public override string GetActionTitle() => "Flash";
+        public override string GetRawDescription(string ident, GameObject gameObject)
         {
-            desc += $"flashes renderer {target.name} for {duration} seconds";
-        }
+            string desc = GetPreconditionsString(gameObject);
 
-        return desc;
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        if (target == null)
-        {
-            target = GetComponent<Renderer>();
             if (target == null)
             {
-                target = GetComponentInChildren<Renderer>();
+                desc += $"flashes this renderer for {duration} seconds";
+            }
+            else
+            {
+                desc += $"flashes renderer {target.name} for {duration} seconds";
+            }
+
+            return desc;
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (target == null)
+            {
+                target = GetComponent<Renderer>();
+                if (target == null)
+                {
+                    target = GetComponentInChildren<Renderer>();
+                }
             }
         }
     }

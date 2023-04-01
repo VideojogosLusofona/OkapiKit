@@ -3,54 +3,57 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(TriggerOnCondition))]
-public class TriggerOnConditionEditor : TriggerEditor
+namespace OkapiKit
 {
-    SerializedProperty propConditions;
-    SerializedProperty propElseActions;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(TriggerOnCondition))]
+    public class TriggerOnConditionEditor : TriggerEditor
     {
-        base.OnEnable();
+        SerializedProperty propConditions;
+        SerializedProperty propElseActions;
 
-        propConditions = serializedObject.FindProperty("conditions");
-        propElseActions = serializedObject.FindProperty("elseActions");
-    }
-
-    protected override Texture2D GetIcon()
-    {
-        var varTexture = GUIUtils.GetTexture("Condition");
-
-        return varTexture;
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false, false);
+            base.OnEnable();
 
-            var trigger = (target as TriggerOnCondition);
-            if (trigger == null) return;
+            propConditions = serializedObject.FindProperty("conditions");
+            propElseActions = serializedObject.FindProperty("elseActions");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions"));
+        protected override Texture2D GetIcon()
+        {
+            var varTexture = GUIUtils.GetTexture("Condition");
 
-            EditorGUI.EndChangeCheck();
+            return varTexture;
+        }
 
-            ActionPanel();
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            var actionsRect = GUILayoutUtility.GetLastRect();
-            actionsRect = new Rect(actionsRect.xMin, actionsRect.yMax, actionsRect.width, 20.0f);
+            if (WriteTitle())
+            {
+                StdEditor(false, false);
 
-            TryDragActionToActionDelayList(actionsRect, propElseActions);
+                var trigger = (target as TriggerOnCondition);
+                if (trigger == null) return;
 
-            EditorGUILayout.PropertyField(propElseActions, new GUIContent("Else Actions"), true);
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions"));
 
-            serializedObject.ApplyModifiedProperties();
-            (target as Trigger).UpdateExplanation();
+                EditorGUI.EndChangeCheck();
+
+                ActionPanel();
+
+                var actionsRect = GUILayoutUtility.GetLastRect();
+                actionsRect = new Rect(actionsRect.xMin, actionsRect.yMax, actionsRect.width, 20.0f);
+
+                TryDragActionToActionDelayList(actionsRect, propElseActions);
+
+                EditorGUILayout.PropertyField(propElseActions, new GUIContent("Else Actions"), true);
+
+                serializedObject.ApplyModifiedProperties();
+                (target as Trigger).UpdateExplanation();
+            }
         }
     }
 }

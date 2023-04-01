@@ -4,22 +4,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using NaughtyAttributes;
 
-public class ActionChangeScene : Action
+namespace OkapiKit
 {
-    [SerializeField, Scene] private string sceneName;
-
-    public override string GetActionTitle() => "Change Scene";
-
-    public override string GetRawDescription(string ident, GameObject gameObject)
+    public class ActionChangeScene : Action
     {
-        return $"{GetPreconditionsString(gameObject)}switches to scene {sceneName}";
-    }
+        [SerializeField, Scene] private string sceneName;
 
-    public override void Execute()
-    {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
+        public override string GetActionTitle() => "Change Scene";
 
-        SceneManager.LoadScene(sceneName);
+        public override string GetRawDescription(string ident, GameObject gameObject)
+        {
+            return $"{GetPreconditionsString(gameObject)}switches to scene {sceneName}";
+        }
+
+        public override void Execute()
+        {
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
+
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

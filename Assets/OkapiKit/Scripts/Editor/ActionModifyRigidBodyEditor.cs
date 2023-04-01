@@ -1,54 +1,57 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionModifyRigidBody))]
-public class ActionModifyRigidBodyEditor : ActionEditor
+namespace OkapiKit
 {
-    SerializedProperty propChangeType;
-    SerializedProperty propBodyType;
-    SerializedProperty propValue;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionModifyRigidBody))]
+    public class ActionModifyRigidBodyEditor : ActionEditor
     {
-        base.OnEnable();
+        SerializedProperty propChangeType;
+        SerializedProperty propBodyType;
+        SerializedProperty propValue;
 
-        propChangeType = serializedObject.FindProperty("changeType");
-        propBodyType = serializedObject.FindProperty("bodyType");
-        propValue = serializedObject.FindProperty("value");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
 
-            var action = (target as ActionModifyRigidBody);
-            if (action == null) return;
+            propChangeType = serializedObject.FindProperty("changeType");
+            propBodyType = serializedObject.FindProperty("bodyType");
+            propValue = serializedObject.FindProperty("value");
+        }
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
-            
-            var changeType = (ActionModifyRigidBody.ChangeType)propChangeType.enumValueIndex;
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            if (changeType == ActionModifyRigidBody.ChangeType.SetBodyType)
+            if (WriteTitle())
             {
-                EditorGUILayout.PropertyField(propBodyType, new GUIContent("Body Type"));
-            }
-            else if ((changeType == ActionModifyRigidBody.ChangeType.Mass) ||
-                     (changeType == ActionModifyRigidBody.ChangeType.LinearDrag) ||
-                     (changeType == ActionModifyRigidBody.ChangeType.AngularDrag) ||
-                     (changeType == ActionModifyRigidBody.ChangeType.GravityScale))
-            {
-                EditorGUILayout.PropertyField(propValue, new GUIContent("Value"));
-            }
+                StdEditor(false);
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                var action = (target as ActionModifyRigidBody);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
+
+                var changeType = (ActionModifyRigidBody.ChangeType)propChangeType.enumValueIndex;
+
+                if (changeType == ActionModifyRigidBody.ChangeType.SetBodyType)
+                {
+                    EditorGUILayout.PropertyField(propBodyType, new GUIContent("Body Type"));
+                }
+                else if ((changeType == ActionModifyRigidBody.ChangeType.Mass) ||
+                         (changeType == ActionModifyRigidBody.ChangeType.LinearDrag) ||
+                         (changeType == ActionModifyRigidBody.ChangeType.AngularDrag) ||
+                         (changeType == ActionModifyRigidBody.ChangeType.GravityScale))
+                {
+                    EditorGUILayout.PropertyField(propValue, new GUIContent("Value"));
+                }
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

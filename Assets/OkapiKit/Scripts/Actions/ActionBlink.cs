@@ -2,113 +2,116 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionBlink : Action
+namespace OkapiKit
 {
-    [SerializeField] private Renderer   target;
-    [SerializeField] private bool       includeChildren;
-    [SerializeField] private float      blinkTimeOn = 0.2f;
-    [SerializeField] private float      blinkTimeOff = 0.2f;
-    [SerializeField] private float      duration = 2.0f;
-
-    bool            startState;
-    float           timer;
-    float           blinkPhaseTimer;
-    List<Renderer>  renderers;
-
-    public override void Execute()
+    public class ActionBlink : Action
     {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
-        if (target == null) return;
+        [SerializeField] private Renderer target;
+        [SerializeField] private bool includeChildren;
+        [SerializeField] private float blinkTimeOn = 0.2f;
+        [SerializeField] private float blinkTimeOff = 0.2f;
+        [SerializeField] private float duration = 2.0f;
 
-        startState = target.enabled;
-        EnableRenderers(!startState);
-        timer = duration;
-        blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
-    }
+        bool startState;
+        float timer;
+        float blinkPhaseTimer;
+        List<Renderer> renderers;
 
-    public override string GetActionTitle() => "Blink";
-
-    public override string GetRawDescription(string ident, GameObject gameObject)
-    {
-        string desc = GetPreconditionsString(gameObject);
-
-        if (target == null)
+        public override void Execute()
         {
-            if (includeChildren)
-                desc += $"blinks the renderers below this object for {duration} seconds";
-            else
-                desc += $"blinks this renderer for {duration} seconds";
-        }
-        else
-        {
-            if (includeChildren)
-                desc += $"blinks renderer {target.name} and all his children for {duration} seconds";
-            else
-                desc += $"blinks renderer {target.name} for {duration} seconds";
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
+            if (target == null) return;
+
+            startState = target.enabled;
+            EnableRenderers(!startState);
+            timer = duration;
+            blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
         }
 
-        return desc;
-    }
+        public override string GetActionTitle() => "Blink";
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        if (target == null)
+        public override string GetRawDescription(string ident, GameObject gameObject)
         {
-            target = GetComponent<Renderer>();
+            string desc = GetPreconditionsString(gameObject);
+
             if (target == null)
             {
-                target = GetComponentInChildren<Renderer>();
-            }
-        }
-        if (target)
-        {
-            renderers = new List<Renderer>();
-            renderers.Add(target);
-
-            if (includeChildren)
-            {
-                var allRenderers = target.GetComponentsInChildren<Renderer>();
-                foreach (var r in allRenderers)
-                {
-                    if (!renderers.Contains(r)) renderers.Add(r);
-                }
-            }
-        }
-        timer = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (target == null) return;
-
-        if (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            if (timer  <= 0)
-            {
-                EnableRenderers(startState);
+                if (includeChildren)
+                    desc += $"blinks the renderers below this object for {duration} seconds";
+                else
+                    desc += $"blinks this renderer for {duration} seconds";
             }
             else
             {
-                blinkPhaseTimer -= Time.deltaTime;
-                if (blinkPhaseTimer <= 0)
+                if (includeChildren)
+                    desc += $"blinks renderer {target.name} and all his children for {duration} seconds";
+                else
+                    desc += $"blinks renderer {target.name} for {duration} seconds";
+            }
+
+            return desc;
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (target == null)
+            {
+                target = GetComponent<Renderer>();
+                if (target == null)
                 {
-                    EnableRenderers(!target.enabled);
-                    blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
+                    target = GetComponentInChildren<Renderer>();
+                }
+            }
+            if (target)
+            {
+                renderers = new List<Renderer>();
+                renderers.Add(target);
+
+                if (includeChildren)
+                {
+                    var allRenderers = target.GetComponentsInChildren<Renderer>();
+                    foreach (var r in allRenderers)
+                    {
+                        if (!renderers.Contains(r)) renderers.Add(r);
+                    }
+                }
+            }
+            timer = 0;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (target == null) return;
+
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                {
+                    EnableRenderers(startState);
+                }
+                else
+                {
+                    blinkPhaseTimer -= Time.deltaTime;
+                    if (blinkPhaseTimer <= 0)
+                    {
+                        EnableRenderers(!target.enabled);
+                        blinkPhaseTimer = (target.enabled) ? (blinkTimeOn) : (blinkTimeOff);
+                    }
                 }
             }
         }
-    }
 
-    void EnableRenderers(bool b)
-    {
-        foreach (var r in renderers)
+        void EnableRenderers(bool b)
         {
-            r.enabled = b;
+            foreach (var r in renderers)
+            {
+                r.enabled = b;
+            }
         }
     }
-}
+};

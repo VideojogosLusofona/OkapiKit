@@ -1,31 +1,34 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ActionQuitApplication))]
-public class ActionQuitApplicationEditor : ActionEditor
+namespace OkapiKit
 {
-    protected override void OnEnable()
+    [CustomEditor(typeof(ActionQuitApplication))]
+    public class ActionQuitApplicationEditor : ActionEditor
     {
-        base.OnEnable();
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
+        }
 
-            var action = (target as ActionQuitApplication);
-            if (action == null) return;
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
-
-            if (EditorGUI.EndChangeCheck())
+            if (WriteTitle())
             {
-                serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                StdEditor(false);
+
+                var action = (target as ActionQuitApplication);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as Action).UpdateExplanation();
+                }
             }
         }
     }

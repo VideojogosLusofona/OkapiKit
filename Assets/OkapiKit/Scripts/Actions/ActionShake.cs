@@ -2,99 +2,102 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionShake : Action
+namespace OkapiKit
 {
-    [SerializeField] private Hypertag   targetTag;
-    [SerializeField] private Transform  targetObject;
-    [SerializeField] private float      strength;
-    [SerializeField] private float      duration;
-
-    Vector3         prevDelta;
-    float           timer;
-    Transform       target;
-
-    public override void Execute()
+    public class ActionShake : Action
     {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
+        [SerializeField] private Hypertag targetTag;
+        [SerializeField] private Transform targetObject;
+        [SerializeField] private float strength;
+        [SerializeField] private float duration;
 
-        timer = duration;
+        Vector3 prevDelta;
+        float timer;
+        Transform target;
 
-        target = null;
-        if (targetObject)
+        public override void Execute()
         {
-            target = targetObject;
-        }
-        else if (targetTag)
-        {
-            var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(targetTag);
-            var minDist = float.MaxValue;
-            foreach (var obj in potentialObjects)
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
+
+            timer = duration;
+
+            target = null;
+            if (targetObject)
             {
-                var d = Vector3.Distance(obj.position, transform.position);
-                if (d < minDist)
+                target = targetObject;
+            }
+            else if (targetTag)
+            {
+                var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(targetTag);
+                var minDist = float.MaxValue;
+                foreach (var obj in potentialObjects)
                 {
-                    minDist = d;
-                    target = obj;
+                    var d = Vector3.Distance(obj.position, transform.position);
+                    if (d < minDist)
+                    {
+                        minDist = d;
+                        target = obj;
+                    }
                 }
             }
         }
-    }
 
 
-    public override string GetActionTitle() => "Shake";
+        public override string GetActionTitle() => "Shake";
 
-    public override string GetRawDescription(string ident, GameObject gameObject)
-    {
-        string desc = GetPreconditionsString(gameObject);
-
-        if (targetObject == null)
+        public override string GetRawDescription(string ident, GameObject gameObject)
         {
-            if (targetTag == null)
+            string desc = GetPreconditionsString(gameObject);
+
+            if (targetObject == null)
             {
-                desc += $"shakes this object with intensity {strength} for {duration} seconds";
+                if (targetTag == null)
+                {
+                    desc += $"shakes this object with intensity {strength} for {duration} seconds";
+                }
+                else
+                {
+                    desc += $"shakes the object with tag [{targetTag.name}] with intensity {strength} for {duration} seconds";
+                }
             }
             else
             {
-                desc += $"shakes the object with tag [{targetTag.name}] with intensity {strength} for {duration} seconds";
-            }            
+                desc += $"shakes the object [{targetObject.name}] with intensity {strength} for {duration} seconds";
+            }
+
+            return desc;
         }
-        else
+
+        protected override void Awake()
         {
-            desc += $"shakes the object [{targetObject.name}] with intensity {strength} for {duration} seconds";
+            base.Awake();
+
+            prevDelta = Vector3.zero;
+            timer = 0;
+            target = null;
         }
 
-        return desc;
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        prevDelta = Vector3.zero;
-        timer = 0;
-        target = null;
-    }
-
-    void LateUpdate()
-    {
-        if (target == null)
+        void LateUpdate()
         {
-            target = transform;
+            if (target == null)
+            {
+                target = transform;
+            }
+
+            // Revert previous movement
+            target.position -= prevDelta;
+
+            if (timer > 0.0f)
+            {
+                timer -= Time.deltaTime;
+
+                prevDelta = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0.0f);
+                prevDelta = prevDelta.normalized * strength;
+
+                target.position += prevDelta;
+            }
+            else prevDelta = Vector2.zero;
         }
-
-        // Revert previous movement
-        target.position -= prevDelta;
-
-        if (timer > 0.0f)
-        {
-            timer -= Time.deltaTime;
-
-            prevDelta = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0.0f);
-            prevDelta = prevDelta.normalized * strength;
-
-            target.position += prevDelta;
-        }
-        else prevDelta = Vector2.zero;
     }
 }

@@ -3,29 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class OkapiElement : MonoBehaviour
+namespace OkapiKit
 {
-    [SerializeField, HideInInspector]
-    protected bool  _showInfo = true;
-    [SerializeField, ResizableTextArea, ReadOnly]
-    protected string _explanation;
-    [SerializeField, ResizableTextArea]
-    protected string description;
-
-    public string explanation => _explanation;
-
-    public bool showInfo
+    public abstract class OkapiElement : MonoBehaviour
     {
-        get { return _showInfo; }
-        set { _showInfo = value; }
-    }
+        [SerializeField, HideInInspector]
+        protected bool _showInfo = true;
+        [SerializeField, ResizableTextArea, ReadOnly]
+        protected string _explanation;
+        [SerializeField, ResizableTextArea]
+        protected string description;
 
-    public abstract string GetRawDescription(string ident, GameObject refObject);
+        public string explanation => _explanation;
 
-    public abstract string UpdateExplanation();
+        public bool showInfo
+        {
+            get { return _showInfo; }
+            set { _showInfo = value; }
+        }
 
-    protected virtual void Awake()
-    {
-        UpdateExplanation();
+        public abstract string GetRawDescription(string ident, GameObject refObject);
+
+        public abstract string UpdateExplanation();
+
+        protected virtual void Awake()
+        {
+            UpdateExplanation();
+        }
     }
 }

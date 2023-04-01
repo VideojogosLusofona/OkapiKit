@@ -3,30 +3,33 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(TriggerOnEveryFrame))]
-public class TriggerOnEveryFrameEditor : TriggerEditor
+namespace OkapiKit
 {
-    protected override void OnEnable()
+    [CustomEditor(typeof(TriggerOnEveryFrame))]
+    public class TriggerOnEveryFrameEditor : TriggerEditor
     {
-        base.OnEnable();
-    }
-
-    protected override Texture2D GetIcon()
-    {
-        var varTexture = GUIUtils.GetTexture("Update");
-
-        return varTexture;
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        if (WriteTitle())
+        protected override void OnEnable()
         {
-            StdEditor(false);
+            base.OnEnable();
+        }
 
-            ActionPanel();
+        protected override Texture2D GetIcon()
+        {
+            var varTexture = GUIUtils.GetTexture("Update");
+
+            return varTexture;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+
+            if (WriteTitle())
+            {
+                StdEditor(false);
+
+                ActionPanel();
+            }
         }
     }
 }

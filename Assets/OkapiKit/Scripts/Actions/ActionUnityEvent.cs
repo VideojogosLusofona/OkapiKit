@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ActionUnityEvent : Action
+namespace OkapiKit
 {
-    [SerializeField] private UnityEvent unityEvent;
-
-    public override void Execute()
+    public class ActionUnityEvent : Action
     {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
+        [SerializeField] private UnityEvent unityEvent;
 
-        unityEvent?.Invoke();
-    }
+        public override void Execute()
+        {
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
 
-    public override string GetActionTitle() => "Unity Event";
+            unityEvent?.Invoke();
+        }
 
-    public override string GetRawDescription(string ident, GameObject gameObject)
-    {
-        return $"{GetPreconditionsString(gameObject)}execute Unity event";
+        public override string GetActionTitle() => "Unity Event";
+
+        public override string GetRawDescription(string ident, GameObject gameObject)
+        {
+            return $"{GetPreconditionsString(gameObject)}execute Unity event";
+        }
     }
 }

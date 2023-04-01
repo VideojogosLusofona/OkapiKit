@@ -3,54 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class ActionPlaySound : Action
+namespace OkapiKit
 {
-    [SerializeField] 
-    private AudioClip   clip;
-    [SerializeField, MinMaxSlider(0.0f, 1.0f)]
-    private Vector2     volume = Vector2.one;
-    [SerializeField, MinMaxSlider(0.0f, 2.0f)]
-    private Vector2     pitch = Vector2.one;
-
-    public override string GetActionTitle() => "Play Sound";
-
-    public override string GetRawDescription(string ident, GameObject gameObject)
+    public class ActionPlaySound : Action
     {
-        string desc = GetPreconditionsString(gameObject);
-        if (clip == null)
-        {
-            desc += "plays an undefined sound";
-        }
-        else
-        {
-            desc += $"plays sound {clip.name}";
-        }
+        [SerializeField]
+        private AudioClip clip;
+        [SerializeField, MinMaxSlider(0.0f, 1.0f)]
+        private Vector2 volume = Vector2.one;
+        [SerializeField, MinMaxSlider(0.0f, 2.0f)]
+        private Vector2 pitch = Vector2.one;
 
-        if (volume.x == volume.y)
-        {
-            desc += $" at volume {volume.x}";
-        }
-        else
-        {
-            desc += $" with a volume in the range [{volume.x},{volume.y}]";
-        }
+        public override string GetActionTitle() => "Play Sound";
 
-        if (pitch.x == pitch.y)
+        public override string GetRawDescription(string ident, GameObject gameObject)
         {
-            desc += $" and at pitch {pitch.x}";
+            string desc = GetPreconditionsString(gameObject);
+            if (clip == null)
+            {
+                desc += "plays an undefined sound";
+            }
+            else
+            {
+                desc += $"plays sound {clip.name}";
+            }
+
+            if (volume.x == volume.y)
+            {
+                desc += $" at volume {volume.x}";
+            }
+            else
+            {
+                desc += $" with a volume in the range [{volume.x},{volume.y}]";
+            }
+
+            if (pitch.x == pitch.y)
+            {
+                desc += $" and at pitch {pitch.x}";
+            }
+            else
+            {
+                desc += $" and a pitch in the range [{pitch.x},{pitch.y}]";
+            }
+
+            return desc;
         }
-        else
+        public override void Execute()
         {
-            desc += $" and a pitch in the range [{pitch.x},{pitch.y}]";
+            if (!enableAction) return;
+            if (!EvaluatePreconditions()) return;
+
+            SoundManager.PlaySound(clip, Random.Range(volume.x, volume.y), Random.Range(pitch.x, pitch.y));
         }
-
-        return desc;
-    }
-    public override void Execute()
-    {
-        if (!enableAction) return;
-        if (!EvaluatePreconditions()) return;
-
-        SoundManager.PlaySound(clip, Random.Range(volume.x, volume.y), Random.Range(pitch.x, pitch.y));
     }
 }
