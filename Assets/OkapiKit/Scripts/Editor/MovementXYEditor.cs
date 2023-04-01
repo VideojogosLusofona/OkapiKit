@@ -7,6 +7,8 @@ using UnityEngine;
 public class MovementXYEditor : MovementEditor
 {
     SerializedProperty propSpeed;
+    SerializedProperty propLimitSpeed;
+    SerializedProperty propSpeedLimit;
     SerializedProperty propUseRotation;
     SerializedProperty propTurnToDirection;
     SerializedProperty propMaxTurnSpeed;
@@ -31,6 +33,8 @@ public class MovementXYEditor : MovementEditor
         base.OnEnable();
 
         propSpeed = serializedObject.FindProperty("speed");
+        propLimitSpeed = serializedObject.FindProperty("limitSpeed");
+        propSpeedLimit = serializedObject.FindProperty("speedLimit");
         propUseRotation = serializedObject.FindProperty("useRotation");
         propTurnToDirection = serializedObject.FindProperty("turnToDirection");
         propMaxTurnSpeed = serializedObject.FindProperty("maxTurnSpeed");
@@ -60,6 +64,11 @@ public class MovementXYEditor : MovementEditor
             EditorGUI.BeginChangeCheck();
 
             EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed"));
+            EditorGUILayout.PropertyField(propLimitSpeed, new GUIContent("Limit Speed?"));
+            if (propLimitSpeed.boolValue)
+            {
+                EditorGUILayout.PropertyField(propSpeedLimit, new GUIContent("Maximum Speed"));
+            }
 
             EditorGUILayout.PropertyField(propUseRotation, new GUIContent("Use Rotation?"));
             if (!propUseRotation.boolValue)

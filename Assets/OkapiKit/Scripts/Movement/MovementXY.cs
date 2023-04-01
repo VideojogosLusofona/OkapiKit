@@ -10,6 +10,10 @@ public class MovementXY : Movement
 
     [SerializeField] 
     private Vector2     speed = new Vector2(100, 100);
+    [SerializeField] 
+    private bool        limitSpeed = false;
+    [SerializeField]
+    private float       speedLimit = 100.0f;
     [SerializeField]
     private bool        useRotation = false;
     [SerializeField]
@@ -79,6 +83,10 @@ public class MovementXY : Movement
             {
                 desc += $"No movement!\n";
             }
+        }
+        if (limitSpeed)
+        {
+            desc += $"Speed will be limited to {speedLimit} units per second.\n";
         }
         if (inertiaEnable)
         {
@@ -171,27 +179,34 @@ public class MovementXY : Movement
             if (inertiaStopTime > 0)
             {
                 float drag = speed.magnitude / inertiaStopTime;
-                if (currentVelocity.sqrMagnitude > 1e-3)
+                if (currentVelocity.sqrMagnitude > 1e-6)
                 {
-                    currentVelocity = currentVelocity - currentVelocity.normalized * drag * Time.fixedDeltaTime;
+                    float newSpeed = Mathf.Max(0, currentVelocity.magnitude - drag * Time.fixedDeltaTime);
+
+                    currentVelocity = currentVelocity.normalized * newSpeed;
+                }
+                else
+                {
+                    currentVelocity = Vector3.zero;
                 }
             }
             else
             {
                 currentVelocity = Vector3.zero;
             }
-            currentVelocity += moveVector;
+            currentVelocity += transformedDelta;
 
             currentVelocity.x = Mathf.Clamp(currentVelocity.x, -speed.x, speed.x);
             currentVelocity.y = Mathf.Clamp(currentVelocity.y, -speed.y, speed.y);
 
-            MoveDelta(currentVelocity * Time.fixedDeltaTime);
+            if (limitSpeed) currentVelocity = currentVelocity.normalized * Mathf.Clamp(currentVelocity.magnitude, 0.0f, speedLimit);
         }
         else
         {
-            currentVelocity = moveVector;
-            MoveDelta(transformedDelta * Time.fixedDeltaTime);
+            currentVelocity = transformedDelta;
+            if (limitSpeed) currentVelocity = currentVelocity.normalized * Mathf.Clamp(currentVelocity.magnitude, 0.0f, speedLimit);
         }
+        MoveDelta(currentVelocity * Time.fixedDeltaTime);
     }
 
     void Update()

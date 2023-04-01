@@ -101,7 +101,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 #
 # Licenses
 
-* All source code by Diogo Andrade is licensed under the MIT license.
+* All source code by Diogo Andrade is licensed under the [MIT] license.
 * Font "Karmatic Arcade" by [Vic Fieger]
 * Breakout paddle by [Zealex], licensed under [CC-BY 3.0]
 * Breakout bricks by [Pavel Kutejnikov], licensed under [CC0]
@@ -144,5 +144,6 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [CC-BY 4.0]:https://creativecommons.org/licenses/by/4.0/
+[MIT]:LICENSE
 [FlatIcon]:Flaticon.com
 [Midjourney]:https://midjourney.com/
