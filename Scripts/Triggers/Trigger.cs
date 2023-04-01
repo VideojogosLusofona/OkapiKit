@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Events;
-using NaughtyAttributes;
-using Unity.VisualScripting;
 
 public abstract class Trigger : OkapiElement
 {
