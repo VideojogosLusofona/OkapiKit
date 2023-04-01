@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: 'Dual axis movement, at (200.00, 200.00) units per second.
+  _explanation: 'Dual axis movement, at (400.00, 400.00) units per second.
 
     Horizontal
     movement will be controlled by the [Horizontal] axis.
@@ -502,7 +502,7 @@ MonoBehaviour:
 
 '
   description: 
-  speed: {x: 200, y: 200}
+  speed: {x: 400, y: 400}
   useRotation: 0
   turnToDirection: 0
   axisToAlign: 0
@@ -519,6 +519,8 @@ MonoBehaviour:
   horizontalKeyNegative: 276
   verticalKeyPositive: 273
   verticalKeyNegative: 274
+  inertiaEnable: 0
+  inertiaStopTime: 1
 --- !u!212 &2027386097
 SpriteRenderer:
   m_ObjectHideFlags: 0

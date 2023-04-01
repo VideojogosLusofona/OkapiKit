@@ -42,8 +42,13 @@ public class MovementXY : Movement
     private KeyCode     verticalKeyPositive = KeyCode.UpArrow;
     [SerializeField]
     private KeyCode     verticalKeyNegative = KeyCode.DownArrow;
+    [SerializeField]
+    private bool        inertiaEnable = false;
+    [SerializeField]
+    private float       inertiaStopTime = 0.0f;
 
     Vector3 moveVector;
+    Vector3 currentVelocity = Vector3.zero;
 
     public override Vector2 GetSpeed() => speed;
     public override void    SetSpeed(Vector2 speed) { this.speed = speed; }
@@ -73,6 +78,17 @@ public class MovementXY : Movement
             else
             {
                 desc += $"No movement!\n";
+            }
+        }
+        if (inertiaEnable)
+        {
+            if (inertiaStopTime > 0)
+            {
+                desc += $"Object will have inertia and will stop in {inertiaStopTime} seconds when at maximum speed.\n";
+            }
+            else
+            {
+                desc += $"Object will have inertia, but will stop immediately.\n";
             }
         }
         if (useRotation)
@@ -150,7 +166,32 @@ public class MovementXY : Movement
             }
         }
 
-        MoveDelta(transformedDelta * Time.fixedDeltaTime);
+        if (inertiaEnable)
+        {
+            if (inertiaStopTime > 0)
+            {
+                float drag = speed.magnitude / inertiaStopTime;
+                if (currentVelocity.sqrMagnitude > 1e-3)
+                {
+                    currentVelocity = currentVelocity - currentVelocity.normalized * drag * Time.fixedDeltaTime;
+                }
+            }
+            else
+            {
+                currentVelocity = Vector3.zero;
+            }
+            currentVelocity += moveVector;
+
+            currentVelocity.x = Mathf.Clamp(currentVelocity.x, -speed.x, speed.x);
+            currentVelocity.y = Mathf.Clamp(currentVelocity.y, -speed.y, speed.y);
+
+            MoveDelta(currentVelocity * Time.fixedDeltaTime);
+        }
+        else
+        {
+            currentVelocity = moveVector;
+            MoveDelta(transformedDelta * Time.fixedDeltaTime);
+        }
     }
 
     void Update()
