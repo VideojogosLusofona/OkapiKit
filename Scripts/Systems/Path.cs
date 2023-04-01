@@ -26,6 +26,10 @@ namespace OkapiKit
         public List<Vector3> GetEditPoints() => (points == null) ? (null) : (new List<Vector3>(points));
         public void SetEditPoints(List<Vector3> inPoints) => points = new List<Vector3>(inPoints);
         public PathType GetPathType() => type;
+        public void SetPathType(PathType t) => type = t;
+        public float GetTension() => tension;
+        public void SetTension(float t) => tension = t;
+        public void SetWorldSpace(bool ws) => worldSpace = ws;
 
         public bool isEditMode => editMode;
         public bool isWorldSpace => worldSpace;
