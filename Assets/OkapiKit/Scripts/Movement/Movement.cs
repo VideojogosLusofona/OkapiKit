@@ -53,8 +53,6 @@ namespace OkapiKit
             if ((rb != null) && (!rb.freezeRotation))
             {
                 Quaternion target = Quaternion.LookRotation(Vector3.forward, upDir);
-                // Hack to correct orientation because of parent rotation (need to review this)
-                if (transform.forward.z < 0.0f) target = target * Quaternion.Euler(0, 0, 180);
 
                 Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, target, maxAngle);
 
@@ -63,8 +61,6 @@ namespace OkapiKit
             else
             {
                 Quaternion target = Quaternion.LookRotation(Vector3.forward, upDir);
-                // Hack to correct orientation because of parent rotation (need to review this)
-                if (transform.forward.z < 0.0f) target = target * Quaternion.Euler(0, 0, 180);
 
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, target, maxAngle);
             }
