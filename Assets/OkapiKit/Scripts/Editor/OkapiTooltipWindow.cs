@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     public class OkapiTooltipWindow : EditorWindow
     {

@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(ValueDisplayImage))]
     public class ValueDisplayImageEditor : ValueDisplayEditor

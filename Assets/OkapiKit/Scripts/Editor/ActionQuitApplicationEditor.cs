@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(ActionQuitApplication))]
     public class ActionQuitApplicationEditor : ActionEditor

@@ -2,9 +2,9 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
-    public abstract class OkapiBaseEditor : Editor
+    public abstract class OkapiBaseEditor : UnityEditor.Editor
     {
         protected SerializedProperty propShowInfo;
         protected SerializedProperty propDescription;
