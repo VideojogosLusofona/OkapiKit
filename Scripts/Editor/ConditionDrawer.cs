@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     [CustomPropertyDrawer(typeof(Condition))]
     public class ConditionDrawer : PropertyDrawer

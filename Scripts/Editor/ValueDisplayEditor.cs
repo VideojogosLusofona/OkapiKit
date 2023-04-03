@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(ValueDisplay))]
     public class ValueDisplayEditor : OkapiBaseEditor

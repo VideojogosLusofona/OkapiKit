@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(CameraFollow2d))]
     public class CameraFollow2dEditor : OkapiBaseEditor

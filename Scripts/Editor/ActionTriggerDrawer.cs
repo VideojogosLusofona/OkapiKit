@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     [CustomPropertyDrawer(typeof(ActionTrigger))]
     public class ActionTriggerDrawer : PropertyDrawer

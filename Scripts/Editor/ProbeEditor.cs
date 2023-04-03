@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(Probe))]
     public class ProbeEditor : OkapiBaseEditor

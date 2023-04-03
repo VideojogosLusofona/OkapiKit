@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(ActionUnityEvent))]
     public class ActionUnityEventEditor : ActionEditor

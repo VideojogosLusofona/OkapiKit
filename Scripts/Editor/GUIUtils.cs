@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 
-namespace OkapiKit
+namespace OkapiKit.Editor
 {
     static class GUIUtils
     {
