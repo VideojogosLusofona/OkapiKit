@@ -177,6 +177,40 @@ namespace OkapiKit
             return false;
         }
 
+        public static bool HasHypertags(this Component go, Hypertag[] tags, bool includeChildren = true)
+        {
+            if (tags == null) return false;
+            if (tags.Length == 0) return false;
+
+            foreach (var tag in tags)
+            {
+                if (go.HasHypertag(tag, includeChildren)) return true;
+            }
+
+            return false;
+        }
+
+        public static bool HasHypertag(this Component go, Hypertag tag, bool includeChildren = true)
+        {
+            HypertaggedObject[] hos;
+            if (includeChildren)
+                hos = go.GetComponentsInChildren<HypertaggedObject>();
+            else
+                hos = go.GetComponents<HypertaggedObject>();
+
+            if (hos == null)
+            {
+                return false;
+            }
+
+            foreach (var ho in hos)
+            {
+                if (ho.Has(tag)) return true;
+            }
+
+            return false;
+        }
+
         public static Hypertag[] GetTags(this GameObject go)
         {
             var hos = go.GetComponent<HypertaggedObject>();
@@ -199,6 +233,16 @@ namespace OkapiKit
             }
 
             return hos.GetTagString();
+        }
+
+        public static void AddHypertag(this GameObject go, Hypertag tag)
+        {
+            var ho = go.GetComponent<HypertaggedObject>();
+            if (ho == null) ho = go.AddComponent<HypertaggedObject>();
+            if (ho)
+            {
+                ho.AddTag(tag);
+            }
         }
     }
 }
