@@ -6,7 +6,7 @@ using System.IO;
 
 namespace OkapiKit.Editor
 {
-    static class GUIUtils
+    static public class GUIUtils
     {
         public delegate void GenTexture(string name);
 
