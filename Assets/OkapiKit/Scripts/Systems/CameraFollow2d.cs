@@ -12,19 +12,19 @@ namespace OkapiKit
         public enum Mode { SimpleFeedbackLoop = 0, Box = 1 };
         public enum TagMode { Closest = 0, Furthest = 1, Average = 2 };
 
-        [SerializeField] Mode           mode = Mode.SimpleFeedbackLoop;
-        [SerializeField] Hypertag       targetTag;
-        [SerializeField] TagMode        tagMode = TagMode.Closest;
-        [SerializeField] bool           allowZoom;
-        [SerializeField] float          zoomMargin = 1.1f;  
-        [SerializeField] Vector2        minMaxSize = new Vector2(180.0f, 360.0f);
-        [SerializeField] Transform      targetObject;
-        [SerializeField] float          followSpeed = 0.9f;
-        [SerializeField] Rect           rect = new Rect(-100.0f, -100.0f, 200.0f, 200.0f);
-        [SerializeField] BoxCollider2D  cameraLimits;
+        [SerializeField] Mode mode = Mode.SimpleFeedbackLoop;
+        [SerializeField] Hypertag targetTag;
+        [SerializeField] TagMode tagMode = TagMode.Closest;
+        [SerializeField] bool allowZoom;
+        [SerializeField] float zoomMargin = 1.1f;
+        [SerializeField] Vector2 minMaxSize = new Vector2(180.0f, 360.0f);
+        [SerializeField] Transform targetObject;
+        [SerializeField] float followSpeed = 0.9f;
+        [SerializeField] Rect rect = new Rect(-100.0f, -100.0f, 200.0f, 200.0f);
+        [SerializeField] BoxCollider2D cameraLimits;
 
-        private new Camera  camera;
-        private Bounds      allObjectsBound;
+        private new Camera camera;
+        private Bounds allObjectsBound;
 
         public override string UpdateExplanation()
         {
@@ -212,15 +212,18 @@ namespace OkapiKit
                 }
                 else if (tagMode == TagMode.Average)
                 {
-                    allObjectsBound = (potentialObjects.Length > 0) ? (new Bounds(transform.position, Vector3.zero)) : (new Bounds(potentialObjects[0].position, Vector3.zero));
-                    selectedPosition = Vector3.zero;
-                    foreach (var obj in potentialObjects)
+                    if (potentialObjects.Length > 0)
                     {
-                        var d = Vector3.Distance(obj.position, transform.position);
-                        selectedPosition += obj.position;
-                        allObjectsBound.Encapsulate(obj.position);
+                        allObjectsBound = new Bounds(potentialObjects[0].position, Vector3.zero);
+                        selectedPosition = Vector3.zero;
+                        foreach (var obj in potentialObjects)
+                        {
+                            var d = Vector3.Distance(obj.position, transform.position);
+                            selectedPosition += obj.position;
+                            allObjectsBound.Encapsulate(obj.position);
+                        }
+                        selectedPosition /= potentialObjects.Length;
                     }
-                    selectedPosition /= potentialObjects.Length;
                 }
 
                 return selectedPosition;
