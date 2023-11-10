@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/UI/Display Image")]
     public class ValueDisplayImage : ValueDisplay
     {
         public override string GetRawDescription(string ident, GameObject refObject)

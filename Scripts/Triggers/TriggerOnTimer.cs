@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Trigger/On Timer")]
     public class TriggerOnTimer : Trigger
     {
         [SerializeField]

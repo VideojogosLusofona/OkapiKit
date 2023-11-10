@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Play Sound")]
     public class ActionPlaySound : Action
     {
         [SerializeField]

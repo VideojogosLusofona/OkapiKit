@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Animator)), AddComponentMenu("Okapi/Action/Set Animation Parameter")]
     public class ActionSetAnimationParameter : Action
     {
         public enum ValueType { Int = 0, Float = 1, Boolean = 2, Trigger = 3, Value = 4 };

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Trigger/On Start")]
     public class TriggerOnStart : Trigger
     {
         public override string GetTriggerTitle() => "On Start";

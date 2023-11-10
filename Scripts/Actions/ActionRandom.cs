@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Random")]
     public class ActionRandom : Action
     {
         [System.Serializable]

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Movement/Forward")]
     public class MovementForward : Movement
     {
         public enum Axis { Up = 0, Right = 1 };

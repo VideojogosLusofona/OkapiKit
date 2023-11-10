@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Run Tagged Action")]
     public class ActionTagged : Action
     {
         public enum SearchType { Global = 0, Tagged = 1, Children = 2, WithinCollider = 3 };

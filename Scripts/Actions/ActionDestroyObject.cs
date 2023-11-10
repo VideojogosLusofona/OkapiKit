@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Destroy Object")]
     public class ActionDestroyObject : Action
     {
         public enum Target { This = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4 };

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Change Action State")]
     public class ActionChangeActionState : Action
     {
         public enum StateChange { Enable = 0, Disable = 1, Toggle = 2 };

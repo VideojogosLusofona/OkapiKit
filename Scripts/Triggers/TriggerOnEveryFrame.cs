@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Trigger/On Every Frame")]
     public class TriggerOnEveryFrame : Trigger
     {
         public override string GetTriggerTitle() => "Every frame";

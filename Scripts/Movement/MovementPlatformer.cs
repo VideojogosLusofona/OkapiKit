@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody2D)),AddComponentMenu("Okapi/Movement/Platformer")]
     public class MovementPlatformer : Movement
     {
         public enum InputType { Axis = 0, Button = 1, Key = 2 };

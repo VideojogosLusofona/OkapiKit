@@ -6,6 +6,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/UI/Display Progress")]
     public class ValueDisplayProgress : ValueDisplay
     {
         [SerializeField]

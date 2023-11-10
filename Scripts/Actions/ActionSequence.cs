@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Sequence")]
     public class ActionSequence : Action
     {
         [SerializeField]

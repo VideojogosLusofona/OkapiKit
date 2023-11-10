@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Modify Renderer")]
     public class ActionModifyRenderer : Action
     {
         public enum ChangeType { Visibility = 0 };

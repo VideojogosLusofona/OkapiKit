@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Other/Follow")]
     public class CameraFollow2d : OkapiElement
     {
         public enum Mode { SimpleFeedbackLoop = 0, Box = 1 };

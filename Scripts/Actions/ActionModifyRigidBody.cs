@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Modify Rigid Body")]
     public class ActionModifyRigidBody : Action
     {
         public enum ChangeType { SetBodyType = 0, Mass = 1, LinearDrag = 2, AngularDrag = 3, GravityScale = 4 };

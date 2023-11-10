@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Set Parent")]
     public class ActionSetParent : Action
     {
         public enum Target { None = 0, Object = 1, Tag = 2 };

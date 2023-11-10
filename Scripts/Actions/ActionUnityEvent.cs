@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Run Unity Event")]
     public class ActionUnityEvent : Action
     {
         [SerializeField] private UnityEvent unityEvent;

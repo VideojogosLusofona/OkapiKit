@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Other/Variable Instance")]
     public class VariableInstance : OkapiElement
     {
         public Variable.Type type = Variable.Type.Float;

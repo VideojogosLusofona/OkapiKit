@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Other/Path")]
     public class Path : OkapiElement
     {
         [SerializeField] public enum PathType { Linear, Smooth };

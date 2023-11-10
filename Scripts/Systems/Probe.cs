@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Other/Probe")]
     public class Probe : OkapiElement
     {
         public enum Type { Raycast = 0, Circlecast = 1 };

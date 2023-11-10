@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Modify Movement")]
     public class ActionModifyMovement : Action
     {
         public enum ChangeType

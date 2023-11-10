@@ -5,6 +5,7 @@ using TMPro;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/UI/Display Text")]
     public class ValueDisplayText : ValueDisplay
     {
         private string baseText;
