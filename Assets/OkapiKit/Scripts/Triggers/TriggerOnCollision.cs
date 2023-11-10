@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Trigger/On Collision")]
     public class TriggerOnCollision : Trigger
     {
         public enum CollisionEvent { Enter, Stay, Exit };

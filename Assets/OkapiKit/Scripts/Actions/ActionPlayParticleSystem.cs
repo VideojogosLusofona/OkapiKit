@@ -5,6 +5,7 @@ using UnityEngine;
 namespace OkapiKit
 {
 
+    [AddComponentMenu("Okapi/Action/Play Particle System")]
     public class ActionPlayParticleSystem : Action
     {
         [SerializeField] private ParticleSystem target;

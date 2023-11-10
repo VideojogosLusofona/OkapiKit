@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Shake")]
     public class ActionShake : Action
     {
         [SerializeField] private Hypertag targetTag;

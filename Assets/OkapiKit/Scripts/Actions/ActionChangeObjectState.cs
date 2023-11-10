@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Change Object State")]
     public class ActionChangeObjectState : Action
     {
         [SerializeField] private enum StateChange { Enable, Disable, Toggle };

@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Spawn")]
     public class ActionSpawn : Action
     {
         public enum SpawnPosition { Default, This, Target, Tag };

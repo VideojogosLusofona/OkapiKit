@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Blink")]
     public class ActionBlink : Action
     {
         [SerializeField] private Renderer target;

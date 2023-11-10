@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Trigger/On Input")]
     public class TriggerOnInput : Trigger
     {
         public enum InputType { Button = 0, Key = 1, Axis = 2 };

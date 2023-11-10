@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Other/Spawner")]
     public class Spawner : OkapiElement
     {
         public enum SpawnPointType { Random = 0, Sequence = 1, All = 2 };

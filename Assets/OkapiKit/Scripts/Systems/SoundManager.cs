@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Other/Sound Manager")]
     public class SoundManager : OkapiElement
     {
         public static SoundManager instance;

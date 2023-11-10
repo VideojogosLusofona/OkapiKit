@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Quit Application")]
     public class ActionQuitApplication : Action
     {
         public override string GetActionTitle() => "Quit Application";

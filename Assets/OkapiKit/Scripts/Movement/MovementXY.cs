@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Movement/XY Movement")]
     public class MovementXY : Movement
     {
         public enum InputType { Axis = 0, Button = 1, Key = 2 };

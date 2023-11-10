@@ -6,6 +6,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Change Scene")]
     public class ActionChangeScene : Action
     {
         [SerializeField, Scene] private string sceneName;

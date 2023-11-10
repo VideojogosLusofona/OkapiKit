@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Modify Sprite Renderer")]
     public class ActionModifySpriteRenderer : Action
     {
         public enum ChangeType { Sprite = 0, Color = 1 };

@@ -6,6 +6,7 @@ using NaughtyAttributes;
 namespace OkapiKit
 {
 
+    [AddComponentMenu("Okapi/Action/Modify Transform")]
     public class ActionModifyTransform : Action
     {
         public enum ChangeType { Position = 0 };

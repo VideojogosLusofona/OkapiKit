@@ -6,6 +6,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Action")]
     abstract public class Action : OkapiElement
     {
         [SerializeField]

@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [DisallowMultipleComponent]
+    [DisallowMultipleComponent,AddComponentMenu("Okapi/Hypertag")]
     public class HypertaggedObject : OkapiElement
     {
         [SerializeField]

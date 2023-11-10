@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Modify Trail Renderer")]
     public class ActionModifyTrailRenderer : Action
     {
         public enum ChangeType { Emitter = 0 };

@@ -6,6 +6,7 @@ using UnityEngine.Android;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Modify Particle System")]
     public class ActionModifyParticleSystem : Action
     {
         public enum ChangeType { Emission = 0 };

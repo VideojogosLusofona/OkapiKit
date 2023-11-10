@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Flash")]
     public class ActionFlash : Action
     {
         [SerializeField] private Renderer target;

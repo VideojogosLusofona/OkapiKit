@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Trigger/On Condition")]
     public class TriggerOnCondition : Trigger
     {
         [SerializeField] private Condition[] conditions;

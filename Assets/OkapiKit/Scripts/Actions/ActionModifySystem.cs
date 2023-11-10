@@ -5,6 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
+    [AddComponentMenu("Okapi/Action/Modify System")]
     public class ActionModifySystem : Action
     {
         public enum ChangeType { MouseCursorVisibility = 0 };
