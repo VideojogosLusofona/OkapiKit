@@ -79,8 +79,8 @@ namespace OkapiKit.Editor
                 else if (propMode.enumValueIndex == (int)CameraFollow2d.Mode.Box)
                 {
                     EditorGUILayout.PropertyField(propRect, new GUIContent("Box"));
-                    EditorGUILayout.PropertyField(propCameraLimits, new GUIContent("Camera Limits"));
                 }
+                EditorGUILayout.PropertyField(propCameraLimits, new GUIContent("Camera Limits"));
 
                 EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
 
