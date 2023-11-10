@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Movement/Follow")]
+    [AddComponentMenu("Okapi/Movement/Follow Movement")]
     public class MovementFollow : Movement
     {
         public enum TargetType { Tag = 0, Object = 1, Mouse = 2 };
