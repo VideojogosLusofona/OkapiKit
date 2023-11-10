@@ -2,22 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using static Codice.Client.BaseCommands.Import.Commit;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Other/Follow")]
+    [AddComponentMenu("Okapi/Other/Camera Follow")]
     public class CameraFollow2d : OkapiElement
     {
         public enum Mode { SimpleFeedbackLoop = 0, Box = 1 };
+        public enum TagMode { Closest = 0, Furthest = 1, Average = 2 };
 
-        [SerializeField] Mode mode = Mode.SimpleFeedbackLoop;
-        [SerializeField] Hypertag targetTag;
-        [SerializeField] Transform targetObject;
-        [SerializeField] float followSpeed = 0.9f;
-        [SerializeField] Rect rect = new Rect(-100.0f, -100.0f, 200.0f, 200.0f);
-        [SerializeField] BoxCollider2D cameraLimits;
+        [SerializeField] Mode           mode = Mode.SimpleFeedbackLoop;
+        [SerializeField] Hypertag       targetTag;
+        [SerializeField] TagMode        tagMode = TagMode.Closest;
+        [SerializeField] bool           allowZoom;
+        [SerializeField] float          zoomMargin = 1.1f;  
+        [SerializeField] Vector2        minMaxSize = new Vector2(180.0f, 360.0f);
+        [SerializeField] Transform      targetObject;
+        [SerializeField] float          followSpeed = 0.9f;
+        [SerializeField] Rect           rect = new Rect(-100.0f, -100.0f, 200.0f, 200.0f);
+        [SerializeField] BoxCollider2D  cameraLimits;
 
-        new Camera camera;
+        private new Camera  camera;
+        private Bounds      allObjectsBound;
 
         public override string UpdateExplanation()
         {
@@ -37,7 +44,24 @@ namespace OkapiKit
             }
             else
             {
-                _explanation += $"Camera follows the closest object tagged with [{targetTag.name}].\n";
+                switch (tagMode)
+                {
+                    case TagMode.Closest:
+                        _explanation += $"Camera follows the closest object tagged with [{targetTag.name}].\n";
+                        break;
+                    case TagMode.Furthest:
+                        _explanation += $"Camera follows the furthest object tagged with [{targetTag.name}].\n";
+                        break;
+                    case TagMode.Average:
+                        _explanation += $"Camera follows the average position of all objects tagged with [{targetTag.name}].\n";
+                        if (allowZoom)
+                        {
+                            _explanation += $"Camera can zoom in to a minimum height of {minMaxSize.x} pixels, and a maximum of {minMaxSize.y},\nwith a margin of {(zoomMargin - 1.0f) * 100}% around it.\n";
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
             if (mode == Mode.SimpleFeedbackLoop)
             {
@@ -93,6 +117,9 @@ namespace OkapiKit
             newPos.z = currentZ;
 
             transform.position = newPos;
+
+            RunZoom();
+            CheckBounds();
         }
 
         void FixedUpdate_Box()
@@ -110,10 +137,23 @@ namespace OkapiKit
 
             transform.position = new Vector3(r.center.x, r.center.y, currentZ);
 
+            RunZoom();
             CheckBounds();
         }
 
-        public void CheckBounds()
+        void RunZoom()
+        {
+            if ((tag != null) && (tagMode == TagMode.Average) && (allowZoom))
+            {
+                float height1 = Mathf.Clamp(allObjectsBound.extents.y * zoomMargin, minMaxSize.x, minMaxSize.y);
+                float height2 = Mathf.Clamp(allObjectsBound.extents.x * zoomMargin, camera.aspect * minMaxSize.x, camera.aspect * minMaxSize.y) / camera.aspect;
+
+                float height = Mathf.Max(height1, height2);
+                camera.orthographicSize = height;
+            }
+        }
+
+        void CheckBounds()
         {
             if (cameraLimits == null) return;
 
@@ -142,23 +182,48 @@ namespace OkapiKit
             if (targetObject != null) return targetObject.transform.position;
             else if (targetTag)
             {
-                Transform closest = null;
+                Vector3 selectedPosition = transform.position;
                 var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(targetTag);
-                var minDist = float.MaxValue;
-                foreach (var obj in potentialObjects)
+                if (tagMode == TagMode.Closest)
                 {
-                    var d = Vector3.Distance(obj.position, transform.position);
-                    if (d < minDist)
+                    var minDist = float.MaxValue;
+                    foreach (var obj in potentialObjects)
                     {
-                        minDist = d;
-                        closest = obj;
+                        var d = Vector3.Distance(obj.position, transform.position);
+                        if (d < minDist)
+                        {
+                            minDist = d;
+                            selectedPosition = obj.position;
+                        }
                     }
                 }
-
-                if (closest)
+                else if (tagMode == TagMode.Furthest)
                 {
-                    return closest.position;
+                    var maxDist = 0.0f;
+                    foreach (var obj in potentialObjects)
+                    {
+                        var d = Vector3.Distance(obj.position, transform.position);
+                        if (d > maxDist)
+                        {
+                            maxDist = d;
+                            selectedPosition = obj.position;
+                        }
+                    }
                 }
+                else if (tagMode == TagMode.Average)
+                {
+                    allObjectsBound = (potentialObjects.Length > 0) ? (new Bounds(transform.position, Vector3.zero)) : (new Bounds(potentialObjects[0].position, Vector3.zero));
+                    selectedPosition = Vector3.zero;
+                    foreach (var obj in potentialObjects)
+                    {
+                        var d = Vector3.Distance(obj.position, transform.position);
+                        selectedPosition += obj.position;
+                        allObjectsBound.Encapsulate(obj.position);
+                    }
+                    selectedPosition /= potentialObjects.Length;
+                }
+
+                return selectedPosition;
             }
 
             return transform.position;

@@ -10,6 +10,10 @@ namespace OkapiKit.Editor
     {
         SerializedProperty propMode;
         SerializedProperty propTargetTag;
+        SerializedProperty propTagMode;
+        SerializedProperty propAllowZoom;
+        SerializedProperty propZoomMargin;
+        SerializedProperty propMinMaxSize;
         SerializedProperty propTargetObject;
         SerializedProperty propFollowSpeed;
         SerializedProperty propRect;
@@ -21,6 +25,10 @@ namespace OkapiKit.Editor
 
             propMode = serializedObject.FindProperty("mode");
             propTargetTag = serializedObject.FindProperty("targetTag");
+            propTagMode = serializedObject.FindProperty("tagMode");
+            propAllowZoom = serializedObject.FindProperty("allowZoom");
+            propZoomMargin = serializedObject.FindProperty("zoomMargin");
+            propMinMaxSize = serializedObject.FindProperty("minMaxSize");
             propTargetObject = serializedObject.FindProperty("targetObject");
             propFollowSpeed = serializedObject.FindProperty("followSpeed");
             propRect = serializedObject.FindProperty("rect");
@@ -36,6 +44,7 @@ namespace OkapiKit.Editor
                 EditorGUI.BeginChangeCheck();
 
                 EditorGUILayout.PropertyField(propMode, new GUIContent("Mode"));
+
                 if (propTargetTag.objectReferenceValue == null)
                 {
                     if (propTargetObject.objectReferenceValue == null)
@@ -51,7 +60,18 @@ namespace OkapiKit.Editor
                 else
                 {
                     EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
+                    EditorGUILayout.PropertyField(propTagMode, new GUIContent("Tag Mode"));
+                    if (propTagMode.enumValueIndex == (int)CameraFollow2d.TagMode.Average)
+                    {
+                        EditorGUILayout.PropertyField(propAllowZoom, new GUIContent("Allow Zoom"));
+                        if (propAllowZoom.boolValue)
+                        {
+                            EditorGUILayout.PropertyField(propZoomMargin, new GUIContent("Zoom Margin"));
+                            EditorGUILayout.PropertyField(propMinMaxSize, new GUIContent("Min/Max Size"));
+                        }
+                    }
                 }
+
                 if (propMode.enumValueIndex == (int)CameraFollow2d.Mode.SimpleFeedbackLoop)
                 {
                     EditorGUILayout.PropertyField(propFollowSpeed, new GUIContent("Follow Speed"));

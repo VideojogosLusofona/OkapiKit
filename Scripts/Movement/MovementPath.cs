@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Movement/Path")]
+    [AddComponentMenu("Okapi/Movement/Path Movement")]
     public class MovementPath : Movement
     {
         public enum RotationBehaviour { None = 0, AlignX = 1, AlignY = 2 };
