@@ -15,6 +15,9 @@ Features:
   - Warning: Change values with deltaValue = 0
   - Warning: No rigid body with OnCollisionTrigger
 - Movement targets should be redefinable
+- Probes:
+  - Circle
+  - Box
 - Comment Code
 - Documentation
 

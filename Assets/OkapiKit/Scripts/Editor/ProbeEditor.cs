@@ -55,6 +55,8 @@ namespace OkapiKit.Editor
                     case Probe.Direction.Down:
                     case Probe.Direction.Right:
                     case Probe.Direction.Left:
+                    case Probe.Direction.TargetObjectDirection:
+                    case Probe.Direction.TargetTagDirection:
                         EditorGUILayout.PropertyField(propMinDistance, new GUIContent("Min Distance"));
                         EditorGUILayout.PropertyField(propMaxDistance, new GUIContent("Max Distance"));
                         break;

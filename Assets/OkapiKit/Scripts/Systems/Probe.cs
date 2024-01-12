@@ -8,7 +8,7 @@ namespace OkapiKit
     public class Probe : OkapiElement
     {
         public enum Type { Raycast = 0, Circlecast = 1 };
-        public enum Direction { Up = 0, Down = 1, Right = 2, Left = 3, TargetObject = 4, TargetTag = 5 }
+        public enum Direction { Up = 0, Down = 1, Right = 2, Left = 3, TargetObject = 4, TargetTag = 5, TargetObjectDirection = 6, TargetTagDirection = 7 }
 
         [SerializeField] private Type type = Type.Raycast;
         [SerializeField] private Direction direction = Direction.Up;
@@ -68,12 +68,26 @@ namespace OkapiKit
                 case Direction.TargetObject:
                     {
                         string objName = (dirTransform != null) ? (dirTransform.name) : ("UNDEFINED");
-                        dirDesc = $"in the direction of the object [{objName}]";
+                        dirDesc = $"towards the object [{objName}]";
                     }
                     break;
                 case Direction.TargetTag:
-                    string tagName = (dirTag != null) ? (dirTag.name) : ("UNDEFINED");
-                    dirDesc = $"in the direction of the closest object with tag [{tagName}]";
+                    {
+                        string tagName = (dirTag != null) ? (dirTag.name) : ("UNDEFINED");
+                        dirDesc = $"towards the closest object with tag [{tagName}]";
+                    }
+                    break;
+                case Direction.TargetObjectDirection:
+                    {
+                        string objName = (dirTransform != null) ? (dirTransform.name) : ("UNDEFINED");
+                        dirDesc = $"in the direction of the object [{objName}]";
+                    }
+                    break;
+                case Direction.TargetTagDirection:
+                    {
+                        string tagName = (dirTag != null) ? (dirTag.name) : ("UNDEFINED");
+                        dirDesc = $"in the direction of the closest object with tag [{tagName}]";
+                    }
                     break;
                 default:
                     break;
@@ -174,6 +188,31 @@ namespace OkapiKit
             var contactFilter = new ContactFilter2D();
             contactFilter.useTriggers = true;
 
+            if ((direction == Direction.TargetObjectDirection) || (direction == Direction.TargetTagDirection))
+            {
+                float dist = maxDistance;
+                if (direction == Direction.TargetObjectDirection)
+                {
+                    dist = (dirTransform.position - transform.position).magnitude;
+                }
+                else if (direction == Direction.TargetTagDirection)
+                {
+                    var objects = this.FindObjectsOfTypeWithHypertag<Transform>(dirTag, true);
+                    if ((objects != null) && (objects.Length > 0))
+                    {
+                        dist = (objects[0].position - transform.position).magnitude;
+                    }
+                }
+
+                if ((dist < minDistance) || (dist > maxDistance))
+                {
+                    intersectionState = true;
+                    intersectionPoint = GetEnd(GetDirection());
+                    closestIntersectionDistance = maxDistance;
+                    return;
+                }
+            }
+
             var dir = GetDirection();
 
             int n = 0;
@@ -231,6 +270,7 @@ namespace OkapiKit
                 case Direction.Right: dir = transform.right; break;
                 case Direction.Left: dir = -transform.right; break;
                 case Direction.TargetObject:
+                case Direction.TargetObjectDirection:
                     if (dirTransform)
                     {
                         dir = dirTransform.position - transform.position;
@@ -239,6 +279,7 @@ namespace OkapiKit
                     }
                     break;
                 case Direction.TargetTag:
+                case Direction.TargetTagDirection:
                     if (dirTag)
                     {
                         var objects = this.FindObjectsOfTypeWithHypertag<Transform>(dirTag, true);
