@@ -5,8 +5,8 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Modify System")]
-    public class ActionModifySystem : Action
+    [AddComponentMenu("Okapi/Action/Change System Option")]
+    public class ActionChangeSystemOption : Action
     {
         public enum ChangeType { MouseCursorVisibility = 0 };
         public enum StateChange { Enable = 0, Disable = 1, Toggle = 2 };
@@ -33,7 +33,7 @@ namespace OkapiKit
             }
         }
 
-        public override string GetActionTitle() => "Modify System";
+        public override string GetActionTitle() => "Change System Option";
 
         public override string GetRawDescription(string ident, GameObject gameObject)
         {

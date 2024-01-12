@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using System.IO;
 
 namespace OkapiKit
 {
@@ -156,6 +157,19 @@ namespace OkapiKit
                 desc += $"Rotational movement, at {speed} degrees per second.\n";
             }
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (mode == RotateMode.Target)
+            {
+                if ((targetTag == null) && (targetObject == null))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target not defined - use either tag or drag the object to the slot below!"));
+                }
+            }
         }
 
         void FixedUpdate()

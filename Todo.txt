@@ -6,14 +6,13 @@ Features:
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
 - Unify ValueHandler/Value with single selector that can take any of them
 - Add HueShift/Outline effect for sprites
-- Warning/Error system
-  - Error: Set scene object to prefab
-  - Warning: No actions
-  - Warning: No probabilities set for ActionRandom
-  - Warning: No tags set for OnCollision
-  - Warning: Change values with deltaValue = 0
-  - Warning: No rigid body with OnCollisionTrigger
 - Movement targets should be redefinable
+- Singleton objects
+- Configuratin object for OkapiKit
+  - Enable debug system for nodes 
+  - Debug is just logging to the console what's happening in terms of triggers
+    and actions
+- Add target to ActionSetParent (need rename of variables)
 - Probes:
   - Circle
   - Box
@@ -28,7 +27,6 @@ Usability:
   - Add triggers/actions directly in the objects
   - Have the ability to have custom adds (SetVisibility, SetVelocity, etc)
 - Add node ID property to actions/triggers
-- Enable debug system for nodes 
 - No info on tagged actions
 - Value Display Text should use a formatting string instead the text in the edit box
 - Split OkapiKit from samples

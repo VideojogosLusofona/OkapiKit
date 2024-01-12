@@ -9,8 +9,8 @@ namespace OkapiKit
     {
         [SerializeField] private Hypertag targetTag;
         [SerializeField] private Transform targetObject;
-        [SerializeField] private float strength;
-        [SerializeField] private float duration;
+        [SerializeField] private float strength = 10;
+        [SerializeField] private float duration = 0.5f;
 
         Vector3 prevDelta;
         float timer;
@@ -68,6 +68,24 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((targetObject == null) && (targetTag == null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Shake target is this object, but it should be set explicitly!"));
+            }
+            if (strength == 0.0f)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Shake strength is zero, object will not shake!"));
+            }
+            if (duration <= 0.0f)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Shake duration is less or equal to zero, object will not shake!"));
+            }
         }
 
         protected override void Awake()

@@ -95,7 +95,7 @@ namespace OkapiKit
             return desc;
         }
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
             string e = GetRawDescription("", gameObject);
 
@@ -113,6 +113,50 @@ namespace OkapiKit
                 }
             }
             return _explanation;
+        }
+
+        public void ForceCheckErrors()
+        {
+            _logs.Clear();
+            CheckErrors();
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (hasTags)
+            {
+                if ((actionTags == null) || (actionTags.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Action is flagged as tagged, but no tags defined!"));
+                }
+                else
+                {
+                    foreach (var tag in actionTags)
+                    {
+                        if (tag == null)
+                        {
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, "Empty tag defined in tags list!"));
+                        }
+                    }
+                }
+            }
+
+            if (hasConditions)
+            {
+                if ((actionConditions == null) || (actionConditions.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!"));
+                }
+                else
+                {
+                    foreach (var condition in actionConditions)
+                    {
+                        condition.CheckErrors(gameObject, _logs);
+                    }
+                }
+            }
         }
     }
 };

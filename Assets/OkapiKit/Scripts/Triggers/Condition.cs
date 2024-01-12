@@ -329,5 +329,87 @@ namespace OkapiKit
 
             return b;
         }
+
+        public void CheckErrors(GameObject go, List<LogEntry> errors)
+        {
+            if ((variable == null) && (valueHandler == null) && (valueType == ValueType.None))
+            {
+                errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined condition!"));
+            }
+            else if (valueType == ValueType.TagCount)
+            {
+                if (tag == null) errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined tag to count!"));
+            }
+            else if ((valueType == ValueType.AbsoluteVelocityX) && (go != null))
+            {
+                if (rigidBody == null)
+                {
+                    if (go.GetComponent<Rigidbody2D>() == null)
+                    {
+                        errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined rigid body for absolute velocity X!"));
+                    }
+                    else
+                    {
+                        errors.Add(new LogEntry(LogEntry.Type.Warning, "Condition: Rigid body for absolute velocity X exists, but should be explicitly set!"));
+                    }
+                }
+            }
+            else if ((valueType == ValueType.AbsoluteVelocityY) && (go != null))
+            {
+                if (rigidBody == null)
+                {
+                    if (go.GetComponent<Rigidbody2D>() == null)
+                    {
+                        errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined rigid body for absolute velocity Y!"));
+                    }
+                    else
+                    {
+                        errors.Add(new LogEntry(LogEntry.Type.Warning, "Condition: Rigid body for absolute velocity Y exists, but should be explicitly set!"));
+                    }
+                }
+            }
+            else if (valueType == ValueType.Distance)
+            {
+                if ((tag == null) && (sourceTransform == null))
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined target for Distance value!"));
+                }
+            }
+            else if (valueType == ValueType.Angle)
+            {
+                if ((tag == null) && (sourceTransform == null))
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined target for Angle value"));
+                }
+            }
+            else if (valueType == ValueType.Probe)
+            {
+                if (probe == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined probe for line of sight condition"));
+                }
+            }
+            else if (valueType == ValueType.ProbeDistance)
+            {
+                if (probe == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined probe for intersection distance condition"));
+                }
+            }
+            else if (valueType == ValueType.IsGrounded)
+            {
+                if (probe == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined platform movement target to check for ground"));
+                }
+            }
+            else if (valueType == ValueType.IsGliding)
+            {
+                if (probe == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Condition: Undefined platform movement target to check for gliding"));
+                }
+            }
+        }
     }
 }

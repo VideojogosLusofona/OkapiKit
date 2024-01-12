@@ -85,6 +85,8 @@ namespace OkapiKit.Editor
 
         protected void StdEditor(bool useOriginalEditor = true)
         {
+            EditorGUI.BeginChangeCheck();
+
             Rect rect = EditorGUILayout.BeginHorizontal();
             rect.height = 20;
             float totalWidth = rect.width;
@@ -113,6 +115,11 @@ namespace OkapiKit.Editor
             if (useOriginalEditor)
             {
                 base.OnInspectorGUI();
+            }
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                (target as Action).UpdateExplanation();
             }
 
         }

@@ -5,18 +5,18 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Modify Trail Renderer")]
-    public class ActionModifyTrailRenderer : Action
+    [AddComponentMenu("Okapi/Action/Change Trail Renderer")]
+    public class ActionChangeTrailRenderer : Action
     {
         public enum ChangeType { Emitter = 0 };
         public enum StateChange { Enable = 0, Disable = 1, Toggle = 2 };
 
         [SerializeField]
-        private TrailRenderer target;
+        private TrailRenderer   target;
         [SerializeField]
-        private ChangeType changeType;
+        private ChangeType      changeType;
         [SerializeField, ShowIf("isEmitter")]
-        private StateChange emitter;
+        private StateChange     emitter;
 
         private bool isEmitter => (changeType == ChangeType.Emitter);
 
@@ -41,7 +41,7 @@ namespace OkapiKit
             }
         }
 
-        public override string GetActionTitle() => "Modify Trail Renderer";
+        public override string GetActionTitle() => "Change Trail Renderer";
 
         public override string GetRawDescription(string ident, GameObject gameObject)
         {
@@ -67,6 +67,23 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                if (GetComponent<TrailRenderer>() == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target trail renderer!"));
+                }
+                else
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Trail renderer to modify is this object, but it should be explicitly linked!"));
+                }
+            }
         }
     }
 }

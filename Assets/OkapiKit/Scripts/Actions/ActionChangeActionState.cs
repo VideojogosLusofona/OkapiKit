@@ -18,19 +18,30 @@ namespace OkapiKit
         {
             string desc = GetPreconditionsString(gameObject);
 
+            string targetDesc = (target) ? (target.GetRawDescription(ident, gameObject)) : ("UNKNOWN");
             switch (state)
             {
                 case StateChange.Enable:
-                    desc += $"enables action [{target.GetRawDescription(ident, gameObject)}]";
+                    desc += $"enables action [{targetDesc}]";
                     break;
                 case StateChange.Disable:
-                    desc += $"disables action [{target.GetRawDescription(ident, gameObject)}]";
+                    desc += $"disables action [{targetDesc}]";
                     break;
                 case StateChange.Toggle:
-                    desc += $"toggles action [{target.GetRawDescription(ident, gameObject)}]";
+                    desc += $"toggles action [{targetDesc}]";
                     break;
             }
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target action"));
+            }
         }
 
         public override void Execute()

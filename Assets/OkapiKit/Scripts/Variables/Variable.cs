@@ -26,6 +26,7 @@ namespace OkapiKit
         public float currentValue { get { return _currentValue; } }
         public float minValue { get { return _minValue; } }
         public float maxValue { get { return _maxValue; } }
+        public bool hasLimits => _hasLimits;
 
         public Type type
         {

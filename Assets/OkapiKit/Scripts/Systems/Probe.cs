@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static OkapiKit.Path;
 
 namespace OkapiKit
 {
@@ -142,7 +144,46 @@ namespace OkapiKit
             return desc;
         }
 
-        public override string UpdateExplanation()
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((tags == null) || (tags.Length == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Tags not defined - these define which objects the probe can detect!"));
+            }
+            else
+            {
+                int index = 0;
+                foreach (var tag in tags)
+                {
+                    if (tag == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty tag slot {index}!"));
+                    }
+                    index++;
+                }
+            }
+            switch (direction)
+            {
+                case Direction.TargetObject:
+                case Direction.TargetObjectDirection:
+                    if (dirTransform == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target object is not set!!"));
+                    }
+                    break;
+                case Direction.TargetTag:
+                case Direction.TargetTagDirection:
+                    if (dirTag== null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag is not set!!"));
+                    }
+                    break;
+            }
+        }
+
+        protected override string Internal_UpdateExplanation()
         {
             _explanation = "";
             if (description != "") _explanation += description + "\n----------------\n";

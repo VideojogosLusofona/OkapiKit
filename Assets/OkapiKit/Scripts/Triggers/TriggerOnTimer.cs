@@ -28,9 +28,9 @@ namespace OkapiKit
             }
 
             if (allowRetrigger)
-                return $"Every [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
+                return $"Every {timeInterval.x} to {timeInterval.y} seconds, trigger the actions:";
             else
-                return $"After [{timeInterval.x},{timeInterval.y}] seconds, trigger the actions:";
+                return $"After {timeInterval.x} to {timeInterval.y} seconds, trigger the actions:";
         }
 
         void Start()

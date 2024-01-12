@@ -3,18 +3,20 @@ using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(ActionModifySystem))]
-    public class ActionModifySystemEditor : ActionEditor
+    [CustomEditor(typeof(ActionChangeRenderer))]
+    public class ActionChangeRendererEditor : ActionEditor
     {
+        SerializedProperty propRenderer;
         SerializedProperty propChangeType;
-        SerializedProperty propState;
+        SerializedProperty propVisibility;
 
         protected override void OnEnable()
         {
             base.OnEnable();
 
+            propRenderer = serializedObject.FindProperty("renderer");
             propChangeType = serializedObject.FindProperty("changeType");
-            propState = serializedObject.FindProperty("state");
+            propVisibility = serializedObject.FindProperty("visibility");
         }
 
         public override void OnInspectorGUI()
@@ -25,15 +27,16 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionModifySystem);
+                var action = (target as ActionChangeRenderer);
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propRenderer, new GUIContent("Renderer"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
 
-                if (propChangeType.enumValueIndex == (int)ActionModifySystem.ChangeType.MouseCursorVisibility)
+                if (propChangeType.enumValueIndex == (int)ActionChangeRenderer.ChangeType.Visibility)
                 {
-                    EditorGUILayout.PropertyField(propState, new GUIContent("Mouse Cursor"));
+                    EditorGUILayout.PropertyField(propVisibility, new GUIContent("Visibility"));
                 }
 
                 if (EditorGUI.EndChangeCheck())

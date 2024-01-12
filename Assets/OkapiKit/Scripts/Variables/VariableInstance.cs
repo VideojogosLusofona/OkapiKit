@@ -12,7 +12,7 @@ namespace OkapiKit
         public float currentValue = 0;
         public float defaultValue = 0;
         public bool isInteger = false;
-        public bool hasLimits = true;
+        public bool hasLimits = false;
         [SerializeField, ShowIf("hasLimits")]
         public float minValue = -float.MaxValue;
         [SerializeField, ShowIf("hasLimits")]
@@ -72,7 +72,7 @@ namespace OkapiKit
             return "";
         }
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
             _explanation = GetRawDescription("", gameObject);
             return _explanation;

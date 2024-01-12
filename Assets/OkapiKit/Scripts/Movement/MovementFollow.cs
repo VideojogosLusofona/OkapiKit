@@ -83,6 +83,33 @@ namespace OkapiKit
             return desc;
         }
 
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (targetType == TargetType.Tag)
+            {
+                if (targetTag == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag not defined!"));
+                }
+            }
+            else if (targetType == TargetType.Object)
+            {
+                if (targetObject == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target object not defined!"));
+                }
+            }
+            else if (targetType == TargetType.Mouse)
+            {
+                if ((cameraObject == null) && (cameraTag == null))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Camera not defined - use either tag or drag the camera object to the slot below!"));
+                }
+            }
+        }
+
         protected override void Start()
         {
             base.Start();

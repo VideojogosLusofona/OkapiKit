@@ -5,6 +5,12 @@
 - Added target tag and target object direction option to probe, to allow for maximum distance
 - Fixed bug with uninitialized actions when added to triggers throwing an error
 - Added Rotate Towards action
+- Added warning/error system
+- Renamed all ActionModify* actions to ActionChange*
+- Added target to ActionChangeRigidBody (only allowed self object)
+- Renamed ActionChangeSystem to ActionChangeSystemOption
+- Fixed bug with Unity event UI on ActionUnityEvent
+- MovementPlatformer now shows animator property
 
 ## V1.8.0
 

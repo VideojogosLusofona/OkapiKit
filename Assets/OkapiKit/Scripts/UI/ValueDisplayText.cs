@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using NaughtyAttributes;
 
 namespace OkapiKit
 {
@@ -28,6 +29,7 @@ namespace OkapiKit
                     baseText = textScene.text;
                 }
             }
+            if (baseText == "") baseText = "{0}";
         }
 
         void Update()
@@ -44,6 +46,35 @@ namespace OkapiKit
         public override string GetRawDescription(string ident, GameObject refObject)
         {
             return "This component displays the variable as text.\nThere has to be a text component on this object with the C# text formatter string set.";
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            var textGUI = GetComponent<TextMeshProUGUI>();
+            if (textGUI == null)
+            {
+                var textScene = GetComponent<TextMeshPro>();
+                if (textScene == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to have a TextMeshPro or TextMeshProUGUI component on this object!"));
+                }
+                else
+                {
+                    if (textScene.text == "")
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Warning, "Need to set the text of the component to a C# text formatter (like {0})"));
+                    }
+                }
+            }
+            else
+            {
+                if (textGUI.text == "")
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Need to set the text of the component to a C# text formatter (like {0})"));
+                }
+            }
         }
 
     }

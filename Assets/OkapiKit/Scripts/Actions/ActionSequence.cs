@@ -82,5 +82,41 @@ namespace OkapiKit
 
             return desc;
         }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((actions == null) || (actions.Length == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No actions defined!"));
+            }
+            else 
+            {
+                if (actions.Length == 1)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Only one action defined, no need for sequence!"));
+                }
+
+                int index = 0;
+                foreach (var action in actions)
+                {
+                    if (action.action == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty action in action list (index={index})!"));
+                    }
+                    else
+                    {
+                        action.action.ForceCheckErrors();
+                        var actionLogs = action.action.logs;
+                        foreach (var log in actionLogs)
+                        {
+                            _logs.Add(new LogEntry(log.type, $"On action {index}: " + log.text));
+                        }
+                    }
+                    index++;
+                }
+            }
+        }
     }
 }

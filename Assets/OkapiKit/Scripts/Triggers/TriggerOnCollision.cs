@@ -47,6 +47,33 @@ namespace OkapiKit
             return desc;
         }
 
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((tags == null) || (tags.Length == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No tags defined - OnCollision only detects objects with the given tags!"));
+            }
+            else
+            {
+                int index = 0;
+                foreach (var tag  in tags)
+                {
+                    if (tag == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty tags slot {index}!"));
+                    }
+                    index++;
+                }
+            }
+
+            if (GetComponent<Rigidbody2D>() == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "OnCollision can only detect collisions if set on an object with a rigid body!"));
+            }
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (!isTrigger) return;

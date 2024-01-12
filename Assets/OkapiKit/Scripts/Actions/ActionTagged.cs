@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using UnityEditor;
 
 namespace OkapiKit
 {
@@ -46,7 +47,10 @@ namespace OkapiKit
                 {
                     for (int i = 0; i < searchTags.Length; i++)
                     {
-                        desc += searchTags[i].name;
+                        if (searchTags[i] != null)
+                            desc += searchTags[i].name;
+                        else
+                            desc += "[UNDEFINED]";
                         if (i < searchTags.Length - 1) desc += ",";
                     }
                 }
@@ -88,11 +92,15 @@ namespace OkapiKit
             {
                 for (int i = 0; i < triggerTags.Length; i++)
                 {
-                    if (triggerTags != null)
+                    if (triggerTags[i] != null)
                     {
                         desc += triggerTags[i].name;
-                        if (i < triggerTags.Length - 1) desc += ",";
                     }
+                    else
+                    {
+                        desc += "[UNDEFINED]";
+                    }
+                    if (i < triggerTags.Length - 1) desc += ",";
                 }
             }
             else desc += "MISSING";
@@ -113,6 +121,66 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((triggerTags == null) || (triggerTags.Length == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Trigger tags not defined!"));
+            }
+            else
+            {
+                int index = 0;
+                foreach (var tag in triggerTags)
+                {
+                    if (tag == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot is empty in tag list (index={index})!"));
+                    }
+                    index++;
+                }
+            }            
+            if (searchType == SearchType.WithinCollider)
+            {
+                if ((colliders == null) || (colliders.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Colliders not defined!"));
+                }
+                else
+                {
+                    int index = 0;
+                    foreach (var collider in colliders)
+                    {
+                        if (collider == null)
+                        {
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Collider slot is empty in collider list (index={index})!"));
+                        }
+                        index++;
+                    }
+                }
+            }
+            if ((searchType == SearchType.Tagged) || (searchType == SearchType.WithinCollider))
+            {
+                if ((searchTags == null) || (searchTags.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Search tags not defined!"));
+                }
+                else
+                {
+                    int index = 0;
+                    foreach (var tag in searchTags)
+                    {
+                        if (tag == null)
+                        {
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot is empty in search tag list (index={index})!"));
+                        }
+                        index++;
+                    }
+                }
+            }
         }
 
         List<Action> targetActions = null;

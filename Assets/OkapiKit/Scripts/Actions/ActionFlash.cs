@@ -66,18 +66,38 @@ namespace OkapiKit
             return desc;
         }
 
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (GetTarget() == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No renderer available for flashing - place one in this object or in a child object"));
+            }
+        }
+
+        Renderer GetTarget()
+        {
+            var ret = target;
+            if (ret == null)
+            {
+                ret = GetComponent<Renderer>();
+                if (ret  == null)
+                {
+                    ret  = GetComponentInChildren<Renderer>();
+                }
+            }
+
+            return ret;
+        }
+
         protected override void Awake()
         {
             base.Awake();
 
-            if (target == null)
-            {
-                target = GetComponent<Renderer>();
-                if (target == null)
-                {
-                    target = GetComponentInChildren<Renderer>();
-                }
-            }
+            target = GetTarget();
         }
+
+
     }
 }

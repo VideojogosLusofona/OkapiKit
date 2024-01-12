@@ -32,6 +32,12 @@ namespace OkapiKit.Editor
 
         protected virtual void OnEnable()
         {
+            var okapiElement = target as OkapiElement;
+            if (okapiElement != null)
+            {
+                okapiElement.UpdateExplanation();
+            }
+
             propShowInfo = serializedObject.FindProperty("_showInfo");
             propDescription = serializedObject.FindProperty("description");
             propExplanation = serializedObject.FindProperty("_explanation");
@@ -41,6 +47,12 @@ namespace OkapiKit.Editor
 
         protected virtual bool WriteTitle()
         {
+            var okapiElement = target as OkapiElement;
+            if (okapiElement == null) 
+            {
+                return false;
+            }
+
             GUIStyle styleTitle = GetTitleSyle();
             GUIStyle explanationStyle = GetExplanationStyle();
 
@@ -79,7 +91,6 @@ namespace OkapiKit.Editor
                 EditorGUI.LabelField(new Rect(titleRect.x + 10, separatorRect.y + separatorRect.height + 4, inspectorWidth - 20 - titleRect.x - 4, explanationTextHeight), explanation, explanationStyle);
             }
 
-
             bool toggle = false;
             bool refreshExplanation = false;
             if (showInfo)
@@ -112,11 +123,64 @@ namespace OkapiKit.Editor
             }
             if (refreshExplanation)
             {
-                propExplanation.stringValue = (target as OkapiElement).UpdateExplanation();
+                propExplanation.stringValue = okapiElement.UpdateExplanation();
                 serializedObject.ApplyModifiedProperties();
             }
 
+            DisplayLogs();
+
             return propShowInfo.boolValue;
+        }
+
+        protected void DisplayLogs()
+        {
+            var okapiElement = target as OkapiElement;
+
+            var logs = okapiElement.logs;
+            if (logs.Count > 0)
+            {
+                var rect = EditorGUILayout.BeginVertical("box");
+                
+                float       inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
+                GUIStyle    explanationStyle = GUIUtils.GetLogStyle();
+
+                int index = 0;
+                foreach (var log in logs)
+                {
+                    Color color = Color.white;
+                    switch (log.type)
+                    {
+                        case LogEntry.Type.Debug:
+                            color = (index % 2 == 0) ? (GUIUtils.ColorFromHex("#5edb64")) : (GUIUtils.ColorFromHex("#5ea064"));
+                            break;
+                        case LogEntry.Type.Warning:
+                            color = (index % 2 == 0) ? (GUIUtils.ColorFromHex("#dbcb5e")) : (GUIUtils.ColorFromHex("#bbbb5e"));
+                            break;
+                        case LogEntry.Type.Error:
+                            color = (index % 2 == 0) ? (GUIUtils.ColorFromHex("#ee5a5a")) : (GUIUtils.ColorFromHex("#bb5a5a"));
+                            break;
+                        default:
+                            color = (index % 2 == 0) ? (GUIUtils.ColorFromHex("#bfbfbf")) : (GUIUtils.ColorFromHex("#909090"));
+                            break;
+                    }
+                    index++;
+
+                    int textLines = log.text.Count((c) => c == '\n');
+                    int height = 18 + textLines * 16;
+
+                    Rect logErrorRect = new Rect(titleRect.x, rect.y, inspectorWidth - 10 - titleRect.x - 4, height);
+                    EditorGUI.DrawRect(logErrorRect, color);
+
+                    logErrorRect.x += 10;
+                    logErrorRect.width += 10;
+
+                    EditorGUI.LabelField(logErrorRect, log.text, explanationStyle);
+                    rect.y += height;
+                    EditorGUILayout.Space(height);
+                }
+
+                EditorGUILayout.EndVertical();
+            }
         }
 
     }

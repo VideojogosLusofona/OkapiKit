@@ -177,6 +177,8 @@ namespace OkapiKit.Editor
 
         protected override (Color, Color, Color) GetColors()
         {
+            if (propEnableTrigger == null) OnEnable();
+
             if (propEnableTrigger.boolValue)
             {
                 return (GUIUtils.ColorFromHex("#D0FFFF"), GUIUtils.ColorFromHex("#2f4858"), GUIUtils.ColorFromHex("#86CBFF"));

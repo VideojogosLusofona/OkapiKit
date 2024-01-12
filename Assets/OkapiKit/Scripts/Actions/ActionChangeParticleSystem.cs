@@ -6,8 +6,8 @@ using UnityEngine.Android;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Modify Particle System")]
-    public class ActionModifyParticleSystem : Action
+    [AddComponentMenu("Okapi/Action/Change Particle System")]
+    public class ActionChangeParticleSystem : Action
     {
         public enum ChangeType { Emission = 0 };
 
@@ -61,7 +61,7 @@ namespace OkapiKit
             }
         }
 
-        public override string GetActionTitle() => "Modify Particle System";
+        public override string GetActionTitle() => "Change Particle System";
 
         public override string GetRawDescription(string ident, GameObject gameObject)
         {
@@ -89,6 +89,23 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (particleSystem == null)
+            {
+                if (GetComponent<ParticleSystem>() == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target particle system"));
+                }
+                else
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Particle system to modify is this object, but it should be explicitly linked!"));
+                }
+            }
         }
     }
 }

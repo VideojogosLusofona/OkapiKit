@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace OkapiKit
 {
@@ -16,9 +17,9 @@ namespace OkapiKit
 
         public override string GetTriggerTitle() => "On Condition";
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
-            base.UpdateExplanation();
+            base.Internal_UpdateExplanation();
 
             if ((elseActions != null) && (elseActions.Length > 0))
             {
@@ -42,6 +43,23 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((conditions == null) || (conditions.Length == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No conditions set!"));
+            }
+            else
+            {
+                foreach (var condition in conditions)
+                {
+                    condition.CheckErrors(gameObject, _logs);
+                }
+            }
         }
 
         private void Update()

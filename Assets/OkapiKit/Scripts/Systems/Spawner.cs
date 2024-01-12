@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using UnityEditor;
 
 namespace OkapiKit
 {
@@ -180,7 +181,7 @@ namespace OkapiKit
             }
         }
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
             _explanation = "";
             if (description != "") _explanation += description + "\n----------------\n";
@@ -214,7 +215,7 @@ namespace OkapiKit
                 }
                 else
                 {
-                    if (prefabs.Length > 0)
+                    if ((prefabs.Length > 0) && (prefabs[0] != null))
                     {
                         _explanation += $"The generated object will be [{prefabs[0].name}].\n";
                     }
@@ -284,6 +285,62 @@ namespace OkapiKit
             }
 
             return _explanation;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((prefabs == null) || (prefabs.Length == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefabs not defined!"));
+            }
+            else
+            {
+                int index = 0;
+                foreach (var prefab in prefabs)
+                {
+                    if (prefab == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Prefab slot is empty in prefab list (index={index})!"));
+                    }
+                    else if ((PrefabUtility.GetPrefabAssetType(prefab) == PrefabAssetType.NotAPrefab) ||
+                             (prefab.scene == null) ||
+                             (prefab.scene.rootCount != 0))
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Spawn object in slot {index} is not a prefab!"));
+                    }
+                    index++;
+                }
+            }
+
+            // Check if there's colliders
+            var collider = GetComponent<BoxCollider2D>();
+            if (collider == null)
+            {
+                if ((spawnPoints == null) || (spawnPoints.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Objects will spawn at this position, but it should be set explicitly."));
+                }
+                else
+                {
+                    int index = 0;
+                    foreach (var spawnPoint in spawnPoints)
+                    {
+                        if (spawnPoint == null)
+                        {
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Spawn point is empty in prefab list (index={index})!"));
+                        }
+                        index++;
+                    }
+                }
+            }
+        }
+
+        public void ForceCheckErrors()
+        {
+            _logs.Clear();
+            CheckErrors();
         }
 
         public int GetSpawnPointCount()

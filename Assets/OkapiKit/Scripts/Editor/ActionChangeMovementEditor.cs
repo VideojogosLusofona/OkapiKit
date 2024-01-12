@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(ActionModifyMovement))]
-    public class ActionModifyMovementEditor : ActionEditor
+    [CustomEditor(typeof(OkapiKit.ActionChangeMovement))]
+    public class ActionChangeMovementEditor : ActionEditor
     {
         SerializedProperty propMovementComponent;
         SerializedProperty propRigidBodyComponent;
@@ -79,13 +79,13 @@ namespace OkapiKit.Editor
                 }
 
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
-                if (propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.Velocity)
+                if (propChangeType.enumValueIndex == (int)OkapiKit.ActionChangeMovement.ChangeType.Velocity)
                 {
                     EditorGUILayout.PropertyField(propOperation, new GUIContent("Operation"));
 
-                    var operation = (ActionModifyMovement.VelocityOperation)propOperation.enumValueIndex;
+                    var operation = (OkapiKit.ActionChangeMovement.VelocityOperation)propOperation.enumValueIndex;
 
-                    if (operation == ActionModifyMovement.VelocityOperation.Set)
+                    if (operation == OkapiKit.ActionChangeMovement.VelocityOperation.Set)
                     {
                         Rect rect = EditorGUILayout.BeginHorizontal();
                         rect.height = 20;
@@ -108,18 +108,18 @@ namespace OkapiKit.Editor
                             EditorGUILayout.PropertyField(propMaxVelocity, new GUIContent("Max Velocity"));
                         }
                     }
-                    else if (operation == ActionModifyMovement.VelocityOperation.PercentageModify)
+                    else if (operation == OkapiKit.ActionChangeMovement.VelocityOperation.PercentageModify)
                     {
                         EditorGUILayout.PropertyField(propPercentageValue, new GUIContent("Percentage Value [0 to 1]"));
                     }
-                    else if (operation == ActionModifyMovement.VelocityOperation.AbsoluteModify)
+                    else if (operation == OkapiKit.ActionChangeMovement.VelocityOperation.AbsoluteModify)
                     {
                         EditorGUILayout.PropertyField(propValue, new GUIContent("Value"));
                         EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis"));
                     }
 
-                    if ((operation == ActionModifyMovement.VelocityOperation.AbsoluteModify) ||
-                        (operation == ActionModifyMovement.VelocityOperation.AbsoluteModify))
+                    if ((operation == OkapiKit.ActionChangeMovement.VelocityOperation.AbsoluteModify) ||
+                        (operation == OkapiKit.ActionChangeMovement.VelocityOperation.AbsoluteModify))
                     {
                         EditorGUILayout.PropertyField(propClampSpeed, new GUIContent("Clamp Speed"));
                         if (propClampSpeed.boolValue)
@@ -128,37 +128,47 @@ namespace OkapiKit.Editor
                         }
                     }
                 }
-                else if ((propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.GravityScale) ||
-                         (propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.JumpHoldTime) ||
-                         (propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.GlideMaxTime))
+                else if ((propChangeType.enumValueIndex == (int)OkapiKit.ActionChangeMovement.ChangeType.GravityScale) ||
+                         (propChangeType.enumValueIndex == (int)OkapiKit.ActionChangeMovement.ChangeType.JumpHoldTime) ||
+                         (propChangeType.enumValueIndex == (int)OkapiKit.ActionChangeMovement.ChangeType.GlideMaxTime))
                 {
                     MovementPlatformer platMovement = null;
                     if (propMovementComponent.objectReferenceValue != null)
                     {
                         platMovement = propMovementComponent.objectReferenceValue as MovementPlatformer;
+                    }
+                    else
+                    {
+                        var action = target as Action;
+                        platMovement = action.gameObject.GetComponent<MovementPlatformer>();
                     }
                     if (platMovement)
                     {
                         EditorGUILayout.PropertyField(propFloatPlatformerOperation, new GUIContent("Operation"));
 
-                        var operation = (ActionModifyMovement.FloatPlatformerPropertyOperation)propFloatPlatformerOperation.enumValueIndex;
+                        var operation = (OkapiKit.ActionChangeMovement.FloatPlatformerPropertyOperation)propFloatPlatformerOperation.enumValueIndex;
 
-                        if (operation == ActionModifyMovement.FloatPlatformerPropertyOperation.Set)
+                        if (operation == OkapiKit.ActionChangeMovement.FloatPlatformerPropertyOperation.Set)
                         {
                             EditorGUILayout.PropertyField(propPercentageValue, new GUIContent("Value"));
                         }
-                        else if (operation == ActionModifyMovement.FloatPlatformerPropertyOperation.PercentageModify)
+                        else if (operation == OkapiKit.ActionChangeMovement.FloatPlatformerPropertyOperation.PercentageModify)
                         {
                             EditorGUILayout.PropertyField(propPercentageValue, new GUIContent("Percentage Value [0 to 1]"));
                         }
                     }
                 }
-                else if (propChangeType.enumValueIndex == (int)ActionModifyMovement.ChangeType.MaxJumpCount)
+                else if (propChangeType.enumValueIndex == (int)OkapiKit.ActionChangeMovement.ChangeType.MaxJumpCount)
                 {
                     MovementPlatformer platMovement = null;
                     if (propMovementComponent.objectReferenceValue != null)
                     {
                         platMovement = propMovementComponent.objectReferenceValue as MovementPlatformer;
+                    }
+                    else
+                    {
+                        var action = target as Action;
+                        platMovement = action.gameObject.GetComponent<MovementPlatformer>();
                     }
                     if (platMovement)
                     {

@@ -5,8 +5,8 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Modify Renderer")]
-    public class ActionModifyRenderer : Action
+    [AddComponentMenu("Okapi/Action/Change Renderer")]
+    public class ActionChangeRenderer : Action
     {
         public enum ChangeType { Visibility = 0 };
 
@@ -21,7 +21,7 @@ namespace OkapiKit
 
         private bool needVisibility => (changeType == ChangeType.Visibility);
 
-        public override string GetActionTitle() { return "Modify Renderer"; }
+        public override string GetActionTitle() { return "Change Renderer"; }
 
         public override void Execute()
         {
@@ -83,6 +83,23 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (renderer == null)
+            {
+                if (GetComponent<Renderer>() == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target renderer"));
+                }
+                else
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Renderer to modify is this object, but it should be explicitly linked!"));
+                }
+            }
         }
     }
 }

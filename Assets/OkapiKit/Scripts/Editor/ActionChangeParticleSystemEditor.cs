@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(ActionModifyRenderer))]
-    public class ActionModifyRendererEditor : ActionEditor
+    [CustomEditor(typeof(ActionChangeParticleSystem))]
+    public class ActionChangeParticleSystemEditor : ActionEditor
     {
-        SerializedProperty propRenderer;
+        SerializedProperty propParticleSystem;
         SerializedProperty propChangeType;
-        SerializedProperty propVisibility;
+        SerializedProperty propEmission;
 
         protected override void OnEnable()
         {
             base.OnEnable();
 
-            propRenderer = serializedObject.FindProperty("renderer");
+            propParticleSystem = serializedObject.FindProperty("particleSystem");
             propChangeType = serializedObject.FindProperty("changeType");
-            propVisibility = serializedObject.FindProperty("visibility");
+            propEmission = serializedObject.FindProperty("emission");
         }
 
         public override void OnInspectorGUI()
@@ -27,16 +27,16 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionModifyRenderer);
+                var action = (target as ActionChangeParticleSystem);
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propRenderer, new GUIContent("Renderer"));
+                EditorGUILayout.PropertyField(propParticleSystem, new GUIContent("Particle System"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
 
-                if (propChangeType.enumValueIndex == (int)ActionModifyRenderer.ChangeType.Visibility)
+                if (propChangeType.enumValueIndex == (int)ActionChangeParticleSystem.ChangeType.Emission)
                 {
-                    EditorGUILayout.PropertyField(propVisibility, new GUIContent("Visibility"));
+                    EditorGUILayout.PropertyField(propEmission, new GUIContent("Emission"));
                 }
 
                 if (EditorGUI.EndChangeCheck())

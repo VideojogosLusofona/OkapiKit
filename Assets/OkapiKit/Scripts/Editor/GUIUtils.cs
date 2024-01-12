@@ -125,6 +125,26 @@ namespace OkapiKit.Editor
             return explanationStyle;
         }
 
+        static public GUIStyle GetLogStyle()
+        {
+            if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+            GUIStyle explanationStyle;
+            styles.TryGetValue("Log", out explanationStyle);
+            if (explanationStyle == null)
+            {
+                explanationStyle = new GUIStyle(GUI.skin.label);
+                explanationStyle.fontSize = 12;
+                explanationStyle.fixedHeight = 12;
+                explanationStyle.alignment = TextAnchor.UpperLeft;
+                explanationStyle.normal.textColor = ColorFromHex("#000000");
+                explanationStyle.clipping = TextClipping.Overflow;
+                explanationStyle.wordWrap = false;
+                styles.Add("Log", explanationStyle);
+            }
+            return explanationStyle;
+        }
+
         static public GUIStyle GetTriggerExplanationStyle()
         {
             if (styles == null) styles = new Dictionary<string, GUIStyle>();

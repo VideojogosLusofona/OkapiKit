@@ -5,8 +5,8 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Modify Movement")]
-    public class ActionModifyMovement : Action
+    [AddComponentMenu("Okapi/Action/Change Movement")]
+    public class ActionChangeMovement : Action
     {
         public enum ChangeType
         {
@@ -61,7 +61,7 @@ namespace OkapiKit
         [SerializeField]
         private int iValue;
 
-        public override string GetActionTitle() { return "Modify Movement"; }
+        public override string GetActionTitle() { return "Change Movement"; }
 
         private (Movement, Rigidbody2D) GetTarget()
         {
@@ -232,6 +232,68 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            Movement movement = null;
+            Rigidbody2D rb = null;
+
+            (movement, rb) = GetTarget();
+
+            if ((movement == null) && (rb == null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No target for movement change\n  - place a Movement or RigidBody2D component on this object or\n  - assign a Movement or RigidBody2D target"));
+            }
+            else
+            {
+                if ((movement != null) && (movementComponent == null))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Target is movement on this object, but it's better to set it explicitly"));
+                }
+                else if ((rb != null) && (rigidBodyComponent == null))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Target is RigidBody2D on this object, but it's better to set it explicitly"));
+                }
+            }
+            if (changeType == ChangeType.Velocity)
+            {
+                if ((movementComponent != null) && (!movementComponent.IsLinear()))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target movement is not linear, velocity can't be changed!"));
+                }
+                else if ((GetComponent<Movement>() != null) && (movement == null))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target movement is not linear, velocity can't be changed!"));
+                }
+            }
+            if (movement == null)
+            {
+                if ((changeType == ChangeType.MaxJumpCount) ||
+                    (changeType == ChangeType.JumpHoldTime) ||
+                    (changeType == ChangeType.GlideMaxTime) ||
+                    (changeType == ChangeType.GravityScale))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, $"{changeType} can only be used with a Platformer Movement target!"));
+                }
+            }
+            else
+            {
+                if (((changeType == ChangeType.MaxJumpCount) ||
+                     (changeType == ChangeType.JumpHoldTime) ||
+                     (changeType == ChangeType.GlideMaxTime) ||
+                     (changeType == ChangeType.GravityScale)) &&
+                    (movement as MovementPlatformer == null))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, $"{changeType} can only be used with a Platformer Movement target!"));
+                }
+            }
+            if (rb == null)
+            {
+                
+            }
         }
 
         public override void Execute()

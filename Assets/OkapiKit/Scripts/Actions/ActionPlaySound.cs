@@ -49,6 +49,21 @@ namespace OkapiKit
 
             return desc;
         }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (clip == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined sound to play!"));
+            }
+            if (SoundManager.instance == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "There is no sound manager in the scene!"));
+            }
+        }
+
         public override void Execute()
         {
             if (!enableAction) return;

@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(ActionModifySpriteRenderer))]
-    public class ActionModifySpriteRendererEditor : ActionEditor
+    [CustomEditor(typeof(ActionChangeSpriteRenderer))]
+    public class ActionChangeSpriteRendererEditor : ActionEditor
     {
         SerializedProperty propTarget;
         SerializedProperty propChangeType;
@@ -29,18 +29,18 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionModifySpriteRenderer);
+                var action = (target as ActionChangeSpriteRenderer);
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
 
-                if (propChangeType.enumValueIndex == (int)ActionModifySpriteRenderer.ChangeType.Sprite)
+                if (propChangeType.enumValueIndex == (int)ActionChangeSpriteRenderer.ChangeType.Sprite)
                 {
                     EditorGUILayout.PropertyField(propSprite, new GUIContent("Sprite"));
                 }
-                if (propChangeType.enumValueIndex == (int)ActionModifySpriteRenderer.ChangeType.Color)
+                if (propChangeType.enumValueIndex == (int)ActionChangeSpriteRenderer.ChangeType.Color)
                 {
                     EditorGUILayout.PropertyField(propColor, new GUIContent("Color"));
                 }

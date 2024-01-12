@@ -26,7 +26,7 @@ namespace OkapiKit
         private new Camera camera;
         private Bounds allObjectsBound;
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
             _explanation = "";
             if (description != "") _explanation += description + "\n----------------\n";
@@ -78,6 +78,28 @@ namespace OkapiKit
             }
 
             return _explanation;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            var camera = GetComponent<Camera>();
+            if ((camera == null) || (!camera.orthographic))
+            {
+                if ((tag != null) && (tagMode == TagMode.Average) && (allowZoom))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "A ortographic camera component needs to be on the same object as this system!"));
+                }
+            }
+            if ((targetTag == null) && (targetObject == null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No follow target is defined!"));
+            }
+            if (cameraLimits == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Camera limits are not set!"));
+            }
         }
 
         void Start()
@@ -143,7 +165,7 @@ namespace OkapiKit
 
         void RunZoom()
         {
-            if ((tag != null) && (tagMode == TagMode.Average) && (allowZoom))
+            if ((targetTag != null) && (tagMode == TagMode.Average) && (allowZoom))
             {
                 float height1 = Mathf.Clamp(allObjectsBound.extents.y * zoomMargin, minMaxSize.x, minMaxSize.y);
                 float height2 = Mathf.Clamp(allObjectsBound.extents.x * zoomMargin, camera.aspect * minMaxSize.x, camera.aspect * minMaxSize.y) / camera.aspect;

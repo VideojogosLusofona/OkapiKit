@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using static OkapiKit.MovementFollow;
 
 namespace OkapiKit
 {
@@ -76,6 +77,16 @@ namespace OkapiKit
                 }
             }
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+            
+            if ((path == null) && (taggedPath == null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Path not defined - use either tag or drag the path object to the slot below!"));
+            }
         }
 
         List<Vector3> actualPath;

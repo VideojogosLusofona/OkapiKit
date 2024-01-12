@@ -8,7 +8,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Action/Destroy Object")]
     public class ActionDestroyObject : Action
     {
-        public enum Target { This = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4 };
+        public enum Target { Self = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4 };
 
         [SerializeField]
         private Target target = Target.Object;
@@ -29,7 +29,7 @@ namespace OkapiKit
 
             switch (target)
             {
-                case Target.This:
+                case Target.Self:
                     desc += $"destroys this object";
                     break;
                 case Target.Topmost:
@@ -48,8 +48,15 @@ namespace OkapiKit
                         desc += "destroys objects with tags [";
                         for (int i = 0; i < tags.Length; i++)
                         {
-                            desc += tags[i].name;
-                            if (i < tags.Length - 1) desc += ",";
+                            if (tags[i] != null)
+                            {
+                                desc += tags[i].name;
+                                if (i < tags.Length - 1) desc += ",";
+                            }
+                            else
+                            {
+                                desc += "[UNDEFINED]";
+                            }
                         }
                         desc += "] ";
                         return desc;
@@ -65,6 +72,34 @@ namespace OkapiKit
 
             return desc;
         }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((target == Target.Object) && (targetObject == null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Undefined target object - this will destroy this object - consider using Self as target!"));
+            }
+            if (target == Target.Tag)
+            {
+                if ((tags == null) || (tags.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Deletion by tag is selected, but no tags are selected!"));
+                }
+                else
+                {
+                    foreach (var tag in tags)
+                    {
+                        if (tag == null)
+                        {
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, "Empty tag defined in tags list!"));
+                        }
+                    }
+                }
+            }
+        }
+
         public override void Execute()
         {
             if (!enableAction) return;
@@ -72,7 +107,7 @@ namespace OkapiKit
 
             switch (target)
             {
-                case Target.This:
+                case Target.Self:
                     Destroy(gameObject);
                     break;
                 case Target.Topmost:

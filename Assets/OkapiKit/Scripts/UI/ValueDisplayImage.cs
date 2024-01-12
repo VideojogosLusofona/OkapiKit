@@ -26,5 +26,20 @@ namespace OkapiKit
                 i++;
             }
         }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            var v = GetVariable();
+            if (v != null)
+            {
+                if (v.type != Variable.Type.Integer)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "This type of display only supports integer values!"));
+                }
+            }
+        }
+
     }
 }

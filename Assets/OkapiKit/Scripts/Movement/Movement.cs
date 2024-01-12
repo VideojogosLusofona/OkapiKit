@@ -66,7 +66,7 @@ namespace OkapiKit
             }
         }
 
-        override public string UpdateExplanation()
+        override protected string Internal_UpdateExplanation()
         {
             _explanation = "";
             if (description != "") _explanation += description + "\n----------------\n";
