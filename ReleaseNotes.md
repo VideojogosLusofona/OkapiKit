@@ -3,6 +3,8 @@
 ## V1.9.0
 
 - Added target tag and target object direction option to probe, to allow for maximum distance
+- Fixed bug with uninitialized actions when added to triggers throwing an error
+- Added Rotate Towards action
 
 ## V1.8.0
 

@@ -6,7 +6,6 @@ Features:
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
 - Unify ValueHandler/Value with single selector that can take any of them
 - Add HueShift/Outline effect for sprites
-- Add LookAt action
 - Warning/Error system
   - Error: Set scene object to prefab
   - Warning: No actions
