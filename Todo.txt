@@ -1,3 +1,6 @@
+Features:
+---------
+
 - Add tooltips to everything with explanations
 - Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
@@ -10,6 +13,7 @@
   - Warning: No probabilities set for ActionRandom
   - Warning: No tags set for OnCollision
   - Warning: Change values with deltaValue = 0
+  - Warning: No rigid body with OnCollisionTrigger
 - Movement targets should be redefinable
 - Comment Code
 - Documentation
@@ -25,6 +29,7 @@ Usability:
 - Enable debug system for nodes 
 - No info on tagged actions
 - Value Display Text should use a formatting string instead the text in the edit box
+- Split OkapiKit from samples
 
 Simple usage:
 -------------
@@ -53,6 +58,19 @@ Games:
 - Create FlagCatcher game
 - Create UI game (strategy, need to think about this a lot)
 - Create SpyGame (add AI system - StateMachine)
-- Create Driving (add AI system - Markov chains)
 - Create Commando 2 game (add AI system - 2d path finding)
 - Create Visual Novel game
+- Convert probe thing to racing game with probe based AI
+- Create Platformer game
+
+Ideas Okapi V2.0:
+-----------------
+
+- All objects that are "Okapi" objects have a "OkapiObject" component, with a scriptable object that belongs to them and has all the Okapi stuff in it
+- Add node-based programming
+- Packages that support types of system/games:
+  - Inventory
+  - Dialogues
+  - AI
+  - Visual Novel
+- Ability to export OkapiKit game as a text file - for research purposes
