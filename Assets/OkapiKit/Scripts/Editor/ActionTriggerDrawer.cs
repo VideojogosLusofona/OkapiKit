@@ -67,9 +67,17 @@ namespace OkapiKit.Editor
                 Action a = propAction.objectReferenceValue as Action;
                 if (a)
                 {
-                    int explanationLines = a.explanation.Count((c) => c == '\n') + 1;
+                    var explanation = a.explanation;
+                    if (explanation != null)
+                    {
+                        int explanationLines = a.explanation.Count((c) => c == '\n') + 1;
 
-                    height += 18 * explanationLines;
+                        height += 18 * explanationLines;
+                    }
+                    else
+                    {
+                        height += 18;
+                    }
                 }
                 else
                 {

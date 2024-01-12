@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.9.0
+
+- Added target tag and target object direction option to probe, to allow for maximum distance
+
 ## V1.8.0
 
 - Added category for OkapiKit under the "Add Component" dialog
