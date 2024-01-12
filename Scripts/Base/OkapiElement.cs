@@ -11,10 +11,13 @@ namespace OkapiKit
         protected bool _showInfo = true;
         [SerializeField, ResizableTextArea, ReadOnly]
         protected string _explanation;
+        [SerializeField, ResizableTextArea, ReadOnly]
+        protected List<LogEntry> _logs = new List<LogEntry>();
         [SerializeField, ResizableTextArea]
         protected string description;
 
-        public string explanation => _explanation;
+        public string           explanation => _explanation;
+        public List<LogEntry>   logs => _logs;
 
         public bool showInfo
         {
@@ -24,7 +27,19 @@ namespace OkapiKit
 
         public abstract string GetRawDescription(string ident, GameObject refObject);
 
-        public abstract string UpdateExplanation();
+        public string UpdateExplanation()
+        {
+            _logs.Clear();
+
+            CheckErrors();
+            return Internal_UpdateExplanation();
+        }
+
+        protected abstract string Internal_UpdateExplanation();
+        protected virtual void CheckErrors()
+        {
+
+        }        
 
         protected virtual void Awake()
         {

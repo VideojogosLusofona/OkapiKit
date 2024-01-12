@@ -50,5 +50,29 @@ namespace OkapiKit
             return desc;
         }
 
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            var v = GetVariable();
+            if (v != null)
+            {
+                if (!v.hasLimits)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "This type of display only supports values with limits!"));
+                }
+            }
+            if (fill == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to set fill to a UI object that gets scaled with the given value!"));
+            }
+            else if (setColor)
+            {
+                if (fill.GetComponent<Image>() == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "To set color, fill needs to have an Image component!"));
+                }
+            }
+        }
     }
 }

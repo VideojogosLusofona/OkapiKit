@@ -33,6 +33,16 @@ namespace OkapiKit
             return desc;
         }
 
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Undefined target object - object will change its own state"));
+            }
+        }
+
         public override void Execute()
         {
             if (!enableAction) return;

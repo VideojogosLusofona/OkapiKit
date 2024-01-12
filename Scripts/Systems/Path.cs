@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using static OkapiKit.CameraFollow2d;
 
 namespace OkapiKit
 {
@@ -138,7 +139,31 @@ namespace OkapiKit
             return "(UNUSED) Path.GetRawDescription";
         }
 
-        public override string UpdateExplanation()
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((points == null) || (points.Count == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No points defined: add points!"));
+            }
+            else
+            {
+                if (points.Count < 2)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Need more points: add points!"));
+                }
+                else if (type == PathType.Smooth)
+                {
+                    if ((points.Count - 1) % 2 != 0)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Need two points per segment on a smooth curve!"));
+                    }
+                }
+            }
+        }
+
+        protected override string Internal_UpdateExplanation()
         {
             _explanation = "";
             if (description != "") _explanation = description;

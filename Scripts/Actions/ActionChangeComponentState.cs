@@ -19,10 +19,10 @@ namespace OkapiKit
         {
             string desc = GetPreconditionsString(gameObject);
 
-            string targetDesc = "[Undefined] on [Undefined Object]";
+            string targetDesc = "[Undefined]";
             if (target != null)
             {
-                targetDesc = $"{target} on {target.name}";
+                targetDesc = $"{target}";
             }
             switch (state)
             {
@@ -37,6 +37,16 @@ namespace OkapiKit
                     break;
             }
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target component"));
+            }
         }
 
         public override void Execute()

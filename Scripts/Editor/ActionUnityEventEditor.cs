@@ -23,7 +23,7 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionUnityEventEditor);
+                var action = (target as ActionUnityEvent);
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();

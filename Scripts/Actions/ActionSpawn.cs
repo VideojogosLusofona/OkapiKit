@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using UnityEditor;
+using System;
 
 namespace OkapiKit
 {
@@ -74,6 +76,52 @@ namespace OkapiKit
                 }
             }
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (prefabObject == null) 
+            {
+                var spawner = GetComponent<Spawner>();
+                if (spawner == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefab not defined!"));
+                }
+                else
+                {
+                    spawner.ForceCheckErrors();
+                    var actionLogs = spawner.logs;
+                    foreach (var log in actionLogs)
+                    {
+                        _logs.Add(new LogEntry(log.type, $"On spawner: " + log.text));
+                    }
+                }
+            }
+            else
+            {
+                if ((PrefabUtility.GetPrefabAssetType(prefabObject) == PrefabAssetType.NotAPrefab) ||
+                    (prefabObject.scene == null) || 
+                    (prefabObject.scene.rootCount != 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn object is not a prefab!"));
+                }
+            }
+            if (spawnPosition == SpawnPosition.Target)
+            {
+                if (targetPosition == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target position is not set!"));
+                }
+            }
+            if (spawnPosition == SpawnPosition.Tag)
+            {
+                if (targetTag == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag is not set!"));
+                }
+            }
         }
 
         public override void Execute()

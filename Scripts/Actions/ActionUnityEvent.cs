@@ -24,5 +24,29 @@ namespace OkapiKit
         {
             return $"{GetPreconditionsString(gameObject)}execute Unity event";
         }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (unityEvent.GetPersistentEventCount() == 0)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No Unity event declared!"));
+            }
+            else
+            {
+                for (int i = 0; i < unityEvent.GetPersistentEventCount(); i++)
+                {
+                    if (unityEvent.GetPersistentTarget(i) == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"No receiver for Unity event on slot {i}!"));
+                    }
+                    else if (unityEvent.GetPersistentMethodName(i) == "")
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"No function for Unity event on slot {i}!"));
+                    }
+                }
+            }
+        }
     }
 }

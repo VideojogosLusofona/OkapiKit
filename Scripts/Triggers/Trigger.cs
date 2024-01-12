@@ -27,7 +27,7 @@ namespace OkapiKit
 
         public virtual string GetTriggerTitle() { return "Trigger"; }
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
             _explanation = "";
 
@@ -50,6 +50,52 @@ namespace OkapiKit
             _explanation += GetDescriptionActions(actions);
 
             return _explanation;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((actions == null) || (actions.Length == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No actions defined!"));
+            }
+            else
+            {
+                int index = 0;
+                foreach (var action in actions)
+                {
+                    if (action.action == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Action {index} in not defined on action list!"));
+                    }
+                    else
+                    {
+                        action.action.ForceCheckErrors();
+                        var actionLogs = action.action.logs;
+                        foreach (var log in actionLogs)
+                        {
+                            _logs.Add(new LogEntry(log.type, $"On action {index}: " + log.text));
+                        }
+                    }
+                    index++;
+                }
+            }
+
+            if (hasPreconditions)
+            {
+                if ((preConditions == null) || (preConditions.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!"));
+                }
+                else
+                {
+                    foreach (var condition in preConditions)
+                    {
+                        condition.CheckErrors(gameObject, _logs);
+                    }
+                }
+            }
         }
 
         protected string GetDescriptionActions(ActionTrigger[] actionList)

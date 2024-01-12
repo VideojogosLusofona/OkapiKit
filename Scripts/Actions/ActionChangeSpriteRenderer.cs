@@ -5,8 +5,8 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Modify Sprite Renderer")]
-    public class ActionModifySpriteRenderer : Action
+    [AddComponentMenu("Okapi/Action/Change Sprite Renderer")]
+    public class ActionChangeSpriteRenderer : Action
     {
         public enum ChangeType { Sprite = 0, Color = 1 };
         public enum StateChange { Enable = 0, Disable = 1, Toggle = 2 };
@@ -42,7 +42,7 @@ namespace OkapiKit
             }
         }
 
-        public override string GetActionTitle() => "Modify Sprite Renderer";
+        public override string GetActionTitle() => "Change Sprite Renderer";
 
         public override string GetRawDescription(string ident, GameObject gameObject)
         {
@@ -62,6 +62,27 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                if (GetComponent<SpriteRenderer>() == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target sprite renderer!"));
+                }
+                else
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Sprite renderer to modify is this object, but it should be explicitly linked!"));
+                }
+            }
+            if (changeType == ChangeType.Sprite)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined sprite to change sprite renderer!"));
+            }
         }
     }
 }

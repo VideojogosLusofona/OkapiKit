@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(ActionModifyTrailRenderer))]
-    public class ActionModifyTrailRendererEditor : ActionEditor
+    [CustomEditor(typeof(ActionChangeTrailRenderer))]
+    public class ActionChangeTrailRendererEditor : ActionEditor
     {
         SerializedProperty propTarget;
         SerializedProperty propChangeType;
@@ -27,14 +27,14 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionModifyTrailRenderer);
+                var action = (target as ActionChangeTrailRenderer);
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
 
-                if (propChangeType.enumValueIndex == (int)ActionModifyTrailRenderer.ChangeType.Emitter)
+                if (propChangeType.enumValueIndex == (int)ActionChangeTrailRenderer.ChangeType.Emitter)
                 {
                     EditorGUILayout.PropertyField(propEmitter, new GUIContent("Emitter"));
                 }

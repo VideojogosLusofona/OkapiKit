@@ -33,5 +33,22 @@ namespace OkapiKit
 
             return $"{GetPreconditionsString(gameObject)}play particle system {targetName}";
         }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                if (GetComponent<ParticleSystem>() == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined particle system!"));
+                }
+                else
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Particle system to play is this object, but it should be explicitly linked!"));
+                }
+            }
+        }
     }
 }

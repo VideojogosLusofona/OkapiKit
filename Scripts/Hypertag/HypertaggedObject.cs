@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using UnityEngine.Events;
 
 namespace OkapiKit
 {
-    [DisallowMultipleComponent,AddComponentMenu("Okapi/Hypertag")]
+    [DisallowMultipleComponent, AddComponentMenu("Okapi/Hypertag")]
     public class HypertaggedObject : OkapiElement
     {
         [SerializeField]
@@ -135,7 +136,7 @@ namespace OkapiKit
             return "";
         }
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
             string e = GetRawDescription("", gameObject);
 
@@ -156,6 +157,28 @@ namespace OkapiKit
                 }
             }
             return _explanation;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((hypertags == null) || (hypertags.Count == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Tags not defined!"));
+            }
+            else
+            {
+                int index = 0;
+                foreach (var tag in hypertags)
+                {
+                    if (tag == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot {index} is empty in tag list!"));
+                    }
+                    index++;
+                }
+            }
         }
     }
 }

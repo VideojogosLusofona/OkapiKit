@@ -3,20 +3,18 @@ using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(ActionModifyParticleSystem))]
-    public class ActionModifyParticleSystemEditor : ActionEditor
+    [CustomEditor(typeof(ActionChangeSystemOption))]
+    public class ActionChangeSystemOptionEditor : ActionEditor
     {
-        SerializedProperty propParticleSystem;
         SerializedProperty propChangeType;
-        SerializedProperty propEmission;
+        SerializedProperty propState;
 
         protected override void OnEnable()
         {
             base.OnEnable();
 
-            propParticleSystem = serializedObject.FindProperty("particleSystem");
             propChangeType = serializedObject.FindProperty("changeType");
-            propEmission = serializedObject.FindProperty("emission");
+            propState = serializedObject.FindProperty("state");
         }
 
         public override void OnInspectorGUI()
@@ -27,16 +25,15 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionModifyParticleSystem);
+                var action = (target as ActionChangeSystemOption);
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propParticleSystem, new GUIContent("Particle System"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
 
-                if (propChangeType.enumValueIndex == (int)ActionModifyParticleSystem.ChangeType.Emission)
+                if (propChangeType.enumValueIndex == (int)ActionChangeSystemOption.ChangeType.MouseCursorVisibility)
                 {
-                    EditorGUILayout.PropertyField(propEmission, new GUIContent("Emission"));
+                    EditorGUILayout.PropertyField(propState, new GUIContent("Mouse Cursor"));
                 }
 
                 if (EditorGUI.EndChangeCheck())

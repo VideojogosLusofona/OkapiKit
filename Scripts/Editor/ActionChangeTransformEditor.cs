@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(ActionModifyTransform))]
-    public class ActionModifyTransformEditor : ActionEditor
+    [CustomEditor(typeof(ActionChangeTransform))]
+    public class ActionChangeTransformEditor : ActionEditor
     {
         SerializedProperty propTarget;
         SerializedProperty propChangeType;
@@ -36,30 +36,30 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionModifyTransform);
+                var action = (target as ActionChangeTransform);
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
-                if (propChangeType.enumValueIndex == (int)ActionModifyTransform.ChangeType.Position)
+                if (propChangeType.enumValueIndex == (int)ActionChangeTransform.ChangeType.Position)
                 {
                     EditorGUILayout.PropertyField(propXAxis, new GUIContent("X Axis"));
-                    if (propXAxis.enumValueIndex == (int)ActionModifyTransform.AxisChange.Set)
+                    if (propXAxis.enumValueIndex == (int)ActionChangeTransform.AxisChange.Set)
                     {
                         EditorGUILayout.PropertyField(propPositionX, new GUIContent("X Position (random value between [X..Y])"));
                     }
-                    else if (propXAxis.enumValueIndex == (int)ActionModifyTransform.AxisChange.Change)
+                    else if (propXAxis.enumValueIndex == (int)ActionChangeTransform.AxisChange.Change)
                     {
                         EditorGUILayout.PropertyField(propDeltaX, new GUIContent("Delta X (random value between [X..Y])"));
                     }
 
                     EditorGUILayout.PropertyField(propYAxis, new GUIContent("Y Axis"));
-                    if (propYAxis.enumValueIndex == (int)ActionModifyTransform.AxisChange.Set)
+                    if (propYAxis.enumValueIndex == (int)ActionChangeTransform.AxisChange.Set)
                     {
                         EditorGUILayout.PropertyField(propPositionY, new GUIContent("Y Position (random value between [X..Y])"));
                     }
-                    else if (propYAxis.enumValueIndex == (int)ActionModifyTransform.AxisChange.Change)
+                    else if (propYAxis.enumValueIndex == (int)ActionChangeTransform.AxisChange.Change)
                     {
                         EditorGUILayout.PropertyField(propDeltaY, new GUIContent("Delta Y (random value between [X..Y])"));
                     }

@@ -32,11 +32,11 @@ namespace OkapiKit.Editor
 
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
-                if (propTag.enumValueIndex == (int)ActionSetParent.Target.Object)
+                if (propTarget.enumValueIndex == (int)ActionSetParent.Target.Object)
                 {
                     EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Object"));
                 }
-                else if (propTag.enumValueIndex == (int)ActionSetParent.Target.Tag)
+                else if (propTarget.enumValueIndex == (int)ActionSetParent.Target.Tag)
                 {
                     EditorGUILayout.PropertyField(propTag, new GUIContent("Tag"));
                 }

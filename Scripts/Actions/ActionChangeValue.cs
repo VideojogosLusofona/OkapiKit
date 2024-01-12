@@ -55,6 +55,24 @@ namespace OkapiKit
             return desc;
         }
 
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((variable == null) && (valueHandler == null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target variable!"));
+            }
+            if (operation == OperationType.Change)
+            {
+                if (deltaValue == 0.0f)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Value is not changing (changing by zero) - select a change value!"));
+                }
+            }
+        }
+
+
         public override void Execute()
         {
             if (!enableAction) return;

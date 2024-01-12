@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
-    [RequireComponent(typeof(Animator)), AddComponentMenu("Okapi/Action/Set Animation Parameter")]
+    [AddComponentMenu("Okapi/Action/Set Animation Parameter")]
     public class ActionSetAnimationParameter : Action
     {
         public enum ValueType { Int = 0, Float = 1, Boolean = 2, Trigger = 3, Value = 4 };
@@ -38,9 +38,11 @@ namespace OkapiKit
         public override void Execute()
         {
             if (!enableAction) return;
-            if (!animator) return;
             if (animationParameter == "") return;
             if (!EvaluatePreconditions()) return;
+
+            if (animator == null) animator = GetComponent<Animator>();
+            if (!animator) return;
 
             switch (valueType)
             {
@@ -61,7 +63,10 @@ namespace OkapiKit
                     if (valueHandler) v = valueHandler.GetVariable();
                     if (v != null)
                     {
-                        animator.SetFloat(animationParameter, v.currentValue);
+                        if (v.type == Variable.Type.Float)
+                            animator.SetFloat(animationParameter, v.currentValue);
+                        else if (v.type == Variable.Type.Integer)
+                            animator.SetInteger(animationParameter, (int)v.currentValue);
                     }
                     break;
                 default:
@@ -75,40 +80,150 @@ namespace OkapiKit
         {
             string desc = GetPreconditionsString(gameObject);
 
-            if (animator == null)
+            var anm = animator;
+            if (anm == null) anm = GetComponent<Animator>();
+
+            if (anm == null)
             {
-                desc += "sets the value of a animation parameter to a value (animator set set)!";
+                desc += "sets the value of a animation parameter to a value (animator not set)!";
             }
             else
             {
                 switch (valueType)
                 {
                     case ValueType.Int:
-                        desc += $"sets animation parameter {animationParameter} of object {animator.name} to {integerValue}";
+                        desc += $"sets animation parameter {animationParameter} of object {anm.name} to {integerValue}";
                         break;
                     case ValueType.Float:
-                        desc += $"sets animation parameter {animationParameter} of object {animator.name} to {floatValue}";
+                        desc += $"sets animation parameter {animationParameter} of object {anm.name} to {floatValue}";
                         break;
                     case ValueType.Boolean:
-                        desc += $"sets animation parameter {animationParameter} of object {animator.name} to {boolValue}";
+                        desc += $"sets animation parameter {animationParameter} of object {anm.name} to {boolValue}";
                         break;
                     case ValueType.Trigger:
-                        desc += $"triggers the animation parameter {animationParameter} of object {animator.name}";
+                        desc += $"triggers the animation parameter {animationParameter} of object {anm.name}";
                         break;
                     case ValueType.Value:
                         if (valueHandler)
                         {
-                            desc += $"sets animation parameter {animationParameter} of object {animator.name} to the value of {valueHandler.name}";
+                            desc += $"sets animation parameter {animationParameter} of object {anm.name} to the value of {valueHandler.name}";
+                        }
+                        else if (variable)
+                        {
+                            desc += $"sets animation parameter {animationParameter} of object {anm.name} to the value of variable {variable.name}";
                         }
                         else
                         {
-                            desc += $"sets animation parameter {animationParameter} of object {animator.name} to the value of variable {variable.name}";
+                            desc += $"sets animation parameter {animationParameter} of object {anm.name} to the value of [UNDEFINED]";
                         }
                         break;
                 }
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            var anm = animator;
+            if (anm == null)
+            {
+                anm = GetComponent<Animator>();
+                if (anm == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined animator!"));
+                }
+                else
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Animator to modify is on this object, but it should be explicitly linked!"));
+                }
+            }
+
+            if (anm) 
+            {
+                if (anm.runtimeAnimatorController == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Linked animator is missing a controller!"));
+                }
+                else
+                {
+                    if (animationParameter != "")
+                    {
+                        bool found = false;
+                        bool rightType = false;
+                        string pType = "[UNKNOWN]";
+                        
+                        for (int i = 0; i < anm.parameterCount; i++)
+                        {
+                            var param = anm.GetParameter(i);
+                            if (param.name == animationParameter)
+                            {
+                                found = true;
+                                pType = param.type.ToString();
+                                switch (param.type)
+                                {
+                                    case AnimatorControllerParameterType.Float:
+                                        if (valueType == ValueType.Float)
+                                        {
+                                            rightType = true;
+                                        }
+                                        else if (valueType == ValueType.Value)
+                                        {
+                                            if (variable) rightType = (variable.type == Variable.Type.Float);
+                                            else if (valueHandler) rightType = (valueHandler.type == Variable.Type.Float);
+                                        }                                            
+                                        break;
+                                    case AnimatorControllerParameterType.Int:
+                                        if (valueType == ValueType.Int)
+                                        {
+                                            rightType = true;
+                                        }
+                                        else if (valueType == ValueType.Value)
+                                        {
+                                            if (variable) rightType = (variable.type == Variable.Type.Integer);
+                                            else if (valueHandler) rightType = (valueHandler.type == Variable.Type.Integer);
+                                        }
+                                        break;
+                                    case AnimatorControllerParameterType.Bool:
+                                        rightType = (valueType == ValueType.Boolean);
+                                        break;
+                                    case AnimatorControllerParameterType.Trigger:
+                                        rightType = (valueType == ValueType.Trigger);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            }
+                        }
+
+                        if (!found)
+                        {
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Parameter animator {animationParameter} is missing!"));
+                        }
+                        else
+                        {
+                            if (!rightType)
+                            {
+                                _logs.Add(new LogEntry(LogEntry.Type.Error, $"Value is of wrong type for animator parameter {animationParameter} (should be {pType})!"));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined animation parameter!"));
+                    }
+                }
+            }
+            if (valueType == ValueType.Value)
+            {
+                if ((valueHandler == null) && (variable == null))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined variable!"));
+                }
+            }
         }
     }
 }

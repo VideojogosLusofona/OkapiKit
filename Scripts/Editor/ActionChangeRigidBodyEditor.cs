@@ -3,9 +3,10 @@ using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(ActionModifyRigidBody))]
-    public class ActionModifyRigidBodyEditor : ActionEditor
+    [CustomEditor(typeof(ActionChangeRigidBody))]
+    public class ActionChangeRigidBodyEditor : ActionEditor
     {
+        SerializedProperty propTarget;
         SerializedProperty propChangeType;
         SerializedProperty propBodyType;
         SerializedProperty propValue;
@@ -14,6 +15,7 @@ namespace OkapiKit.Editor
         {
             base.OnEnable();
 
+            propTarget = serializedObject.FindProperty("target");
             propChangeType = serializedObject.FindProperty("changeType");
             propBodyType = serializedObject.FindProperty("bodyType");
             propValue = serializedObject.FindProperty("value");
@@ -27,22 +29,23 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionModifyRigidBody);
+                var action = (target as ActionChangeRigidBody);
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
 
-                var changeType = (ActionModifyRigidBody.ChangeType)propChangeType.enumValueIndex;
+                var changeType = (ActionChangeRigidBody.ChangeType)propChangeType.enumValueIndex;
 
-                if (changeType == ActionModifyRigidBody.ChangeType.SetBodyType)
+                if (changeType == ActionChangeRigidBody.ChangeType.SetBodyType)
                 {
                     EditorGUILayout.PropertyField(propBodyType, new GUIContent("Body Type"));
                 }
-                else if ((changeType == ActionModifyRigidBody.ChangeType.Mass) ||
-                         (changeType == ActionModifyRigidBody.ChangeType.LinearDrag) ||
-                         (changeType == ActionModifyRigidBody.ChangeType.AngularDrag) ||
-                         (changeType == ActionModifyRigidBody.ChangeType.GravityScale))
+                else if ((changeType == ActionChangeRigidBody.ChangeType.Mass) ||
+                         (changeType == ActionChangeRigidBody.ChangeType.LinearDrag) ||
+                         (changeType == ActionChangeRigidBody.ChangeType.AngularDrag) ||
+                         (changeType == ActionChangeRigidBody.ChangeType.GravityScale))
                 {
                     EditorGUILayout.PropertyField(propValue, new GUIContent("Value"));
                 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using static OkapiKit.MovementRotate;
+using UnityEngine.UIElements;
 
 namespace OkapiKit
 {
@@ -28,7 +30,7 @@ namespace OkapiKit
         [SerializeField]
         private KeyCode horizontalKeyNegative = KeyCode.LeftArrow;
         [SerializeField]
-        private float gravityScale = 0;
+        private float gravityScale = 1.0f;
         [SerializeField]
         private bool useTerminalVelocity = false;
         [SerializeField]
@@ -274,22 +276,23 @@ namespace OkapiKit
                 desc += $"Character can only glide a maximum of {glideMaxTime} seconds.\n";
             }
 
-            desc += "This controller also controls some visuals:\n";
+            string animDesc = "";
+
             switch (flipBehaviour)
             {
                 case FlipBehaviour.None:
                     break;
                 case FlipBehaviour.VelocityFlipsSprite:
-                    desc += "When the character is moving to the left, the sprite renderer will be flipped.\n";
+                    animDesc += "When the character is moving to the left, the sprite renderer will be flipped.\n";
                     break;
                 case FlipBehaviour.VelocityInvertsScale:
-                    desc += "When the character is moving to the left, the horizontal scale of this object will be inverted.\n";
+                    animDesc += "When the character is moving to the left, the horizontal scale of this object will be inverted.\n";
                     break;
                 case FlipBehaviour.InputFlipsSprite:
-                    desc += "When the player intent is to go left, the sprite renderer will be flipped.\n";
+                    animDesc += "When the player intent is to go left, the sprite renderer will be flipped.\n";
                     break;
                 case FlipBehaviour.InputInvertsScale:
-                    desc += "When the player intent is to go left, the horizontal scale of this object will be inverted.\n";
+                    animDesc += "When the player intent is to go left, the horizontal scale of this object will be inverted.\n";
                     break;
                 default:
                     break;
@@ -301,17 +304,103 @@ namespace OkapiKit
                 if (anim == null) anim = GetComponent<Animator>();
                 if (anim)
                 {
-                    desc += $"Some values will be set on animator {anim.name}:\n";
-                    if (horizontalVelocityParameter != "") desc += $"Horizontal velocity will be set to parameter {horizontalVelocityParameter}.\n";
-                    if (absoluteHorizontalVelocityParameter != "") desc += $"Absolute horizontal velocity will be set to parameter {absoluteHorizontalVelocityParameter}.\n";
-                    if (verticalVelocityParameter != "") desc += $"Vertical velocity will be set to parameter {verticalVelocityParameter}.\n";
-                    if (absoluteVerticalVelocityParameter != "") desc += $"Absolute vertical velocity will be set to parameter {absoluteVerticalVelocityParameter}.\n";
-                    if (isGroundedParameter != "") desc += $"Grounded state will be set to parameter {isGroundedParameter}.\n";
-                    if (isGlidingParameter != "") desc += $"Gliding state will be set to parameter {isGroundedParameter}.\n";
+                    animDesc += $"Some values will be set on animator {anim.name}:\n";
+                    if (horizontalVelocityParameter != "") animDesc += $"Horizontal velocity will be set to parameter {horizontalVelocityParameter}.\n";
+                    if (absoluteHorizontalVelocityParameter != "") animDesc += $"Absolute horizontal velocity will be set to parameter {absoluteHorizontalVelocityParameter}.\n";
+                    if (verticalVelocityParameter != "") animDesc += $"Vertical velocity will be set to parameter {verticalVelocityParameter}.\n";
+                    if (absoluteVerticalVelocityParameter != "") animDesc += $"Absolute vertical velocity will be set to parameter {absoluteVerticalVelocityParameter}.\n";
+                    if (isGroundedParameter != "") animDesc += $"Grounded state will be set to parameter {isGroundedParameter}.\n";
+                    if (isGlidingParameter != "") animDesc += $"Gliding state will be set to parameter {isGroundedParameter}.\n";
                 }
             }
 
+            if (animDesc != "")
+            {
+                desc += "This controller also controls some visuals:\n";
+                desc += animDesc;
+            }
+
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (groundCheckCollider == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Ground check collider is necessary to see where the ground is!"));
+            }
+            if (groundLayerMask.value == 0)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Ground check mask needs to be defined - it defines what layers are considered ground."));
+            }
+            if (gravityScale == 0.0f)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Gravity needs to be setup - character will float otherwise!"));
+            }
+            if ((groundCollider == null) && (airCollider != null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to define ground collider (collider used when character is on the ground)!"));
+            }
+            if ((groundCollider != null) && (airCollider == null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to define air collider (collider used when character is not on the ground)!"));
+            }
+            if (useAnimator)
+            {
+                Animator anm = animator;
+                if (anm == null)
+                {
+                    anm = GetComponent<Animator>();
+                    if (anm == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Animator not defined!"));
+                    }
+                    else
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Warning, "Animator exists, but it should be linked explicitly!"));
+                    }
+                }
+                if (anm != null)
+                {
+                    if (anm.runtimeAnimatorController == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Animator controller is not set!"));
+                    }
+                    else
+                    {
+                        CheckErrorAnim(anm, "horizontal velocity", horizontalVelocityParameter, AnimatorControllerParameterType.Float);
+                        CheckErrorAnim(anm, "absolute horizontal velocity", absoluteHorizontalVelocityParameter, AnimatorControllerParameterType.Float);
+                        CheckErrorAnim(anm, "vertical velocity", verticalVelocityParameter, AnimatorControllerParameterType.Float);
+                        CheckErrorAnim(anm, "absolute vertical velocity", absoluteVerticalVelocityParameter, AnimatorControllerParameterType.Float);
+                        CheckErrorAnim(anm, "is grounded", isGroundedParameter, AnimatorControllerParameterType.Bool);
+                        CheckErrorAnim(anm, "is gliding", isGlidingParameter, AnimatorControllerParameterType.Bool);
+                    }
+                }
+            }
+        }
+
+        void CheckErrorAnim(Animator anm, string logParameter, string parameterName, AnimatorControllerParameterType type)
+        {
+            if (parameterName == "")
+            {
+                return;
+            }
+            for (int i = 0; i < anm.parameterCount; i++)
+            {
+                var param = anm.GetParameter(i);
+                if (param.name == parameterName)
+                {
+                    if (param.type != type)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!"));
+                    }
+                    return;
+                }
+            }
+
+            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter {parameterName} for {logParameter} not found!"));
         }
 
         protected override void Start()

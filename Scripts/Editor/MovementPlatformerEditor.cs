@@ -211,6 +211,7 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(propUseAnimator, new GUIContent("Use Animator"));
                 if (propUseAnimator.boolValue)
                 {
+                    EditorGUILayout.PropertyField(propAnimator, new GUIContent("Animator"));
                     EditorGUILayout.PropertyField(propHorizontalVelocityParameter, new GUIContent("Horizontal Velocity Parameter"));
                     EditorGUILayout.PropertyField(propAbsoluteHorizontalVelocityParameter, new GUIContent("Absolute Horizontal Velocity Parameter"));
                     EditorGUILayout.PropertyField(propVerticalVelocityParameter, new GUIContent("Vertical Velocity Parameter"));

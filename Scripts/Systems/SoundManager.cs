@@ -8,19 +8,30 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Other/Sound Manager")]
     public class SoundManager : OkapiElement
     {
-        public static SoundManager instance;
+        private static SoundManager _instance;
 
         [SerializeField] private AudioMixerGroup defaultMixerOutput;
 
-
         List<AudioSource> audioSources = new List<AudioSource>();
+
+        public static SoundManager instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType<SoundManager>();
+                }
+                return _instance;
+            }
+        }
 
         // Start is called before the first frame update
         void Start()
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = this;
+                _instance = this;
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -75,7 +86,7 @@ namespace OkapiKit
 
         static public void PlaySound(AudioClip clip, float volume = 1.0f, float pitch = 1.0f)
         {
-            instance._PlaySound(clip, volume, pitch);
+            _instance._PlaySound(clip, volume, pitch);
         }
 
         public override string GetRawDescription(string ident, GameObject refObject)
@@ -83,12 +94,22 @@ namespace OkapiKit
             return "(UNUSED) SoundManager.GetRawDescription";
         }
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
             if (description != "") _explanation = description;
             else _explanation = "";
 
             return _explanation;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (defaultMixerOutput == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to create/define the mixer output (Window/Audio/Audio Mixer)"));
+            }
         }
     }
 }

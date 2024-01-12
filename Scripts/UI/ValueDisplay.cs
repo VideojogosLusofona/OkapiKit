@@ -17,7 +17,7 @@ namespace OkapiKit
             return "";
         }
 
-        public override string UpdateExplanation()
+        protected override string Internal_UpdateExplanation()
         {
             _explanation = "";
 
@@ -38,6 +38,16 @@ namespace OkapiKit
             }
 
             return null;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((variable == null) && (valueHandler == null))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No variable is set!"));
+            }
         }
     }
 }

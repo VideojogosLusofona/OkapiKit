@@ -6,8 +6,8 @@ using NaughtyAttributes;
 namespace OkapiKit
 {
 
-    [AddComponentMenu("Okapi/Action/Modify Transform")]
-    public class ActionModifyTransform : Action
+    [AddComponentMenu("Okapi/Action/Change Transform")]
+    public class ActionChangeTransform : Action
     {
         public enum ChangeType { Position = 0 };
 
@@ -67,7 +67,7 @@ namespace OkapiKit
             return desc;
         }
 
-        public override string GetActionTitle() => "Modify Transform";
+        public override string GetActionTitle() => "Change Transform";
 
         public override string GetRawDescription(string ident, GameObject gameObject)
         {
@@ -101,6 +101,16 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Transform to modify is this object, but it should be explicitly linked!"));
+            }
         }
 
         public override void Execute()

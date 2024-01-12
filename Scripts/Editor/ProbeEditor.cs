@@ -55,8 +55,16 @@ namespace OkapiKit.Editor
                     case Probe.Direction.Down:
                     case Probe.Direction.Right:
                     case Probe.Direction.Left:
+                        EditorGUILayout.PropertyField(propMinDistance, new GUIContent("Min Distance"));
+                        EditorGUILayout.PropertyField(propMaxDistance, new GUIContent("Max Distance"));
+                        break;
                     case Probe.Direction.TargetObjectDirection:
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                        EditorGUILayout.PropertyField(propMinDistance, new GUIContent("Min Distance"));
+                        EditorGUILayout.PropertyField(propMaxDistance, new GUIContent("Max Distance"));
+                        break;
                     case Probe.Direction.TargetTagDirection:
+                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
                         EditorGUILayout.PropertyField(propMinDistance, new GUIContent("Min Distance"));
                         EditorGUILayout.PropertyField(propMaxDistance, new GUIContent("Max Distance"));
                         break;
@@ -72,7 +80,7 @@ namespace OkapiKit.Editor
                         break;
                 }
                 EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
-                EditorGUILayout.PropertyField(propTargetTransform, new GUIContent("Target Transform"));
+                EditorGUILayout.PropertyField(propTargetTransform, new GUIContent("Target Transform", "If set, this transform will be set to the intersection point of the ray/circlecast"));
 
                 EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
 

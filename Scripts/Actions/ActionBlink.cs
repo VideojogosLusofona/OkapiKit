@@ -54,18 +54,22 @@ namespace OkapiKit
             return desc;
         }
 
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (GetTarget() == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No renderer available for blinking - place one in this object or in a child object"));
+            }
+        }
+
         protected override void Awake()
         {
             base.Awake();
 
-            if (target == null)
-            {
-                target = GetComponent<Renderer>();
-                if (target == null)
-                {
-                    target = GetComponentInChildren<Renderer>();
-                }
-            }
+            target = GetTarget();
+
             if (target)
             {
                 renderers = new List<Renderer>();
@@ -81,6 +85,21 @@ namespace OkapiKit
                 }
             }
             timer = 0;
+        }
+
+        protected Renderer GetTarget()
+        {
+            Renderer ret = target;
+            if (ret == null)
+            {
+                ret = GetComponent<Renderer>();
+                if (ret == null)
+                {
+                    ret  = GetComponentInChildren<Renderer>();
+                }
+            }
+
+            return ret;
         }
 
         // Update is called once per frame

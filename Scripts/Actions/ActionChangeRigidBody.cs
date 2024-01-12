@@ -5,13 +5,15 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Modify Rigid Body")]
-    public class ActionModifyRigidBody : Action
+    [AddComponentMenu("Okapi/Action/Change Rigid Body")]
+    public class ActionChangeRigidBody : Action
     {
         public enum ChangeType { SetBodyType = 0, Mass = 1, LinearDrag = 2, AngularDrag = 3, GravityScale = 4 };
 
         [SerializeField]
-        private ChangeType changeType;
+        private Rigidbody2D     target;
+        [SerializeField]
+        private ChangeType      changeType;
         [SerializeField, ShowIf("needsBodyType")]
         private RigidbodyType2D bodyType;
         [SerializeField, ShowIf("needValue")]
@@ -25,7 +27,8 @@ namespace OkapiKit
             if (!enableAction) return;
             if (!EvaluatePreconditions()) return;
 
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = target;
+            if (rb == null) rb = GetComponent<Rigidbody2D>();
             if (rb == null) return;
 
             switch (changeType)
@@ -50,7 +53,7 @@ namespace OkapiKit
             }
         }
 
-        public override string GetActionTitle() => "Modify Rigid Body";
+        public override string GetActionTitle() => "Change Rigid Body";
         public override string GetRawDescription(string ident, GameObject gameObject)
         {
             var desc = GetPreconditionsString(gameObject);
@@ -74,6 +77,23 @@ namespace OkapiKit
             }
 
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                if (GetComponent<Rigidbody2D>() == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target rigid body"));
+                }
+                else
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Rigid body to modify is on this object, but it should be explicitly linked!"));
+                }
+            }
         }
     }
 }

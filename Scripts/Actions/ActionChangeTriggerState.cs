@@ -34,6 +34,15 @@ namespace OkapiKit
             }
             return desc;
         }
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (target == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target trigger"));
+            }
+        }
 
         public override void Execute()
         {
