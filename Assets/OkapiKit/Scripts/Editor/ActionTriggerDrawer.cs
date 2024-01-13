@@ -51,8 +51,8 @@ namespace OkapiKit.Editor
 
             GUIStyle textStyle = GUIUtils.GetActionDelayTextStyle();
 
-            EditorGUI.LabelField(delayTextRect, "Delay", textStyle);
-            EditorGUI.LabelField(actionTextRect, "Action", textStyle);
+            EditorGUI.LabelField(delayTextRect, new GUIContent("Delay", "Delay in seconds for triggering action"), textStyle);
+            EditorGUI.LabelField(actionTextRect, new GUIContent("Action", "Action to trigger"), textStyle);
 
             // Draw fields - pass GUIContent.none to each so they are drawn without labels
             EditorGUI.PropertyField(delayRect, property.FindPropertyRelative("delay"), GUIContent.none);

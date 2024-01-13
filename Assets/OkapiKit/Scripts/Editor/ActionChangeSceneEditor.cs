@@ -27,7 +27,7 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propSceneName, new GUIContent("Scene"));
+                EditorGUILayout.PropertyField(propSceneName, new GUIContent("Scene", "Selects the next scene to be loaded."));
 
                 if (EditorGUI.EndChangeCheck())
                 {

@@ -105,88 +105,88 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed"));
+                EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Maximum movement speed.\nX component is the maximum horizontal velocity\nY component is the jump velocity"));
 
-                EditorGUILayout.PropertyField(propHorizontalInputType, new GUIContent("Horizontal Input Type"));
+                EditorGUILayout.PropertyField(propHorizontalInputType, new GUIContent("Horizontal Input Type", "Control type for horizontal movement.\nAxis: Use an axis for movement\nButton: Use a button for the movement\nKey: Use a key for the movement"));
 
                 var inputType = (MovementPlatformer.InputType)propHorizontalInputType.enumValueIndex;
 
                 switch (inputType)
                 {
                     case MovementPlatformer.InputType.Axis:
-                        EditorGUILayout.PropertyField(propHorizontalAxis, new GUIContent("Horizontal Axis"));
+                        EditorGUILayout.PropertyField(propHorizontalAxis, new GUIContent("Horizontal Axis", "Horizontal axis name"));
                         break;
                     case MovementPlatformer.InputType.Button:
-                        EditorGUILayout.PropertyField(propHorizontalButtonPositive, new GUIContent("Horizontal Positive Button"));
-                        EditorGUILayout.PropertyField(propHorizontalButtonNegative, new GUIContent("Horizontal Negative Button"));
+                        EditorGUILayout.PropertyField(propHorizontalButtonPositive, new GUIContent("Horizontal Positive Button", "Positive button, press this to go right"));
+                        EditorGUILayout.PropertyField(propHorizontalButtonNegative, new GUIContent("Horizontal Negative Button", "Negative button, press this to go left"));
                         break;
                     case MovementPlatformer.InputType.Key:
-                        EditorGUILayout.PropertyField(propHorizontalKeyPositive, new GUIContent("Horizontal Positive Key"));
-                        EditorGUILayout.PropertyField(propHorizontalKeyNegative, new GUIContent("Horizontal Negative Key"));
+                        EditorGUILayout.PropertyField(propHorizontalKeyPositive, new GUIContent("Horizontal Positive Key", "Positive key, press this to go right"));
+                        EditorGUILayout.PropertyField(propHorizontalKeyNegative, new GUIContent("Horizontal Negative Key", "Negative key, press this to go left"));
                         break;
                     default:
                         break;
                 }
 
-                EditorGUILayout.PropertyField(propGroundCheckCollider, new GUIContent("Ground Check Collider"));
-                EditorGUILayout.PropertyField(propGroundLayerMask, new GUIContent("Ground Layer Mask"));
-                EditorGUILayout.PropertyField(propGravityScale, new GUIContent("Gravity Scale"));
-                EditorGUILayout.PropertyField(propUseTerminalVelocity, new GUIContent("Use Terminal Velocity"));
+                EditorGUILayout.PropertyField(propGroundCheckCollider, new GUIContent("Ground Check Collider", "Link to a collider that identifies the ground.\nCircle or box collider below the player, when it touches ground, the character is grounded and can jump."));
+                EditorGUILayout.PropertyField(propGroundLayerMask, new GUIContent("Ground Layer Mask", "In which layers are the objects that are considered ground?"));
+                EditorGUILayout.PropertyField(propGravityScale, new GUIContent("Gravity Scale", "What's the gravity like? This is multiplied by the project's 2d gravity settings"));
+                EditorGUILayout.PropertyField(propUseTerminalVelocity, new GUIContent("Use Terminal Velocity", "Does the object have a top speed while falling?"));
                 if (propUseTerminalVelocity.boolValue)
                 {
-                    EditorGUILayout.PropertyField(propTerminalVelocity, new GUIContent("Terminal Velocity"));
+                    EditorGUILayout.PropertyField(propTerminalVelocity, new GUIContent("Terminal Velocity", "What's the top speed while falling, in world units (pixels)/second?"));
                 }
-                EditorGUILayout.PropertyField(propCoyoteTime, new GUIContent("Coyote Time"));
-                EditorGUILayout.PropertyField(propEnableAirControl, new GUIContent("Air Control"));
-                EditorGUILayout.PropertyField(propAirCollider, new GUIContent("Air Collider"));
-                EditorGUILayout.PropertyField(propGroundCollider, new GUIContent("Ground Collider"));
+                EditorGUILayout.PropertyField(propCoyoteTime, new GUIContent("Coyote Time", "How long does it take until the character start falling when not grounded?"));
+                EditorGUILayout.PropertyField(propEnableAirControl, new GUIContent("Air Control", "Can the player control the character while in the air?"));
+                EditorGUILayout.PropertyField(propAirCollider, new GUIContent("Air Collider", "What is the object's collider while in the air (not grounded)?"));
+                EditorGUILayout.PropertyField(propGroundCollider, new GUIContent("Ground Collider", "What's the object's collider while on the ground?"));
 
-                EditorGUILayout.PropertyField(propJumpBehaviour, new GUIContent("Jump Type"));
+                EditorGUILayout.PropertyField(propJumpBehaviour, new GUIContent("Jump Type", "Type of jump.\nNone: Player can't jump\nFixed: Player always jumps the same height\nVariable: The longer the player holds the jump button, the higher he jumps"));
                 if (propJumpBehaviour.enumValueIndex != (int)MovementPlatformer.JumpBehaviour.None)
                 {
-                    EditorGUILayout.PropertyField(propJumpInputType, new GUIContent("Jump Input Type"));
+                    EditorGUILayout.PropertyField(propJumpInputType, new GUIContent("Jump Input Type", "What's the input to jump?\nAxis: Use an axis for movement\nButton: Use a button for the movement\nKey: Use a key for the movement"));
 
                     var jumpInputType = (MovementPlatformer.InputType)propJumpInputType.enumValueIndex;
 
                     switch (jumpInputType)
                     {
                         case MovementPlatformer.InputType.Axis:
-                            EditorGUILayout.PropertyField(propJumpAxis, new GUIContent("Jump Axis"));
+                            EditorGUILayout.PropertyField(propJumpAxis, new GUIContent("Jump Axis", "Axis to jump.\nAs soon as this axis' value is larger than zero, character will jump."));
                             break;
                         case MovementPlatformer.InputType.Button:
-                            EditorGUILayout.PropertyField(propJumpButton, new GUIContent("Jump Button"));
+                            EditorGUILayout.PropertyField(propJumpButton, new GUIContent("Jump Button", "Jump button."));
                             break;
                         case MovementPlatformer.InputType.Key:
-                            EditorGUILayout.PropertyField(propJumpKey, new GUIContent("Jump Key"));
+                            EditorGUILayout.PropertyField(propJumpKey, new GUIContent("Jump Key", "Jump key"));
                             break;
                         default:
                             break;
                     }
 
-                    EditorGUILayout.PropertyField(propMaxJumpCount, new GUIContent("Max Jump Count"));
-                    EditorGUILayout.PropertyField(propJumpBufferingTime, new GUIContent("Jump Buffering Time"));
+                    EditorGUILayout.PropertyField(propMaxJumpCount, new GUIContent("Max Jump Count", "How many jumps can the player do before having to touch the ground?\nFor example, for double jump, use 2.\nIf zero, no jumping allowed."));
+                    EditorGUILayout.PropertyField(propJumpBufferingTime, new GUIContent("Jump Buffering Time", "If the player presses the jump key before being on the ground, but hits the ground in less than this time, he will jump automatically.\nThis reduces player frustration and provides tighter controls."));
                     if (propJumpBehaviour.enumValueIndex == (int)MovementPlatformer.JumpBehaviour.Variable)
                     {
-                        EditorGUILayout.PropertyField(propJumpHoldMaxTime, new GUIContent("Jump Max. Hold Time"));
+                        EditorGUILayout.PropertyField(propJumpHoldMaxTime, new GUIContent("Jump Max. Hold Time", "For how long can the player press jump and still be considered a single jump."));
                     }
                 }
-                EditorGUILayout.PropertyField(propGlideBehaviour, new GUIContent("Glide Behaviour"));
+                EditorGUILayout.PropertyField(propGlideBehaviour, new GUIContent("Glide Behaviour", "Glide behaviour.\nNone: No gliding allowed.\nEnabled: Player can glide at will\nTimer: Player can glide for a certain amount of time.\nGliding is basically falling slower while pressing the glide input."));
                 if (propGlideBehaviour.enumValueIndex != (int)MovementPlatformer.GlideBehaviour.None)
                 {
-                    EditorGUILayout.PropertyField(propGlideInputType, new GUIContent("Glide Input Type"));
+                    EditorGUILayout.PropertyField(propGlideInputType, new GUIContent("Glide Input Type", "What's the input to glide?\nAxis: Use an axis for movement\nButton: Use a button for the movement\nKey: Use a key for the movement"));
 
                     var glideInputType = (MovementPlatformer.InputType)propGlideInputType.enumValueIndex;
 
                     switch (glideInputType)
                     {
                         case MovementPlatformer.InputType.Axis:
-                            EditorGUILayout.PropertyField(propGlideAxis, new GUIContent("Glide Axis"));
+                            EditorGUILayout.PropertyField(propGlideAxis, new GUIContent("Glide Axis", "What's the glide axis?\nAs soon as this axis any amount of positive, it's considered triggered."));
                             break;
                         case MovementPlatformer.InputType.Button:
-                            EditorGUILayout.PropertyField(propGlideButton, new GUIContent("Glide Button"));
+                            EditorGUILayout.PropertyField(propGlideButton, new GUIContent("Glide Button", "Glide button"));
                             break;
                         case MovementPlatformer.InputType.Key:
-                            EditorGUILayout.PropertyField(propGlideKey, new GUIContent("Glide Key"));
+                            EditorGUILayout.PropertyField(propGlideKey, new GUIContent("Glide Key", "Glide key"));
                             break;
                         default:
                             break;
@@ -194,10 +194,10 @@ namespace OkapiKit.Editor
 
                     if (propGlideBehaviour.enumValueIndex == (int)MovementPlatformer.GlideBehaviour.Timer)
                     {
-                        EditorGUILayout.PropertyField(propGlideMaxTime, new GUIContent("Glide Max. Time"));
+                        EditorGUILayout.PropertyField(propGlideMaxTime, new GUIContent("Glide Max. Time", "What's the maximum amount of glide time?"));
                     }
 
-                    EditorGUILayout.PropertyField(propMaxGlideSpeed, new GUIContent("Max Glide Speed"));
+                    EditorGUILayout.PropertyField(propMaxGlideSpeed, new GUIContent("Max Glide Speed", "This is the maximum fall speed while gliding, in world units (pixels)/second."));
                 }
 
                 // Separator
@@ -207,20 +207,20 @@ namespace OkapiKit.Editor
                 EditorGUI.DrawRect(separatorRect, GUIUtils.ColorFromHex("#ff6060"));
                 EditorGUILayout.Space(separatorRect.height + 5);
 
-                EditorGUILayout.PropertyField(propFlipBehaviour, new GUIContent("Flip Behaviour"));
-                EditorGUILayout.PropertyField(propUseAnimator, new GUIContent("Use Animator"));
+                EditorGUILayout.PropertyField(propFlipBehaviour, new GUIContent("Flip Behaviour", "What to do visually when we turn?\nVelocity Flips Sprite: When horizontal velocity is negative (moving left), the sprite renderer is flipped horizontal\nVelocity Inverts Scale: When horizontal velocity is negative (moving left), the horizontal scale is negated\nInput Flips Sprite: When players presses left, the sprite renderer is flipped horizontal\nInput Inverts Scale: When player presses left, the horizontal scale is negated"));
+                EditorGUILayout.PropertyField(propUseAnimator, new GUIContent("Use Animator", "Should we drive an animator with this movement controller?"));
                 if (propUseAnimator.boolValue)
                 {
-                    EditorGUILayout.PropertyField(propAnimator, new GUIContent("Animator"));
-                    EditorGUILayout.PropertyField(propHorizontalVelocityParameter, new GUIContent("Horizontal Velocity Parameter"));
-                    EditorGUILayout.PropertyField(propAbsoluteHorizontalVelocityParameter, new GUIContent("Absolute Horizontal Velocity Parameter"));
-                    EditorGUILayout.PropertyField(propVerticalVelocityParameter, new GUIContent("Vertical Velocity Parameter"));
-                    EditorGUILayout.PropertyField(propAbsoluteVerticalVelocityParameter, new GUIContent("Absolute Vertical Velocity Parameter"));
-                    EditorGUILayout.PropertyField(propIsGroundedParameter, new GUIContent("Is Grounded Parameter"));
-                    EditorGUILayout.PropertyField(propIsGlidingParameter, new GUIContent("Is Glidding Parameter"));
+                    EditorGUILayout.PropertyField(propAnimator, new GUIContent("Animator", "What animator to use?"));
+                    EditorGUILayout.PropertyField(propHorizontalVelocityParameter, new GUIContent("Horizontal Velocity Parameter", "What is the parameter to set to the horizontal velocity?"));
+                    EditorGUILayout.PropertyField(propAbsoluteHorizontalVelocityParameter, new GUIContent("Absolute Horizontal Velocity Parameter", "What is the parameter to set to the absolute horizontal velocity?"));
+                    EditorGUILayout.PropertyField(propVerticalVelocityParameter, new GUIContent("Vertical Velocity Parameter", "What is the parameter to set to the vertical velocity?"));
+                    EditorGUILayout.PropertyField(propAbsoluteVerticalVelocityParameter, new GUIContent("Absolute Vertical Velocity Parameter", "What is the parameter to set to the absolute horizontal velocity?"));
+                    EditorGUILayout.PropertyField(propIsGroundedParameter, new GUIContent("Is Grounded Parameter", "What is the parameter to set to true/false when the player is grounded?"));
+                    EditorGUILayout.PropertyField(propIsGlidingParameter, new GUIContent("Is Glidding Parameter", "What is the parameter to set to true/false when the player is gliding?"));
                 }
 
-                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
                 EditorGUI.EndChangeCheck();
 

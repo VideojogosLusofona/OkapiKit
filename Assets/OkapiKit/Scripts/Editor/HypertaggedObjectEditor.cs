@@ -31,8 +31,8 @@ namespace OkapiKit.Editor
         {
             EditorGUI.BeginChangeCheck();
 
-            EditorGUILayout.PropertyField(propHypertags, new GUIContent("Tags"), true);
-            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"), true);
+            EditorGUILayout.PropertyField(propHypertags, new GUIContent("Tags", "Tags assigned to this object"), true);
+            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "Description of this object.\nThis is only for you to leave notes for yourself or others."), true);
 
             EditorGUI.EndChangeCheck();
 

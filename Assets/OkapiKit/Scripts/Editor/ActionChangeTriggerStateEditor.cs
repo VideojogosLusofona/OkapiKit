@@ -30,8 +30,8 @@ namespace OkapiKit.Editor
 
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
-                EditorGUILayout.PropertyField(propState, new GUIContent("State"));
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target", "What's the target trigger?"));
+                EditorGUILayout.PropertyField(propState, new GUIContent("State", "On: Turn on the trigger\nOff: Turn off the trigger\nToggle: If on, turn the trigger off, otherwise turn it on."));
 
                 if (EditorGUI.EndChangeCheck())
                 {

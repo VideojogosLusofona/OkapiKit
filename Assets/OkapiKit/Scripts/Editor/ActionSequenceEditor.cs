@@ -32,7 +32,7 @@ namespace OkapiKit.Editor
                 TryDragActionToActionDelayList(actionsRect, propActions);
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propActions, new GUIContent("Action Sequence"));
+                EditorGUILayout.PropertyField(propActions, new GUIContent("Action Sequence", "What are the actions we want to run when this action is triggered?"));
 
                 EditorGUI.EndChangeCheck();
 

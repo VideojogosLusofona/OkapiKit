@@ -31,12 +31,11 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propParticleSystem, new GUIContent("Particle System"));
-                EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
-
+                EditorGUILayout.PropertyField(propParticleSystem, new GUIContent("Particle System", "What's the target particle system?"));
+                EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type", "What kind of change to perform on the particle system?\nEmission: New particles emission"));
                 if (propChangeType.enumValueIndex == (int)ActionChangeParticleSystem.ChangeType.Emission)
                 {
-                    EditorGUILayout.PropertyField(propEmission, new GUIContent("Emission"));
+                    EditorGUILayout.PropertyField(propEmission, new GUIContent("Emission", "On: Activate particle emission\nOff: Disable particle emission\nToggle: If on, turn off particle emission, otherwise turn it on."));
                 }
 
                 if (EditorGUI.EndChangeCheck())

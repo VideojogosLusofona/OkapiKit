@@ -6,13 +6,15 @@
 - Fixed bug with uninitialized actions when added to triggers throwing an error
 - Added Rotate Towards action
 - Added warning/error system
+  - Placing the cursor on a log message will sometimes provide a more detailed explanation.
 - Renamed all ActionModify* actions to ActionChange*
 - Added target to ActionChangeRigidBody (only allowed self object)
 - Renamed ActionChangeSystem to ActionChangeSystemOption
 - Fixed bug with Unity event UI on ActionUnityEvent
 - MovementPlatformer now shows animator property
 - Added ping system for actions (right-click on action in triggers, sequences and random
-  and that will select the object that contains the action, open the action and highlight its title bar) - Ping only works if there's a Okapi Config instance in the project
+  and that will select the object that contains the action and highlight its title bar) - Ping only works if there's a Okapi Config instance in the project
+- Added tooltips to all Okapi elements
 
 ## V1.8.0
 

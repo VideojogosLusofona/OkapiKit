@@ -42,7 +42,7 @@ namespace OkapiKit.Editor
 
             float positionValue = position.x + 50;
 
-            EditorGUI.LabelField(new Rect(position.x, position.y, 50, position.height), "Not");
+            EditorGUI.LabelField(new Rect(position.x, position.y, 50, position.height), new GUIContent("Not", "Negate this condition"));
             propNegate.boolValue = EditorGUI.Toggle(new Rect(position.x + 25, position.y, 20, position.height), propNegate.boolValue);
 
             float offset_y = 0.0f;
@@ -68,7 +68,7 @@ namespace OkapiKit.Editor
                         // Draw fields - pass GUIContent.none to each so they are drawn without labels
                         EditorGUI.PropertyField(valueHandlerRect, propValueHandler, GUIContent.none);
                         EditorGUI.PropertyField(variableRect, propVariable, GUIContent.none);
-                        EditorGUI.PropertyField(systemRect, propValueType, GUIContent.none);
+                        EditorGUI.PropertyField(systemRect, propValueType, new GUIContent("", "Function"));
 
                         offset_y = position.height / 4;
                     }

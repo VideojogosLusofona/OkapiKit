@@ -43,46 +43,46 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propMode, new GUIContent("Mode"));
+                EditorGUILayout.PropertyField(propMode, new GUIContent("Mode", "Camera follow mode\nSimple Feedback Loop: Camera will try to get as close of target, fast when it's far away and getting slower as it gets closer.\nBox: Camera trap, camera will always keep the target object inside the defined box."));
 
                 if (propTargetTag.objectReferenceValue == null)
                 {
                     if (propTargetObject.objectReferenceValue == null)
                     {
-                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
-                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "What's the tag of the object(s) to follow?\nNote that you can follow objects by tag or by linking, but not both at the same time."));
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object", "What's the object to follow?\nNote that you can follow objects by tag or by linking, but not both at the same time."));
                     }
                     else
                     {
-                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object", "What's the object to follow?\nNote that you can follow objects by tag or by linking, but not both at the same time."));
                     }
                 }
                 else
                 {
-                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
-                    EditorGUILayout.PropertyField(propTagMode, new GUIContent("Tag Mode"));
+                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "What's the tag of the object(s) to follow?\nNote that you can follow objects by tag or by linking, but not both at the same time."));
+                    EditorGUILayout.PropertyField(propTagMode, new GUIContent("Tag Mode", "If there are multiple objects with this tag, what to do?\nClosest: Follow the closest to the camera\nFurthest: Follow the furthest away\nAverage: Follow the average position of the objects."));
                     if (propTagMode.enumValueIndex == (int)CameraFollow2d.TagMode.Average)
                     {
-                        EditorGUILayout.PropertyField(propAllowZoom, new GUIContent("Allow Zoom"));
+                        EditorGUILayout.PropertyField(propAllowZoom, new GUIContent("Allow Zoom", "Should the camera zoom in/out to account for multiple objects being tracked?"));
                         if (propAllowZoom.boolValue)
                         {
-                            EditorGUILayout.PropertyField(propZoomMargin, new GUIContent("Zoom Margin"));
-                            EditorGUILayout.PropertyField(propMinMaxSize, new GUIContent("Min/Max Size"));
+                            EditorGUILayout.PropertyField(propZoomMargin, new GUIContent("Zoom Margin", "Margin to add to the zoom so that objects aren't just at the edge of the camera.\nIf this is 1, the objects will be right at the edge, 1.1 leaves a 10% margin, and so forth."));
+                            EditorGUILayout.PropertyField(propMinMaxSize, new GUIContent("Min/Max Size", "Minimum/maximum ortographic size of the camera on the zoom."));
                         }
                     }
                 }
 
                 if (propMode.enumValueIndex == (int)CameraFollow2d.Mode.SimpleFeedbackLoop)
                 {
-                    EditorGUILayout.PropertyField(propFollowSpeed, new GUIContent("Follow Speed"));
+                    EditorGUILayout.PropertyField(propFollowSpeed, new GUIContent("Follow Speed", "What's the speed of the camera while following, expressed as percentage per frame.\nIf 1, camera will be locked to the target.\nUsually a value like 0.05 (5% per frame) works fine."));
                 }
                 else if (propMode.enumValueIndex == (int)CameraFollow2d.Mode.Box)
                 {
-                    EditorGUILayout.PropertyField(propRect, new GUIContent("Box"));
+                    EditorGUILayout.PropertyField(propRect, new GUIContent("Box", "Camera trap position/size, you can see it in magenta on the scene view."));
                 }
-                EditorGUILayout.PropertyField(propCameraLimits, new GUIContent("Camera Limits"));
+                EditorGUILayout.PropertyField(propCameraLimits, new GUIContent("Camera Limits", "Box collider that defines the limits of the camera movement. If target leaves this area, camera can't track it. Leave it empty for no limits (unadvisable)."));
 
-                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "Text description of this component, if you want to leave notes for yourself or others."));
 
                 EditorGUI.EndChangeCheck();
 

@@ -87,7 +87,7 @@ namespace OkapiKit
                 var spawner = GetComponent<Spawner>();
                 if (spawner == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefab not defined!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefab not defined!\nEither define a prefab to spawn, or add a Spawner system on this object!"));
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace OkapiKit
                     var actionLogs = spawner.logs;
                     foreach (var log in actionLogs)
                     {
-                        _logs.Add(new LogEntry(log.type, $"On spawner: " + log.text));
+                        _logs.Add(new LogEntry(log.type, $"On spawner: " + log.text, log.tooltip));
                     }
                 }
             }
@@ -107,21 +107,22 @@ namespace OkapiKit
                 {
                     _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn object is not a prefab!"));
                 }
-            }
-            if (spawnPosition == SpawnPosition.Target)
-            {
-                if (targetPosition == null)
+
+                if (spawnPosition == SpawnPosition.Target)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target position is not set!"));
+                    if (targetPosition == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target position is not set!"));
+                    }
                 }
-            }
-            if (spawnPosition == SpawnPosition.Tag)
-            {
-                if (targetTag == null)
+                if (spawnPosition == SpawnPosition.Tag)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag is not set!"));
+                    if (targetTag == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag is not set!"));
+                    }
                 }
-            }
+            }            
         }
 
         public override void Execute()

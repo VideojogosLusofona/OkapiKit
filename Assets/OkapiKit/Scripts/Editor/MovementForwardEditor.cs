@@ -27,10 +27,10 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed"));
-                EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis"));
+                EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "What's the movement speed (pixels/second)?"));
+                EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis", "What is forward (i.e. is the object point to the right, or pointing up?)"));
 
-                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
                 EditorGUI.EndChangeCheck();
 

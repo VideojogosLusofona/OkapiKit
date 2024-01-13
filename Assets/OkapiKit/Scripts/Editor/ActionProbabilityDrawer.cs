@@ -37,7 +37,8 @@ namespace OkapiKit.Editor
             EditorGUI.BeginProperty(position, label, property);
 
             // Draw label
-            position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+            GUIContent newLabel = new GUIContent(label.text.Replace("Element", "Action"), "What's the action and probability of that action running?");
+            position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), newLabel);
 
             // Don't make child fields be indented
             var indent = EditorGUI.indentLevel;

@@ -33,15 +33,15 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target", "What's the type of target object?\nObject: Link an object to be destroyed\nTags: Select tags to be found and destroyed"));
 
                 if (propTarget.enumValueIndex == (int)ActionDestroyObject.Target.Object)
                 {
-                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target"));
+                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target", "Target object to destroy."));
                 }
                 else if (propTarget.enumValueIndex == (int)ActionDestroyObject.Target.Tag)
                 {
-                    EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
+                    EditorGUILayout.PropertyField(propTags, new GUIContent("Tags", "Target tags to be found. All objects with these tags will be destroyed."));
                 }
 
                 if (EditorGUI.EndChangeCheck())

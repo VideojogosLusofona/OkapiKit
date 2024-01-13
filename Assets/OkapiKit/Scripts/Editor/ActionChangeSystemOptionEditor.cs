@@ -29,11 +29,11 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type"));
+                EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type", "What kind of system change we want?\nMouse Cursor Visibility: Allows us to select if the mouse cursor is on/off."));
 
                 if (propChangeType.enumValueIndex == (int)ActionChangeSystemOption.ChangeType.MouseCursorVisibility)
                 {
-                    EditorGUILayout.PropertyField(propState, new GUIContent("Mouse Cursor"));
+                    EditorGUILayout.PropertyField(propState, new GUIContent("Mouse Cursor", "On: Turn on the mouse cursor\nOff: Turn off the mouse cursor\nToggle: If on, turn the mouse cursor off, otherwise turn it on."));
                 }
 
                 if (EditorGUI.EndChangeCheck())

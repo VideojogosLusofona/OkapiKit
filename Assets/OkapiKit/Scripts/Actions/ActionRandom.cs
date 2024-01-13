@@ -76,7 +76,7 @@ namespace OkapiKit
                         var actionLogs = action.action.logs;
                         foreach (var log in actionLogs)
                         {
-                            _logs.Add(new LogEntry(log.type, $"On action {index}: " + log.text));
+                            _logs.Add(new LogEntry(log.type, $"On action {index}: " + log.text, log.tooltip));
                         }
                     }
                     if (action.probability <= 0.0f)

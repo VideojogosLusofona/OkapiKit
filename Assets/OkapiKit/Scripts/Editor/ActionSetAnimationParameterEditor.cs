@@ -41,21 +41,21 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propAnimator, new GUIContent("Animator"));
-                EditorGUILayout.PropertyField(propAnimationParameter, new GUIContent("Parameter"));
-                EditorGUILayout.PropertyField(propValueType, new GUIContent("Type"));
+                EditorGUILayout.PropertyField(propAnimator, new GUIContent("Animator", "What is the target animator?"));
+                EditorGUILayout.PropertyField(propAnimationParameter, new GUIContent("Parameter", "What parameter do you want to change?"));
+                EditorGUILayout.PropertyField(propValueType, new GUIContent("Type", "What data type do you want to change?"));
 
                 var type = (ActionSetAnimationParameter.ValueType)propValueType.enumValueIndex;
                 switch (type)
                 {
                     case ActionSetAnimationParameter.ValueType.Int:
-                        EditorGUILayout.PropertyField(propIntegerValue, new GUIContent("Value"));
+                        EditorGUILayout.PropertyField(propIntegerValue, new GUIContent("Value", "Integer value to set"));
                         break;
                     case ActionSetAnimationParameter.ValueType.Float:
-                        EditorGUILayout.PropertyField(propFloatValue, new GUIContent("Value"));
+                        EditorGUILayout.PropertyField(propFloatValue, new GUIContent("Value", "Float value to set"));
                         break;
                     case ActionSetAnimationParameter.ValueType.Boolean:
-                        EditorGUILayout.PropertyField(propBoolValue, new GUIContent("Value"));
+                        EditorGUILayout.PropertyField(propBoolValue, new GUIContent("Value", "Boolean value to set"));
                         break;
                     case ActionSetAnimationParameter.ValueType.Trigger:
                         break;
@@ -64,17 +64,17 @@ namespace OkapiKit.Editor
                         {
                             if (propVariable.objectReferenceValue == null)
                             {
-                                EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Value Handler"));
-                                EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable"));
+                                EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Value Instance", "Value handler to set to parameter.\nYou can select a value instance or a variable, but not both at the same time."));
+                                EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable", "Variable to set to parameter.\nYou can select a value instance or a variable, but not both at the same time."));
                             }
                             else
                             {
-                                EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable"));
+                                EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable", "Variable to set to parameter.\nYou can select a value instance or a variable, but not both at the same time."));
                             }
                         }
                         else
                         {
-                            EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Value Handler"));
+                            EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Value Instance", "Value handler to set to parameter.\nYou can select a value instance or a variable, but not both at the same time."));
                         }
                         break;
                     default:

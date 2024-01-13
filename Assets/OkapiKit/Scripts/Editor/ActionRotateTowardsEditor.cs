@@ -35,28 +35,28 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propHasMaxSpeed, new GUIContent("Has Max Speed"));
+                EditorGUILayout.PropertyField(propHasMaxSpeed, new GUIContent("Has Max Speed", "Is there a limit to the rotation speed?\nIf not, this object will be always pointing towards the target."));
                 if (propHasMaxSpeed.boolValue)
                 {
-                    EditorGUILayout.PropertyField(propSpeed, new GUIContent("Max Speed"));
+                    EditorGUILayout.PropertyField(propSpeed, new GUIContent("Max Speed", "What's the maximum angular speed, in degrees per second?"));
                 }
-                EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align"));
+                EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align", "Which of the axis you want to align to the target?"));
 
                 if (propTargetTag.objectReferenceValue == null)
                 {
                     if (propTargetObject.objectReferenceValue == null)
                     {
-                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
-                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "What's the target's tag?\nYou can specify either a tag for the target, or link the target itself, but not both at the same time."));
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object", "What's the target object?\nYou can specify either a tag for the target, or link the target itself, but not both at the same time."));
                     }
                     else
                     {
-                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object", "What's the target object?\nYou can specify either a tag for the target, or link the target itself, but not both at the same time."));
                     }
                 }
                 else
                 {
-                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
+                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "What's the target's tag?\nYou can specify either a tag for the target, or link the target itself, but not both at the same time."));
                 }
 
                 if (EditorGUI.EndChangeCheck())

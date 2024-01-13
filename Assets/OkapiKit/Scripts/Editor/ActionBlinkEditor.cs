@@ -37,11 +37,11 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
-                EditorGUILayout.PropertyField(propIncludeChildren, new GUIContent("Include Children?"));
-                EditorGUILayout.PropertyField(propBlinkTimeOn, new GUIContent("On Duration"));
-                EditorGUILayout.PropertyField(propBlinkTimeOff, new GUIContent("Off Duration"));
-                EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration"));
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target", "Which renderer will blink.\nBlinking is just turning it on/off at the given speed, so it works with all renderer types."));
+                EditorGUILayout.PropertyField(propIncludeChildren, new GUIContent("Include Children?", "Should all the renderers in children object of the target object also blink?"));
+                EditorGUILayout.PropertyField(propBlinkTimeOn, new GUIContent("On Duration", "How long should the renderer be on, in seconds."));
+                EditorGUILayout.PropertyField(propBlinkTimeOff, new GUIContent("Off Duration", "How long should the renderer be off, in seconds."));
+                EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration", "How long should the renderers be blinking?"));
 
                 if (EditorGUI.EndChangeCheck())
                 {

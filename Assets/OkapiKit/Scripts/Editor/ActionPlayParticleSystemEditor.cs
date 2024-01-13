@@ -29,7 +29,7 @@ namespace OkapiKit.Editor
 
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propTarget, new GUIContent("Particle System"));
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Particle System", "What's the target particle system?"));
 
                 if (EditorGUI.EndChangeCheck())
                 {

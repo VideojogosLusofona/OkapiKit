@@ -31,9 +31,9 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
-                EditorGUILayout.PropertyField(propColor, new GUIContent("Color"));
-                EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration"));
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target", "What's the target renderer to flash?\nNote that only renderers that have a material will be able to flash, like sprite renderers. Others might work, but the behaviour might be unexpected."));
+                EditorGUILayout.PropertyField(propColor, new GUIContent("Color", "Color to flash the object."));
+                EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration", "For how long to flash the object, in seconds."));
 
                 if (EditorGUI.EndChangeCheck())
                 {

@@ -49,8 +49,8 @@ namespace OkapiKit.Editor
         {
             EditorGUI.BeginChangeCheck();
 
-            EditorGUILayout.PropertyField(propDefaultMixerOutput, new GUIContent("Default Mixer Output"));
-            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+            EditorGUILayout.PropertyField(propDefaultMixerOutput, new GUIContent("Default Mixer Output", "Select a mixer, this is the mixer used for all sound output.\n"));
+            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
             EditorGUI.EndChangeCheck();
             serializedObject.ApplyModifiedProperties();

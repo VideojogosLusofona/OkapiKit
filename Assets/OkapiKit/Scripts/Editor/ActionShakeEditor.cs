@@ -37,20 +37,20 @@ namespace OkapiKit.Editor
                 {
                     if (propTargetTag.objectReferenceValue == null)
                     {
-                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
-                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                        EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "An object with this tag will be the target.\nYou can set either a tag or a target object, but not both at the same time."));
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object", "What's the target object?\nYou can set either a tag or a target object, but not both at the same time."));
                     }
                     else
                     {
-                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object"));
+                        EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object", "What's the target object?\nYou can set either a tag or a target object, but not both at the same time."));
                     }
                 }
                 else
                 {
-                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag"));
+                    EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "An object with this tag will be the target.\nYou can set either a tag or a target object, but not both at the same time."));
                 }
-                EditorGUILayout.PropertyField(propStrength, new GUIContent("Strength"));
-                EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration"));
+                EditorGUILayout.PropertyField(propStrength, new GUIContent("Strength", "Strength of the shaking, in world units (pixels)."));
+                EditorGUILayout.PropertyField(propDuration, new GUIContent("Duration", "Duration of the shaking."));
 
                 if (EditorGUI.EndChangeCheck())
                 {

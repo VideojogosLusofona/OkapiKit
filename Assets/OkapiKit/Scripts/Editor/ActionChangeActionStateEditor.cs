@@ -32,8 +32,8 @@ namespace OkapiKit.Editor
 
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
-                EditorGUILayout.PropertyField(propState, new GUIContent("State"));
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target", "What's the action to turn on/off/toggle?"));
+                EditorGUILayout.PropertyField(propState, new GUIContent("State", "What is the state of the target action after this action runs?\nOn - Activates the action\nOff - Disables the action\nToggle - If it is on, turn off. If it is off, turn it on."));
 
                 if (EditorGUI.EndChangeCheck())
                 {
