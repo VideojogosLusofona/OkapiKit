@@ -72,7 +72,12 @@ namespace OkapiKit.Editor
             {
                 fullRect.height = rect.height + 6 + explanationTextHeight;
             }
-            EditorGUI.DrawRect(fullRect, backgroundColor);
+            Color barColor = backgroundColor;
+            if (OkapiConfig.IsPinged(okapiElement))
+            {
+                barColor = Color.yellow;
+            }
+            EditorGUI.DrawRect(fullRect, barColor);
             var prevColor = styleTitle.normal.textColor;
             styleTitle.normal.textColor = textColor;
             GUI.DrawTexture(new Rect(titleRect.x + 10, titleRect.y + 4, 32, 32), GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
@@ -183,5 +188,9 @@ namespace OkapiKit.Editor
             }
         }
 
+        public override bool RequiresConstantRepaint()
+        {
+            return (OkapiConfig.IsPinged(target as OkapiElement));
+        }
     }
 }

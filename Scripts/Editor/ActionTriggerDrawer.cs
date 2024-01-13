@@ -12,6 +12,26 @@ namespace OkapiKit.Editor
         // Draw the property inside the given rect
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            var propAction = property.FindPropertyRelative("action");
+
+            if (Event.current.type == EventType.ContextClick)
+            {
+                if (position.Contains(Event.current.mousePosition))
+                {
+                    // Create the context menu
+                    GenericMenu menu = new GenericMenu();
+
+                    // Add custom menu items
+                    menu.AddItem(new GUIContent("Ping"), false, () => { propAction.isExpanded = true; PingAction(propAction.objectReferenceValue as Action); });
+
+                    // Show the menu
+                    menu.ShowAsContext();
+
+                    // Use the event
+                    Event.current.Use();
+                }
+            }
+
             // Using BeginProperty / EndProperty on the parent property means that
             // prefab override logic works on the entire property.
             EditorGUI.BeginProperty(position, label, property);
@@ -34,8 +54,6 @@ namespace OkapiKit.Editor
             EditorGUI.LabelField(delayTextRect, "Delay", textStyle);
             EditorGUI.LabelField(actionTextRect, "Action", textStyle);
 
-            var propAction = property.FindPropertyRelative("action");
-
             // Draw fields - pass GUIContent.none to each so they are drawn without labels
             EditorGUI.PropertyField(delayRect, property.FindPropertyRelative("delay"), GUIContent.none);
             EditorGUI.PropertyField(actionRect, propAction, GUIContent.none);
@@ -53,7 +71,18 @@ namespace OkapiKit.Editor
             // Set indent back to what it was
             EditorGUI.indentLevel = indent;
 
-            EditorGUI.EndProperty();
+            EditorGUI.EndProperty();            
+        }
+
+        private void PingAction(Action action)
+        {
+            if (action == null) return;
+
+            EditorGUIUtility.PingObject(action);
+
+            // Select object
+            Selection.activeObject = action.gameObject;
+            OkapiConfig.PingComponent(action);
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
