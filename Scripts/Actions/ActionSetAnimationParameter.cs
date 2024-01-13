@@ -133,11 +133,11 @@ namespace OkapiKit
                 anm = GetComponent<Animator>();
                 if (anm == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined animator!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined animator!", "This action changes some parameter in the animator, so we need to have a target animator, or an animator in the same object."));
                 }
                 else
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Animator to modify is on this object, but it should be explicitly linked!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Animator to modify is on this object, but it should be explicitly linked!", "This works as it is, but it's usually good practice to explicitly link the animator component to this action, in that case if something changes this is more likely it will work."));
                 }
             }
 
@@ -145,7 +145,7 @@ namespace OkapiKit
             {
                 if (anm.runtimeAnimatorController == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Linked animator is missing a controller!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Linked animator is missing a controller!", "An animator without an animation controller doesn't do anything. Create one, and assign it to the linked controller!"));
                 }
                 else
                 {
@@ -201,19 +201,19 @@ namespace OkapiKit
 
                         if (!found)
                         {
-                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Parameter animator {animationParameter} is missing!"));
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Parameter animator {animationParameter} is missing!", $"You're trying to set the {animationParameter} parameter, but the animator doesn't have a parameter with that name!"));
                         }
                         else
                         {
                             if (!rightType)
                             {
-                                _logs.Add(new LogEntry(LogEntry.Type.Error, $"Value is of wrong type for animator parameter {animationParameter} (should be {pType})!"));
+                                _logs.Add(new LogEntry(LogEntry.Type.Error, $"Value is of wrong type for animator parameter {animationParameter} (should be {pType})!", $"The parameter you're trying to set is of type {pType} but you're setting it to a value of type {valueType}. Change the type of the parameter on the animator, or on this action."));
                             }
                         }
                     }
                     else
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined animation parameter!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined animation parameter!", "You need to set the name of the parameter you want to change!"));
                     }
                 }
             }
@@ -221,7 +221,7 @@ namespace OkapiKit
             {
                 if ((valueHandler == null) && (variable == null))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined variable!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined variable!", "You're trying to set the parameter to the value of a variable, but there's no variable set!"));
                 }
             }
         }
