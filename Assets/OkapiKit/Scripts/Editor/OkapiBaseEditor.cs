@@ -175,6 +175,8 @@ namespace OkapiKit.Editor
 
                     Rect logErrorRect = new Rect(titleRect.x, rect.y, inspectorWidth - 10 - titleRect.x - 4, height);
                     EditorGUI.DrawRect(logErrorRect, color);
+                    if (log.tooltip != "")
+                        EditorGUI.LabelField(logErrorRect, new GUIContent("", log.tooltip));
 
                     logErrorRect.x += 10;
                     logErrorRect.width += 10;

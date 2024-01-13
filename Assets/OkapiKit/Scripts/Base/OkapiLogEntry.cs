@@ -10,12 +10,13 @@ namespace OkapiKit
 
         public Type     type;
         public string   text;
+        public string   tooltip;
 
-        public LogEntry(Type type, string text)
+        public LogEntry(Type type, string text, string tooltip = "")
         {
             this.type = type;
             this.text = text;
+            this.tooltip = tooltip;
         }
     }
-
 }
