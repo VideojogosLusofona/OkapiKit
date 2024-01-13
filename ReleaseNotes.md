@@ -11,6 +11,8 @@
 - Renamed ActionChangeSystem to ActionChangeSystemOption
 - Fixed bug with Unity event UI on ActionUnityEvent
 - MovementPlatformer now shows animator property
+- Added ping system for actions (right-click on action in triggers, sequences and random
+  and that will select the object that contains the action, open the action and highlight its title bar) - Ping only works if there's a Okapi Config instance in the project
 
 ## V1.8.0
 
