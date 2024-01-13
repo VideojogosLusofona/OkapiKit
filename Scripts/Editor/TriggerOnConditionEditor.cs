@@ -38,7 +38,7 @@ namespace OkapiKit.Editor
                 if (trigger == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions"));
+                EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions", "When these conditions are all true, this trigger will execute."));
 
                 EditorGUI.EndChangeCheck();
 
@@ -49,7 +49,7 @@ namespace OkapiKit.Editor
 
                 TryDragActionToActionDelayList(actionsRect, propElseActions);
 
-                EditorGUILayout.PropertyField(propElseActions, new GUIContent("Else Actions"), true);
+                EditorGUILayout.PropertyField(propElseActions, new GUIContent("Else Actions", "What actions do we want if the conditions are not true?"), true);
 
                 serializedObject.ApplyModifiedProperties();
                 (target as Trigger).UpdateExplanation();

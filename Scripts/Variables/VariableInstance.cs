@@ -23,7 +23,7 @@ namespace OkapiKit
         void Start()
         {
             value = ScriptableObject.CreateInstance<Variable>();
-            value.SetProperties(type, currentValue, defaultValue, isInteger, hasLimits, minValue, maxValue);
+            value.SetProperties(type, defaultValue, defaultValue, isInteger, hasLimits, minValue, maxValue);
         }
 
         public Variable GetVariable()

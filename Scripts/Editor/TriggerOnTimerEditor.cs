@@ -38,8 +38,8 @@ namespace OkapiKit.Editor
                 if (trigger == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propStartTriggered, new GUIContent("Trigger At Start?"));
-                EditorGUILayout.PropertyField(propTimeInterval, new GUIContent("Time interval (random between [X..Y]"));
+                EditorGUILayout.PropertyField(propStartTriggered, new GUIContent("Trigger At Start?", "If active, the trigger will execute immediately, and only then the timer proper will start."));
+                EditorGUILayout.PropertyField(propTimeInterval, new GUIContent("Time interval (random between [X..Y]", "How often we want to trigger this?\nThis is a random range."));
 
                 EditorGUI.EndChangeCheck();
 

@@ -40,16 +40,16 @@ namespace OkapiKit.Editor
         {
             EditorGUI.BeginChangeCheck();
 
-            EditorGUILayout.PropertyField(propType, new GUIContent("Type"), true);
-            EditorGUILayout.PropertyField(propCurrentValue, new GUIContent("Current Value"), true);
-            EditorGUILayout.PropertyField(propDefaultValue, new GUIContent("Default Value"), true);
-            EditorGUILayout.PropertyField(propHasLimits, new GUIContent("Has Limits"), true);
+            EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of variable."), true);
+            EditorGUILayout.PropertyField(propCurrentValue, new GUIContent("Current Value", "Current value of this variable."), true);
+            EditorGUILayout.PropertyField(propDefaultValue, new GUIContent("Default Value", "Default value of this variable.\nWhen variable is reset, application starts or object is spawned, it will be reset to this value."), true);
+            EditorGUILayout.PropertyField(propHasLimits, new GUIContent("Has Limits", "If we want this value to have limits.\nTo use ValueDisplayProgress, numbers have to have limits.\nNumbers with limits can never be smaller or larger than its limits."), true);
             if (propHasLimits.boolValue)
             {
-                EditorGUILayout.PropertyField(propMinValue, new GUIContent("Minimum Value"), true);
-                EditorGUILayout.PropertyField(propMaxValue, new GUIContent("Maximum Value"), true);
+                EditorGUILayout.PropertyField(propMinValue, new GUIContent("Minimum Value", "Minimum value"), true);
+                EditorGUILayout.PropertyField(propMaxValue, new GUIContent("Maximum Value", "Maximum value"), true);
             }
-            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"), true);
+            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."), true);
 
             EditorGUI.EndChangeCheck();
 

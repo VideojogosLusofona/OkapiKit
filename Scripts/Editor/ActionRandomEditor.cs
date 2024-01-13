@@ -27,7 +27,7 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propActions, new GUIContent("Choices"));
+                EditorGUILayout.PropertyField(propActions, new GUIContent("Choices", "What are the options of actions to run?"));
 
                 if (EditorGUI.EndChangeCheck())
                 {

@@ -37,22 +37,22 @@ namespace OkapiKit.Editor
             {
                 if (propVariable.objectReferenceValue == null)
                 {
-                    EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Variable Instance"), true);
-                    EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable"), true);
+                    EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Variable Instance", "Variable instance to display.\nYou can only select either a global variable or a Value Instance, not both at the same time."), true);
+                    EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable", "Variable to display.\nYou can only select either a global variable or a Value Instance, not both at the same time."), true);
                 }
                 else
                 {
-                    EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable"), true);
+                    EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable", "Variable to display.\nYou can only select either a global variable or a Value Instance, not both at the same time."), true);
                 }
             }
             else
             {
-                EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Variable Instance"), true);
+                EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Variable Instance", "Variable instance to display.\nYou can only select either a global variable or a Value Instance, not both at the same time."), true);
             }
 
             if (isFinal)
             {
-                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"), true);
+                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."), true);
 
                 EditorGUI.EndChangeCheck();
 

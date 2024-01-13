@@ -98,15 +98,16 @@ namespace OkapiKit.Editor
 
             bool toggle = false;
             bool refreshExplanation = false;
+            var showInfoButton = new GUIContent("", "This button toggles the element's configuration on/off.\nShift-click to toggle on/off all components on this object!");
             if (showInfo)
             {
-                toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("EyeClose"));
+                toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), showInfoButton, GUIUtils.GetButtonStyle("EyeClose"));
             }
             else
             {
-                toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("EyeOpen"));
+                toggle = GUI.Button(new Rect(rect.x + rect.width - 48, rect.y + rect.height * 0.5f - 10, 20, 20), showInfoButton, GUIUtils.GetButtonStyle("EyeOpen"));
             }
-            refreshExplanation = GUI.Button(new Rect(rect.x + rect.width - 26, rect.y + rect.height * 0.5f - 10, 20, 20), "", GUIUtils.GetButtonStyle("Refresh"));
+            refreshExplanation = GUI.Button(new Rect(rect.x + rect.width - 26, rect.y + rect.height * 0.5f - 10, 20, 20), new GUIContent("", "This button refreshes the text explanation of this component"), GUIUtils.GetButtonStyle("Refresh"));
             if (toggle)
             {
                 refreshExplanation = true;

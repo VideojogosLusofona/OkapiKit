@@ -55,31 +55,31 @@ namespace OkapiKit.Editor
                 TriggerOnInput.InputType inputType = (TriggerOnInput.InputType)propInputType.enumValueIndex;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type"));
+                EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type", "What kind of input we're detecting?"));
                 if (inputType == TriggerOnInput.InputType.Button)
                 {
-                    EditorGUILayout.PropertyField(propButtonName, new GUIContent("Button Name"));
-                    EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous"));
+                    EditorGUILayout.PropertyField(propButtonName, new GUIContent("Button Name", "Button name"));
+                    EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous", "If active, this triggers when the button is pressed, if not this trigger only executes when the key was just pressed."));
                 }
                 else if (inputType == TriggerOnInput.InputType.Key)
                 {
-                    EditorGUILayout.PropertyField(propKey, new GUIContent("Key"));
-                    EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous"));
+                    EditorGUILayout.PropertyField(propKey, new GUIContent("Key", "Key name"));
+                    EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous", "If active, this triggers when the button is pressed, if not this trigger only executes when the key was just pressed."));
                 }
                 else if (inputType == TriggerOnInput.InputType.Axis)
                 {
-                    EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis"));
-                    EditorGUILayout.PropertyField(propDeadArea, new GUIContent("Dead Area"));
+                    EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis", "Axis"));
+                    EditorGUILayout.PropertyField(propDeadArea, new GUIContent("Dead Area", "How far from center does the axis have to go for it to execute this trigger?"));
                 }
                 if ((propContinuous.boolValue) || (inputType == TriggerOnInput.InputType.Axis))
                 {
-                    EditorGUILayout.PropertyField(propNegate, new GUIContent("Negate"));
+                    EditorGUILayout.PropertyField(propNegate, new GUIContent("Negate", "Do we want to trigger this when the input DOESN'T happen, instead of the other way around?"));
                 }
 
-                EditorGUILayout.PropertyField(propUseCooldown, new GUIContent("Use Cooldown"));
+                EditorGUILayout.PropertyField(propUseCooldown, new GUIContent("Use Cooldown", "Should we have a cooldown for this trigger?"));
                 if (propUseCooldown.boolValue)
                 {
-                    EditorGUILayout.PropertyField(propCooldown, new GUIContent("Cooldown"));
+                    EditorGUILayout.PropertyField(propCooldown, new GUIContent("Cooldown", "This trigger can only happen once every this time."));
                 }
 
                 EditorGUI.EndChangeCheck();

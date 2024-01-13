@@ -21,6 +21,12 @@ namespace OkapiKit
 
         public List<LogEntry> logs => _logs;
 
+        private void OnEnable()
+        {
+            pingComponent = null;
+            pingTime = DateTime.MinValue;
+        }
+
         public void ForceCheckErrors()
         {
             _logs.Clear();

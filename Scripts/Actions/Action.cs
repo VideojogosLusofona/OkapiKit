@@ -151,9 +151,17 @@ namespace OkapiKit
                 }
                 else
                 {
+                    var condLogs = new List<LogEntry>();
+                    int index = 0;
                     foreach (var condition in actionConditions)
                     {
-                        condition.CheckErrors(gameObject, _logs);
+                        condLogs.Clear();
+                        condition.CheckErrors(gameObject, condLogs);
+                        foreach (var l in condLogs)
+                        {
+                            _logs.Add(new LogEntry(l.type, $"Condition {index}: {l.text}", l.tooltip));
+                        }
+                        index++;
                     }
                 }
             }

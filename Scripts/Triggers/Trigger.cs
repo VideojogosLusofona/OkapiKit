@@ -56,6 +56,29 @@ namespace OkapiKit
         {
             base.CheckErrors();
 
+            if (hasPreconditions)
+            {
+                if ((preConditions == null) || (preConditions.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!"));
+                }
+                else
+                {
+                    var condLogs = new List<LogEntry>();
+                    int index = 0;
+                    foreach (var condition in preConditions)
+                    {
+                        condLogs.Clear();
+                        condition.CheckErrors(gameObject, condLogs);
+                        foreach (var l in condLogs)
+                        {
+                            _logs.Add(new LogEntry(l.type, $"Condition {index}: {l.text}", l.tooltip));
+                        }
+                        index++;
+                    }
+                }
+            }
+
             if ((actions == null) || (actions.Length == 0))
             {
                 _logs.Add(new LogEntry(LogEntry.Type.Error, "No actions defined!"));
@@ -75,25 +98,10 @@ namespace OkapiKit
                         var actionLogs = action.action.logs;
                         foreach (var log in actionLogs)
                         {
-                            _logs.Add(new LogEntry(log.type, $"On action {index}: " + log.text));
+                            _logs.Add(new LogEntry(log.type, $"On action {index}: " + log.text, log.tooltip));
                         }
                     }
                     index++;
-                }
-            }
-
-            if (hasPreconditions)
-            {
-                if ((preConditions == null) || (preConditions.Length == 0))
-                {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!"));
-                }
-                else
-                {
-                    foreach (var condition in preConditions)
-                    {
-                        condition.CheckErrors(gameObject, _logs);
-                    }
                 }
             }
         }

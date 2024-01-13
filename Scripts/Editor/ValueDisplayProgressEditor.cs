@@ -25,14 +25,14 @@ namespace OkapiKit.Editor
         {
             base.StdEditor(useOriginalEditor, false);
 
-            EditorGUILayout.PropertyField(propFill, new GUIContent("Fill"), true);
-            EditorGUILayout.PropertyField(propSetColor, new GUIContent("Set color?"), true);
+            EditorGUILayout.PropertyField(propFill, new GUIContent("Fill", "UI object to scale depending on current variable value and its limits"), true);
+            EditorGUILayout.PropertyField(propSetColor, new GUIContent("Set color?", "Do we want to set the color as well as scale it?\nOnly works if Fill is an UI Image component"), true);
             if (propSetColor.boolValue)
             {
-                EditorGUILayout.PropertyField(propColor, new GUIContent("Color Gradient"), true);
+                EditorGUILayout.PropertyField(propColor, new GUIContent("Color Gradient", "Color gradient to use. Leftmost color is used when the value is close to 0%, rightmost color is used when value is close to 100%"), true);
             }
 
-            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"), true);
+            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."), true);
 
             EditorGUI.EndChangeCheck();
 

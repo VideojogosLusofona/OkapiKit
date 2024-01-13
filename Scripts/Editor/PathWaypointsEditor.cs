@@ -42,15 +42,15 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propType, new GUIContent("Type"));
+                EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of path.\nLinear: Straight lines between points\nSmooth: Curved line that passes through some points and is influenced by the others."));
                 if (propType.enumValueIndex == (int)Path.PathType.Smooth)
                 {
-                    EditorGUILayout.PropertyField(propTension, new GUIContent("Tension"));
+                    EditorGUILayout.PropertyField(propTension, new GUIContent("Tension", "The less tension, the more linear the path is."));
                 }
-                EditorGUILayout.PropertyField(propPoints, new GUIContent("Points"));
-                EditorGUILayout.PropertyField(propWorldSpace, new GUIContent("World Space"));
-                EditorGUILayout.PropertyField(propEditMode, new GUIContent("Edit Mode"));
-                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+                EditorGUILayout.PropertyField(propPoints, new GUIContent("Points", "Waypoints"));
+                EditorGUILayout.PropertyField(propWorldSpace, new GUIContent("World Space", "Are the positions in world space, or relative to this object."));
+                EditorGUILayout.PropertyField(propEditMode, new GUIContent("Edit Mode", "If edit mode is on, you can edit the points the scene view.\nClick on a point to select it, use the gizmo to move them around."));
+                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
                 if (GUILayout.Button("Add Point"))
                 {

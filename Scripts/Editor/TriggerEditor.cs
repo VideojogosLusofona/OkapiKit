@@ -44,20 +44,20 @@ namespace OkapiKit.Editor
             rect.height = 20;
             float totalWidth = rect.width;
             float elemWidth = totalWidth / 3;
-            propEnableTrigger.boolValue = CheckBox("Active", rect.x, rect.y, elemWidth, propEnableTrigger.boolValue);
-            propAllowRetrigger.boolValue = CheckBox("Allow Retrigger", rect.x + elemWidth, rect.y, elemWidth, propAllowRetrigger.boolValue);
+            propEnableTrigger.boolValue = CheckBox("Active", "If active, this trigger can be triggered. If not, this trigger is disabled.", rect.x, rect.y, elemWidth, propEnableTrigger.boolValue);
+            propAllowRetrigger.boolValue = CheckBox("Allow Retrigger", "If true, this trigger can retrigger, otherwise it disables itself after the first trigger", rect.x + elemWidth, rect.y, elemWidth, propAllowRetrigger.boolValue);
             if (allowConditions)
             {
-                propHasConditions.boolValue = CheckBox("Conditions", rect.x + elemWidth * 2, rect.y, elemWidth, propHasConditions.boolValue);
+                propHasConditions.boolValue = CheckBox("Conditions", "If active, this trigger can only be triggered if some conditions are met", rect.x + elemWidth * 2, rect.y, elemWidth, propHasConditions.boolValue);
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space(rect.height);
-            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
             if (propHasConditions.boolValue)
             {
                 // Display tags
-                EditorGUILayout.PropertyField(propPreConditions, new GUIContent("Conditions"), true);
+                EditorGUILayout.PropertyField(propPreConditions, new GUIContent("Conditions", "These conditions have to be met for this trigger to be active."), true);
             }
 
             serializedObject.ApplyModifiedProperties();
@@ -80,7 +80,7 @@ namespace OkapiKit.Editor
 
             TryDragActionToActionDelayList(actionsRect, propActions);
 
-            EditorGUILayout.PropertyField(propActions, new GUIContent("Actions"), true);
+            EditorGUILayout.PropertyField(propActions, new GUIContent("Actions", "These actions will be performed when this trigger is executed."), true);
 
             serializedObject.ApplyModifiedProperties();
             (target as Trigger).UpdateExplanation();
@@ -145,12 +145,12 @@ namespace OkapiKit.Editor
             }
         }
 
-        private bool CheckBox(string label, float x, float y, float width, bool initialValue)
+        private bool CheckBox(string label, string tooltip, float x, float y, float width, bool initialValue)
         {
             GUIStyle style = GUI.skin.toggle;
             Vector2 size = style.CalcSize(new GUIContent(label));
 
-            EditorGUI.LabelField(new Rect(x, y, size.x, 20), label);
+            EditorGUI.LabelField(new Rect(x, y, size.x, 20), new GUIContent(label, tooltip));
             float offsetX = size.x + 1;
 
             if (offsetX + 20 > width) offsetX = width - 20;

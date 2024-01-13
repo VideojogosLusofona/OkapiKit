@@ -48,7 +48,7 @@ namespace OkapiKit.Editor
                 if (config == null) return;
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(props["maxPingTime"], new GUIContent("Max. Ping Time"));
+                EditorGUILayout.PropertyField(props["maxPingTime"], new GUIContent("Max. Ping Time", "When pinging an action, how long does it stays lit up."));
 
                 if (EditorGUI.EndChangeCheck())
                 {

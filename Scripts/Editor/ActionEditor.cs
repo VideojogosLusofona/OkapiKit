@@ -91,22 +91,22 @@ namespace OkapiKit.Editor
             rect.height = 20;
             float totalWidth = rect.width;
             float elemWidth = totalWidth / 3;
-            propEnableAction.boolValue = CheckBox("Active", rect.x, rect.y, elemWidth, propEnableAction.boolValue);
-            propHasTags.boolValue = CheckBox("Tags", rect.x + elemWidth, rect.y, elemWidth, propHasTags.boolValue);
-            propHasConditions.boolValue = CheckBox("Conditions", rect.x + elemWidth * 2, rect.y, elemWidth, propHasConditions.boolValue);
+            propEnableAction.boolValue = CheckBox("Active", "If active, this action can be triggered. If disabled, this action can never be triggered.", rect.x, rect.y, elemWidth, propEnableAction.boolValue);
+            propHasTags.boolValue = CheckBox("Tags", "If active, you can tag this action so that it can be triggered by an unlinked 'Action Tagged' action.", rect.x + elemWidth, rect.y, elemWidth, propHasTags.boolValue);
+            propHasConditions.boolValue = CheckBox("Conditions", "If active, you can specify conditions. Only if these conditions are all true will this action trigger, even if explicitly told to.", rect.x + elemWidth * 2, rect.y, elemWidth, propHasConditions.boolValue);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space(rect.height);
 
             if (propHasTags.boolValue)
             {
                 // Display tags
-                EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"), true);
+                EditorGUILayout.PropertyField(propTags, new GUIContent("Tags", "These define the tags for this action itself, so it can be triggered by an 'Action Tagged' action."), true);
             }
 
             if (propHasConditions.boolValue)
             {
                 // Display tags
-                EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions"), true);
+                EditorGUILayout.PropertyField(propConditions, new GUIContent("Conditions", "These define the conditions that have to be true for this action to be able to be triggered."), true);
             }
 
             serializedObject.ApplyModifiedProperties();
@@ -124,17 +124,17 @@ namespace OkapiKit.Editor
 
         }
 
-        protected bool CheckBox(string label, float x, float y, float width, bool initialValue)
+        protected bool CheckBox(string label, string tooltip, float x, float y, float width, bool initialValue)
         {
             GUIStyle style = GUI.skin.toggle;
-            Vector2 size = style.CalcSize(new GUIContent(label));
+            Vector2 size = style.CalcSize(new GUIContent(label, tooltip));
 
-            EditorGUI.LabelField(new Rect(x, y, size.x, 20), label);
+            EditorGUI.LabelField(new Rect(x, y, size.x, 20), new GUIContent(label, tooltip));
             float offsetX = size.x + 1;
 
             if (offsetX + 20 > width) offsetX = width - 20;
 
-            bool ret = EditorGUI.Toggle(new Rect(x + offsetX, y, 20, 20), initialValue);
+            bool ret = EditorGUI.Toggle(new Rect(x + offsetX, y, 20, 20), new GUIContent("", tooltip), initialValue);
 
             return ret;
         }

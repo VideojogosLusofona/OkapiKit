@@ -40,9 +40,9 @@ namespace OkapiKit.Editor
                 if (trigger == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propIsTrigger, new GUIContent("Collider Is Trigger?"));
-                EditorGUILayout.PropertyField(propEventType, new GUIContent("Event type"));
-                EditorGUILayout.PropertyField(propTags, new GUIContent("Tags"));
+                EditorGUILayout.PropertyField(propIsTrigger, new GUIContent("Collider Is Trigger?", "Is active, only collisions with trigger colliders will be detected."));
+                EditorGUILayout.PropertyField(propEventType, new GUIContent("Event type", "What kind of event we want to detect.\nEnter: When a collision happens\nStay: While a collision happens\nExit: When a collision stops happening"));
+                EditorGUILayout.PropertyField(propTags, new GUIContent("Tags", "Which tags to use for the collisions.\nOnly objects with these tags (and a collider) can be detected"));
                 EditorGUI.EndChangeCheck();
 
                 ActionPanel();

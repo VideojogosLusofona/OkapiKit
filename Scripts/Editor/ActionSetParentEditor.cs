@@ -31,14 +31,14 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target"));
+                EditorGUILayout.PropertyField(propTarget, new GUIContent("Target", "Type of target to set this object as a parent."));
                 if (propTarget.enumValueIndex == (int)ActionSetParent.Target.Object)
                 {
-                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Object"));
+                    EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Object", "What object is the new parent of this object?\nLeave it empty to set this object to the root level (with no parent)."));
                 }
                 else if (propTarget.enumValueIndex == (int)ActionSetParent.Target.Tag)
                 {
-                    EditorGUILayout.PropertyField(propTag, new GUIContent("Tag"));
+                    EditorGUILayout.PropertyField(propTag, new GUIContent("Tag", "Find an object with this tag to be the new parent of this object.\nLeave it empty to set this object to the root level (with no parent)."));
                 }
 
                 if (EditorGUI.EndChangeCheck())

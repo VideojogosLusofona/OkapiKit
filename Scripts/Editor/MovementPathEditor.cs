@@ -41,37 +41,37 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed"));
+                EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Movement speed (in pixels/second)."));
                 if (propPath.objectReferenceValue == null)
                 {
                     if (propTaggedPath.objectReferenceValue == null)
                     {
-                        EditorGUILayout.PropertyField(propPath, new GUIContent("Path"));
-                        EditorGUILayout.PropertyField(propTaggedPath, new GUIContent("Path Tag"));
+                        EditorGUILayout.PropertyField(propPath, new GUIContent("Path", "What path should this object follow?\nYou can either link a path, or reference it by tag, but not both at the same time.\nIf you use a tag to define the path, if there's multiple paths with the same tag, a random one will be selected."));
+                        EditorGUILayout.PropertyField(propTaggedPath, new GUIContent("Path Tag", "Find a path with this tag.\nYou can either link a path, or reference it by tag, but not both at the same time.\nIf you use a tag to define the path, if there's multiple paths with the same tag, a random one will be selected."));
                     }
                     else
                     {
-                        EditorGUILayout.PropertyField(propTaggedPath, new GUIContent("Path Tag"));
+                        EditorGUILayout.PropertyField(propTaggedPath, new GUIContent("Path Tag", "Find a path with this tag.\nYou can either link a path, or reference it by tag, but not both at the same time.\nIf you use a tag to define the path, if there's multiple paths with the same tag, a random one will be selected."));
                     }
                 }
                 else
                 {
-                    EditorGUILayout.PropertyField(propPath, new GUIContent("Path"));
+                    EditorGUILayout.PropertyField(propPath, new GUIContent("Path", "What path should this object follow?\nYou can either link a path, or reference it by tag, but not both at the same time.\nIf you use a tag to define the path, if there's multiple paths with the same tag, a random one will be selected."));
                 }
-                EditorGUILayout.PropertyField(propLoop, new GUIContent("Loop"));
-                EditorGUILayout.PropertyField(propRelativePath, new GUIContent("Is Path Relative?"));
-                EditorGUILayout.PropertyField(propRotationBehaviour, new GUIContent("Rotation Behaviour"));
+                EditorGUILayout.PropertyField(propLoop, new GUIContent("Loop", "If on, the object will loop around the path."));
+                EditorGUILayout.PropertyField(propRelativePath, new GUIContent("Is Path Relative?", "If on, the relative position of the object to the path's will be accounted for.\nThis means the object will follow the path as if the path's start was at the initial position of this object."));
+                EditorGUILayout.PropertyField(propRotationBehaviour, new GUIContent("Rotation Behaviour", "What happens in terms of rotation?\nNone: No rotation applied\nAxis X: the right (X) axis will be aligned with the movement direction\nAxis Y: the up (Y) axis will be aligned with the movement direction."));
                 if (propRotationBehaviour.enumValueIndex != (int)MovementPath.RotationBehaviour.None)
                 {
-                    EditorGUILayout.PropertyField(propUseFlip, new GUIContent("Use flip?"));
-                    EditorGUILayout.PropertyField(propHasMaxRotationSpeed, new GUIContent("Has maximum rotation speed?"));
+                    EditorGUILayout.PropertyField(propUseFlip, new GUIContent("Use flip?", "If on, the object flips if the movement direction is to the left/down.\nFliping means scaling by negative coeficient."));
+                    EditorGUILayout.PropertyField(propHasMaxRotationSpeed, new GUIContent("Has maximum rotation speed?", "If on, the object has a maximum rotation speed."));
                     if (propHasMaxRotationSpeed.boolValue)
                     {
-                        EditorGUILayout.PropertyField(propMaxRotationSpeed, new GUIContent("Maximum rotation speed?"));
+                        EditorGUILayout.PropertyField(propMaxRotationSpeed, new GUIContent("Maximum rotation speed?", "Maximum rotation speed (degrees per second)"));
                     }
                 }
 
-                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description"));
+                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
                 EditorGUI.EndChangeCheck();
 

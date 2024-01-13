@@ -28,7 +28,7 @@ namespace OkapiKit.Editor
 
                 EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propUnityEvent, new GUIContent("Unity Event"));
+                EditorGUILayout.PropertyField(propUnityEvent, new GUIContent("Unity Event", "Unity event to trigger"));
 
                 if (EditorGUI.EndChangeCheck())
                 {
