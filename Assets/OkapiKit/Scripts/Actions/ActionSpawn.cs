@@ -53,7 +53,7 @@ namespace OkapiKit
                         break;
                     case SpawnPosition.Tag:
                         var tagName = (targetTag) ? (targetTag.name) : ("UNDEFINED");
-                        desc += $" at the position of object with tag [{tagName}]";
+                        desc += $" at the position of object with tag [{tagName}] (if multiple objects have the same tag, selects a random one)";
                         break;
                     default:
                         break;
@@ -87,7 +87,7 @@ namespace OkapiKit
                 var spawner = GetComponent<Spawner>();
                 if (spawner == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefab not defined!\nEither define a prefab to spawn, or add a Spawner system on this object!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefab not defined!\nEither define a prefab to spawn, or add a Spawner system on this object!", "This action spawns (creates) a new object, so we need to define which object we want to create.\nWe can do that by defining a prefab object, or if we want to do something more complex (like selecting a random object from a list, or spawning randomly inside of an area, or at certain points), we need to create a Spawner system on this object. "));
                 }
                 else
                 {
@@ -105,21 +105,21 @@ namespace OkapiKit
                     (prefabObject.scene == null) || 
                     (prefabObject.scene.rootCount != 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn object is not a prefab!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn object is not a prefab!", "Object needs to be a prefab, not an object that belongs to the scene, because those can be destroyed.\nA prefab is an object that doesn't belong to a scene, but belongs to the project (so it's on the Project view, not on the Hierarchy).\nTo create a new prefab, just drag the object from the hierarchy to the project.\nIf the object is already a prefab object by itself, select the original object on the project view, instead of the hierarchy view."));
                 }
 
                 if (spawnPosition == SpawnPosition.Target)
                 {
                     if (targetPosition == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target position is not set!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target position is not set!", "If you want to spawn the object at a particular point, you need to provide which point"));
                     }
                 }
                 if (spawnPosition == SpawnPosition.Tag)
                 {
                     if (targetTag == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag is not set!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag is not set!", "If you want to spawn the object at the position of an object with a specific tag, please define what tag.\nIf there's multiple objects with the same tag, a random one will be chosen."));
                     }
                 }
             }            
@@ -157,13 +157,17 @@ namespace OkapiKit
                         break;
                     case SpawnPosition.Tag:
                         {
-                            var targetObj = HypertaggedObject.FindGameObjectWithHypertag(targetTag);
-                            if (targetObj)
+                            var targetObjs = HypertaggedObject.FindGameObjectsWithHypertag(targetTag);
+                            if ((targetObjs != null) && (targetObjs.Count > 0))
                             {
-                                var obj = Instantiate(prefabObject, targetObj.transform.position, targetObj.transform.rotation);
-                                if (setParent)
+                                var targetObj = targetObjs[UnityEngine.Random.Range(0, targetObjs.Count)];
+                                if (targetObj)
                                 {
-                                    obj.transform.SetParent(targetObj.transform);
+                                    var obj = Instantiate(prefabObject, targetObj.transform.position, targetObj.transform.rotation);
+                                    if (setParent)
+                                    {
+                                        obj.transform.SetParent(targetObj.transform);
+                                    }
                                 }
                             }
                         }

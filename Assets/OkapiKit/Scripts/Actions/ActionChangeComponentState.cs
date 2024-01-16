@@ -45,7 +45,7 @@ namespace OkapiKit
 
             if (target == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target component"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target component", "You need to define which component you want to change!"));
             }
         }
 

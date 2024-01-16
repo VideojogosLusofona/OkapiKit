@@ -60,7 +60,7 @@ namespace OkapiKit
 
             if (GetTarget() == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No renderer available for blinking - place one in this object or in a child object"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No renderer available for blinking - place one in this object or in a child object", "Blinking is turning on/off a renderer, so for this to work, there has to be at least one renderer on this object, or reference a renderer."));
             }
         }
 

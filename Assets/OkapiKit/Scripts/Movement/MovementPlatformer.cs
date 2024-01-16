@@ -329,23 +329,30 @@ namespace OkapiKit
 
             if (groundCheckCollider == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Ground check collider is necessary to see where the ground is!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Ground check collider is necessary to see where the ground is!", $"Platformers depend on knowing if the character is on the ground, to know if it can jump, etc. For that, we need to use a trigger collider that we reference.\nWhen some objects that belong to the layer {GetLayerString(groundLayerMask)} are inside the defined collider, the character is set as being on the ground"));
+            }
+            else
+            {
+                if (!groundCheckCollider.isTrigger)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Ground check collider should be a trigger!", $"This collider is a sensor, not an actual physical thing, and as such it should be a trigger collider"));
+                }
             }
             if (groundLayerMask.value == 0)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Ground check mask needs to be defined - it defines what layers are considered ground."));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Ground check mask needs to be defined - it defines what layers are considered ground.", $"Platformers depend on knowing if the character is on the ground, to know if it can jump, etc. For that, we need to use a trigger collider that we reference.\nWhen some objects that belong to a specific layer are inside the defined collider, the character is set as being on the ground, so the layers have to defined"));
             }
             if (gravityScale == 0.0f)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Gravity needs to be setup - character will float otherwise!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Gravity needs to be setup - character will float otherwise!", "Gravity is the force that pulls the player down. This is a multiplier factor, so this is multiplied by the project settings property under Physics2D.\nThe default value should be 1, to match the value on the physics properties, but it can be larger than zero so the character falls faster and be less floaty"));
             }
             if ((groundCollider == null) && (airCollider != null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to define ground collider (collider used when character is on the ground)!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to define ground collider (collider used when character is on the ground)!", "Objects can have different colliders while in the air and on the ground.\nFor example, it's common to have a box collider while in the air, while having a capsule collider on the ground (better to go up ramps, for example).\nIf we want this behaviour, we need to set the air and ground colliders."));
             }
             if ((groundCollider != null) && (airCollider == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to define air collider (collider used when character is not on the ground)!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to define air collider (collider used when character is not on the ground)!", "Objects can have different colliders while in the air and on the ground.\nFor example, it's common to have a box collider while in the air, while having a capsule collider on the ground (better to go up ramps, for example).\nIf we want this behaviour, we need to set the air and ground colliders."));
             }
             if (useAnimator)
             {
@@ -355,18 +362,18 @@ namespace OkapiKit
                     anm = GetComponent<Animator>();
                     if (anm == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Animator not defined!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Animator not defined!", "If we want to drive an animator with the properties of the movement, we need to define which animator to use."));
                     }
                     else
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Warning, "Animator exists, but it should be linked explicitly!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Warning, "Animator exists, but it should be linked explicitly!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                     }
                 }
                 if (anm != null)
                 {
                     if (anm.runtimeAnimatorController == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Animator controller is not set!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Animator controller is not set!", "There's an animator, but it doesn't have a controller setup. Creat one and set it on the animator."));
                     }
                     else
                     {
@@ -394,13 +401,13 @@ namespace OkapiKit
                 {
                     if (param.type != type)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!", $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!"));
                     }
                     return;
                 }
             }
 
-            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter {parameterName} for {logParameter} not found!"));
+            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter {parameterName} for {logParameter} not found!", "The given animator doesn't have this parameter. Either set it to empty (so we don't try to drive it), or add it on the animator."));
         }
 
         protected override void Start()

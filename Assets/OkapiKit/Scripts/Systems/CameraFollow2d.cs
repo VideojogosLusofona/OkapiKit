@@ -89,16 +89,16 @@ namespace OkapiKit
             {
                 if ((tag != null) && (tagMode == TagMode.Average) && (allowZoom))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "A ortographic camera component needs to be on the same object as this system!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "A ortographic camera component needs to be on the same object as this system!", "For the follow to work properly, we need to reference an ortographic cameras."));
                 }
             }
             if ((targetTag == null) && (targetObject == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No follow target is defined!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No follow target is defined!", "If we're following an object, we need to set either a reference to the object, or the tags of objects to find and follow."));
             }
             if (cameraLimits == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Camera limits are not set!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Camera limits are not set!", "This is not mandatory, but it's common to have some sort of limits on the camera, so that it can't fall outside of the scope of the scene.\nCreate a box collider and reference it under camera limits."));
             }
         }
 

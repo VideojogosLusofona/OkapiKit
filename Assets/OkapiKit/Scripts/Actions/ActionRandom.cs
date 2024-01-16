@@ -60,7 +60,7 @@ namespace OkapiKit
             {
                 if (actions.Length == 1)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Only one action defined, no need for random choice!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Only one action defined, no need for random choice!", "Only one action defined, no need for random choice"));
                 }
 
                 int index = 0;
@@ -68,7 +68,7 @@ namespace OkapiKit
                 {
                     if (action.action == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty action in action list (index={index})!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty action in action list (index={index})!", "Empty actions don't do anything"));
                     }
                     else
                     {
@@ -81,7 +81,7 @@ namespace OkapiKit
                     }
                     if (action.probability <= 0.0f)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Action with probability of zero or less - this will never be chosen (index={index})!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Action with probability of zero or less - this will never be chosen (index={index})!", "If something has a zero percent probability of happening, that thing will never happen"));
                     }
                     index++;
                 }

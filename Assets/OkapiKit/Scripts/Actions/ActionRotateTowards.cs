@@ -125,7 +125,7 @@ namespace OkapiKit
 
             if ((targetObject == null) && (targetTag == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No target defined!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No target defined!", "We want to rotate the object towards something, but we didn't define what"));
             }
         }
 

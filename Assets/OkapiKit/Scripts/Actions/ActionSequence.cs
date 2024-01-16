@@ -95,7 +95,7 @@ namespace OkapiKit
             {
                 if (actions.Length == 1)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Only one action defined, no need for sequence!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Only one action defined, no need for sequence!", "Only one action defined, no need for sequence"));
                 }
 
                 int index = 0;
@@ -103,7 +103,7 @@ namespace OkapiKit
                 {
                     if (action.action == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty action in action list (index={index})!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty action in action list (index={index})!", "Empty actions don't do anything"));
                     }
                     else
                     {

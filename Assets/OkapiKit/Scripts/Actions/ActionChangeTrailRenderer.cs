@@ -77,11 +77,11 @@ namespace OkapiKit
             {
                 if (GetComponent<TrailRenderer>() == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target trail renderer!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target trail renderer!", "We're changing something on a trail renderer, so we need a target so we know which trail renderer to change."));
                 }
                 else
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Trail renderer to modify is this object, but it should be explicitly linked!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Trail renderer to modify is this object, but it should be explicitly linked!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
             }
         }

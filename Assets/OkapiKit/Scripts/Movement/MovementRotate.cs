@@ -167,7 +167,7 @@ namespace OkapiKit
             {
                 if ((targetTag == null) && (targetObject == null))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target not defined - use either tag or drag the object to the slot below!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target not defined - use either tag or drag the object to the slot below!", "If we want to rotate towards an object, we need to define which object."));
                 }
             }
         }

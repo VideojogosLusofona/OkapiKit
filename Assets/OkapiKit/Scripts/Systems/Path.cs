@@ -145,19 +145,19 @@ namespace OkapiKit
 
             if ((points == null) || (points.Count == 0))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No points defined: add points!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No points defined: add points!", "To have a path, we need to have some points..."));
             }
             else
             {
                 if (points.Count < 2)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Need more points: add points!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Need more points: add points!", "To have a path, we need to have more than one point..."));
                 }
                 else if (type == PathType.Smooth)
                 {
                     if ((points.Count - 1) % 2 != 0)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Need two points per segment on a smooth curve!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Need two points per segment on a smooth curve!", "To have a smooth path, we need to have some 2 point per segment, plus a starting point..."));
                     }
                 }
             }

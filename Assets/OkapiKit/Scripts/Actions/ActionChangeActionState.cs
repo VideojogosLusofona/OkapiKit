@@ -40,7 +40,7 @@ namespace OkapiKit
 
             if (target == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target action"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target action", "You need to define which action you want to change the state of!"));
             }
         }
 

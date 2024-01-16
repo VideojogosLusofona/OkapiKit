@@ -129,7 +129,7 @@ namespace OkapiKit
             {
                 if ((actionTags == null) || (actionTags.Length == 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Action is flagged as tagged, but no tags defined!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Action is flagged as tagged, but no tags defined!", "If you want to tag an action so you can call it/identify it from somewhere else, you need to assign at least one tags!"));
                 }
                 else
                 {
@@ -137,7 +137,7 @@ namespace OkapiKit
                     {
                         if (tag == null)
                         {
-                            _logs.Add(new LogEntry(LogEntry.Type.Error, "Empty tag defined in tags list!"));
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, "Empty tag defined in tags list!", "If you want to tag an action so you can call it/identify it from somewhere else, you need to assign at least one tags!"));
                         }
                     }
                 }
@@ -147,7 +147,7 @@ namespace OkapiKit
             {
                 if ((actionConditions == null) || (actionConditions.Length == 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!", "If you want this action to only execute given some conditions, you have to define those conditions!"));
                 }
                 else
                 {

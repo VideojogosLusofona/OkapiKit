@@ -76,15 +76,15 @@ namespace OkapiKit
 
             if ((targetObject == null) && (targetTag == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Shake target is this object, but it should be set explicitly!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Shake target is this object, but it should be set explicitly!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
             }
             if (strength == 0.0f)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Shake strength is zero, object will not shake!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Shake strength is zero, object will not shake!", "Strength is how much the object will shake, in world coordinates (pixels).\nZero strength means the object will not shake."));
             }
             if (duration <= 0.0f)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Shake duration is less or equal to zero, object will not shake!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Shake duration is less or equal to zero, object will not shake!", "Duration is for how long (in seconds) the shake will happen. A duration of zero means the object will not shake at all."));
             }
         }
 

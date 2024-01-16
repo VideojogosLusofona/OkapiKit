@@ -56,11 +56,11 @@ namespace OkapiKit
 
             if (clip == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined sound to play!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined sound to play!", "We need to know what sound to play"));
             }
             if (SoundManager.instance == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "There is no sound manager in the scene!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "There is no sound manager in the scene!", "All sounds are played by a SoundManager, but there's no SoundManager on the scene.\nCreate an empty GameObject and add a SoundManager system!"));
             }
         }
 

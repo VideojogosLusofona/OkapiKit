@@ -72,7 +72,7 @@ namespace OkapiKit
 
             if (GetTarget() == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No renderer available for flashing - place one in this object or in a child object"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No renderer available for flashing - place one in this object or in a child object", "Flashing an object requires a renderer with a material (like a sprite or trail renderer), so you need to define by adding or referencing one"));
             }
         }
 

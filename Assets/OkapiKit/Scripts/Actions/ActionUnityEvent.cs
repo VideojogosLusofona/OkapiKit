@@ -31,7 +31,7 @@ namespace OkapiKit
 
             if (unityEvent.GetPersistentEventCount() == 0)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No Unity event declared!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No Unity event declared!", "If we're using this, we want to call an event (which is just a functional call to some Unity script).\nIf you don't define anything, this does nothing."));
             }
             else
             {
@@ -39,11 +39,11 @@ namespace OkapiKit
                 {
                     if (unityEvent.GetPersistentTarget(i) == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"No receiver for Unity event on slot {i}!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"No receiver for Unity event on slot {i}!", "If you want to call a function on an object, you need to define which object."));
                     }
                     else if (unityEvent.GetPersistentMethodName(i) == "")
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"No function for Unity event on slot {i}!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"No function for Unity event on slot {i}!", "An object is selected as target for the event, but no function/event is selected."));
                     }
                 }
             }

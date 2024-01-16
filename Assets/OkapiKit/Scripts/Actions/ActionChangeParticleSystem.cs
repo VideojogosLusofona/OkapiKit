@@ -99,11 +99,11 @@ namespace OkapiKit
             {
                 if (GetComponent<ParticleSystem>() == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target particle system"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target particle system", "We're changing something on a particle system, so we need a target so we know which particle system to change."));
                 }
                 else
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Particle system to modify is this object, but it should be explicitly linked!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Particle system to modify is this object, but it should be explicitly linked!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
             }
         }

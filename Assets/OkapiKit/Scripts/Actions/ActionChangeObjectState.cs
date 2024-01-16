@@ -39,7 +39,7 @@ namespace OkapiKit
 
             if (target == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Undefined target object - object will change its own state"));
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Undefined target object - object will change its own state", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
             }
         }
 
