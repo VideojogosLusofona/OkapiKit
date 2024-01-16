@@ -38,4 +38,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OkapiKitSamples/Platformer/Platformer.unity
     guid: d1d82361234b9bd47b4da5a818a57c36
+  - enabled: 1
+    path: Assets/OkapiKitSamples/Snippets/SingletonSoundManagerA.unity
+    guid: 5d410d58b6c1786438dda1f8a45b9f09
+  - enabled: 1
+    path: Assets/OkapiKitSamples/Snippets/SingletonSoundManagerB.unity
+    guid: 813d8d29f2558154f85c4ba201af7a5e
   m_configObjects: {}

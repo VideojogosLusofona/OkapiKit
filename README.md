@@ -90,8 +90,14 @@ There are also some code snippets demonstrating some of the features, but devoid
 
 ## Snippets
 
-- Probe: Shows probe usage
-- StoppingDistance: Shows how to use the Stopping Distance property on the Follow movement
+- Probe: 
+  - probe usage
+- StoppingDistance
+  - how to use the stopping distance property on the Follow movement
+- SingletonSoundManagerA/B
+  - how to use the singleton system in the OkapiKit
+  - how to keep a song playing throughout the game, even if it has multiple scenes
+  - how to use a button to change the music playing
 
 # Documentation
 
@@ -132,6 +138,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 * Top-down buildings by [chabull], licensed under [CC-BY 3.0]
 * Platformer sprites by [IMakeGames], licensed under [CC-BY 3.0]
 * Gems by [Winternaut], licensed under [CC0]
+* NES Shooter Music by [SketchyLogic], licensed under [CC0]
 * Editor icons from [FlatIcon]
 * Title imagem from [Midjourney]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
@@ -158,6 +165,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 [chabull]:https://opengameart.org/users/chabull
 [IMakeGames]:http://www.imake-games.com/
 [Winternaut]:https://opengameart.org/users/winternaut
+[SketchyLogic]:https://opengameart.org/users/sketchylogic
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [CC-BY 4.0]:https://creativecommons.org/licenses/by/4.0/

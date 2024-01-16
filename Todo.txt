@@ -1,7 +1,6 @@
 Features:
 ---------
 
-- Singleton objects
 - Movement targets should be redefinable
 - Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
@@ -26,8 +25,6 @@ Usability:
   - Add triggers/actions directly in the objects
   - Have the ability to have custom adds (SetVisibility, SetVelocity, etc)
 - Add node ID property to actions/triggers
-- Value Display Text should use a formatting string instead the text in the edit box
-- Split OkapiKit from samples
 
 Simple usage:
 -------------
@@ -61,7 +58,6 @@ Games:
 - Create Commando 2 game (add AI system - 2d path finding)
 - Create Visual Novel game
 - Convert probe thing to racing game with probe based AI
-- Create Platformer game
 
 Ideas Okapi V2.0:
 -----------------

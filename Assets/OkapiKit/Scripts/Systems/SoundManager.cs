@@ -12,7 +12,7 @@ namespace OkapiKit
 
         [SerializeField] private AudioMixerGroup defaultMixerOutput;
 
-        List<AudioSource> audioSources = new List<AudioSource>();
+        List<AudioSource> audioSources;
 
         public static SoundManager instance
         {
@@ -29,14 +29,11 @@ namespace OkapiKit
         // Start is called before the first frame update
         void Start()
         {
-            if (_instance == null)
+            // Find all audio sources
+            audioSources = new List<AudioSource>(GetComponentsInChildren<AudioSource>());
+            if (audioSources == null)
             {
-                _instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
+                audioSources = new List<AudioSource>();
             }
         }
 
@@ -98,6 +95,8 @@ namespace OkapiKit
         {
             if (description != "") _explanation = description;
             else _explanation = "";
+
+            _explanation += "This system is responsible for playing all sounds in the game";
 
             return _explanation;
         }
