@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 namespace OkapiKit
 {
@@ -294,6 +296,7 @@ namespace OkapiKit
         {
             base.CheckErrors();
 
+#if UNITY_EDITOR
             if ((prefabs == null) || (prefabs.Length == 0))
             {
                 _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefabs not defined!", "This system spawns (creates) a new object, so we need to define which object we want to create.\nWe can do that by defining a list of prefab objects, and a random one will be chosen everytime a spawn should be performed."));
@@ -316,6 +319,7 @@ namespace OkapiKit
                     index++;
                 }
             }
+#endif
 
             // Check if there's colliders
             var collider = GetComponent<BoxCollider2D>();

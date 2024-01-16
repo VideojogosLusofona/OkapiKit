@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-using static Codice.Client.BaseCommands.Import.Commit;
 
 namespace OkapiKit
 {

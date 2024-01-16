@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System;
 
 namespace OkapiKit
@@ -101,12 +103,14 @@ namespace OkapiKit
             }
             else
             {
+#if UNITY_EDITOR
                 if ((PrefabUtility.GetPrefabAssetType(prefabObject) == PrefabAssetType.NotAPrefab) ||
                     (prefabObject.scene == null) || 
                     (prefabObject.scene.rootCount != 0))
                 {
                     _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn object is not a prefab!", "Object needs to be a prefab, not an object that belongs to the scene, because those can be destroyed.\nA prefab is an object that doesn't belong to a scene, but belongs to the project (so it's on the Project view, not on the Hierarchy).\nTo create a new prefab, just drag the object from the hierarchy to the project.\nIf the object is already a prefab object by itself, select the original object on the project view, instead of the hierarchy view."));
                 }
+#endif
 
                 if (spawnPosition == SpawnPosition.Target)
                 {
