@@ -81,7 +81,7 @@ namespace OkapiKit
 
             if ((actions == null) || (actions.Length == 0))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No actions defined!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No actions defined!", "If no actions are defined, this trigger will not do anything, even if it is activated!"));
             }
             else
             {

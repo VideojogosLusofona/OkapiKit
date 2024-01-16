@@ -165,7 +165,7 @@ namespace OkapiKit
 
             if ((hypertags == null) || (hypertags.Count == 0))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Tags not defined!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Tags not defined!", "Having a hypertag component without hypertags defined is pointless!\nHypertags allow OkapiKit (and other custom scripts) identify an object in the scene.\nAn object can have multiple hypertags."));
             }
             else
             {

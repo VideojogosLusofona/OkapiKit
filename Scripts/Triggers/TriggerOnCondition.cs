@@ -9,8 +9,9 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Trigger/On Condition")]
     public class TriggerOnCondition : Trigger
     {
-        [SerializeField] private Condition[] conditions;
-        [SerializeField] protected ActionTrigger[] elseActions;
+        [SerializeField] private bool               continuous = false;
+        [SerializeField] private Condition[]        conditions;
+        [SerializeField] protected ActionTrigger[]  elseActions;
 
         private bool firstTime = true;
         private bool prevValue = false;
@@ -24,6 +25,15 @@ namespace OkapiKit
             if ((elseActions != null) && (elseActions.Length > 0))
             {
                 _explanation += "else\n" + GetDescriptionActions(elseActions);
+            }
+
+            if (continuous)
+            {
+                _explanation += "\nThis trigger will execute every single frame when the conditions are true.";
+            }
+            else
+            {
+                _explanation += "\nThis trigger will execute only when the conditions change and they are all true.";
             }
 
             return _explanation;
@@ -86,12 +96,14 @@ namespace OkapiKit
             if (b)
             {
                 if (firstTime) ExecuteTrigger();
-                else if (!prevValue) ExecuteTrigger();
+                else if ((!prevValue) && (!continuous)) ExecuteTrigger();
+                else ExecuteTrigger();
             }
             else
             {
                 if (firstTime) ExecuteElseTrigger();
-                else if (prevValue) ExecuteElseTrigger();
+                else if ((prevValue) && (!continuous)) ExecuteElseTrigger();
+                else ExecuteElseTrigger();
             }
 
             prevValue = b;

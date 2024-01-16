@@ -38,7 +38,22 @@ namespace OkapiKit
             if (v == null) return;
             if ((textGUI == null) && (textScene == null)) return;
 
-            var txt = string.Format(baseText, v.currentValue);
+            var txt = "";
+            try
+            {
+                txt = string.Format(baseText, v.currentValue);
+            }
+            catch
+            {
+                try
+                {
+                    txt = string.Format(baseText, (int)v.currentValue);
+                }
+                catch
+                {
+                    txt = $"[Invalid Formatter - {baseText}]";
+                }
+            }
             if (textGUI) textGUI.text = txt;
             if (textScene) textScene.text = txt;
         }
