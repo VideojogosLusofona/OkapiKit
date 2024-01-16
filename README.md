@@ -60,6 +60,18 @@ Use the UPM Git extension to install the OkapiKit:
 It currently has seven sample 'games' (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
 There are also some code snippets demonstrating some of the features, but devoid of any meaningful context. The Snippets menu can be accessed through the Samples scene.
 
+## Using the samples if you installed them as a package
+
+Due to the way packages work in Unity, you can't open the sample scenes from the package.
+To sidestep this issue, you have to follow some steps:
+
+1. Go to the Packages/OkapiKitSamples folder in your project view
+
+2. Copy all the scenes that you want to explore to your own project
+  - The relevant scenes are Samples and Snippets for the base menus, the individual scenes for each of the sample games (inside the folder) and the scenes inside the Snippets directory.
+
+3. Add all scenes to the build menu (or else they links between scenes won't work)
+
 ## Pong
 
 ![PongImage](Screenshots/pong.png)
