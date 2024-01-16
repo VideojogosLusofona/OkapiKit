@@ -91,21 +91,21 @@ namespace OkapiKit
             {
                 if (targetTag == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag not defined!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag not defined!", "You want to follow an object with a specific tag, so you have to define which tag."));
                 }
             }
             else if (targetType == TargetType.Object)
             {
                 if (targetObject == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target object not defined!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target object not defined!", "You want to follow an specific object, so you have to define which one.\nNote that the prefered method is to follow a tag, not an object, which is more error prone."));
                 }
             }
             else if (targetType == TargetType.Mouse)
             {
                 if ((cameraObject == null) && (cameraTag == null))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Camera not defined - use either tag or drag the camera object to the slot below!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Camera not defined - use either tag or drag the camera object to the slot below!", "Mouse cursor depends on a viewport on the screen, that's why we need to know what camera is the main one, either by using a tag, or a reference."));
                 }
             }
         }
@@ -125,7 +125,7 @@ namespace OkapiKit
             {
                 Transform targetTransform = null;
 
-                if (targetTag)
+                if ((targetTag) && (targetType == TargetType.Tag))
                 {
                     var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(targetTag);
                     var minDist = float.MaxValue;
@@ -139,7 +139,7 @@ namespace OkapiKit
                         }
                     }
                 }
-                else if (targetObject)
+                else if ((targetObject) && (targetType == TargetType.Object))
                 {
                     targetTransform = targetObject;
                 }

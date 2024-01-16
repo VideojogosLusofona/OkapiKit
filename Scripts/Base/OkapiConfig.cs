@@ -46,7 +46,7 @@ namespace OkapiKit
                     if (i < allConfigs.Count - 1) err += "\n";
                 }
                 
-                _logs.Add(new LogEntry(LogEntry.Type.Error, err));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, err, "There can only be one Okapi Config object in the whole project.\nThis is where some Okapi Kit configurations are made, and we don't want different objects to conflict with each other."));
             }
         }        
         

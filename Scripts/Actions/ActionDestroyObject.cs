@@ -79,22 +79,24 @@ namespace OkapiKit
 
             if ((target == Target.Object) && (targetObject == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Undefined target object - this will destroy this object - consider using Self as target!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Undefined target object - this will destroy this object - consider using Self as target!", "It's always better to explicitly set properties, instead of letting the system guess what we want!"));
             }
             if (target == Target.Tag)
             {
                 if ((tags == null) || (tags.Length == 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Deletion by tag is selected, but no tags are selected!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Deletion by tag is selected, but no tags are selected!", "We want to delete all objects with certain tags, but you didn't define which ones!"));
                 }
                 else
                 {
+                    int index = 0;
                     foreach (var tag in tags)
                     {
                         if (tag == null)
                         {
-                            _logs.Add(new LogEntry(LogEntry.Type.Error, "Empty tag defined in tags list!"));
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty tag defined in slot {index} of the tag list!", "There's an empty tag defined, please define it or delete it."));
                         }
+                        index++;
                     }
                 }
             }

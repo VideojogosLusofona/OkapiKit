@@ -59,18 +59,18 @@ namespace OkapiKit
             {
                 if (!v.hasLimits)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "This type of display only supports values with limits!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "This type of display only supports values with limits!", "To display a variable as a progress bar, we need to know the limits of the value, so the variable needs to be bound with a lower and upper value."));
                 }
             }
             if (fill == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to set fill to a UI object that gets scaled with the given value!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to set fill to a UI object that gets scaled with the given value!", "This works by scaling a component depending on the current ercentage of the value, so we need to define what object we want to scale (usually an UI image component)."));
             }
             else if (setColor)
             {
                 if (fill.GetComponent<Image>() == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "To set color, fill needs to have an Image component!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "To set color, fill needs to have an Image component!", "If we want to change the color, we need to define an Image component, since it has the property we need to change."));
                 }
             }
         }

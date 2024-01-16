@@ -296,7 +296,7 @@ namespace OkapiKit
 
             if ((prefabs == null) || (prefabs.Length == 0))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefabs not defined!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Spawn prefabs not defined!", "This system spawns (creates) a new object, so we need to define which object we want to create.\nWe can do that by defining a list of prefab objects, and a random one will be chosen everytime a spawn should be performed."));
             }
             else
             {
@@ -305,13 +305,13 @@ namespace OkapiKit
                 {
                     if (prefab == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Prefab slot is empty in prefab list (index={index})!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Prefab slot is empty in prefab list (index={index})!", "Empty can't be spawned, so we should define something"));
                     }
                     else if ((PrefabUtility.GetPrefabAssetType(prefab) == PrefabAssetType.NotAPrefab) ||
                              (prefab.scene == null) ||
                              (prefab.scene.rootCount != 0))
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Spawn object in slot {index} is not a prefab!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Spawn object in slot {index} is not a prefab!", "Object needs to be a prefab, not an object that belongs to the scene, because those can be destroyed.\nA prefab is an object that doesn't belong to a scene, but belongs to the project (so it's on the Project view, not on the Hierarchy).\nTo create a new prefab, just drag the object from the hierarchy to the project.\nIf the object is already a prefab object by itself, select the original object on the project view, instead of the hierarchy view."));
                     }
                     index++;
                 }
@@ -323,7 +323,7 @@ namespace OkapiKit
             {
                 if ((spawnPoints == null) || (spawnPoints.Length == 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Objects will spawn at this position, but it should be set explicitly."));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Objects will spawn at this position, but it should be set explicitly.", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
                 else
                 {
@@ -332,7 +332,7 @@ namespace OkapiKit
                     {
                         if (spawnPoint == null)
                         {
-                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Spawn point is empty in prefab list (index={index})!"));
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Spawn point is empty in prefab list (index={index})!", "An empty point will cause the object not to spawn if this empty slot is chosen during object spawn."));
                         }
                         index++;
                     }

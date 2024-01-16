@@ -73,21 +73,21 @@ namespace OkapiKit
                 var textScene = GetComponent<TextMeshPro>();
                 if (textScene == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to have a TextMeshPro or TextMeshProUGUI component on this object!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to have a TextMeshPro or TextMeshProUGUI component on this object!", "To display some text, we need to have a TextMeshPro component (either TextMeshPro or TextMeshProUGUI, depending if it's part of a UI/canvas or the scene itself)."));
                 }
                 else
                 {
-                    if (textScene.text == "")
+                    if ((textScene.text == "") || (textScene.text.IndexOf('{') == -1))
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Warning, "Need to set the text of the component to a C# text formatter (like {0})"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Warning, "Need to set the text of the component to a C# text formatter (like {0} or {0:D4})", "The text can incorporate other parts, only the part between { } will be replaced by the value itself and formatted according to the C# rules."));
                     }
                 }
             }
             else
             {
-                if (textGUI.text == "")
+                if ((textGUI.text == "") || (textScene.text.IndexOf('{') == -1))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Need to set the text of the component to a C# text formatter (like {0})"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Need to set the text of the component to a C# text formatter (like {0} or {0:D4})", "The text can incorporate other parts, only the part between { } will be replaced by the value itself and formatted according to the C# rules."));
                 }
             }
         }

@@ -42,11 +42,11 @@ namespace OkapiKit
             {
                 if (GetComponent<ParticleSystem>() == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined particle system!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined particle system!", "We need to know what particle system to play"));
                 }
                 else
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Particle system to play is this object, but it should be explicitly linked!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Particle system to play is this object, but it should be explicitly linked!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
             }
         }

@@ -334,11 +334,11 @@ namespace OkapiKit
         {
             if ((variable == null) && (valueHandler == null) && (valueType == ValueType.None))
             {
-                errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined condition!"));
+                errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined condition!", "The condition is empty, define the criteria."));
             }
             else if (valueType == ValueType.TagCount)
             {
-                if (tag == null) errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined tag to count!"));
+                if (tag == null) errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined tag to count!", "We need to count tags for this condition to work, so we need to know what tags to count."));
             }
             else if ((valueType == ValueType.AbsoluteVelocityX) && (go != null))
             {
@@ -346,11 +346,11 @@ namespace OkapiKit
                 {
                     if (go.GetComponent<Rigidbody2D>() == null)
                     {
-                        errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined rigid body for absolute velocity X!"));
+                        errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined rigid body for absolute velocity X!", "To have a velocity, we need to have a rigid body, since it's there the velocity will be defined at."));
                     }
                     else
                     {
-                        errors.Add(new LogEntry(LogEntry.Type.Warning, "Rigid body for absolute velocity X exists, but should be explicitly set!"));
+                        errors.Add(new LogEntry(LogEntry.Type.Warning, "Rigid body for absolute velocity X exists, but should be explicitly set!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                     }
                 }
             }
@@ -360,11 +360,11 @@ namespace OkapiKit
                 {
                     if (go.GetComponent<Rigidbody2D>() == null)
                     {
-                        errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined rigid body for absolute velocity Y!"));
+                        errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined rigid body for absolute velocity Y!", "To have a velocity, we need to have a rigid body, since it's there the velocity will be defined at."));
                     }
                     else
                     {
-                        errors.Add(new LogEntry(LogEntry.Type.Warning, "Rigid body for absolute velocity Y exists, but should be explicitly set!"));
+                        errors.Add(new LogEntry(LogEntry.Type.Warning, "Rigid body for absolute velocity Y exists, but should be explicitly set!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                     }
                 }
             }
@@ -372,42 +372,42 @@ namespace OkapiKit
             {
                 if ((tag == null) && (sourceTransform == null))
                 {
-                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined target for Distance value!"));
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined target for Distance value!", "We need to check the distance to an object, so we need to define which object"));
                 }
             }
             else if (valueType == ValueType.Angle)
             {
                 if ((tag == null) && (sourceTransform == null))
                 {
-                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined target for Angle value"));
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined target for Angle value", "We need to check the rotation angle of an object, so we need to define which object"));
                 }
             }
             else if (valueType == ValueType.Probe)
             {
                 if (probe == null)
                 {
-                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined probe for line of sight condition"));
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined probe for line of sight condition", "We need to check the line of sight of a specific probe, so we need to define which one"));
                 }
             }
             else if (valueType == ValueType.ProbeDistance)
             {
                 if (probe == null)
                 {
-                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined probe for intersection distance condition"));
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined probe for intersection distance condition", "We need to check the distance to the intersection of a specific probe, so we need to define which one"));
                 }
             }
             else if (valueType == ValueType.IsGrounded)
             {
                 if (movementPlatformer == null)
                 {
-                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined platform movement target to check for ground"));
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined platform movement target to check for ground", "We need to check if a specific character is jumping, so we need to know which character"));
                 }
             }
             else if (valueType == ValueType.IsGliding)
             {
                 if (movementPlatformer == null)
                 {
-                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined platform movement target to check for gliding"));
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined platform movement target to check for gliding", "We need to check if a specific character is glidding, so we need to know which character"));
                 }
             }
         }

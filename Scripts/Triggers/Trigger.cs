@@ -60,7 +60,7 @@ namespace OkapiKit
             {
                 if ((preConditions == null) || (preConditions.Length == 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!", "If there's no conditions defined, it's the same as having the use conditions flag turned off."));
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace OkapiKit
                 {
                     if (action.action == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Action {index} in not defined on action list!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Action {index} in not defined on action list!", "Empty actions don't do anything, so either remove it or fill it in."));
                     }
                     else
                     {

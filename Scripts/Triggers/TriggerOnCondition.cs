@@ -61,7 +61,7 @@ namespace OkapiKit
 
             if ((conditions == null) || (conditions.Length == 0))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No conditions set!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No conditions set!", "If there's no conditions, this trigger will be executed every frame, and if that's the desired option, it's better to use a OnEveryFrame trigger."));
             }
             else
             {

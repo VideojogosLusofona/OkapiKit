@@ -129,7 +129,7 @@ namespace OkapiKit
 
             if ((triggerTags == null) || (triggerTags.Length == 0))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Trigger tags not defined!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Trigger tags not defined!", "Trigger tags are the tags of the action you want to call.\nThis acts like a broadcast, i.e. all the actions that are not filtered out (by the search criteria) that are tagged with these tags will be executed when this action is executed"));
             }
             else
             {
@@ -138,7 +138,7 @@ namespace OkapiKit
                 {
                     if (tag == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot is empty in tag list (index={index})!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot is empty in tag list (index={index})!", "Empty tags are useless, fill it in, or delete it"));
                     }
                     index++;
                 }
@@ -147,7 +147,7 @@ namespace OkapiKit
             {
                 if ((colliders == null) || (colliders.Length == 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Colliders not defined!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Colliders not defined!", "If we want to search for actions inside a particular area, we need to define that area by using the colliders"));
                 }
                 else
                 {
@@ -156,7 +156,7 @@ namespace OkapiKit
                     {
                         if (collider == null)
                         {
-                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Collider slot is empty in collider list (index={index})!"));
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Collider slot is empty in collider list (index={index})!", "Empty colliders are useless, remove it or fill it in"));
                         }
                         index++;
                     }
@@ -166,7 +166,7 @@ namespace OkapiKit
             {
                 if ((searchTags == null) || (searchTags.Length == 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Search tags not defined!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Search tags not defined!", "If you want to search for an action tag inside objects tagged with another tag, you need to specify which ones you want to include in the search"));
                 }
                 else
                 {
@@ -175,7 +175,7 @@ namespace OkapiKit
                     {
                         if (tag == null)
                         {
-                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot is empty in search tag list (index={index})!"));
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot is empty in search tag list (index={index})!", "Empty tags are useless, fill it in or remove it."));
                         }
                         index++;
                     }

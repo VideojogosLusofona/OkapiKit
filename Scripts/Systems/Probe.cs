@@ -150,7 +150,7 @@ namespace OkapiKit
 
             if ((tags == null) || (tags.Length == 0))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Tags not defined - these define which objects the probe can detect!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Tags not defined - these define which objects the probe can detect!", "Probes check for intersections, so we need to define what objects can block/intersect with the probe. We define those using tags."));
             }
             else
             {
@@ -159,7 +159,7 @@ namespace OkapiKit
                 {
                     if (tag == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty tag slot {index}!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty tag slot {index}!", "Empty tags are useless, so remove the empty, or fill it in."));
                     }
                     index++;
                 }
@@ -170,14 +170,14 @@ namespace OkapiKit
                 case Direction.TargetObjectDirection:
                     if (dirTransform == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target object is not set!!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target object is not set!!", "If our probe is supposed to target a specific object, we need to define which one."));
                     }
                     break;
                 case Direction.TargetTag:
                 case Direction.TargetTagDirection:
                     if (dirTag== null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag is not set!!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, "Target tag is not set!!", "If our probe is supposed to target the closest object with a specific tag, we need to define which tag."));
                     }
                     break;
             }

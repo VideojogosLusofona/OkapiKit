@@ -109,7 +109,7 @@ namespace OkapiKit
 
             if (target == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Transform to modify is this object, but it should be explicitly linked!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Transform to modify is this object, but it should be explicitly linked!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
             }
         }
 

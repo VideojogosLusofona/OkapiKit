@@ -174,7 +174,7 @@ namespace OkapiKit
                 {
                     if (tag == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot {index} is empty in tag list!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Tag slot {index} is empty in tag list!", "Empty tags are useless, remove it or fill it in."));
                     }
                     index++;
                 }

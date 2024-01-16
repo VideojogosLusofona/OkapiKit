@@ -46,7 +46,7 @@ namespace OkapiKit
 
             if ((variable == null) && (valueHandler == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No variable is set!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No variable is set!", "This will display the contents of a variable, so we need to define which one."));
             }
         }
     }

@@ -61,13 +61,13 @@ namespace OkapiKit
 
             if ((variable == null) && (valueHandler == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target variable!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target variable!", "We're changing the value of a variable, so we need a target so we know which variable to change."));
             }
             if (operation == OperationType.Change)
             {
                 if (deltaValue == 0.0f)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Value is not changing (changing by zero) - select a change value!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Value is not changing (changing by zero) - select a change value!", "Changing a value by zero is the same as not changing it, which I guess is not what you intended"));
                 }
             }
         }

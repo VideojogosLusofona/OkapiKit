@@ -85,7 +85,7 @@ namespace OkapiKit
             
             if ((path == null) && (taggedPath == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Path not defined - use either tag or drag the path object to the slot below!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Path not defined - use either tag or drag the path object to the slot below!", "This component follows a path, so we need to specify which one."));
             }
         }
 

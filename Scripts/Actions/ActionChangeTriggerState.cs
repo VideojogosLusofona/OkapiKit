@@ -40,7 +40,7 @@ namespace OkapiKit
 
             if (target == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target trigger"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target trigger", "We're changing something on a trigger, so we need a target so we know which trigger to change."));
             }
         }
 

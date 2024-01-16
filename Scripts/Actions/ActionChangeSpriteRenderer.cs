@@ -72,16 +72,16 @@ namespace OkapiKit
             {
                 if (GetComponent<SpriteRenderer>() == null)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target sprite renderer!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined target sprite renderer!", "We're changing something on a renderer, so we need a target so we know which renderer to change."));
                 }
                 else
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Sprite renderer to modify is this object, but it should be explicitly linked!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Sprite renderer to modify is this object, but it should be explicitly linked!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
             }
             if (changeType == ChangeType.Sprite)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined sprite to change sprite renderer!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined sprite to change sprite renderer!", "We want to change the sprite of an object, so we need to know which object (more precisely, which sprite renderer) to change"));
             }
         }
     }

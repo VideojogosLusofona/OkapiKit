@@ -245,28 +245,28 @@ namespace OkapiKit
 
             if ((movement == null) && (rb == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No target for movement change\n  - place a Movement or RigidBody2D component on this object or\n  - assign a Movement or RigidBody2D target"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No target for movement change\n  - place a Movement or RigidBody2D component on this object or\n  - assign a Movement or RigidBody2D target", "If you want to change the movement properties, you need to define either a Movement or Rigidbody2D component, or have one on this object."));
             }
             else
             {
                 if ((movement != null) && (movementComponent == null))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Target is movement on this object, but it's better to set it explicitly"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Target is movement on this object, but it's better to set it explicitly", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
                 else if ((rb != null) && (rigidBodyComponent == null))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Target is RigidBody2D on this object, but it's better to set it explicitly"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Target is RigidBody2D on this object, but it's better to set it explicitly", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
             }
             if (changeType == ChangeType.Velocity)
             {
                 if ((movementComponent != null) && (!movementComponent.IsLinear()))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target movement is not linear, velocity can't be changed!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target movement is not linear, velocity can't be changed!", "Velocity can only be changed in an object that's moving, not rotating. Use as target a linear movement component."));
                 }
                 else if ((GetComponent<Movement>() != null) && (movement == null))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target movement is not linear, velocity can't be changed!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Target movement is not linear, velocity can't be changed!", "Velocity can only be changed in an object that's moving, not rotating. Use as target a linear movement component."));
                 }
             }
             if (movement == null)
@@ -276,7 +276,7 @@ namespace OkapiKit
                     (changeType == ChangeType.GlideMaxTime) ||
                     (changeType == ChangeType.GravityScale))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, $"{changeType} can only be used with a Platformer Movement target!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, $"{changeType} can only be used with a Platformer Movement target!", $"{changeType} is a property of a MovementPlatformer component, so you need to define one as a target!"));
                 }
             }
             else
@@ -287,7 +287,7 @@ namespace OkapiKit
                      (changeType == ChangeType.GravityScale)) &&
                     (movement as MovementPlatformer == null))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, $"{changeType} can only be used with a Platformer Movement target!"));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, $"{changeType} can only be used with a Platformer Movement target!", $"{changeType} is a property of a MovementPlatformer component, so you can only use this with a Platfomer Movement component"));
                 }
             }
             if (rb == null)
