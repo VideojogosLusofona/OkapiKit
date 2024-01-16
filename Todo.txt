@@ -44,6 +44,8 @@ Bugs:
 -----
 - Collision detection fails because of using RigidBody2D.MovePosition() instead of actual physics
 - Preserve velocity with Movement
+- Tooltips don't work with Naughty Attributes range
+  - Maybe make my own to be able to have tooltips, or propose a fix
 
 Polish:
 -------

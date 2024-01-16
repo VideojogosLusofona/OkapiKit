@@ -116,6 +116,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 * Survivor top down sprites by [rileygombart], licensed under [CC-BY 3.0]
 * Top-down buildings by [chabull], licensed under [CC-BY 3.0]
 * Platformer sprites by [IMakeGames], licensed under [CC-BY 3.0]
+* Gems by [Winternaut], licensed under [CC0]
 * Editor icons from [FlatIcon]
 * Title imagem from [Midjourney]
 * [NaughtyAttributes] by Denis Rizov, available through the MIT license.
@@ -141,6 +142,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 [pansapiens]:https://opengameart.org/users/pansapiens
 [chabull]:https://opengameart.org/users/chabull
 [IMakeGames]:http://www.imake-games.com/
+[Winternaut]:https://opengameart.org/users/winternaut
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [CC-BY 4.0]:https://creativecommons.org/licenses/by/4.0/

@@ -148,30 +148,40 @@ namespace OkapiKit
             });
         }
 
-        public static bool HasHypertags(this GameObject go, Hypertag[] tags)
+        public static bool HasHypertags(this GameObject go, Hypertag[] tags, bool includeChildren = true)
         {
             if (tags == null) return false;
             if (tags.Length == 0) return false;
 
             foreach (var tag in tags)
             {
-                if (go.HasHypertag(tag)) return true;
+                if (go.HasHypertag(tag, includeChildren)) return true;
             }
 
             return false;
         }
 
-        public static bool HasHypertag(this GameObject go, Hypertag tag)
+        public static bool HasHypertag(this GameObject go, Hypertag tag, bool includeChildren = true)
         {
-            var hos = go.GetComponentsInChildren<HypertaggedObject>();
-            if (hos == null)
+            if (includeChildren)
             {
-                return false;
-            }
+                var hos = go.GetComponentsInChildren<HypertaggedObject>();
+                if (hos == null)
+                {
+                    return false;
+                }
 
-            foreach (var ho in hos)
+                foreach (var ho in hos)
+                {
+                    if (ho.Has(tag)) return true;
+                }
+            }
+            else
             {
-                if (ho.Has(tag)) return true;
+                var hypertag = go.GetComponent<HypertaggedObject>();
+                if (hypertag == null) return false;
+
+                return hypertag.Has(tag);                
             }
 
             return false;

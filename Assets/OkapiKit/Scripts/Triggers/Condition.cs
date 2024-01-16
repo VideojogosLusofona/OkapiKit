@@ -398,14 +398,14 @@ namespace OkapiKit
             }
             else if (valueType == ValueType.IsGrounded)
             {
-                if (probe == null)
+                if (movementPlatformer == null)
                 {
                     errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined platform movement target to check for ground"));
                 }
             }
             else if (valueType == ValueType.IsGliding)
             {
-                if (probe == null)
+                if (movementPlatformer == null)
                 {
                     errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined platform movement target to check for gliding"));
                 }

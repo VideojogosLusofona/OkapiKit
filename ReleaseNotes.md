@@ -15,6 +15,9 @@
 - Added ping system for actions (right-click on action in triggers, sequences and random
   and that will select the object that contains the action and highlight its title bar) - Ping only works if there's a Okapi Config instance in the project
 - Added tooltips to all Okapi elements
+- Added tooltips to many of the debug/warning/error messages in the components, hover cursor for some hints
+- Fixed issue with Display Text formatter with int/float type mismatch (for example, now {0:D6} works for having text with 6 digits, even if the number is a float - before it would just fail)
+- Promoted platformer snippet to a full sample
 
 ## V1.8.0
 

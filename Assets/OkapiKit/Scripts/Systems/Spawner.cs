@@ -109,13 +109,27 @@ namespace OkapiKit
             if (prefab != null)
             {
                 int c = 1;
-                if (spawnPointType == SpawnPointType.All) c = spawnPoints.Length;
+                if ((spawnAreas == null) || (spawnAreas.Length == 0))
+                {
+                    if (spawnPointType == SpawnPointType.All) c = spawnPoints.Length;
+                }
 
                 for (int i = 0; i < c; i++)
                 {
                     Vector3 position = Vector3.zero;
                     Quaternion rotation = Quaternion.identity;
-                    if ((spawnPoints != null) && (spawnPoints.Length > 0))
+                    if ((spawnAreas != null) && (spawnAreas.Length > 0))
+                    {
+                        var ra = Random.Range(0, spawnAreas.Length);
+                        var spawnArea = spawnAreas[ra];
+
+                        float x = 0.5f * Random.Range(-spawnArea.size.x, spawnArea.size.x) + spawnArea.offset.x;
+                        float y = 0.5f * Random.Range(-spawnArea.size.y, spawnArea.size.y) + spawnArea.offset.y;
+
+                        position = transform.TransformPoint(new Vector3(x, y, 0));
+                        rotation = transform.rotation;
+                    }
+                    else if ((spawnPoints != null) && (spawnPoints.Length > 0))
                     {
                         int p;
                         if (spawnPointType == SpawnPointType.All)
@@ -134,17 +148,6 @@ namespace OkapiKit
 
                         position = spawnPoints[p].position;
                         rotation = spawnPoints[p].rotation;
-                    }
-                    else if ((spawnAreas != null) && (spawnAreas.Length > 0))
-                    {
-                        var ra = Random.Range(0, spawnAreas.Length);
-                        var spawnArea = spawnAreas[ra];
-
-                        float x = 0.5f * Random.Range(-spawnArea.size.x, spawnArea.size.x) + spawnArea.offset.x;
-                        float y = 0.5f * Random.Range(-spawnArea.size.y, spawnArea.size.y) + spawnArea.offset.y;
-
-                        position = transform.TransformPoint(new Vector3(x, y, 0));
-                        rotation = transform.rotation;
                     }
                     else
                     {

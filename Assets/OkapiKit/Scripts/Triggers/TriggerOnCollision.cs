@@ -53,7 +53,7 @@ namespace OkapiKit
 
             if ((tags == null) || (tags.Length == 0))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "No tags defined - OnCollision only detects objects with the given tags!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "No tags defined - OnCollision only detects objects with the given tags!", "OnCollision needs to filter what objects have collided, and it uses the tag list to do so.\nAdd on the Tags list what objects are allowed to collider with this object."));
             }
             else
             {
@@ -62,7 +62,7 @@ namespace OkapiKit
                 {
                     if (tag == null)
                     {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty tags slot {index}!"));
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty tags slot {index}!", "An empty slot doesn't do anything, clean up after yourself! :)"));
                     }
                     index++;
                 }
@@ -70,7 +70,7 @@ namespace OkapiKit
 
             if (GetComponent<Rigidbody2D>() == null)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "OnCollision can only detect collisions if set on an object with a rigid body!"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "OnCollision can only detect collisions if set on an object with a rigid body!", "In Unity, collision events are only reported if there's a rigidbody on the same object as the component that's using those collisions.\nIn this case, that component is this OnCollision trigger."));
             }
         }
 

@@ -36,6 +36,6 @@ EditorBuildSettings:
     path: Assets/OkapiKit/Samples/Snippets/StoppingDistance.unity
     guid: 0806f99de1713894c9c0ebc0dff0ea42
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Snippets/Platformer.unity
+    path: Assets/OkapiKit/Samples/Platformer/Platformer.unity
     guid: d1d82361234b9bd47b4da5a818a57c36
   m_configObjects: {}
