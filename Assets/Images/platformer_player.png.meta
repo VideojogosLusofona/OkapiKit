@@ -488,11 +488,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -531,6 +532,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  swizzle: 50462976
   cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
@@ -543,6 +545,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -555,6 +558,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -567,6 +571,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -579,6 +584,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -591,6 +597,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -603,6 +610,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1354,44 +1375,43 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      player_0: 4334783836991956000
       player_1: 7388399842426930641
+      player_10: -3861952770410913445
+      player_11: 5044450397378941176
+      player_12: 1871739406167786269
+      player_13: 6426868497666326525
+      player_14: -2418196558428526619
       player_15: -480808811739928509
       player_16: -7814200450545973387
-      player_8: -1205440766039775075
-      player_14: -2418196558428526619
-      player_12: 1871739406167786269
+      player_17: -7689382371589266427
+      player_18: -6119387374007233121
       player_19: 5435452280369712508
+      player_2: 6757282713640645180
+      player_20: 6476020496741556544
       player_21: -2812111548000859311
+      player_22: 6581797731665330364
+      player_23: -735806604810280217
+      player_24: 8871532568298537163
+      player_25: -3522477055284954234
       player_26: -2611168455720188827
+      player_27: -747095956079510842
+      player_28: -1150986314314233284
+      player_29: -1549151736782420611
+      player_3: -6781412095145881161
+      player_30: 4425439098077930050
+      player_31: -7411917632262290953
+      player_32: 4951135081433990916
+      player_33: -4432693348276648354
+      player_34: 8810164309174969732
       player_4: 1755772209161902963
       player_5: 5865078278364869351
-      player_25: -3522477055284954234
-      player_23: -735806604810280217
-      player_31: -7411917632262290953
-      player_33: -4432693348276648354
-      player_0: 4334783836991956000
-      player_9: 5602337906906987636
-      player_24: 8871532568298537163
-      player_30: 4425439098077930050
-      player_3: -6781412095145881161
-      player_18: -6119387374007233121
       player_6: -2023923573111878767
-      player_10: -3861952770410913445
-      player_2: 6757282713640645180
-      player_29: -1549151736782420611
-      player_22: 6581797731665330364
-      player_34: 8810164309174969732
-      player_20: 6476020496741556544
-      player_17: -7689382371589266427
-      player_13: 6426868497666326525
-      player_28: -1150986314314233284
-      player_32: 4951135081433990916
-      player_11: 5044450397378941176
       player_7: -540375121143967267
-      player_27: -747095956079510842
-  spritePackingTag: 
+      player_8: -1205440766039775075
+      player_9: 5602337906906987636
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
