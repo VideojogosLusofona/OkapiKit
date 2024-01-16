@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8944353752429849117
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910608, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910609, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 266880563, guid: 5d36798469a2f4346a814863d0498c66, type: 3}
+    - target: {fileID: 6487674904708910614, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: _explanation
+      value: Sets animation parameter Health of object Brick01 to the value of Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910614, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: animationParameter
+      value: Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910615, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 174d94bfec7372e49bc1cbde020ae3a5, type: 2}
+    - target: {fileID: 6487674904708910636, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: _showInfo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910636, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: _explanation
+      value: "If ball hits, reduce health\n----------------\nWhen a collision with
+        a bounding volume with tags [Tag_Ball] starts:\n First, \n          adds
+        -1 to variable Health\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910636, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: actions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910636, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: actions.Array.data[1].action
+      value: 
+      objectReference: {fileID: 2749557158036595723}
+    - target: {fileID: 6487674904708910637, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674904708910638, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: m_Name
+      value: Brick01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674905090255524, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: currentValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674905090255524, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: defaultValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674905090255524, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: onChange.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674905090255524, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: onChange.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487674905090255530, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+      propertyPath: _explanation
+      value: "When (Health <= 0):\n First, \n          destroys the parent of this
+        object\n"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+--- !u!114 &2749557158036595723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6487674904708910614, guid: 0dd02444aabea5947a311c556bb9769b, type: 3}
+  m_PrefabInstance: {fileID: 8944353752429849117}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36ea0b4a4f80be42880b56e364b61d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
