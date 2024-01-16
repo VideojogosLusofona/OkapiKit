@@ -10,11 +10,13 @@ It's currently still under development, and eventually will be commented properl
 # Installation
 
 ## Option 1 - Super-simple, less useful
+
 You can simply create a fork of this repository or download it and start working!
 
 ## Option 2 - Unity Package Manager
+
 Use the Unity Package Manager to install the OkapiKit:
- 
+
 1. Open the Unity Package Manager
 
 ![Install1](Screenshots/install01.png)
@@ -27,9 +29,12 @@ Use the Unity Package Manager to install the OkapiKit:
 
 4. You can now install the OkapiKit, selecting again "Add package from git URL", and pasting the URL "https://github.com/VideojogosLusofona/OkapiKit.git#upm"
 
-5. With this option, everytime you want to update the package, you will have to remove it and re-add it (the Update option doesn't work properly in this context)
+5. If you want to install the samples as well, select again "Add package from git URL", and pasting the URL "https://github.com/VideojogosLusofona/OkapiKit.git#samples"
+
+6. With this option, everytime you want to update the package, you will have to remove it and re-add it (the Update option doesn't work properly in this context)
 
 ## Option 3 - More complicated, best option - UpmGitExtension
+
 Use the UPM Git extension to install the OkapiKit:
 
 1. Open the Unity Package Manager
@@ -46,38 +51,48 @@ Use the UPM Git extension to install the OkapiKit:
 
 5. Finally, install the OkapiKit, selecting again "Add package from git URL", and pasting the URL "https://github.com/VideojogosLusofona/OkapiKit.git#upm"
 
-6. When you want to update, just use the Update button.
+6. If you want to install the samples, select again "Add package from git URL", and pasting the URL "https://github.com/VideojogosLusofona/OkapiKit.git#samples"
 
-#
-# Samples
+7. When you want to update, just use the Update button.
 
-It currently has six sample 'games' (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
+# Sample
+
+It currently has seven sample 'games' (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
 There are also some code snippets demonstrating some of the features, but devoid of any meaningful context. The Snippets menu can be accessed through the Samples scene.
 
-## Pong 
+## Pong
+
 ![PongImage](Screenshots/pong.png)
 
 ## Breakout
+
 ![BreakoutImage](Screenshots/breakout.png)
 
 ## Space Invaders
+
 ![SpaceInvadersImage](Screenshots/spaceinvaders.png)
 
-## "Procedural" side scrolling shoot'em'up 
+## "Procedural" side scrolling shoot'em'up
+
 ![SideShooterImage](Screenshots/sideshooter.png)
 
 ## Asteroids
+
 ![AsteroidsImage](Screenshots/asteroids.png)
 
 ## Commando
+
 ![CommandoImage](Screenshots/commando.png)
 
-## Snippets
-### Probe: Shows probe usage
-### StoppingDistance: Shows how to use the Stopping Distance property on the Follow movement
-### Platformer: Shows the Platformer movement controller
+## Platformer acid drip
 
-#
+![PlatformerImage](Screenshots/platformer.png)
+
+## Snippets
+
+- Probe: Shows probe usage
+- StoppingDistance: Shows how to use the Stopping Distance property on the Follow movement
+
 # Documentation
 
 For now, there's no documentation yet, but everything has custom editors, which display information on what each thing is doing (dynamically, depending on options selected):

@@ -18,6 +18,7 @@
 - Added tooltips to many of the debug/warning/error messages in the components, hover cursor for some hints
 - Fixed issue with Display Text formatter with int/float type mismatch (for example, now {0:D6} works for having text with 6 digits, even if the number is a float - before it would just fail)
 - Promoted platformer snippet to a full sample
+- Separated Okapi Kit and the samples in two different packages
 
 ## V1.8.0
 
