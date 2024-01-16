@@ -2,7 +2,9 @@ using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace OkapiKit
@@ -35,6 +37,7 @@ namespace OkapiKit
 
         void CheckErrors()
         {
+#if UNITY_EDITOR
             // Find all objects of this type on the project
             var allConfigs = FindAllInstances<OkapiConfig>();
             if (allConfigs.Count > 1)
@@ -48,6 +51,7 @@ namespace OkapiKit
                 
                 _logs.Add(new LogEntry(LogEntry.Type.Error, err, "There can only be one Okapi Config object in the whole project.\nThis is where some Okapi Kit configurations are made, and we don't want different objects to conflict with each other."));
             }
+#endif
         }        
         
         public static void PingComponent(OkapiElement element)
@@ -90,6 +94,7 @@ namespace OkapiKit
 
         static List<T> FindAllInstances<T>() where T : ScriptableObject
         {
+#if UNITY_EDITOR
             string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name); // Find all assets of type T
             List<T> assets = new List<T>();
 
@@ -104,6 +109,9 @@ namespace OkapiKit
             }
 
             return assets;
+#else
+            return null;
+#endif
         }
     }
 }
