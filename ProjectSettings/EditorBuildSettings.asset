@@ -6,36 +6,36 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Samples.unity
+    path: Assets/OkapiKitSamples/Samples.unity
     guid: fbe436a18220faf429eb17618d9ab864
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Pong/Pong.unity
+    path: Assets/OkapiKitSamples/Pong/Pong.unity
     guid: e3f4e76148d682f45aa35df21d4f993b
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Breakout/Breakout.unity
+    path: Assets/OkapiKitSamples/Breakout/Breakout.unity
     guid: 30fd746f5616b8e4498befe003ee7ae5
   - enabled: 1
-    path: Assets/OkapiKit/Samples/SpaceInvaders/SpaceInvaders.unity
+    path: Assets/OkapiKitSamples/SpaceInvaders/SpaceInvaders.unity
     guid: d1612ebf41a507f49bf7dec067176d6f
   - enabled: 1
-    path: Assets/OkapiKit/Samples/SideShooter/SideShooter.unity
+    path: Assets/OkapiKitSamples/SideShooter/SideShooter.unity
     guid: c4e843e9dc3ffe44b89777e62c8bdc86
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Asteroids/Asteroids.unity
+    path: Assets/OkapiKitSamples/Asteroids/Asteroids.unity
     guid: 9e99fa697cd7be843a880567c21ee193
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Commando/Commando.unity
+    path: Assets/OkapiKitSamples/Commando/Commando.unity
     guid: fd707bc1ef9c7d94bb739a1e9b66193d
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Snippets.unity
+    path: Assets/OkapiKitSamples/Snippets.unity
     guid: 4ad9ae2692c52df4299e2594a1609159
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Snippets/Probe.unity
+    path: Assets/OkapiKitSamples/Snippets/Probe.unity
     guid: 58fe37225e96a89408f0e7a673c1244f
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Snippets/StoppingDistance.unity
+    path: Assets/OkapiKitSamples/Snippets/StoppingDistance.unity
     guid: 0806f99de1713894c9c0ebc0dff0ea42
   - enabled: 1
-    path: Assets/OkapiKit/Samples/Platformer/Platformer.unity
+    path: Assets/OkapiKitSamples/Platformer/Platformer.unity
     guid: d1d82361234b9bd47b4da5a818a57c36
   m_configObjects: {}
