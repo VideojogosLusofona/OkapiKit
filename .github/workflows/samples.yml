@@ -1,0 +1,27 @@
+name: Samples
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  split-upm:
+    name: update samples branch
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: update samples branch
+      run: |
+        echo '### head info'
+        git log -1
+
+        echo '### split upm branch'
+        git subtree split -P "$PKG_ROOT" -b samples
+
+        echo '### update remote upm branch'
+        git push origin samples
+      env:
+        PKG_ROOT: Assets/OkapiKitSamples
