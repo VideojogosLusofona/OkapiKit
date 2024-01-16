@@ -85,7 +85,7 @@ namespace OkapiKit
             }
             else
             {
-                if ((textGUI.text == "") || (textScene.text.IndexOf('{') == -1))
+                if ((textGUI.text == "") || (textGUI.text.IndexOf('{') == -1))
                 {
                     _logs.Add(new LogEntry(LogEntry.Type.Warning, "Need to set the text of the component to a C# text formatter (like {0} or {0:D4})", "The text can incorporate other parts, only the part between { } will be replaced by the value itself and formatted according to the C# rules."));
                 }
