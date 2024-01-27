@@ -1,10 +1,10 @@
 Features:
 ---------
 
+- Unify ValueHandler/Value with single selector that can take any of them
 - Movement targets should be redefinable
 - Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
-- Unify ValueHandler/Value with single selector that can take any of them
 - Add HueShift/Outline effect for sprites
 - Added debug system to Okapi
   - Enable debug system for nodes 

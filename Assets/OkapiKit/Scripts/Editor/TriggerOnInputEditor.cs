@@ -17,6 +17,7 @@ namespace OkapiKit.Editor
         SerializedProperty propNegate;
         SerializedProperty propUseCooldown;
         SerializedProperty propCooldown;
+        SerializedProperty propElseActions;
 
         protected override void OnEnable()
         {
@@ -31,6 +32,7 @@ namespace OkapiKit.Editor
             propNegate = serializedObject.FindProperty("negate");
             propUseCooldown = serializedObject.FindProperty("useCooldown");
             propCooldown = serializedObject.FindProperty("cooldown");
+            propElseActions = serializedObject.FindProperty("elseActions");
         }
 
         protected override Texture2D GetIcon()
@@ -54,17 +56,32 @@ namespace OkapiKit.Editor
 
                 TriggerOnInput.InputType inputType = (TriggerOnInput.InputType)propInputType.enumValueIndex;
 
+                string actionsName = "Actions when pressed";
+                string elseActionsName = "Actions when released";
+
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type", "What kind of input we're detecting?"));
                 if (inputType == TriggerOnInput.InputType.Button)
                 {
                     EditorGUILayout.PropertyField(propButtonName, new GUIContent("Button Name", "Button name"));
                     EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous", "If active, this triggers when the button is pressed, if not this trigger only executes when the key was just pressed."));
+
+                    if (propContinuous.boolValue)
+                    {
+                        actionsName = "Actions while pressed";
+                        elseActionsName = "Actions while released";
+                    }                    
                 }
                 else if (inputType == TriggerOnInput.InputType.Key)
                 {
                     EditorGUILayout.PropertyField(propKey, new GUIContent("Key", "Key name"));
                     EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous", "If active, this triggers when the button is pressed, if not this trigger only executes when the key was just pressed."));
+
+                    if (propContinuous.boolValue)
+                    {
+                        actionsName = "Actions while pressed";
+                        elseActionsName = "Actions while released";
+                    }
                 }
                 else if (inputType == TriggerOnInput.InputType.Axis)
                 {
@@ -74,6 +91,11 @@ namespace OkapiKit.Editor
                 if ((propContinuous.boolValue) || (inputType == TriggerOnInput.InputType.Axis))
                 {
                     EditorGUILayout.PropertyField(propNegate, new GUIContent("Negate", "Do we want to trigger this when the input DOESN'T happen, instead of the other way around?"));
+                    if (propNegate.boolValue)
+                    {
+                        actionsName = "Actions while not pressed";
+                        elseActionsName = "Actions while pressed";
+                    }
                 }
 
                 EditorGUILayout.PropertyField(propUseCooldown, new GUIContent("Use Cooldown", "Should we have a cooldown for this trigger?"));
@@ -84,7 +106,18 @@ namespace OkapiKit.Editor
 
                 EditorGUI.EndChangeCheck();
 
-                ActionPanel();
+                ActionPanel(actionsName);
+
+                var actionsRect = GUILayoutUtility.GetLastRect();
+                actionsRect = new Rect(actionsRect.xMin, actionsRect.yMax, actionsRect.width, 20.0f);
+
+                TryDragActionToActionDelayList(actionsRect, propElseActions);
+
+                EditorGUILayout.PropertyField(propElseActions, new GUIContent(elseActionsName, "What actions do we want while the input is not triggered"), true);
+
+                serializedObject.ApplyModifiedProperties();
+                (target as Trigger).UpdateExplanation();
+
             }
         }
     }

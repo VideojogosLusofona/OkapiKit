@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.9.1
+
+- Added else actions to OnInput
+- Else actions on OnCondition weren't displaying warnings/errors
+
 ## V1.9.0
 
 - Added target tag and target object direction option to probe, to allow for maximum distance

@@ -77,6 +77,28 @@ namespace OkapiKit
                     index++;
                 }
             }
+
+            if ((elseActions != null) && (elseActions.Length > 0))
+            {
+                int index = 0;
+                foreach (var action in elseActions)
+                {
+                    if (action.action == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Warning, $"Else action {index} in not defined on else action list!", "Empty actions don't do anything, so either remove it or fill it in."));
+                    }
+                    else
+                    {
+                        action.action.ForceCheckErrors();
+                        var actionLogs = action.action.logs;
+                        foreach (var log in actionLogs)
+                        {
+                            _logs.Add(new LogEntry(log.type, $"On else action {index}: " + log.text, log.tooltip));
+                        }
+                    }
+                    index++;
+                }
+            }
         }
 
         private void Update()
