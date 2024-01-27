@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.9.2
+
+- Fixed bug with ranges on ChangeMovement (changing velocity range would set the wrong values when X and Y had different ranges)
+
 ## V1.9.1
 
 - Added else actions to OnInput
