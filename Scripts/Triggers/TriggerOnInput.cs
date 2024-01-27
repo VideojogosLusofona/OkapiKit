@@ -28,6 +28,8 @@ namespace OkapiKit
         private bool useCooldown = false;
         [SerializeField]
         private float cooldown = 1.0f;
+        [SerializeField] 
+        protected ActionTrigger[] elseActions;
 
         float cooldownTimer = 0.0f;
 
@@ -59,6 +61,18 @@ namespace OkapiKit
             return desc;
         }
 
+        protected override string Internal_UpdateExplanation()
+        {
+            base.Internal_UpdateExplanation();
+
+            if ((elseActions != null) && (elseActions.Length > 0))
+            {
+                _explanation += "else\n" + GetDescriptionActions(elseActions);
+            }
+
+            return _explanation;
+        }
+
         void Update()
         {
             if (!isTriggerEnabled) return;
@@ -75,29 +89,32 @@ namespace OkapiKit
             }
 
             bool isTrigger = false;
+            bool elseTrigger = false;
             bool c = continuous;
 
             if (inputType == InputType.Button)
             {
                 isTrigger = (continuous) ? (Input.GetButton(buttonName)) : (Input.GetButtonDown(buttonName));
+                elseTrigger = (continuous) ? !(Input.GetButton(buttonName)) : (Input.GetButtonUp(buttonName));
             }
             else if (inputType == InputType.Key)
             {
                 isTrigger = (continuous) ? (Input.GetKey(key)) : (Input.GetKeyDown(key));
+                elseTrigger = (continuous) ? (!Input.GetKey(key)) : (Input.GetKeyUp(key));
             }
             else if (inputType == InputType.Axis)
             {
                 float a = Input.GetAxis(axis);
                 isTrigger = (a < deadArea.x) || (a > deadArea.y);
-                if (isTrigger)
-                {
-                    int ba = 10;
-                    ba++;
-                }
+                elseTrigger = !isTrigger;
                 c = true;
             }
 
-            if ((c) && (negate)) isTrigger = !isTrigger;
+            if ((c) && (negate))
+            {
+                isTrigger = !isTrigger;
+                elseTrigger = !elseTrigger;
+            }
 
             if (isTrigger)
             {
@@ -105,6 +122,58 @@ namespace OkapiKit
 
                 if (useCooldown) cooldownTimer = cooldown;
             }
+            if (elseTrigger)
+            {
+                ExecuteElseTrigger();
+            }
         }
+
+        public virtual void ExecuteElseTrigger()
+        {
+            if (!enableTrigger) return;
+
+            foreach (var action in elseActions)
+            {
+                if (action.action.isActionEnabled)
+                {
+                    if (action.delay > 0)
+                    {
+                        StartCoroutine(ExecuteTriggerCR(action));
+                    }
+                    else
+                    {
+                        action.action.Execute();
+                    }
+                }
+            }
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if ((elseActions != null) && (elseActions.Length > 0))
+            {
+                int index = 0;
+                foreach (var action in elseActions)
+                {
+                    if (action.action == null)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Warning, $"Else action {index} in not defined on else action list!", "Empty actions don't do anything, so either remove it or fill it in."));
+                    }
+                    else
+                    {
+                        action.action.ForceCheckErrors();
+                        var actionLogs = action.action.logs;
+                        foreach (var log in actionLogs)
+                        {
+                            _logs.Add(new LogEntry(log.type, $"On else action {index}: " + log.text, log.tooltip));
+                        }
+                    }
+                    index++;
+                }
+            }
+        }
+
     }
 }

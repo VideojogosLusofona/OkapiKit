@@ -70,7 +70,7 @@ namespace OkapiKit.Editor
 
         }
 
-        protected void ActionPanel()
+        protected void ActionPanel(string title = "Actions")
         {
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
@@ -80,7 +80,7 @@ namespace OkapiKit.Editor
 
             TryDragActionToActionDelayList(actionsRect, propActions);
 
-            EditorGUILayout.PropertyField(propActions, new GUIContent("Actions", "These actions will be performed when this trigger is executed."), true);
+            EditorGUILayout.PropertyField(propActions, new GUIContent(title, "These actions will be performed when this trigger is executed."), true);
 
             serializedObject.ApplyModifiedProperties();
             (target as Trigger).UpdateExplanation();
