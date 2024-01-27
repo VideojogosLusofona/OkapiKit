@@ -321,7 +321,7 @@ namespace OkapiKit
                     }
                     else
                     {
-                        velocity = new Vector2(Random.Range(minVelocity.x, maxVelocity.y), Random.Range(minVelocity.y, maxVelocity.y));
+                        velocity = new Vector2(Random.Range(minVelocity.x, maxVelocity.x), Random.Range(minVelocity.y, maxVelocity.y));
                     }
 
                     if (useRotation)
