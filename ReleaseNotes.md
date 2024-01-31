@@ -1,5 +1,11 @@
 # Release Notes
 
+## V1.10.0
+
+- Added circle, arc and polygon path
+- Modified path curve to use Catmull-Rom splines, it's a bit better
+- Delete deletes point on path, while in edit mode and a point is selected
+
 ## V1.9.2
 
 - Fixed bug with ranges on ChangeMovement (changing velocity range would set the wrong values when X and Y had different ranges)
