@@ -22,19 +22,21 @@ namespace OkapiKit
 
         [System.Serializable] public enum DataType { Number = 0, Boolean = 1 };
 
-        public bool negate;
-        public VariableInstance valueHandler;
-        public Variable variable;
-        public ValueType valueType;
-        public Hypertag tag;
-        public Transform sourceTransform;
-        public Rigidbody2D rigidBody;
-        public Axis axis;
-        public Probe probe;
-        public MovementPlatformer movementPlatformer;
-        public Comparison comparison;
-        public float value;
-        public bool percentageCompare;
+        public bool                 negate;
+        public VariableInstance     valueHandler;
+        public Variable             variable;
+        public ValueType            valueType;
+        public Hypertag             tag;
+        public bool                 tagCountRangeEnabled;
+        public float                tagCountRange;
+        public Transform            sourceTransform;
+        public Rigidbody2D          rigidBody;
+        public Axis                 axis;
+        public Probe                probe;
+        public MovementPlatformer   movementPlatformer;
+        public Comparison           comparison;
+        public float                value;
+        public bool                 percentageCompare;
 
         public DataType GetDataType()
         {
@@ -62,8 +64,16 @@ namespace OkapiKit
             switch (valueType)
             {
                 case ValueType.TagCount:
-                    if (tag) return $"TagCount({tag.name})";
-                    return "TagCount([Unknown])";
+                    if (tagCountRangeEnabled)
+                    {
+                        if (tag) return $"ObjectWithTagInRange({tag.name},{tagCountRange})";
+                        return "ObjectsWithTagsInRange([Unknown],{tagCountRange})";
+                    }
+                    else
+                    {
+                        if (tag) return $"ObjectsWithTag({tag.name})";
+                        return "ObjectsWithTag([Unknown])";
+                    }
                 case ValueType.WorldPositionX:
                     if (sourceTransform) return $"{sourceTransform.name}.x";
                     return $"{gameObject.name}.x";
@@ -109,7 +119,7 @@ namespace OkapiKit
 
         public string GetRawDescription(GameObject gameObject)
         {
-            string desc = "(";
+            string desc = "";
             if (negate) desc += "not ";
             desc += $"({GetVariableName(gameObject)}";
             if (GetDataType() == DataType.Number)
@@ -177,9 +187,26 @@ namespace OkapiKit
                     switch (valueType)
                     {
                         case Condition.ValueType.TagCount:
-                            currentValue = HypertaggedObject.FindGameObjectsWithHypertag(tag).Count;
-                            minValue = 0;
-                            maxValue = float.MaxValue;
+                            {
+                                var objects = HypertaggedObject.FindGameObjectsWithHypertag(tag);
+                                if (tagCountRangeEnabled)
+                                {
+                                    currentValue = 0;
+                                    foreach (var obj in objects)
+                                    {
+                                        if (Vector3.Distance(obj.transform.position, gameObject.transform.position) < tagCountRange)
+                                        {
+                                            currentValue++;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    currentValue = objects.Count;
+                                }
+                                minValue = 0;
+                                maxValue = objects.Count;
+                            }
                             break;
                         case Condition.ValueType.WorldPositionX:
                             t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
