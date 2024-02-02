@@ -28,6 +28,25 @@ namespace OkapiKit.Editor
 
         static Dictionary<string, GUIStyle> styles;
 
+        static public GUIStyle GetLabelStyle(string color)
+        {
+            if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+            string n = $"Label{color}";
+            GUIStyle labelStyle;
+            styles.TryGetValue(n, out labelStyle);
+            if (labelStyle == null)
+            {
+                labelStyle = new GUIStyle();
+                labelStyle.fontSize = 12;
+                labelStyle.fixedHeight = 12;
+                labelStyle.clipping = TextClipping.Overflow;
+                labelStyle.normal.textColor = ColorFromHex(color);
+                styles.Add(n, labelStyle);
+            }
+            return labelStyle;
+        }
+
         static public GUIStyle GetTooltipTextStyle()
         {
             if (styles == null) styles = new Dictionary<string, GUIStyle>();

@@ -57,5 +57,22 @@ namespace OkapiKit.Editor
                 (target as Trigger).UpdateExplanation();
             }
         }
+
+        public override void OnSceneGUI()
+        {
+            base.OnSceneGUI();
+
+            // Make sure to update the serializedObject to reflect the latest data
+            serializedObject.Update();
+
+            // Iterate through all elements in the propConditions array
+            for (int i = 0; i < propConditions.arraySize; i++)
+            {
+                SerializedProperty conditionElement = propConditions.GetArrayElementAtIndex(i);
+
+                // Render the property we want 
+                ConditionDrawer.OnSceneGUI(serializedObject, conditionElement);
+            }
+        }
     }
 }

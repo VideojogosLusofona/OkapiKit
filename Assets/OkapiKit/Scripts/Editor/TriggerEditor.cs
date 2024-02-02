@@ -70,6 +70,22 @@ namespace OkapiKit.Editor
 
         }
 
+        public virtual void OnSceneGUI()
+        {
+            // Make sure to update the serializedObject to reflect the latest data
+            serializedObject.Update();
+
+            // Iterate through all elements in the propConditions array
+            for (int i = 0; i < propPreConditions.arraySize; i++)
+            {
+                SerializedProperty conditionElement = propPreConditions.GetArrayElementAtIndex(i);
+
+                // Render the property we want 
+                ConditionDrawer.OnSceneGUI(serializedObject, conditionElement);
+            }
+        }
+
+
         protected void ActionPanel(string title = "Actions")
         {
             serializedObject.ApplyModifiedProperties();
