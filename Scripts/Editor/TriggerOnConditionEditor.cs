@@ -62,16 +62,19 @@ namespace OkapiKit.Editor
         {
             base.OnSceneGUI();
 
-            // Make sure to update the serializedObject to reflect the latest data
-            serializedObject.Update();
-
-            // Iterate through all elements in the propConditions array
-            for (int i = 0; i < propConditions.arraySize; i++)
+            if (OkapiConfig.showConditions)
             {
-                SerializedProperty conditionElement = propConditions.GetArrayElementAtIndex(i);
+                // Make sure to update the serializedObject to reflect the latest data
+                serializedObject.Update();
 
-                // Render the property we want 
-                ConditionDrawer.OnSceneGUI(serializedObject, conditionElement);
+                // Iterate through all elements in the propConditions array
+                for (int i = 0; i < propConditions.arraySize; i++)
+                {
+                    SerializedProperty conditionElement = propConditions.GetArrayElementAtIndex(i);
+
+                    // Render the property we want 
+                    ConditionDrawer.OnSceneGUI(serializedObject, conditionElement);
+                }
             }
         }
     }
