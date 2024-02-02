@@ -26,7 +26,7 @@ namespace OkapiKit.Editor
 
             propType = serializedObject.FindProperty("type");
             propClosed = serializedObject.FindProperty("closed");
-            propSides = serializedObject.FindProperty("sides");
+            propSides = serializedObject.FindProperty("nSides");
             propPoints = serializedObject.FindProperty("points");
             propWorldSpace = serializedObject.FindProperty("worldSpace");
             propEditMode = serializedObject.FindProperty("editMode");

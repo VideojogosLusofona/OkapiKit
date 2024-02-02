@@ -17,7 +17,7 @@ namespace OkapiKit
         [SerializeField]
         private bool        closed = false;
         [SerializeField, Range(3, 30)]
-        private int         sides = 4;
+        private int         nSides = 4;
         [SerializeField]
         private List<Vector3> points;
 
@@ -43,6 +43,7 @@ namespace OkapiKit
         private float           endAngle;
         private bool            dirty = true;
         private List<Vector3>   fullPoints;
+        private float           linearLength;
 
         public List<Vector3> GetEditPoints() => (points == null) ? (null) : (new List<Vector3>(points));
         public void SetEditPoints(List<Vector3> inPoints)
@@ -110,18 +111,31 @@ namespace OkapiKit
             return a * t3 + b * t2 + c * t + d;
         }
 
-        public Vector2 Evaluate(float t)
+        public Vector2 EvaluateWorld(float t)
+        {
+            return transform.TransformPoint(EvaluateLocal(t));
+        }
+
+        public Vector2 EvaluateLocal(float t)
         {
             switch (type)
             {
                 case PathType.Linear:
                     {
-                        float tSub = 1.0f / points.Count;
-                        int   startIndex = Mathf.FloorToInt(t / tSub);
-                        var   p1 = points[startIndex];
-                        var   p2 = points[(startIndex + 1) % points.Count];
-                        float tMinor = (t - startIndex * tSub) / tSub;
-                        return p1 + (p2 - p1) * tMinor;
+                        float d = t * linearLength;
+                        
+                        for (int i = 0; i < points.Count - ((closed)?(0):(1)); i++)
+                        {
+                            var delta = points[(i + 1) % points.Count] - points[i];
+                            float thisDistance = delta.magnitude;
+                            if (thisDistance >= d)
+                            {
+                                return points[i] + d * (delta / thisDistance);
+                            }
+                            else d -= thisDistance;
+                        }
+
+                        return points[0];
                     }
                 case PathType.Smooth:
                     {
@@ -159,7 +173,21 @@ namespace OkapiKit
                         return center + Vector2.right * radius * Mathf.Cos(angle) + Vector2.up * radius * Mathf.Sin(angle);
                     }
                 case PathType.Polygon:
-                    break;
+                    { 
+                        float   totalSides = (nSides - ((closed) ? (0) : (1)));
+                        int     side = Mathf.FloorToInt(totalSides * t);
+                        float   tInc = 1.0f / totalSides;
+                        float   angleInc = Mathf.PI * 2.0f / (totalSides + ((closed)?(0):(1)));
+                        float   angle = side * angleInc;
+                        Vector2 center = points[0];
+
+                        Vector3 p1 = center + primaryRadius * primaryDir * Mathf.Cos(angle) + perpRadius * perpDir * Mathf.Sin(angle);
+                        Vector3 p2 = center + primaryRadius * primaryDir * Mathf.Cos(angle + angleInc) + perpRadius * perpDir * Mathf.Sin(angle + angleInc);
+
+                        float remainingT = (t - side * tInc) / tInc;
+
+                        return p1 + (p2 - p1) * remainingT;
+                    }
                 default:
                     break;
             }
@@ -182,6 +210,7 @@ namespace OkapiKit
                 case PathType.Linear:
                     steps = 0;
                     fullPoints = new List<Vector3>(points);
+                    if ((closed) && (points.Count > 1)) fullPoints.Add(points[0]);
                     break;
                 case PathType.Smooth:
                     if (points.Count < 3)
@@ -220,8 +249,8 @@ namespace OkapiKit
                             steps = 0;
 
                             float angle = 0.0f;
-                            float angleInc = Mathf.PI * 2.0f / sides;
-                            for (int i = 0; i < sides; i++)
+                            float angleInc = Mathf.PI * 2.0f / nSides;
+                            for (int i = 0; i < nSides; i++)
                             {
                                 Vector2 center = points[0];
                                 fullPoints.Add(center + primaryDir * primaryRadius * Mathf.Cos(angle) + perpDir * perpRadius * Mathf.Sin(angle));
@@ -240,7 +269,7 @@ namespace OkapiKit
 
             if (steps > 0)
             {
-                var prevPoint = Evaluate(0.0f);
+                var prevPoint = EvaluateLocal(0.0f);
                 fullPoints.Add(prevPoint);
 
                 float tInc = 1.0f / steps;
@@ -248,7 +277,7 @@ namespace OkapiKit
 
                 for (int i = 0; i < steps; i++)
                 {
-                    var newPt = Evaluate(t);
+                    var newPt = EvaluateLocal(t);
                     if (Vector3.SqrMagnitude(newPt - prevPoint) > 1.0f)
                     {
                         fullPoints.Add(newPt);
@@ -349,6 +378,13 @@ namespace OkapiKit
 
         private void ComputeVariables()
         {
+            // Compute length
+            linearLength = 0.0f;
+            for (int i = 0; i < points.Count - ((closed)?(0):(1)); i++)
+            {
+                linearLength += Vector3.Distance(points[i], points[(i + 1) % points.Count]);
+            }
+
             // Compute generic values for circle, arc and polygon
             if (points.Count >= 2)
             {
