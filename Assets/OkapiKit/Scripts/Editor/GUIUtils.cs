@@ -46,6 +46,26 @@ namespace OkapiKit.Editor
             }
             return labelStyle;
         }
+        static public GUIStyle GetCenteredLabelStyle(string color, Texture2D texture = null)
+        {
+            if (styles == null) styles = new Dictionary<string, GUIStyle>();
+
+            string n = $"CenteredLabel{color}";
+            GUIStyle labelStyle;
+            styles.TryGetValue(n, out labelStyle);
+            if (labelStyle == null)
+            {
+                labelStyle = new GUIStyle();
+                labelStyle.fontSize = 12;
+                labelStyle.fixedHeight = 12;
+                labelStyle.clipping = TextClipping.Overflow;
+                labelStyle.normal.textColor = ColorFromHex(color);
+                labelStyle.normal.background = texture;
+                labelStyle.alignment = TextAnchor.MiddleCenter;
+                styles.Add(n, labelStyle);
+            }
+            return labelStyle;
+        }
 
         static public GUIStyle GetTooltipTextStyle()
         {

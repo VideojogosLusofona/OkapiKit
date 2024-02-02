@@ -18,6 +18,8 @@ namespace OkapiKit.Editor
             config.ForceCheckErrors();
 
             AddProp("maxPingTime");
+            AddProp("displayHypertags");
+            AddProp("displayConditions");
         }
 
         void AddProp(string name)
@@ -49,6 +51,8 @@ namespace OkapiKit.Editor
                 EditorGUI.BeginChangeCheck();
 
                 EditorGUILayout.PropertyField(props["maxPingTime"], new GUIContent("Max. Ping Time", "When pinging an action, how long does it stays lit up."));
+                EditorGUILayout.PropertyField(props["displayHypertags"], new GUIContent("Display hypertags in scene view?", "Should the hypertags be visible in the scene view?"));
+                EditorGUILayout.PropertyField(props["displayConditions"], new GUIContent("Display conditions in scene view?", "Some conditions can be visualized in the scene view, should they?"));
 
                 if (EditorGUI.EndChangeCheck())
                 {

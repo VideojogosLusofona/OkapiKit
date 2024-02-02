@@ -17,6 +17,10 @@ namespace OkapiKit
 
         [SerializeField]
         private float maxPingTime = 4.0f;
+        [SerializeField, Header("Scene View")]
+        private bool displayConditions = true;
+        [SerializeField]
+        private bool displayHypertags = false;
 
         protected OkapiElement  pingComponent;
         protected DateTime      pingTime;
@@ -79,6 +83,9 @@ namespace OkapiKit
 
             return false;
         }
+
+        public static bool showTags => (instance) ? (instance.displayHypertags) : (false);
+        public static bool showConditions => (instance) ? (instance.displayConditions) : (false);
 
         static OkapiConfig instance { 
             get {

@@ -11,6 +11,7 @@ Features:
   - Debug is just logging to the console what's happening in terms of triggers
     and actions
 - Tagged variables with search for variables beneath an object, etc...
+- Conditions that can have visual support and interfaces on scene view should be created
 - Add Network Object support to Okapi
 - Add target to ActionSetParent (need rename of variables)
 - Probes:

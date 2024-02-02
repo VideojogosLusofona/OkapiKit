@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using log4net.Util;
 
 namespace OkapiKit.Editor
 {
@@ -25,6 +26,14 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
             }
+        }
+
+        public void OnSceneGUI()
+        {
+            var ho = target as HypertaggedObject;
+
+            string tagText = ho.GetTagString();
+            Handles.Label(ho.transform.position, tagText);
         }
 
         protected void StdEditor(bool useOriginalEditor = true)

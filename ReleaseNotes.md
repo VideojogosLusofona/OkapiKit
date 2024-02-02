@@ -13,7 +13,8 @@
 - Added center path option on path object
 - Improved display and UI of path object
 - Tag count condition can now be limited to a specific range
-- Tag count with condition can now be rendered by in the scene view to be able to view the range
+- Tag count with condition can now be rendered by in the scene view to be able to view the range (option on OkapiConfig scriptable object, enabled by default)
+- Tags can now be seen in the scene view (option on OkapiConfig scriptable object, disabled by default)
 
 ## V1.9.2
 
