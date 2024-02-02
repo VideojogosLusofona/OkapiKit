@@ -50,14 +50,14 @@ namespace OkapiKit.Editor
 
                 EditorGUI.BeginChangeCheck();
 
-                var type = (Path.PathType)propType.enumValueIndex;
+                var type = (Path.Type)propType.enumValueIndex;
 
                 EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of path.\nLinear: Straight lines between points\nSmooth: Curved line that passes through some points and is influenced by the others.\nCircle: The first point defines the center, the second the radius of the circle. If there is a third point, it defines the radius in that approximate direction.\nArc: First point defines the center, the second and third define the beginning and end of an arc centered on the first point.\nPolygon: First point define the center, the second and third point define the radius in different directions, while the 'Sides' property defines the number of sides of the polygon."));
-                if ((type != Path.PathType.Circle) && (type != Path.PathType.Arc))
+                if ((type != Path.Type.Circle) && (type != Path.Type.Arc))
                 {
                     EditorGUILayout.PropertyField(propClosed, new GUIContent("Closed", "If the path should end where it starts."));
                 }
-                if (type == Path.PathType.Polygon)
+                if (type == Path.Type.Polygon)
                 {
                     EditorGUILayout.PropertyField(propSides, new GUIContent("Sides", "Number of sides in the polygon."));
                 }
@@ -70,9 +70,9 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
                 bool prevEnabled = GUI.enabled;
-                GUI.enabled = (propPoints.arraySize < 3) || ((type != Path.PathType.Circle) && (type != Path.PathType.Arc) && (type != Path.PathType.Polygon));
+                GUI.enabled = (propPoints.arraySize < 3) || ((type != Path.Type.Circle) && (type != Path.Type.Arc) && (type != Path.Type.Polygon));
 
-                if (type == Path.PathType.Smooth)
+                if (type == Path.Type.Smooth)
                 {
                     if (GUILayout.Button("Add Segment"))
                     {
@@ -96,6 +96,24 @@ namespace OkapiKit.Editor
                 }
                 GUI.enabled = prevEnabled;
 
+                if ((type == Path.Type.Linear) || (type == Path.Type.Smooth) || (type == Path.Type.Arc))
+                {
+                    if (GUILayout.Button("Invert Path"))
+                    {
+                        Undo.RecordObject(target, "Invert path");
+                        t.InvertPath();
+
+                        SceneView.RepaintAll();
+                    }
+                }
+                if (GUILayout.Button("Center Path"))
+                {
+                    Undo.RecordObject(target, "Center path");
+                    t.CenterPath();
+
+                    SceneView.RepaintAll();
+                }
+
                 EditorGUI.EndChangeCheck();
 
                 serializedObject.ApplyModifiedProperties();
@@ -108,8 +126,8 @@ namespace OkapiKit.Editor
             var t = (target as Path);
 
             bool    localSpace = !t.isWorldSpace;
-            var     type = (Path.PathType)propType.enumValueIndex;
-
+            var     type = (Path.Type)propType.enumValueIndex;
+            
             if (t.isEditMode)
             {
                 List<Vector3> newPoints = t.GetEditPoints();
@@ -149,16 +167,60 @@ namespace OkapiKit.Editor
                 for (int i = 0; i < newPoints.Count; i++)
                 {
                     float s = (editPoint == i) ? (10.0f) : (5.0f);
+                    bool selectable = true;
 
-                    if (Handles.Button(newPoints[i], Quaternion.identity, s, s, Handles.CircleHandleCap))
+                    // Render text
+                    string text = "";
+                    if ((type == Path.Type.Linear) || (type == Path.Type.Smooth))
                     {
-                        editPoint = i;
+                        text = $"{i}";
+                    }
+                    else if ((type == Path.Type.Circle) || (type == Path.Type.Polygon))
+                    {
+                        if (i == 0) text = "Center";
+                        else if (i == 1) text = "Primary Axis";
+                        else if (i == 2) text = "Secondary Axis";
+                        else selectable = false;
+                    }
+                    else if (type == Path.Type.Arc) 
+                    {
+                        if (i == 0) text = "Center";
+                        else if (i == 1) text = "Start";
+                        else if (i == 2) text = "End";
+                        else selectable = false;
+                    }
+
+                    if (selectable)
+                    {
+                        if (Handles.Button(newPoints[i], Quaternion.identity, s, s, Handles.CircleHandleCap))
+                        {
+                            editPoint = i;
+                        }
+                    }
+                    if (text != "")
+                    {
+                        Handles.Label(newPoints[i] + Vector3.right * s * 1.25f, text);
                     }
                 }
 
                 if ((editPoint >= 0) && (editPoint < newPoints.Count))
                 {
                     newPoints[editPoint] = Handles.PositionHandle(newPoints[editPoint], Quaternion.identity);
+
+                    if ((type == Path.Type.Circle) || (type == Path.Type.Polygon))
+                    {
+                        if (newPoints.Count >= 2)
+                        {
+                            // Project this point into the perpendicular and use that instead
+                            Vector3 delta = (newPoints[1] - newPoints[0]).normalized;
+                            (delta.x, delta.y) = (delta.y, -delta.x);
+
+                            delta.Normalize();
+
+                            float r = Vector3.Dot(delta, (newPoints[2] - newPoints[1]));
+                            newPoints[2] = newPoints[0] + r * delta;
+                        }
+                    }
                 }
 
                 if (localSpace)
@@ -175,9 +237,9 @@ namespace OkapiKit.Editor
 
                 DrawPath(type, t.GetPoints(), Color.white);
 
-                if ((type == Path.PathType.Smooth) && (!propClosed.boolValue))
+                var editPoints = t.GetEditPoints();
+                if ((type == Path.Type.Smooth) && (!propClosed.boolValue))
                 {
-                    var editPoints = t.GetEditPoints();
                     if (editPoints.Count > 2)
                     {
                         // Draw last segment
@@ -193,6 +255,16 @@ namespace OkapiKit.Editor
                         }
                     }
                 }
+
+                if (((type == Path.Type.Circle) || (type == Path.Type.Polygon) || (type == Path.Type.Polygon)) && (editPoints.Count > 0))
+                {
+                    Vector3 center = editPoints[0];
+                    Vector3 upBound = t.upAxis * t.upExtent;
+                    Vector3 rightBound = t.rightAxis * t.rightExtent;
+
+                    Handles.color = Color.yellow;
+                    Handles.DrawPolyLine(new Vector3[] { center - rightBound - upBound, center + rightBound - upBound, center + rightBound + upBound, center - rightBound + upBound, center - rightBound - upBound });
+                }
             }
             else
             {
@@ -203,7 +275,7 @@ namespace OkapiKit.Editor
             }
         }
 
-        void DrawPath(Path.PathType type, List<Vector3> points, Color color)
+        void DrawPath(Path.Type type, List<Vector3> points, Color color)
         {
             if (points == null) return;
 
@@ -232,7 +304,7 @@ namespace OkapiKit.Editor
 
         protected override Texture2D GetIcon()
         {
-            if (propType.enumValueIndex == (int)Path.PathType.Linear)
+            if (propType.enumValueIndex == (int)Path.Type.Linear)
                 return GUIUtils.GetTexture("PathStraight");
             else
                 return GUIUtils.GetTexture("PathCurved");
