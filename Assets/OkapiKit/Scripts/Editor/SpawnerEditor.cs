@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using static OkapiKit.Spawner;
 
 namespace OkapiKit.Editor
 {
@@ -20,6 +21,8 @@ namespace OkapiKit.Editor
         SerializedProperty propSpeedVariance;
         SerializedProperty propSetParent;
         SerializedProperty propSpawnPathSpacing;
+        SerializedProperty propSpawnRotation;
+        SerializedProperty propSpawnAlignmentAxis;
 
         protected override void OnEnable()
         {
@@ -35,6 +38,8 @@ namespace OkapiKit.Editor
             propSpawnPoints = serializedObject.FindProperty("spawnPoints");
             propSpawnPointType = serializedObject.FindProperty("spawnPointType");
             propSpawnPathSpacing = serializedObject.FindProperty("spawnPathSpacing");
+            propSpawnRotation = serializedObject.FindProperty("spawnRotation");
+            propSpawnAlignmentAxis = serializedObject.FindProperty("spawnAlignmentAxis");
             propModifiers = serializedObject.FindProperty("modifiers");
             propScaleVariance = serializedObject.FindProperty("scaleVariance");
             propSpeedVariance = serializedObject.FindProperty("speedVariance");
@@ -114,6 +119,21 @@ namespace OkapiKit.Editor
                     if (propSpawnPointType.enumValueIndex != (int)Spawner.SpawnPointType.Random)
                     {
                         EditorGUILayout.PropertyField(propSpawnPathSpacing, new GUIContent("Point Spacing", "What is the spacing between spawn points on the path, in parametric space (percentage of the whole path - i.e. 0.5 means that there will be a point in the beginning, one in the middle, one at the end)"));
+                    }
+
+                    EditorGUILayout.PropertyField(propSpawnRotation, new GUIContent("Rotation", "What is the rotation of the spawned object?\nDefault: The original rotation is preserved\nThis: Uses the rotation of the object with the spawner\nAlign With Direction: Aligns object with the path's orientation\nAlign With Inverse Direction: Aligns object to point in the opposite direction of the path's orientation\nAlign With Perpendicular: Aligns objects to the outward direction of the path\nAlign With Inverse Perpendicular: Aligns object to the inner direction of the path"));
+
+                    var spawnRotation = (Spawner.SpawnRotation)propSpawnRotation.enumValueIndex;
+                    switch (spawnRotation)
+                    {
+                        case SpawnRotation.AlignWithDirection:
+                        case SpawnRotation.AlignWithInverseDirection:
+                        case SpawnRotation.AlignWithPerpendicular:
+                        case SpawnRotation.AlignWithInversePerpendicular:
+                            EditorGUILayout.PropertyField(propSpawnAlignmentAxis, new GUIContent("Alignment Axis", "Which axis align with the previous property?"));
+                            break;
+                        default:
+                            break;
                     }
                 }
                 else

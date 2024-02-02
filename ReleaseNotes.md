@@ -9,6 +9,9 @@
 - Spawner now displays on the scene view the spawn area when it uses a box collider
 - Spawner now can trigger how many cycles of spawn should it do by spawn action
 - Spawner can now spawn objects along a path
+- Added invert path option on path object
+- Added center path option on path object
+- Improved display and UI of path object
 
 ## V1.9.2
 

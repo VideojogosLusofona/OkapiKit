@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -12,6 +13,9 @@ namespace OkapiKit
     public class Spawner : OkapiElement
     {
         public enum SpawnPointType { Random = 0, Sequence = 1, All = 2 };
+        public enum SpawnRotation { Default = 0, This = 1, AlignWithDirection = 2, AlignWithInverseDirection = 3, AlignWithPerpendicular = 4, AlignWithInversePerpendicular = 5 };
+        public enum AlignAxis { Right = 0, Up = 1 };
+
         public enum Modifiers
         {
             None = 0,
@@ -36,9 +40,13 @@ namespace OkapiKit
         [SerializeField]
         private Transform[] spawnPoints;
         [SerializeField]
-        private SpawnPointType spawnPointType = SpawnPointType.Random;
+        private SpawnPointType  spawnPointType = SpawnPointType.Random;
         [SerializeField, Range(0.0f, 1.0f)] 
-        private float spawnPathSpacing;
+        private float           spawnPathSpacing = 0.25f;
+        [SerializeField]
+        private SpawnRotation   spawnRotation = SpawnRotation.Default;
+        [SerializeField]
+        private AlignAxis       spawnAlignmentAxis = AlignAxis.Right;
         [SerializeField, EnumFlags]
         private Modifiers modifiers = Modifiers.None;
         [SerializeField, MinMaxSlider(0.0f, 2.0f)]
@@ -153,11 +161,44 @@ namespace OkapiKit
                             spawnPointT = Random.Range(0.0f, 1.0f);
                         }
 
-                        position = spawnPath.EvaluateLocal(spawnPointT);
-                        rotation = transform.rotation;
+                        position = spawnPath.EvaluateWorld(spawnPointT);
 
-                        spawnPointT += spawnPathSpacing;
-                        if (spawnPointT > 1) spawnPointT -= 1.0f;
+                        switch (spawnRotation)
+                        {
+                            case SpawnRotation.Default:
+                                rotation = prefab.transform.rotation;
+                                break;
+                            case SpawnRotation.This:
+                                rotation = transform.rotation;
+                                break;
+                            case SpawnRotation.AlignWithDirection:
+                            case SpawnRotation.AlignWithInverseDirection:
+                            case SpawnRotation.AlignWithPerpendicular:
+                            case SpawnRotation.AlignWithInversePerpendicular:
+                                {
+                                    Vector2 dir = Vector2.zero;
+                                    Vector2 up = Vector2.zero;
+
+                                    GetWorldDirUp(spawnPath, spawnPointT, ref dir, ref up);
+                                    if (spawnAlignmentAxis == AlignAxis.Up)
+                                    {
+                                        (dir, up) = (up, dir);
+                                    }
+
+                                    rotation = Quaternion.LookRotation(Vector3.forward, up);
+                                }
+                                break;
+                        }
+                        if (spawnPointT < 1.0f)
+                        {
+                            spawnPointT += spawnPathSpacing;
+                            if (Mathf.Abs(1.0f - spawnPointT) < 1e-6) spawnPointT = 1.0f;
+                            else if (spawnPointT >= 1.0f) spawnPointT = 0.0f;
+                        }
+                        else
+                        {
+                            spawnPointT = 0.0f;
+                        }
                     }
                     else if ((spawnPoints != null) && (spawnPoints.Length > 0))
                     {
@@ -289,6 +330,31 @@ namespace OkapiKit
                 {
                     _explanation += $"Every spawn will fill the path attached to this object, with spacing {spawnPathSpacing * 100}% of the path length.\n";
                 }
+
+                string axisName = (spawnAlignmentAxis == AlignAxis.Right) ? ("right axis") : ("up axis");
+                switch (spawnRotation)
+                {
+                    case SpawnRotation.Default:
+                        _explanation += $"The new object will spawn with the original rotation.\n";
+                        break;
+                    case SpawnRotation.This:
+                        _explanation += $"The new object will spawn with the rotation of this object.\n";
+                        break;
+                    case SpawnRotation.AlignWithDirection:
+                        _explanation += $"The new object will align it's {axisName} with the orientation of the path.\n";
+                        break;
+                    case SpawnRotation.AlignWithInverseDirection:
+                        _explanation += $"The new object will align it's {axisName} with the inverse of the orientation of the path.\n";
+                        break;
+                    case SpawnRotation.AlignWithPerpendicular:
+                        _explanation += $"The new object will align it's {axisName} with the outside direction of the path.\n";
+                        break;
+                    case SpawnRotation.AlignWithInversePerpendicular:
+                        _explanation += $"The new object will align it's {axisName} with the inside direction of the path.\n";
+                        break;
+                    default:
+                        break;
+                }
             }
             else if ((spawnPoints != null) && (spawnPoints.Length > 0))
             {
@@ -315,9 +381,13 @@ namespace OkapiKit
                 else
                 {
                     if (spawnPoints[0])
+                    {
                         _explanation += $"These objects will spawn will spawn at the position of [{spawnPoints[0].name}].\n";
+                    }
                     else
+                    {
                         _explanation += $"These objects will spawn will spawn at the position of this object.\n";
+                    }
                 }
             }
             else
@@ -397,7 +467,7 @@ namespace OkapiKit
                 }
                 else if((spawnPoints == null) || (spawnPoints.Length == 0))
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Objects will spawn at this position, but it should be set explicitly.", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Missing explicit definition of spawn position.", "As it is, the objects will spawn at the position of this object. If that's what's intended, you can just move the GameObject to the Spawn Points list below.\nYou have different alternatives to spawn objects:\nPoints: Objects spawn at the position of a randomly chosen point in the Spawn Points list.\nBox Collider: You can add BoxCollider2d components and those will define the areas where the objects will spawn.\nPath: You can add a Path component on this object, and the objects will spawn along that path, in the defined fashion."));
                 }
                 else
             {
@@ -426,11 +496,42 @@ namespace OkapiKit
             return spawnPoints.Length;
         }
 
+        void GetWorldDirUp(Path path, float t, ref Vector2 dir, ref Vector2 up)
+        {
+            GetLocalDirUp(path, t, ref dir, ref up);
+            dir = path.transform.TransformVector(dir);
+            up = path.transform.TransformVector(up);
+        }
+
+        void GetLocalDirUp(Path path, float t, ref Vector2 dir, ref Vector2 up)
+        {
+            switch (spawnRotation)
+            {
+                case SpawnRotation.AlignWithDirection:
+                    dir = path.EvaluateLocalDir(t);
+                    up = new Vector2(dir.y, -dir.x);
+                    break;
+                case SpawnRotation.AlignWithInverseDirection:
+                    dir = -path.EvaluateLocalDir(t);
+                    up = new Vector2(dir.y, -dir.x);
+                    break;
+                case SpawnRotation.AlignWithPerpendicular:
+                    up = path.EvaluateLocalDir(t);
+                    dir = new Vector2(up.y, -up.x);
+                    break;
+                case SpawnRotation.AlignWithInversePerpendicular:
+                    up = path.EvaluateLocalDir(t);
+                    dir = new Vector2(-up.y, up.x);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public override string GetRawDescription(string ident, GameObject refObject)
         {
             return "(UNUSED) Spawner.GetRawDescription";
         }
-
 
         private void OnDrawGizmosSelected()
         {
@@ -477,13 +578,27 @@ namespace OkapiKit
                     if ((spawnPointType == SpawnPointType.Sequence) ||
                         (spawnPointType == SpawnPointType.All))
                     {
+                        float circleSize = 5.0f;
+                        float arrowSize = 10.0f;
                         float t = 0.0f;
                         while (t <= 1.0f)
                         {
-                            var pt = path.EvaluateLocal(t);
+                            var pt = path.EvaluateWorld(t);
 
-                            Gizmos.color = Color.green;
-                            Gizmos.DrawWireSphere(pt, 10.0f);
+                            Gizmos.color = Color.cyan;
+                            Gizmos.DrawWireSphere(pt, circleSize);
+
+                            Gizmos.color = (spawnAlignmentAxis == AlignAxis.Right) ? Color.red : Color.green;
+
+                            Vector2 dir = Vector2.zero;
+                            Vector2 up = Vector2.zero;
+
+                            GetWorldDirUp(path, t, ref dir, ref up);
+
+                            Vector2 arrowTip = pt + dir * arrowSize * 2.0f;
+                            Gizmos.DrawLine(pt, arrowTip);
+                            Gizmos.DrawLine(arrowTip, arrowTip - dir * arrowSize * 0.5f + up * arrowSize * 0.5f);
+                            Gizmos.DrawLine(arrowTip, arrowTip - dir * arrowSize * 0.5f - up * arrowSize * 0.5f);
 
                             t += spawnPathSpacing;
                         }

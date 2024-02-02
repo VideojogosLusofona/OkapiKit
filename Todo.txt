@@ -10,6 +10,7 @@ Features:
   - Enable debug system for nodes 
   - Debug is just logging to the console what's happening in terms of triggers
     and actions
+- Tagged variables with search for variables beneath an object, etc...
 - Add Network Object support to Okapi
 - Add target to ActionSetParent (need rename of variables)
 - Probes:
