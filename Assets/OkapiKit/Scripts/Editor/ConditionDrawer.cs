@@ -30,6 +30,8 @@ namespace OkapiKit.Editor
             var propVariable = property.FindPropertyRelative("variable");
             var propValueType = property.FindPropertyRelative("valueType");
             var propTag = property.FindPropertyRelative("tag");
+            var propTagRangeEnabled = property.FindPropertyRelative("tagCountRangeEnabled");
+            var propTagRange = property.FindPropertyRelative("tagCountRange");
             var propTransform = property.FindPropertyRelative("sourceTransform");
             var propRB = property.FindPropertyRelative("rigidBody");
             var propAxis = property.FindPropertyRelative("axis");
@@ -77,11 +79,23 @@ namespace OkapiKit.Editor
                         Condition.ValueType valueType = (Condition.ValueType)propValueType.enumValueIndex;
                         if (valueType == Condition.ValueType.TagCount)
                         {
-                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 2);
-                            var tagRect = new Rect(positionValue, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
+                            float heightPerElement = (position.height / 3) - 2.0f;
+
+                            var valueTypeRect = new Rect(positionValue, GetLineY(position.y, heightPerElement, 0), 150 + extra_width_variable, heightPerElement);
+                            var tagRect = new Rect(positionValue, GetLineY(position.y, heightPerElement, 1), 150 + extra_width_variable, heightPerElement);
+                            var tagRangeEnableLabelRect = new Rect(positionValue, GetLineY(position.y, heightPerElement, 2), 80, heightPerElement);
+                            var tagRangeEnableRect = new Rect(positionValue + 85, GetLineY(position.y, heightPerElement, 2), 20, heightPerElement);
 
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                             EditorGUI.PropertyField(tagRect, propTag, GUIContent.none);
+                            EditorGUI.LabelField(tagRangeEnableLabelRect, new GUIContent("Limit Range?", "Should the search for this tag be limited to a range near this object?"));
+                            EditorGUI.PropertyField(tagRangeEnableRect, propTagRangeEnabled, GUIContent.none);
+                            if (propTagRangeEnabled.boolValue)
+                            {
+                                var tagRangeRect = new Rect(positionValue + 110, GetLineY(position.y, heightPerElement, 2), 40 + extra_width_variable, heightPerElement);
+
+                                EditorGUI.PropertyField(tagRangeRect, propTagRange, GUIContent.none);
+                            }
                         }
                         else if ((propValueType.enumValueIndex >= (int)Condition.ValueType.WorldPositionX) &&
                                  (propValueType.enumValueIndex <= (int)Condition.ValueType.RelativePositionY))
@@ -210,11 +224,17 @@ namespace OkapiKit.Editor
             EditorGUI.EndProperty();
         }
 
+        public float GetLineY(float basePosY, float heightPerElement, int lineY)
+        {
+            return basePosY + lineY * (heightPerElement + 2);
+        }
+
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var propValueHandler = property.FindPropertyRelative("valueHandler");
             var propVariable = property.FindPropertyRelative("variable");
             var systemVariable = property.FindPropertyRelative("valueType");
+            var baseHeight = base.GetPropertyHeight(property, label) + 2;
 
             if (propValueHandler.objectReferenceValue == null)
             {
@@ -222,12 +242,15 @@ namespace OkapiKit.Editor
                 {
                     if (systemVariable.enumValueIndex == 0)
                     {
-                        return base.GetPropertyHeight(property, label) * 3;
+                        return baseHeight * 3;
                     }
-                    else if ((systemVariable.enumValueIndex >= (int)Condition.ValueType.TagCount) &&
-                             (systemVariable.enumValueIndex <= (int)Condition.ValueType.AbsoluteVelocityY))
+                    else if (systemVariable.enumValueIndex >= (int)Condition.ValueType.TagCount)
                     {
-                        return base.GetPropertyHeight(property, label) * 2;
+                        return baseHeight * 3;
+                    }
+                    else if (systemVariable.enumValueIndex <= (int)Condition.ValueType.AbsoluteVelocityY)
+                    {
+                        return baseHeight * 2;
                     }
                     else if (systemVariable.enumValueIndex == (int)Condition.ValueType.Distance)
 
@@ -237,7 +260,7 @@ namespace OkapiKit.Editor
 
                         if (tagVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 2;
                         else if (transformVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 2;
-                        else return base.GetPropertyHeight(property, label) * 3;
+                        else return baseHeight * 3;
                     }
                     else if (systemVariable.enumValueIndex == (int)Condition.ValueType.Angle)
                     {
@@ -246,22 +269,22 @@ namespace OkapiKit.Editor
 
                         if (tagVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 3;
                         else if (transformVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 3;
-                        else return base.GetPropertyHeight(property, label) * 4;
+                        else return baseHeight * 4;
                     }
                     else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.Probe) ||
                              (systemVariable.enumValueIndex == (int)Condition.ValueType.ProbeDistance))
                     {
-                        return base.GetPropertyHeight(property, label) * 2;
+                        return baseHeight * 2;
                     }
                     else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.IsGrounded) ||
                              (systemVariable.enumValueIndex == (int)Condition.ValueType.IsGliding))
                     {
-                        return base.GetPropertyHeight(property, label) * 2;
+                        return baseHeight * 2;
                     }
                 }
             }
 
-            return base.GetPropertyHeight(property, label);
+            return baseHeight;
         }
     }
 }

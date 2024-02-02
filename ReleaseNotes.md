@@ -12,6 +12,7 @@
 - Added invert path option on path object
 - Added center path option on path object
 - Improved display and UI of path object
+- Tag count condition can now be limited to a specific range
 
 ## V1.9.2
 
