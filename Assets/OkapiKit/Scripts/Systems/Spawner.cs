@@ -20,6 +20,8 @@ namespace OkapiKit
         }
 
         [SerializeField]
+        private int  spawnsPerTrigger = 1;
+        [SerializeField]
         private bool forceCount = false;
         [SerializeField]
         private int numberOfEntities = 1;
@@ -35,6 +37,8 @@ namespace OkapiKit
         private Transform[] spawnPoints;
         [SerializeField]
         private SpawnPointType spawnPointType = SpawnPointType.Random;
+        [SerializeField, Range(0.0f, 1.0f)] 
+        private float spawnPathSpacing;
         [SerializeField, EnumFlags]
         private Modifiers modifiers = Modifiers.None;
         [SerializeField, MinMaxSlider(0.0f, 2.0f)]
@@ -44,9 +48,11 @@ namespace OkapiKit
         [SerializeField]
         private bool setParent = false;
 
-        private BoxCollider2D[] spawnAreas;
-        private int spawnPointIndex;
-        private List<GameObject> items;
+        private BoxCollider2D[]     spawnAreas;
+        private int                 spawnPointIndex;
+        private Path                spawnPath;
+        private float               spawnPointT;
+        private List<GameObject>    items;
 
         private bool hasPulsePattern => (!forceCount) && (usePulsePattern);
 
@@ -55,6 +61,8 @@ namespace OkapiKit
             items = new List<GameObject>();
             spawnAreas = GetComponents<BoxCollider2D>();
             spawnPointIndex = 0;
+            spawnPointT = 0.0f;
+            spawnPath = GetComponent<Path>();
         }
 
         public void Update()
@@ -75,23 +83,26 @@ namespace OkapiKit
 
         public void Spawn()
         {
-            if (hasPulsePattern)
+            for (int j = 0; j < spawnsPerTrigger; j++)
             {
-                if (pulseTime > 0)
+                if (hasPulsePattern)
                 {
-                    StartCoroutine(SpawnCR());
+                    if (pulseTime > 0)
+                    {
+                        StartCoroutine(SpawnCR());
+                    }
+                    else
+                    {
+                        for (int i = 0; i < pulsePattern.Length; i++)
+                        {
+                            if (pulsePattern[i] == 'x') SingleSpawn();
+                        }
+                    }
                 }
                 else
                 {
-                    for (int i = 0; i < pulsePattern.Length; i++)
-                    {
-                        if (pulsePattern[i] == 'x') SingleSpawn();
-                    }
+                    SingleSpawn();
                 }
-            }
-            else
-            {
-                SingleSpawn();
             }
         }
 
@@ -115,6 +126,10 @@ namespace OkapiKit
                 {
                     if (spawnPointType == SpawnPointType.All) c = spawnPoints.Length;
                 }
+                if (spawnPath != null)
+                {
+                    if (spawnPointType == SpawnPointType.All) c = Mathf.FloorToInt(1.0f / spawnPathSpacing);
+                }
 
                 for (int i = 0; i < c; i++)
                 {
@@ -130,6 +145,19 @@ namespace OkapiKit
 
                         position = transform.TransformPoint(new Vector3(x, y, 0));
                         rotation = transform.rotation;
+                    }
+                    else if (spawnPath != null)
+                    {
+                        if(spawnPointType == SpawnPointType.Random)
+                        {
+                            spawnPointT = Random.Range(0.0f, 1.0f);
+                        }
+
+                        position = spawnPath.EvaluateLocal(spawnPointT);
+                        rotation = transform.rotation;
+
+                        spawnPointT += spawnPathSpacing;
+                        if (spawnPointT > 1) spawnPointT -= 1.0f;
                     }
                     else if ((spawnPoints != null) && (spawnPoints.Length > 0))
                     {
@@ -199,12 +227,16 @@ namespace OkapiKit
             }
             else
             {
-                _explanation += $"When triggered by a [Spawn] action, this component will create new objects.\n";
                 if (usePulsePattern)
                 {
+                    _explanation += $"When triggered by a [Spawn] action, this component will create execute the pulse pattern, {spawnsPerTrigger} times.\n";
                     _explanation += $"Every spawn trigger will generate {pulsePattern.Length} objects, ";
                     if (pulseTime > 0) _explanation += $"one every {pulseTime} seconds, following a\n[{pulsePattern}] pattern, where an 'x' is a spawn, and a 'o' is a pause.\n";
                     else _explanation += $"following a [{pulsePattern}] pattern,\nwhere an 'x' is a spawn, and a 'o' is a pause.\n";
+                }
+                else
+                {
+                    _explanation += $"When triggered by a [Spawn] action, this component will create {spawnsPerTrigger} objects.\n";
                 }
             }
             if (prefabs != null)
@@ -235,6 +267,7 @@ namespace OkapiKit
                 _explanation += "There's currently no defined object to spawn.\n";
             }
             var colliders = GetComponents<BoxCollider2D>();
+            var path = GetComponent<Path>();
             if ((colliders != null) && (colliders.Length > 0))
             {
                 if (colliders.Length > 1)
@@ -242,11 +275,37 @@ namespace OkapiKit
                 else
                     _explanation += $"These objects will spawn inside the BoxCollider2D attached to this object.\n";
             }
+            else if (path != null)
+            {
+                if (spawnPointType == SpawnPointType.Random)
+                {
+                    _explanation += $"These objects will spawn on a random position of the path attached to this object.\n";
+                }
+                else if (spawnPointType == SpawnPointType.Sequence)
+                {
+                    _explanation += $"Each spawn will happen on a position on the path attached to this object, in a sequence, \nwith spacing {spawnPathSpacing * 100}% of the path length.\n";
+                }
+                else if (spawnPointType == SpawnPointType.All)
+                {
+                    _explanation += $"Every spawn will fill the path attached to this object, with spacing {spawnPathSpacing * 100}% of the path length.\n";
+                }
+            }
             else if ((spawnPoints != null) && (spawnPoints.Length > 0))
             {
                 if (spawnPoints.Length > 1)
                 {
-                    _explanation += "These objects will spawn on any of the positions:\n";
+                    if (spawnPointType == SpawnPointType.Random)
+                    {
+                        _explanation += "Each object will spawn at a random selection between these positions/rotations:\n";
+                    }
+                    else if (spawnPointType == SpawnPointType.Sequence)
+                    {
+                        _explanation += "Each object will spawn on one of these positions/rotations, in sequence:\n";
+                    }
+                    else if (spawnPointType == SpawnPointType.All)
+                    {
+                        _explanation += "An object will spawn at each of these positions/rotations:\n";
+                    }
                     foreach (var spawnPoint in spawnPoints)
                     {
                         if (spawnPoint == null) _explanation += $"      [Nothing]\n";
@@ -325,12 +384,23 @@ namespace OkapiKit
             var collider = GetComponent<BoxCollider2D>();
             if (collider == null)
             {
-                if ((spawnPoints == null) || (spawnPoints.Length == 0))
+                var path = GetComponent<Path>();
+                if (path != null)
+                {
+                    if (spawnPointType != SpawnPointType.Random)
+                    {
+                        if (spawnPathSpacing == 0.0f)
+                        {
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Spacing is equal to zero, it should be larger than zero!", "To spawn objects along the curve, we need to know the spacing between objects!"));
+                        }
+                    }
+                }
+                else if((spawnPoints == null) || (spawnPoints.Length == 0))
                 {
                     _logs.Add(new LogEntry(LogEntry.Type.Warning, "Objects will spawn at this position, but it should be set explicitly.", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
                 else
-                {
+            {
                     int index = 0;
                     foreach (var spawnPoint in spawnPoints)
                     {
@@ -359,6 +429,67 @@ namespace OkapiKit
         public override string GetRawDescription(string ident, GameObject refObject)
         {
             return "(UNUSED) Spawner.GetRawDescription";
+        }
+
+
+        private void OnDrawGizmosSelected()
+        {
+            var spawnAreas = GetComponents<BoxCollider2D>();
+            foreach (var collider in spawnAreas)
+            { 
+                Vector3 pA = collider.offset - collider.size * 0.5f;
+
+                var p1 = transform.transform.TransformPoint(pA);
+                var p2 = transform.transform.TransformPoint(pA + collider.size.x * Vector3.right);
+                var p3 = transform.transform.TransformPoint(pA + collider.size.x * Vector3.right + collider.size.y * Vector3.up);
+                var p4 = transform.transform.TransformPoint(pA + collider.size.y * Vector3.up);
+
+                Gizmos.color = Color.cyan;
+                int c = 10;
+                float t = 0.0f;
+                float tInc = 1.0f / c;
+
+                for (int i = 0; i < c; i++)
+                {
+                    Vector3 pa = Vector3.Lerp(p1, p2, t);
+                    Vector3 pb = Vector3.Lerp(p3, p2, t);
+
+                    Gizmos.DrawLine(pa, pb);
+
+                    pa = Vector3.Lerp(p3, p4, t);
+                    pb = Vector3.Lerp(p1, p4, t);
+
+                    Gizmos.DrawLine(pa, pb);
+
+                    t += tInc;
+                }
+
+                Gizmos.DrawLine(p1, p2);
+                Gizmos.DrawLine(p2, p3);
+                Gizmos.DrawLine(p3, p4);
+                Gizmos.DrawLine(p4, p1);
+            }
+            if (((spawnAreas == null) || (spawnAreas.Length == 0)) && (spawnPathSpacing > 0.0f))
+            {
+                var path = GetComponent<Path>();
+                if (path)
+                {
+                    if ((spawnPointType == SpawnPointType.Sequence) ||
+                        (spawnPointType == SpawnPointType.All))
+                    {
+                        float t = 0.0f;
+                        while (t <= 1.0f)
+                        {
+                            var pt = path.EvaluateLocal(t);
+
+                            Gizmos.color = Color.green;
+                            Gizmos.DrawWireSphere(pt, 10.0f);
+
+                            t += spawnPathSpacing;
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ namespace OkapiKit.Editor
     [CustomEditor(typeof(Spawner))]
     public class SpawnerEditor : OkapiBaseEditor
     {
+        SerializedProperty propSpawnsPerTrigger;
         SerializedProperty propForceCount;
         SerializedProperty propNumberOfEntities;
         SerializedProperty propUsePulsePattern;
@@ -18,11 +19,13 @@ namespace OkapiKit.Editor
         SerializedProperty propScaleVariance;
         SerializedProperty propSpeedVariance;
         SerializedProperty propSetParent;
+        SerializedProperty propSpawnPathSpacing;
 
         protected override void OnEnable()
         {
             base.OnEnable();
 
+            propSpawnsPerTrigger = serializedObject.FindProperty("spawnsPerTrigger");
             propForceCount = serializedObject.FindProperty("forceCount");
             propNumberOfEntities = serializedObject.FindProperty("numberOfEntities");
             propUsePulsePattern = serializedObject.FindProperty("usePulsePattern");
@@ -31,6 +34,7 @@ namespace OkapiKit.Editor
             propPrefabs = serializedObject.FindProperty("prefabs");
             propSpawnPoints = serializedObject.FindProperty("spawnPoints");
             propSpawnPointType = serializedObject.FindProperty("spawnPointType");
+            propSpawnPathSpacing = serializedObject.FindProperty("spawnPathSpacing");
             propModifiers = serializedObject.FindProperty("modifiers");
             propScaleVariance = serializedObject.FindProperty("scaleVariance");
             propSpeedVariance = serializedObject.FindProperty("speedVariance");
@@ -77,6 +81,8 @@ namespace OkapiKit.Editor
             EditorGUI.BeginChangeCheck();
 
             EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
+            EditorGUILayout.Space(10);
+            EditorGUILayout.PropertyField(propSpawnsPerTrigger, new GUIContent("Spawns per trigger", "Everytime this spawner is triggered, how many entities will it trigger at one time.\nNotice that if you have a pulse patterns, it will be this ammount of patters of spawning, so if your pulse pattern is xxx and this number is 3, it will trigger a total of 9 times!"));
             EditorGUILayout.PropertyField(propForceCount, new GUIContent("Force Count?", "If true, a certain number of objects will be spawned and guaranteed to be present in the scene at any time.\nIf any object spawned by this is destroyed, another gets spawned in."));
             if (propForceCount.boolValue)
             {
@@ -100,11 +106,24 @@ namespace OkapiKit.Editor
             }
             else
             {
-                EditorGUILayout.PropertyField(propSpawnPoints, new GUIContent("Spawn Points", "Where should the objects spawn?\nIf no points, objects will spawn at this position.\nIf more than one point, a point is chosen based on Spawn Point Sequence."));
-
-                if (spawner.GetSpawnPointCount() > 1)
+                var path = spawner.GetComponent<Path>();
+                if (path)
                 {
-                    EditorGUILayout.PropertyField(propSpawnPointType, new GUIContent("Spawn Point Sequence", "How to choose a spawn point?\nRandom: A random one is selected\nSequence: Points are chosen in sequence (i.e. first object is spawned at the first point, second object at the second point, etc)\nAll: Objects are spawned at the same time in all points (i.e. if there's 5 points, 5 objects will spawn, one in each point)"));
+                    EditorGUILayout.PropertyField(propSpawnPointType, new GUIContent("Spawn Point Sequence", "How to choose a spawn point?\nRandom: A random point in the path is selected\nSequence: Points are chosen in sequence in a path, with the given spacing\nAll: Objects will spawn all over the path, with the given spacing"));
+
+                    if (propSpawnPointType.enumValueIndex != (int)Spawner.SpawnPointType.Random)
+                    {
+                        EditorGUILayout.PropertyField(propSpawnPathSpacing, new GUIContent("Point Spacing", "What is the spacing between spawn points on the path, in parametric space (percentage of the whole path - i.e. 0.5 means that there will be a point in the beginning, one in the middle, one at the end)"));
+                    }
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField(propSpawnPoints, new GUIContent("Spawn Points", "Where should the objects spawn?\nIf no points, objects will spawn at this position.\nIf more than one point, a point is chosen based on Spawn Point Sequence."));
+
+                    if (spawner.GetSpawnPointCount() > 1)
+                    {
+                        EditorGUILayout.PropertyField(propSpawnPointType, new GUIContent("Spawn Point Sequence", "How to choose a spawn point?\nRandom: A random one is selected\nSequence: Points are chosen in sequence (i.e. first object is spawned at the first point, second object at the second point, etc)\nAll: Objects are spawned at the same time in all points (i.e. if there's 5 points, 5 objects will spawn, one in each point)"));
+                    }
                 }
             }
             EditorGUILayout.PropertyField(propModifiers, new GUIContent("Modifiers", "What kind of per-spawn modifiers we want?\nScale: Every spawn has a different scale modifier applied\nSpeed: Every spawn has a different speed modifier applied"));

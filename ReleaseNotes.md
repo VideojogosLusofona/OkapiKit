@@ -5,6 +5,10 @@
 - Added circle, arc and polygon path
 - Modified path curve to use Catmull-Rom splines, it's a bit better
 - Delete deletes point on path, while in edit mode and a point is selected
+- Path can be closed
+- Spawner now displays on the scene view the spawn area when it uses a box collider
+- Spawner now can trigger how many cycles of spawn should it do by spawn action
+- Spawner can now spawn objects along a path
 
 ## V1.9.2
 
