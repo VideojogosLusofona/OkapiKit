@@ -25,10 +25,10 @@ namespace OkapiKit.Editor
             EditorGUI.indentLevel = 0;
 
             // Check if we need both selectors
+            var propValueType = property.FindPropertyRelative("valueType");
             var propNegate = property.FindPropertyRelative("negate");
             var propValueHandler = property.FindPropertyRelative("valueHandler");
             var propVariable = property.FindPropertyRelative("variable");
-            var propValueType = property.FindPropertyRelative("valueType");
             var propTag = property.FindPropertyRelative("tag");
             var propTagRangeEnabled = property.FindPropertyRelative("tagCountRangeEnabled");
             var propTagRange = property.FindPropertyRelative("tagCountRange");
@@ -285,6 +285,43 @@ namespace OkapiKit.Editor
             }
 
             return baseHeight;
+        }
+
+        internal static void OnSceneGUI(SerializedObject serializedObject, SerializedProperty conditionElement)
+        {
+            // Get type
+            var propValueType = conditionElement.FindPropertyRelative("valueType");
+            var type = (Condition.ValueType)propValueType.enumValueIndex;
+
+            if (type == Condition.ValueType.TagCount)
+            {
+                var propTagRangeEnabled = conditionElement.FindPropertyRelative("tagCountRangeEnabled");
+                var propTagRange = conditionElement.FindPropertyRelative("tagCountRange");
+
+                if (propTagRangeEnabled.boolValue)
+                {
+                    Handles.color = new Color(0.1f, 1.0f, 1.0f, 0.25f);
+
+                    OkapiElement okapiElement = serializedObject.targetObject as OkapiElement;
+                    if (okapiElement)
+                    {
+                        Condition condition = (Condition)conditionElement.boxedValue;
+                        string conditionText = condition.GetRawDescription(okapiElement.gameObject);
+
+                        // Draw circle
+                        Handles.DrawWireArc(okapiElement.transform.position, Vector3.forward, Vector3.up, 360, propTagRange.floatValue);
+
+                        Action action = serializedObject.targetObject as Action;
+                        if (action != null)
+                        {
+                            conditionText = action.explanation;
+                        }
+
+                        var labelStyle = GUIUtils.GetLabelStyle("#00FFFF40");
+                        Handles.Label(okapiElement.transform.position + Vector3.right * (propTagRange.floatValue + 10.0f), conditionText, labelStyle);
+                    }
+                }
+            }
         }
     }
 }
