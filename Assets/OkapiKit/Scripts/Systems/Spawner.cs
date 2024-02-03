@@ -498,29 +498,22 @@ namespace OkapiKit
 
         void GetWorldDirUp(Path path, float t, ref Vector2 dir, ref Vector2 up)
         {
-            GetLocalDirUp(path, t, ref dir, ref up);
-            dir = path.transform.TransformVector(dir);
-            up = path.transform.TransformVector(up);
-        }
-
-        void GetLocalDirUp(Path path, float t, ref Vector2 dir, ref Vector2 up)
-        {
             switch (spawnRotation)
             {
                 case SpawnRotation.AlignWithDirection:
-                    dir = path.EvaluateLocalDir(t);
+                    dir = path.EvaluateWorldDir(t);
                     up = new Vector2(dir.y, -dir.x);
                     break;
                 case SpawnRotation.AlignWithInverseDirection:
-                    dir = -path.EvaluateLocalDir(t);
+                    dir = -path.EvaluateWorldDir(t);
                     up = new Vector2(dir.y, -dir.x);
                     break;
                 case SpawnRotation.AlignWithPerpendicular:
-                    up = path.EvaluateLocalDir(t);
+                    up = path.EvaluateWorldDir(t);
                     dir = new Vector2(up.y, -up.x);
                     break;
                 case SpawnRotation.AlignWithInversePerpendicular:
-                    up = path.EvaluateLocalDir(t);
+                    up = path.EvaluateWorldDir(t);
                     dir = new Vector2(-up.y, up.x);
                     break;
                 default:

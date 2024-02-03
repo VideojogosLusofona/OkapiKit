@@ -127,6 +127,8 @@ namespace OkapiKit
 
         public Vector2 EvaluateWorld(float t)
         {
+            if (worldSpace) return EvaluateLocal(t);
+
             return transform.TransformPoint(EvaluateLocal(t));
         }
 
@@ -211,6 +213,8 @@ namespace OkapiKit
 
         public Vector2 EvaluateWorldDir(float t)
         {
+            if (worldSpace) return EvaluateLocalDir(t);
+
             return transform.TransformVector(EvaluateLocalDir(t));
         }
 

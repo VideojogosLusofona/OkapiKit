@@ -87,15 +87,19 @@ namespace OkapiKit
         public static bool showTags => (instance) ? (instance.displayHypertags) : (false);
         public static bool showConditions => (instance) ? (instance.displayConditions) : (false);
 
+        static OkapiConfig _instance = null;
+
         static OkapiConfig instance { 
             get {
+                if (_instance) return _instance;
+
                 var allConfigs = FindAllInstances<OkapiConfig>();
                 if (allConfigs.Count == 1)
                 {
-                    return allConfigs[0];
+                    _instance = allConfigs[0];
                 }
 
-                return null;
+                return _instance;
             } 
         }
 

@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.10.1
+
+- Fixed issue with world space path coordinates vs local space path coordinates
+- Improved performance of Okapi UI elements significatly
+
 ## V1.10.0
 
 - Added circle, arc and polygon path
