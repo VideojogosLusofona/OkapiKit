@@ -8,7 +8,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Action/Set Animation Parameter")]
     public class ActionSetAnimationParameter : Action
     {
-        public enum ValueType { Int = 0, Float = 1, Boolean = 2, Trigger = 3, Value = 4 };
+        public enum ValueType { Int = 0, Float = 1, Boolean = 2, Trigger = 3, Value = 4, VelocityX = 5, VelocityY = 6 };
 
         [SerializeField]
         private Animator animator;
@@ -27,13 +27,31 @@ namespace OkapiKit
         private VariableInstance valueHandler;
         [SerializeField, ShowIf("needsVariable")]
         private Variable variable;
+        [SerializeField, ShowIf("needsAbsolute")]
+        private bool absolute = false;
 
         private bool needsInt => valueType == ValueType.Int;
         private bool needsFloat => valueType == ValueType.Float;
         private bool needsBoolean => valueType == ValueType.Boolean;
         private bool needsValue => (valueType == ValueType.Value) && (variable == null);
         private bool needsVariable => (valueType == ValueType.Value) && (valueHandler == null);
+        private bool needsAbsolute => ((valueType == ValueType.VelocityX) || (valueType == ValueType.VelocityY));
 
+        Vector3     prevPos;
+        Vector3     currentVelocity;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            prevPos = transform.position;
+        }
+
+        protected void FixedUpdate()
+        {
+            currentVelocity = (transform.position - prevPos) / Time.fixedDeltaTime;
+            prevPos = transform.position;
+        }
 
         public override void Execute()
         {
@@ -68,6 +86,12 @@ namespace OkapiKit
                         else if (v.type == Variable.Type.Integer)
                             animator.SetInteger(animationParameter, (int)v.currentValue);
                     }
+                    break;
+                case ValueType.VelocityX:
+                    animator.SetFloat(animationParameter, (absolute) ? (Mathf.Abs(currentVelocity.x)) : (currentVelocity.x));
+                    break;
+                case ValueType.VelocityY:
+                    animator.SetFloat(animationParameter, (absolute) ? (Mathf.Abs(currentVelocity.y)) : (currentVelocity.y));
                     break;
                 default:
                     break;
@@ -117,6 +141,14 @@ namespace OkapiKit
                             desc += $"sets animation parameter {animationParameter} of object {anm.name} to the value of [UNDEFINED]";
                         }
                         break;
+                    case ValueType.VelocityX:
+                        if (absolute) desc += $"sets animation parameter {animationParameter} of object {anm.name} to the absolute horizontal velocity of this object";
+                        else desc += $"sets animation parameter {animationParameter} of object {anm.name} to the horizontal velocity of this object";
+                        break;
+                    case ValueType.VelocityY:
+                        if (absolute) desc += $"sets animation parameter {animationParameter} of object {anm.name} to the absolute vertical velocity of this object";
+                        else desc += $"sets animation parameter {animationParameter} of object {anm.name} to the vertical velocity of this object";
+                        break;
                 }
             }
 
@@ -165,10 +197,10 @@ namespace OkapiKit
                                 switch (param.type)
                                 {
                                     case AnimatorControllerParameterType.Float:
-                                        if (valueType == ValueType.Float)
+                                        if ((valueType == ValueType.Float) || (valueType == ValueType.VelocityX) || (valueType == ValueType.VelocityY))
                                         {
                                             rightType = true;
-                                        }
+                                        }                                        
                                         else if (valueType == ValueType.Value)
                                         {
                                             if (variable) rightType = (variable.type == Variable.Type.Float);

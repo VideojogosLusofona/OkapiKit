@@ -14,6 +14,7 @@ namespace OkapiKit.Editor
         SerializedProperty propBoolValue;
         SerializedProperty propValueHandler;
         SerializedProperty propVariable;
+        SerializedProperty propAbsolute;
 
         protected override void OnEnable()
         {
@@ -27,6 +28,7 @@ namespace OkapiKit.Editor
             propBoolValue = serializedObject.FindProperty("boolValue");
             propValueHandler = serializedObject.FindProperty("valueHandler");
             propVariable = serializedObject.FindProperty("variable");
+            propAbsolute = serializedObject.FindProperty("absolute");
         }
 
         public override void OnInspectorGUI()
@@ -76,6 +78,10 @@ namespace OkapiKit.Editor
                         {
                             EditorGUILayout.PropertyField(propValueHandler, new GUIContent("Value Instance", "Value handler to set to parameter.\nYou can select a value instance or a variable, but not both at the same time."));
                         }
+                        break;
+                    case ActionSetAnimationParameter.ValueType.VelocityX:
+                    case ActionSetAnimationParameter.ValueType.VelocityY:
+                        EditorGUILayout.PropertyField(propAbsolute, new GUIContent("Use absolute value?", "If active, use the absolute velocity (non-negative)"));
                         break;
                     default:
                         break;

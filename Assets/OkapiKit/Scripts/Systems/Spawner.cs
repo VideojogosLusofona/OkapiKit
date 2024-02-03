@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System.IO;
+using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -528,76 +529,99 @@ namespace OkapiKit
 
         private void OnDrawGizmosSelected()
         {
+            const float circleSize = 5.0f;
+            const float arrowSize = 10.0f;
+
             var spawnAreas = GetComponents<BoxCollider2D>();
-            foreach (var collider in spawnAreas)
-            { 
-                Vector3 pA = collider.offset - collider.size * 0.5f;
-
-                var p1 = transform.transform.TransformPoint(pA);
-                var p2 = transform.transform.TransformPoint(pA + collider.size.x * Vector3.right);
-                var p3 = transform.transform.TransformPoint(pA + collider.size.x * Vector3.right + collider.size.y * Vector3.up);
-                var p4 = transform.transform.TransformPoint(pA + collider.size.y * Vector3.up);
-
-                Gizmos.color = Color.cyan;
-                int c = 10;
-                float t = 0.0f;
-                float tInc = 1.0f / c;
-
-                for (int i = 0; i < c; i++)
+            if ((spawnAreas != null) && (spawnAreas.Length > 0))
+            {
+                foreach (var collider in spawnAreas)
                 {
-                    Vector3 pa = Vector3.Lerp(p1, p2, t);
-                    Vector3 pb = Vector3.Lerp(p3, p2, t);
+                    Vector3 pA = collider.offset - collider.size * 0.5f;
 
-                    Gizmos.DrawLine(pa, pb);
+                    var p1 = transform.transform.TransformPoint(pA);
+                    var p2 = transform.transform.TransformPoint(pA + collider.size.x * Vector3.right);
+                    var p3 = transform.transform.TransformPoint(pA + collider.size.x * Vector3.right + collider.size.y * Vector3.up);
+                    var p4 = transform.transform.TransformPoint(pA + collider.size.y * Vector3.up);
 
-                    pa = Vector3.Lerp(p3, p4, t);
-                    pb = Vector3.Lerp(p1, p4, t);
+                    Gizmos.color = Color.cyan;
+                    int c = 10;
+                    float t = 0.0f;
+                    float tInc = 1.0f / c;
 
-                    Gizmos.DrawLine(pa, pb);
+                    for (int i = 0; i < c; i++)
+                    {
+                        Vector3 pa = Vector3.Lerp(p1, p2, t);
+                        Vector3 pb = Vector3.Lerp(p3, p2, t);
 
-                    t += tInc;
+                        Gizmos.DrawLine(pa, pb);
+
+                        pa = Vector3.Lerp(p3, p4, t);
+                        pb = Vector3.Lerp(p1, p4, t);
+
+                        Gizmos.DrawLine(pa, pb);
+
+                        t += tInc;
+                    }
+
+                    Gizmos.DrawLine(p1, p2);
+                    Gizmos.DrawLine(p2, p3);
+                    Gizmos.DrawLine(p3, p4);
+                    Gizmos.DrawLine(p4, p1);
                 }
-
-                Gizmos.DrawLine(p1, p2);
-                Gizmos.DrawLine(p2, p3);
-                Gizmos.DrawLine(p3, p4);
-                Gizmos.DrawLine(p4, p1);
             }
-            if (((spawnAreas == null) || (spawnAreas.Length == 0)) && (spawnPathSpacing > 0.0f))
+            else 
             {
                 var path = GetComponent<Path>();
                 if (path)
                 {
-                    if ((spawnPointType == SpawnPointType.Sequence) ||
-                        (spawnPointType == SpawnPointType.All))
+                    if (spawnPathSpacing > 0.0f)
                     {
-                        float circleSize = 5.0f;
-                        float arrowSize = 10.0f;
-                        float t = 0.0f;
-                        while (t <= 1.0f)
+                        if ((spawnPointType == SpawnPointType.Sequence) ||
+                            (spawnPointType == SpawnPointType.All))
                         {
-                            var pt = path.EvaluateWorld(t);
+                            float t = 0.0f;
+                            while (t <= 1.0f)
+                            {
+                                var pt = path.EvaluateWorld(t);
 
-                            Gizmos.color = Color.cyan;
-                            Gizmos.DrawWireSphere(pt, circleSize);
+                                Gizmos.color = Color.cyan;
+                                Gizmos.DrawWireSphere(pt, circleSize);
 
-                            Gizmos.color = (spawnAlignmentAxis == AlignAxis.Right) ? Color.red : Color.green;
+                                Gizmos.color = (spawnAlignmentAxis == AlignAxis.Right) ? Color.red : Color.green;
 
-                            Vector2 dir = Vector2.zero;
-                            Vector2 up = Vector2.zero;
+                                Vector2 dir = Vector2.zero;
+                                Vector2 up = Vector2.zero;
 
-                            GetWorldDirUp(path, t, ref dir, ref up);
+                                GetWorldDirUp(path, t, ref dir, ref up);
 
-                            Vector2 arrowTip = pt + dir * arrowSize * 2.0f;
-                            Gizmos.DrawLine(pt, arrowTip);
-                            Gizmos.DrawLine(arrowTip, arrowTip - dir * arrowSize * 0.5f + up * arrowSize * 0.5f);
-                            Gizmos.DrawLine(arrowTip, arrowTip - dir * arrowSize * 0.5f - up * arrowSize * 0.5f);
+                                DrawGizmoArrow(pt, dir, up, arrowSize);
 
-                            t += spawnPathSpacing;
+                                t += spawnPathSpacing;
+                            }
                         }
                     }
                 }
-            }
+                else
+                {
+                    foreach (var pt in spawnPoints)
+                    {
+                        Gizmos.color = Color.cyan;
+                        Gizmos.DrawWireSphere(pt.position, circleSize);
+
+                        Gizmos.color = Color.green;
+                        DrawGizmoArrow(pt.position, pt.right, pt.up, arrowSize);
+                    }
+                }
+            }            
+        }
+
+        void DrawGizmoArrow(Vector2 pt, Vector2 dir, Vector2 up, float arrowSize)
+        {
+            Vector2 arrowTip = pt + dir * arrowSize * 2.0f;
+            Gizmos.DrawLine(pt, arrowTip);
+            Gizmos.DrawLine(arrowTip, arrowTip - dir * arrowSize * 0.5f + up * arrowSize * 0.5f);
+            Gizmos.DrawLine(arrowTip, arrowTip - dir * arrowSize * 0.5f - up * arrowSize * 0.5f);
         }
     }
 }

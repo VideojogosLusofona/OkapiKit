@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.11.0
+
+- Added special values to SetAnimationParameter action - velocity.x/y, with abs
+- Display spawn points on spawner, like we do on box areas or path
+
 ## V1.10.1
 
 - Fixed issue with world space path coordinates vs local space path coordinates
