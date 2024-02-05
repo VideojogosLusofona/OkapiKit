@@ -52,7 +52,7 @@ namespace OkapiKit
 
             dirty = true;
         }
-        public int GetEditPointsCount() => points.Count;
+        public int GetEditPointsCount() => (points != null) ? (points.Count) : (0);
 
         public Type GetPathType() => type;
         public void SetPathType(Type t) => type = t;
@@ -61,6 +61,12 @@ namespace OkapiKit
         public bool isEditMode => editMode;
         public bool isWorldSpace => worldSpace;
         public bool isLocalSpace => !worldSpace;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            ComputeVariables();
+        }
 
         public void AddPoint()
         {
@@ -550,31 +556,34 @@ namespace OkapiKit
         {
             // Compute length
             linearLength = 0.0f;
-            for (int i = 0; i < points.Count - ((closed)?(0):(1)); i++)
+            if ((points != null) && (points.Count > 1))
             {
-                linearLength += Vector3.Distance(points[i], points[(i + 1) % points.Count]);
-            }
-
-            // Compute generic values for circle, arc and polygon
-            if (points.Count >= 2)
-            {
-                primaryRadius = Vector3.Distance(points[0], points[1]);
-                primaryDir = (points[1] - points[0]).normalized;
-                perpDir = new Vector2(primaryDir.y, -primaryDir.x);
-                perpRadius = primaryRadius;
-                if (points.Count >= 3)
+                for (int i = 0; i < points.Count - ((closed) ? (0) : (1)); i++)
                 {
-                    secondaryDir = points[2] - points[0];
-                    if (Vector2.Dot(perpDir, secondaryDir) < 0) perpDir = -perpDir;
-                    perpRadius = Vector2.Dot(perpDir, secondaryDir);
+                    linearLength += Vector3.Distance(points[i], points[(i + 1) % points.Count]);
+                }
 
-                    secondaryRadius = secondaryDir.magnitude;
-                    secondaryDir /= secondaryRadius;
+                // Compute generic values for circle, arc and polygon
+                if (points.Count >= 2)
+                {
+                    primaryRadius = Vector3.Distance(points[0], points[1]);
+                    primaryDir = (points[1] - points[0]).normalized;
+                    perpDir = new Vector2(primaryDir.y, -primaryDir.x);
+                    perpRadius = primaryRadius;
+                    if (points.Count >= 3)
+                    {
+                        secondaryDir = points[2] - points[0];
+                        if (Vector2.Dot(perpDir, secondaryDir) < 0) perpDir = -perpDir;
+                        perpRadius = Vector2.Dot(perpDir, secondaryDir);
 
-                    startAngle = Mathf.Atan2(primaryDir.y, primaryDir.x);
-                    endAngle = Mathf.Atan2(secondaryDir.y, secondaryDir.x);
+                        secondaryRadius = secondaryDir.magnitude;
+                        secondaryDir /= secondaryRadius;
 
-                    if (endAngle < startAngle) endAngle += Mathf.PI * 2.0f;
+                        startAngle = Mathf.Atan2(primaryDir.y, primaryDir.x);
+                        endAngle = Mathf.Atan2(secondaryDir.y, secondaryDir.x);
+
+                        if (endAngle < startAngle) endAngle += Mathf.PI * 2.0f;
+                    }
                 }
             }
         }

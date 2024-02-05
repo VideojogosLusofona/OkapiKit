@@ -8,8 +8,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Action/Change Sprite Renderer")]
     public class ActionChangeSpriteRenderer : Action
     {
-        public enum ChangeType { Sprite = 0, Color = 1 };
-        public enum StateChange { Enable = 0, Disable = 1, Toggle = 2 };
+        public enum ChangeType { Sprite = 0, Color = 1, FlipX = 2, FlipY = 3};
 
         [SerializeField]
         private SpriteRenderer target;
@@ -19,6 +18,8 @@ namespace OkapiKit
         private Sprite sprite;
         [SerializeField]
         private Color color = Color.white;
+        [SerializeField]
+        private bool boolState;
 
         public override void Execute()
         {
@@ -36,6 +37,12 @@ namespace OkapiKit
                     break;
                 case ChangeType.Color:
                     sr.color = color;
+                    break;
+                case ChangeType.FlipX:
+                    sr.flipX = boolState;
+                    break;
+                case ChangeType.FlipY:
+                    sr.flipY = boolState;
                     break;
                 default:
                     break;
@@ -58,6 +65,12 @@ namespace OkapiKit
                     break;
                 case ChangeType.Color:
                     desc += $"sets {targetName}'s sprite color to {color}";
+                    break;
+                case ChangeType.FlipX:
+                    desc += $"sets {targetName}'s horizontal flip to {boolState}";
+                    break;
+                case ChangeType.FlipY:
+                    desc += $"sets {targetName}'s vertical flip to {boolState}";
                     break;
             }
 

@@ -28,14 +28,6 @@ namespace OkapiKit.Editor
             }
         }
 
-        public void OnSceneGUI()
-        {
-            var ho = target as HypertaggedObject;
-
-            string tagText = ho.GetTagString();
-            Handles.Label(ho.transform.position, tagText);
-        }
-
         protected void StdEditor(bool useOriginalEditor = true)
         {
             EditorGUI.BeginChangeCheck();

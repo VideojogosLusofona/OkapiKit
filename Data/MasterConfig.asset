@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxPingTime: 4
   displayConditions: 1
-  displayHypertags: 1
+  displayHypertags: 0

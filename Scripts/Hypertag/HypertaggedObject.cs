@@ -3,12 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.Events;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace OkapiKit
 {
     [DisallowMultipleComponent, AddComponentMenu("Okapi/Hypertag")]
     public class HypertaggedObject : OkapiElement
     {
+        static private Dictionary<Hypertag, List<HypertaggedObject>> hypertaggedObjects = new Dictionary<Hypertag, List<HypertaggedObject>>();
+
+        static void AddObject(HypertaggedObject obj)
+        {
+            foreach (var t in obj.hypertags)
+            {
+                hypertaggedObjects.TryGetValue(t, out var list);
+                if (list == null)
+                {
+                    list = new List<HypertaggedObject>();
+                    hypertaggedObjects.Add(t, list);
+                }
+
+                list.Add(obj);
+            }
+        }
+
+        static void RemoveObject(HypertaggedObject obj)
+        {
+            foreach (var t in obj.hypertags)
+            {
+                hypertaggedObjects[t].Remove(obj);
+            }
+        }
+
+        private void OnEnable()
+        {
+            AddObject(this);
+        }
+
+        private void OnDisable()
+        {
+            RemoveObject(this);
+        }
+
+        void OnDestroy()
+        {
+            RemoveObject(this);
+        }
+
         [SerializeField]
         private List<Hypertag> hypertags;
 
@@ -54,8 +95,6 @@ namespace OkapiKit
             }
         }
 
-
-
         public bool Has(Hypertag tag)
         {
             if (hypertags == null) return false;
@@ -87,12 +126,12 @@ namespace OkapiKit
         {
             List<GameObject> ret = new List<GameObject>();
 
-            var objs = FindObjectsOfType<HypertaggedObject>();
-            foreach (var obj in objs)
+            foreach (var t in tags)
             {
-                if (obj.Has(tags))
+                hypertaggedObjects.TryGetValue(t, out var list);
+                if (list != null)
                 {
-                    ret.Add(obj.gameObject);
+                    foreach (var ho in list) ret.Add(ho.gameObject);
                 }
             }
 
@@ -103,13 +142,10 @@ namespace OkapiKit
         {
             List<GameObject> ret = new List<GameObject>();
 
-            var objs = FindObjectsOfType<HypertaggedObject>();
-            foreach (var obj in objs)
+            hypertaggedObjects.TryGetValue(tag, out var list);
+            if (list != null)
             {
-                if (obj.Has(tag))
-                {
-                    ret.Add(obj.gameObject);
-                }
+                foreach (var ho in list) ret.Add(ho.gameObject);
             }
 
             return ret;
@@ -117,16 +153,152 @@ namespace OkapiKit
 
         public static GameObject FindGameObjectWithHypertag(Hypertag tag)
         {
-            var objs = FindObjectsOfType<HypertaggedObject>();
-            foreach (var obj in objs)
+            hypertaggedObjects.TryGetValue(tag, out var list);
+            if (list != null)
             {
-                if (obj.Has(tag))
+                foreach (var ho in list) return ho.gameObject;
+            }
+
+            return null;
+        }
+
+        public static T FindObjectByHypertag<T>(Hypertag tag) where T : Component
+        {
+            List<HypertaggedObject> hos;
+            if (hypertaggedObjects.TryGetValue(tag, out hos))
+            {
+                foreach (HypertaggedObject ho in hos)
                 {
-                    return obj.gameObject;
+                    var c = ho.GetComponent<T>();
+                    if (c) return c;
+                }
+            }
+
+            return default(T);
+        }
+
+        public static T FindObjectByHypertag<T>(Hypertag[] tags) where T : Component
+        {
+            foreach (var tag in tags)
+            {
+                if (hypertaggedObjects.TryGetValue(tag, out var hos))
+                {
+                    foreach (HypertaggedObject ho in hos)
+                    {
+                        var c = ho.GetComponent<T>();
+                        if (c) return c;
+                    }
+                }
+            }
+
+            return default(T);
+        }
+
+        public static List<T> FindObjectsByHypertag<T>(Hypertag tag) where T : Component
+        {
+            List<T> ret = new List<T>();
+
+            return FindObjectsByHypertag<T>(tag, ret);
+        }
+
+        public static List<T> FindObjectsByHypertag<T>(Hypertag[] tags) where T : Component
+        {
+            List<T> ret = new List<T>();
+
+            return FindObjectsByHypertag<T>(tags, ret);
+        }
+
+        public static List<T> FindObjectsByHypertag<T>(Hypertag tag, List<T> ret) where T : Component
+        {
+            hypertaggedObjects.TryGetValue(tag, out var list);
+            if (list != null)
+            {
+                foreach (var ho in list)
+                {
+                    var comp = ho.GetComponent<T>();
+                    if (comp) ret.Add(comp);
+                }
+            }
+
+            return ret;
+        }
+
+        public static List<T> FindObjectsByHypertag<T>(Hypertag[] tags, List<T> ret) where T : Component
+        {
+            foreach (var tag in tags)
+            {
+                hypertaggedObjects.TryGetValue(tag, out var list);
+                if (list != null)
+                {
+                    foreach (var ho in list)
+                    {
+                        var comp = ho.GetComponent<T>();
+                        if (comp) ret.Add(comp);
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public static List<HypertaggedObject> GetAll()
+        {
+            var ret = new List<HypertaggedObject>();
+            
+            foreach (var hol in hypertaggedObjects)
+            {
+                ret.AddRange(hol.Value);
+            }
+
+            return ret;
+        }
+
+        public static HypertaggedObject GetObjectByTag(Hypertag tag)
+        {
+            if (hypertaggedObjects.TryGetValue(tag, out var hos))
+            {
+                if (hos.Count > 0) return hos[0];
+            }
+
+            return null;
+        }
+
+        public static List<HypertaggedObject> GetObjectsByTag(Hypertag tag)
+        {
+            if (hypertaggedObjects.TryGetValue(tag, out var hos))
+            {
+                return new List<HypertaggedObject>(hos);
+            }
+
+            return null;
+        }
+
+        public static HypertaggedObject GetObjectByTag(Hypertag[] tags)
+        {
+            foreach (var tag in tags)
+            {
+                if (hypertaggedObjects.TryGetValue(tag, out var hos))
+                {
+                    if (hos.Count > 0) return hos[0];
                 }
             }
 
             return null;
+        }
+
+        public static List<HypertaggedObject> GetObjectsByTag(Hypertag[] tags)
+        {
+            var ret = new List<HypertaggedObject>();
+
+            foreach (var tag in tags)
+            {
+                if (hypertaggedObjects.TryGetValue(tag, out var hos))
+                {
+                    ret.AddRange(hos);
+                }
+            }
+
+            return ret;
         }
 
         public override string GetRawDescription(string ident, GameObject refObject)

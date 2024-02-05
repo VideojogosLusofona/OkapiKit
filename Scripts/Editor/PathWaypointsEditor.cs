@@ -217,8 +217,11 @@ namespace OkapiKit.Editor
 
                             delta.Normalize();
 
-                            float r = Vector3.Dot(delta, (newPoints[2] - newPoints[1]));
-                            newPoints[2] = newPoints[0] + r * delta;
+                            if (newPoints.Count >= 3)
+                            {
+                                float r = Vector3.Dot(delta, (newPoints[2] - newPoints[1]));
+                                newPoints[2] = newPoints[0] + r * delta;
+                            }
                         }
                     }
                 }

@@ -12,10 +12,11 @@ namespace OkapiKit
         {
             None = 0, TagCount = 1,
             WorldPositionX = 2, WorldPositionY = 3, RelativePositionX = 4, RelativePositionY = 5,
+            VelocityX = 14, VelocityY = 15,
             AbsoluteVelocityX = 6, AbsoluteVelocityY = 7,
             Distance = 8, Angle = 9,
             Probe = 10, ProbeDistance = 11,
-            IsGrounded = 12, IsGliding = 13
+            IsGrounded = 12, IsGliding = 13,
         };
         [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5 };
         [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
@@ -86,12 +87,18 @@ namespace OkapiKit
                 case ValueType.RelativePositionY:
                     if (sourceTransform) return $"{sourceTransform.name}.ry";
                     return $"{gameObject.name}.ry";
-                case ValueType.AbsoluteVelocityX:
+                case ValueType.VelocityX:
                     if (rigidBody) return $"{rigidBody.name}.velocity.x";
                     return $"{gameObject.name}.velocity.x";
-                case ValueType.AbsoluteVelocityY:
+                case ValueType.VelocityY:
                     if (rigidBody) return $"{rigidBody.name}.velocity.y";
                     return $"{gameObject.name}.velocity.y";
+                case ValueType.AbsoluteVelocityX:
+                    if (rigidBody) return $"Abs({rigidBody.name}.velocity.x)";
+                    return $"Abs({gameObject.name}.velocity.x)";
+                case ValueType.AbsoluteVelocityY:
+                    if (rigidBody) return $"Abs({rigidBody.name}.velocity.y)";
+                    return $"Abs({gameObject.name}.velocity.y)";
                 case ValueType.Distance:
                     if (tag != null) return $"DistanceTo(Tag[{tag.name}])";
                     else if (sourceTransform) return $"DistanceTo({sourceTransform.name})";
@@ -232,15 +239,27 @@ namespace OkapiKit
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.AbsoluteVelocityX:
+                        case Condition.ValueType.VelocityX:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
                             if (rb) currentValue = rb.velocity.x;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.AbsoluteVelocityY:
+                        case Condition.ValueType.VelocityY:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
                             if (rb) currentValue = rb.velocity.y;
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+                            break;
+                        case Condition.ValueType.AbsoluteVelocityX:
+                            rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
+                            if (rb) currentValue = Mathf.Abs(rb.velocity.x);
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+                            break;
+                        case Condition.ValueType.AbsoluteVelocityY:
+                            rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
+                            if (rb) currentValue = Mathf.Abs(rb.velocity.y);
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;

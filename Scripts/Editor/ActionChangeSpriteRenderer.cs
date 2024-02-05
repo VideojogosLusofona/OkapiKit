@@ -10,6 +10,7 @@ namespace OkapiKit.Editor
         SerializedProperty propChangeType;
         SerializedProperty propSprite;
         SerializedProperty propColor;
+        SerializedProperty propBoolState;
 
         protected override void OnEnable()
         {
@@ -19,6 +20,7 @@ namespace OkapiKit.Editor
             propChangeType = serializedObject.FindProperty("changeType");
             propSprite = serializedObject.FindProperty("sprite");
             propColor = serializedObject.FindProperty("color");
+            propBoolState = serializedObject.FindProperty("boolState");
         }
 
         public override void OnInspectorGUI()
@@ -43,6 +45,11 @@ namespace OkapiKit.Editor
                 if (propChangeType.enumValueIndex == (int)ActionChangeSpriteRenderer.ChangeType.Color)
                 {
                     EditorGUILayout.PropertyField(propColor, new GUIContent("Color", "What's the new color we want to set?"));
+                }
+                if ((propChangeType.enumValueIndex == (int)ActionChangeSpriteRenderer.ChangeType.FlipX) ||
+                    (propChangeType.enumValueIndex == (int)ActionChangeSpriteRenderer.ChangeType.FlipY))
+                {
+                    EditorGUILayout.PropertyField(propBoolState, new GUIContent("Flip?", "Should we flip this axis?"));
                 }
 
                 if (EditorGUI.EndChangeCheck())

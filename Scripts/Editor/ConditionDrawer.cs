@@ -106,8 +106,10 @@ namespace OkapiKit.Editor
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                             EditorGUI.PropertyField(transformRect, propTransform, GUIContent.none);
                         }
-                        else if ((propValueType.enumValueIndex >= (int)Condition.ValueType.AbsoluteVelocityX) &&
-                                 (propValueType.enumValueIndex <= (int)Condition.ValueType.AbsoluteVelocityY))
+                        else if ((valueType == Condition.ValueType.AbsoluteVelocityX) ||
+                                 (valueType == Condition.ValueType.AbsoluteVelocityY) ||
+                                 (valueType == Condition.ValueType.VelocityX) ||
+                                 (valueType == Condition.ValueType.VelocityY))
                         {
                             var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 2);
                             var rbRect = new Rect(positionValue, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
@@ -244,16 +246,18 @@ namespace OkapiKit.Editor
                     {
                         return baseHeight * 3;
                     }
-                    else if (systemVariable.enumValueIndex >= (int)Condition.ValueType.TagCount)
+                    else if (systemVariable.enumValueIndex == (int)Condition.ValueType.TagCount)
                     {
                         return baseHeight * 3;
                     }
-                    else if (systemVariable.enumValueIndex <= (int)Condition.ValueType.AbsoluteVelocityY)
+                    else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.AbsoluteVelocityX) ||
+                             (systemVariable.enumValueIndex == (int)Condition.ValueType.AbsoluteVelocityY) ||
+                             (systemVariable.enumValueIndex == (int)Condition.ValueType.VelocityX) ||
+                             (systemVariable.enumValueIndex == (int)Condition.ValueType.VelocityY))
                     {
                         return baseHeight * 2;
                     }
                     else if (systemVariable.enumValueIndex == (int)Condition.ValueType.Distance)
-
                     {
                         var tagVariable = property.FindPropertyRelative("tag");
                         var transformVariable = property.FindPropertyRelative("sourceTransform");
