@@ -4,6 +4,12 @@
 
 - Added special values to SetAnimationParameter action - velocity.x/y, with abs
 - Display spawn points on spawner, like we do on box areas or path
+- Fixed small issues with display of tags
+- Added initial delay on OnTimer trigger
+- Changed how objects with rigid body are moved beneath the hood (shouldn't see any differences)
+- Fixed bug with Absolute Velocity conditions, and added Velocity conditions
+- Added ability to change FlipX/Y on ChangeSpriteRenderer action
+- Some optimization of find by hypertag functions
 
 ## V1.10.1
 

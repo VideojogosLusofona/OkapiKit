@@ -27,13 +27,21 @@ namespace OkapiKit
         {
             if (rb != null)
             {
-                rb.MovePosition(rb.position + new Vector2(delta.x, delta.y));
+                rb.velocity = delta / Time.deltaTime;
             }
             else
             {
                 transform.position = transform.position + delta;
             }
             lastDelta = delta;
+        }
+
+        protected void StopMovement()
+        {
+            if (rb != null)
+            {
+                rb.velocity = Vector2.zero;
+            }
         }
 
         protected void RotateZ(float angle)

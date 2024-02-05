@@ -167,7 +167,11 @@ namespace OkapiKit
                         {
                             pathIndex = 0;
                         }
-                        else break;
+                        else
+                        {
+                            StopMovement();
+                            break;
+                        }
                     }
                     if (initialIndex == pathIndex)
                     {

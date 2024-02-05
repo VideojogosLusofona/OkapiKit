@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.TerrainTools;
 using UnityEditor;
 using UnityEngine;
+using UnityEditor.SceneManagement;
 
 namespace OkapiKit.Editor
 {
@@ -16,24 +17,27 @@ namespace OkapiKit.Editor
 
         private static void OnSceneGUI(SceneView sceneView)
         {
-            if (OkapiConfig.showTags)
+            if (PrefabStageUtility.GetCurrentPrefabStage() == null)
             {
-                // Get all tags
-                var hos = GameObject.FindObjectsByType<HypertaggedObject>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-                foreach (var h in hos)
+                if (OkapiConfig.showTags)
                 {
-                    var text = h.GetTagString();
-                    if (text != "")
+                    // Get all tags
+                    var hos = HypertaggedObject.GetAll();
+                    foreach (var h in hos)
                     {
-                        var pos = h.transform.position;
-
-                        var sr = h.GetComponent<SpriteRenderer>();
-                        if (sr)
+                        var text = h.GetTagString();
+                        if (text != "")
                         {
-                            pos = sr.bounds.center + sr.bounds.size.y * Vector3.up;
-                        }
+                            var pos = h.transform.position;
 
-                        Handles.Label(pos, text, GUIUtils.GetCenteredLabelStyle("#00FFFFFF", GUIUtils.GetColorTexture("BlackBackground", Color.black)));
+                            var rr = h.GetComponent<Renderer>();
+                            if (rr)
+                            {
+                                pos = rr.bounds.center + rr.bounds.extents.y * Vector3.up;
+                            }
+
+                            Handles.Label(pos, text, GUIUtils.GetCenteredLabelStyle("#00FFFFFF", GUIUtils.GetColorTexture("BlackBackground", Color.black)));
+                        }
                     }
                 }
             }

@@ -190,6 +190,10 @@ namespace OkapiKit
             {
                 MoveDelta(delta);
             }
+            else
+            {
+                StopMovement();
+            }
 
             if (rotateTowardsDirection)
             {

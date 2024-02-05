@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
+using UnityEngine.Windows;
 
 namespace OkapiKit
 {
@@ -10,7 +12,11 @@ namespace OkapiKit
     {
         [SerializeField]
         private bool startTriggered = false;
-        [SerializeField, MinMaxSlider(0.0f, 10.0f)]
+        [SerializeField]
+        private bool initialDelayEnable = false;
+        [SerializeField, MinMaxSlider(0.0f, 60.0f)]
+        private Vector2 initialDelay = new Vector2(5.0f, 5.0f);
+        [SerializeField, MinMaxSlider(0.0f, 60.0f)]
         private Vector2 timeInterval = new Vector2(5.0f, 5.0f);
 
         private float timer;
@@ -19,30 +25,55 @@ namespace OkapiKit
 
         public override string GetRawDescription(string ident, GameObject refObject)
         {
+            string text = "";
+
             if (timeInterval.x == timeInterval.y)
             {
                 if (allowRetrigger)
-                    return $"Every {timeInterval.x} seconds, trigger the actions:";
+                {
+                    text = $"Every {timeInterval.x} seconds, trigger the actions:";
+                }
                 else
-                    return $"After {timeInterval.x} seconds, trigger the actions:";
+                    text = $"After {timeInterval.x} seconds, trigger the actions:";
+            }
+            else
+            {
+                if (allowRetrigger)
+                    text = $"Every {timeInterval.x} to {timeInterval.y} seconds, trigger the actions:";
+                else
+                    text = $"After {timeInterval.x} to {timeInterval.y} seconds, trigger the actions:";
             }
 
-            if (allowRetrigger)
-                return $"Every {timeInterval.x} to {timeInterval.y} seconds, trigger the actions:";
-            else
-                return $"After {timeInterval.x} to {timeInterval.y} seconds, trigger the actions:";
+            if ((allowRetrigger) && (!startTriggered) && (initialDelayEnable))
+            {
+                text = char.ToLower(text[0]) + text.Substring(1);
+                if (initialDelay.x == initialDelay.y)
+                {
+                    text = $"Wait for {initialDelay.x} seconds, and then {text}";
+                }
+                else
+                {
+                    text = $"Wait for between {initialDelay.x} and {initialDelay.y} seconds, and then {text}";
+                }
+            }
+
+            return text;
         }
 
         void Start()
         {
+            timer = Random.Range(timeInterval.x, timeInterval.y);
             if (isTriggerEnabled)
             {
                 if (startTriggered)
                 {
                     ExecuteTrigger();
                 }
+                else if (initialDelayEnable)
+                {
+                    timer = Random.Range(initialDelay.x, initialDelay.y);
+                }
             }
-            timer = Random.Range(timeInterval.x, timeInterval.y);
         }
 
         // Update is called once per frame

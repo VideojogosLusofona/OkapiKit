@@ -137,7 +137,11 @@ namespace OkapiKit
                 }
                 if (spawnPath != null)
                 {
-                    if (spawnPointType == SpawnPointType.All) c = Mathf.FloorToInt(1.0f / spawnPathSpacing);
+                    if (spawnPointType == SpawnPointType.All)
+                    {
+                        c = Mathf.FloorToInt(1.0f / spawnPathSpacing);
+                        if (Mathf.Abs(1.0f - spawnPathSpacing * c) < 1e-6) c++;
+                    }
                 }
 
                 for (int i = 0; i < c; i++)
@@ -575,7 +579,7 @@ namespace OkapiKit
                 var path = GetComponent<Path>();
                 if (path)
                 {
-                    if (spawnPathSpacing > 0.0f)
+                    if ((spawnPathSpacing > 0.0f) && (path.GetEditPointsCount() > 1))
                     {
                         if ((spawnPointType == SpawnPointType.Sequence) ||
                             (spawnPointType == SpawnPointType.All))
@@ -602,7 +606,7 @@ namespace OkapiKit
                         }
                     }
                 }
-                else
+                else if (spawnPoints != null)
                 {
                     foreach (var pt in spawnPoints)
                     {
@@ -610,7 +614,7 @@ namespace OkapiKit
                         Gizmos.DrawWireSphere(pt.position, circleSize);
 
                         Gizmos.color = Color.green;
-                        DrawGizmoArrow(pt.position, pt.right, pt.up, arrowSize);
+                        DrawGizmoArrow(pt.position, pt.up, pt.right, arrowSize);
                     }
                 }
             }            
