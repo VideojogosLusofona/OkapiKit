@@ -1,14 +1,14 @@
 {
     "name": "com.videojogoslusofona.okapikit",
     "displayName": "OkapiKit",
-    "version": "1.11.0",
+    "version": "1.11.1",
     "unity": "2022.3",
     "description": "OkapiKit is a toolkit for creation of simple games without code.",
     "keywords": [ "kit" ],
     "category": "kit",
     "dependencies": {},
     "author": {
-      "name": "Diogo de Andrade - ULHT",
+      "name": "Videojogos ULHT",
       "url": "https://github.com/VideojogosLusofona"
     }
   }
