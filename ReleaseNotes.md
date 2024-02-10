@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.11.1
+
+- Added access function to closed property on Path
+- Fixed bug where spawn action uses prefab even when there's a spawner
+
 ## V1.11.0
 
 - Added special values to SetAnimationParameter action - velocity.x/y, with abs

@@ -14,6 +14,9 @@ Features:
 - Conditions that can have visual support and interfaces on scene view should be created
 - Add Network Object support to Okapi
 - Add target to ActionSetParent (need rename of variables)
+- Spawner with boxes should have options for direction
+- Spawner should have random direction possibility
+- Path shows direction (debug)
 - Probes:
   - Circle
   - Box
@@ -22,6 +25,8 @@ Features:
 
 Usability:
 ----------
+- Warning: when a button name is not defined (or doesn't exist, if possible)
+- Warning: destroy action should be the last
 - How to make simple actions more accessible? (see Simple Usage)
 - Add a tree view to explore objects in the games
   - Add triggers/actions directly in the objects
@@ -41,10 +46,14 @@ Videos:
 
 Bugs:
 -----
-- Collision detection fails because of using RigidBody2D.MovePosition() instead of actual physics
-- Preserve velocity with Movement
+- Preserve gravity with velocity set (?)
 - Tooltips don't work with Naughty Attributes range
   - Maybe make my own to be able to have tooltips, or propose a fix
+- Inertia on Movement_XY should only appear when Input control
+- There's a strange bug with bounding boxes spawner, need to check it out (Breno project)
+- Target tag on Shake should disappear when an object is set
+- Shake should be linked to target, not to action itself (can't destroy action after a shake)
+- Shake should return object to initial state (or have option for it)
 
 Polish:
 -------

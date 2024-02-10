@@ -29,7 +29,7 @@ namespace OkapiKit
         [SerializeField]
         private bool        onlyDisplayWhenSelected = true;
         [SerializeField]
-        private Color       displayColor = Color.white;
+        private Color       displayColor = Color.yellow;
 
         private bool isSmooth => type == Type.Smooth;
 
@@ -61,6 +61,8 @@ namespace OkapiKit
         public bool isEditMode => editMode;
         public bool isWorldSpace => worldSpace;
         public bool isLocalSpace => !worldSpace;
+
+        public bool isClosed => closed;
 
         protected override void Awake()
         {
