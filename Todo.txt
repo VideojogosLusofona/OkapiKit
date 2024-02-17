@@ -57,7 +57,6 @@ Bugs:
 - Blink doesn't check for lack of renderer
 - Blink doesn't say nothing on description about on/off duration
 - Limits should disappear on a variable when the limits are turned off
-- When there's only one scene, we can't select it properly on ChangeScene action
 
 Polish:
 -------

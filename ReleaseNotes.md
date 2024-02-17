@@ -6,7 +6,7 @@
 - Inertia on Movement_XY only appears when Input control is turned on
 - Disabled colliders can't be used as spawn points
 - SetParameter action is having issues detecting an animation parameter
-
+- Fixed bug with selecting scene name when only one scene exists on Change Scene action
 
 ## V1.11.1
 
