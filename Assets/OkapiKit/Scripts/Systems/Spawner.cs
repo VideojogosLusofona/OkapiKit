@@ -49,9 +49,9 @@ namespace OkapiKit
         private AlignAxis       spawnAlignmentAxis = AlignAxis.Right;
         [SerializeField, EnumFlags]
         private Modifiers modifiers = Modifiers.None;
-        [SerializeField, MinMaxSlider(0.0f, 2.0f)]
+        [SerializeField, MinMaxSlider(-10.0f, 10.0f)]
         private Vector2 scaleVariance = new Vector2(1.0f, 1.0f);
-        [SerializeField, MinMaxSlider(-2.0f, 2.0f)]
+        [SerializeField, MinMaxSlider(-10.0f, 10.0f)]
         private Vector2 speedVariance = new Vector2(1.0f, 1.0f);
         [SerializeField]
         private bool setParent = false;
