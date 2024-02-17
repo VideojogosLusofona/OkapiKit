@@ -91,17 +91,6 @@ namespace OkapiKit
             {
                 desc += $"Speed will be limited to {speedLimit} units per second.\n";
             }
-            if (inertiaEnable)
-            {
-                if (inertiaStopTime > 0)
-                {
-                    desc += $"Object will have inertia and will stop in {inertiaStopTime} seconds when at maximum speed.\n";
-                }
-                else
-                {
-                    desc += $"Object will have inertia, but will stop immediately.\n";
-                }
-            }
             if (useRotation)
             {
                 desc += "These directions will be relative to the current object orientation.\n";
@@ -116,6 +105,17 @@ namespace OkapiKit
             }
             if (inputEnabled)
             {
+                if (inertiaEnable)
+                {
+                    if (inertiaStopTime > 0)
+                    {
+                        desc += $"Object will have inertia and will stop in {inertiaStopTime} seconds when at maximum speed.\n";
+                    }
+                    else
+                    {
+                        desc += $"Object will have inertia, but will stop immediately.\n";
+                    }
+                }
                 if (inputType == InputType.Axis)
                 {
                     if ((horizontalAxis != "") && (horizontalAxis != "None"))
@@ -177,7 +177,7 @@ namespace OkapiKit
                 }
             }
 
-            if (inertiaEnable)
+            if ((inertiaEnable) && (inputEnabled))
             {
                 if (inertiaStopTime > 0)
                 {
