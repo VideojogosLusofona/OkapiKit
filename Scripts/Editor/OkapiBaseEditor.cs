@@ -48,7 +48,8 @@ namespace OkapiKit.Editor
         protected virtual bool WriteTitle()
         {
             var okapiElement = target as OkapiElement;
-            if (okapiElement == null) 
+            var okapiScriptableObject = target as OkapiScriptableObject;
+            if ((okapiElement == null) && (okapiScriptableObject == null))
             {
                 return false;
             }
@@ -113,23 +114,33 @@ namespace OkapiKit.Editor
                 refreshExplanation = true;
                 showInfo = !showInfo;
 
-                Event e = Event.current;
-                if (e.shift)
+                if (okapiElement)
                 {
-                    // Affect all the triggers in this object
-                    var allOkapi = (target as Component).GetComponents<OkapiElement>();
-                    foreach (var t in allOkapi)
+                    Event e = Event.current;
+                    if (e.shift)
                     {
-                        t.showInfo = showInfo;
-                        t.UpdateExplanation();
+                        // Affect all the triggers in this object
+                        var allOkapi = (target as Component).GetComponents<OkapiElement>();
+                        foreach (var t in allOkapi)
+                        {
+                            t.showInfo = showInfo;
+                            t.UpdateExplanation();
+                        }
                     }
                 }
 
                 serializedObject.ApplyModifiedProperties();
             }
-            if (refreshExplanation)
+            if (refreshExplanation) 
             {
-                propExplanation.stringValue = okapiElement.UpdateExplanation();
+                if (okapiElement)
+                {
+                    propExplanation.stringValue = okapiElement.UpdateExplanation();
+                }
+                else if (okapiScriptableObject)
+                {
+                    propExplanation.stringValue = okapiScriptableObject.UpdateExplanation();
+                }
                 serializedObject.ApplyModifiedProperties();
             }
 
@@ -141,8 +152,9 @@ namespace OkapiKit.Editor
         protected void DisplayLogs()
         {
             var okapiElement = target as OkapiElement;
+            var okapiScriptableElement = target as OkapiScriptableObject;
 
-            var logs = okapiElement.logs;
+            var logs = (okapiElement) ? (okapiElement.logs) : (okapiScriptableElement.logs);
             if (logs.Count > 0)
             {
                 var rect = EditorGUILayout.BeginVertical("box");
