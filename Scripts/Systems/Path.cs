@@ -536,6 +536,7 @@ namespace OkapiKit
             return _explanation;
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (onlyDisplayWhenSelected) return;
@@ -553,6 +554,7 @@ namespace OkapiKit
                 Handles.DrawLine(renderPoints[i - 1], renderPoints[i], 1.0f);
             }
         }
+#endif
 
         private void ComputeVariables()
         {

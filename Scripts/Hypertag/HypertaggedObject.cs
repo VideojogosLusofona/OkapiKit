@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.Events;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace OkapiKit
 {
