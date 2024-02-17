@@ -8,6 +8,9 @@
 - SetParameter action is having issues detecting an animation parameter
 - Fixed bug with selecting scene name when only one scene exists on Change Scene action
 - Custom inspector for variables
+- Custom inspector for hypertags
+- Scale/Speed variance on spawner with more generous limits
+- Blink now refers what the on/off duration do
 
 ## V1.11.1
 
