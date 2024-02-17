@@ -15,6 +15,7 @@
 - Target tag on Shake now disappears when an object is set
 - Shake is now linked to target (through a Shaker behaviour), not to action itself - now we can destroy the object with the action when it's triggered
 - Shake returns object to initial state
+- Added warning when a button name is not defined (or doesn't exist)
 
 ## V1.11.1
 

@@ -27,8 +27,8 @@ Features:
 
 Usability:
 ----------
-- Warning: when a button name is not defined (or doesn't exist, if possible)
 - Warning: destroy action should be the last
+- Warning: actions are not sorted properly (delays)
 - How to make simple actions more accessible? (see Simple Usage)
 - Add a tree view to explore objects in the games
   - Add triggers/actions directly in the objects

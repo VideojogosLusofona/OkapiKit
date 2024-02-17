@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System.IO;
+using System;
 
 namespace OkapiKit
 {
@@ -162,6 +163,25 @@ namespace OkapiKit
         protected override void CheckErrors()
         {
             base.CheckErrors();
+
+            if (mode == RotateMode.InputSet)
+            {
+                if (inputType == InputType.Button)
+                {
+                    CheckButton("Positive X rotation button", rotationButtonPositiveX);
+                    CheckButton("Negative X rotation button", rotationButtonNegativeX);
+                    CheckButton("Positive Y rotation button", rotationButtonPositiveY);
+                    CheckButton("Negative Y rotation button", rotationButtonNegativeY);
+                }
+            }
+            else if (mode == RotateMode.InputDelta)
+            {
+                if (inputType == InputType.Button)
+                {
+                    CheckButton("Positive rotation button", rotationButtonPositive);
+                    CheckButton("Negative rotation button", rotationButtonNegative);
+                }
+            }
 
             if (mode == RotateMode.Target)
             {
