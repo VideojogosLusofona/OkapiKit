@@ -104,7 +104,6 @@ namespace OkapiKit
             _explanation += GetRawDescription("", this);
 
             return _explanation;
-
         }
 
     }
