@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace OkapiKit.Editor
 {
@@ -27,12 +28,12 @@ namespace OkapiKit.Editor
                 if (action == null) return;
 
                 EditorGUI.BeginChangeCheck();
+                string prevSceneName = propSceneName.stringValue;
                 EditorGUILayout.PropertyField(propSceneName, new GUIContent("Scene", "Selects the next scene to be loaded."));
-
-                if (EditorGUI.EndChangeCheck())
+                if ((propSceneName.stringValue != prevSceneName) || (EditorGUI.EndChangeCheck()))
                 {
                     serializedObject.ApplyModifiedProperties();
-                    (target as Action).UpdateExplanation();
+                    action.UpdateExplanation();
                 }
             }
         }
