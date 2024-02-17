@@ -4,6 +4,8 @@
 
 - Can now build games made with Okapi Kit
 - Inertia on Movement_XY only appears when Input control is turned on
+- Disabled colliders can't be used as spawn points
+- SetParameter action is having issues detecting an animation parameter
 
 
 ## V1.11.1
