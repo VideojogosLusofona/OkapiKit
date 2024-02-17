@@ -23,6 +23,64 @@ namespace OkapiKit
 
         public override string GetActionTitle() { return "Destroy Object"; }
 
+        public bool WillDestroyThis(GameObject otherGameObject)
+        {
+            switch (target)
+            {
+                case Target.Self:
+                    if (otherGameObject == gameObject) return true;
+                    if (IsChild(gameObject, otherGameObject)) return true;
+                    break;
+                case Target.Parent:
+                    if (transform.parent != null)
+                    {
+                        if (otherGameObject == transform.parent.gameObject) return true;
+                        if (IsChild(transform.parent.gameObject, otherGameObject)) return true;
+                    }
+                    break;
+                case Target.Topmost:
+                    if (otherGameObject == GetTopMost(gameObject)) return true;
+                    if (IsChild(GetTopMost(gameObject), otherGameObject)) return true;
+                    break;
+                case Target.Object:
+                    if (targetObject != null)
+                    {
+                        if (otherGameObject == targetObject) return true;
+                        if (IsChild(targetObject, otherGameObject)) return true;
+                    }
+                    else
+                    {
+                        if (otherGameObject == gameObject) return true;
+                        if (IsChild(gameObject, otherGameObject)) return true;
+                    }
+                    break;
+            }
+
+            return false;
+        }
+
+        static bool IsChild(GameObject baseObject, GameObject otherGameObject)
+        {            
+            for (int i = 0; i < baseObject.transform.childCount; i++)
+            {
+                var childTransform = baseObject.transform.GetChild(i);
+                if (childTransform.gameObject == otherGameObject) return true;
+                if (IsChild(childTransform.gameObject, otherGameObject)) return true;
+            }
+
+            return false;
+        }
+
+        static GameObject GetTopMost(GameObject baseObject)
+        {
+            Transform o = baseObject.transform;
+            while (o.parent != null)
+            {
+                o = o.parent;
+            }
+            return o.gameObject;
+        }
+
         public override string GetRawDescription(string ident, GameObject gameObject)
         {
             string desc = GetPreconditionsString(gameObject);
@@ -77,9 +135,16 @@ namespace OkapiKit
         {
             base.CheckErrors();
 
-            if ((target == Target.Object) && (targetObject == null))
+            if (target == Target.Object)
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Undefined target object - this will destroy this object - consider using Self as target!", "It's always better to explicitly set properties, instead of letting the system guess what we want!"));
+                if (targetObject == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "Undefined target object - this will destroy this object - consider using Self as target!", "It's always better to explicitly set properties, instead of letting the system guess what we want!"));
+                }
+                else if (targetObject == gameObject)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "You selected this object as target - consider using Self as target!", "Self represents the object that contains this action, so you can use that instead of using the reference to him"));
+                }
             }
             if (target == Target.Tag)
             {
@@ -114,12 +179,8 @@ namespace OkapiKit
                     break;
                 case Target.Topmost:
                     {
-                        Transform o = gameObject.transform;
-                        while (o.parent != null)
-                        {
-                            o = o.parent;
-                        }
-                        Destroy(o.gameObject);
+                        GameObject topMost = GetTopMost(gameObject);
+                        Destroy(topMost);
                     }
                     break;
                 case Target.Parent:
