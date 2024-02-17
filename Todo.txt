@@ -51,7 +51,6 @@ Bugs:
 - Preserve gravity with velocity set (?)
 - Tooltips don't work with Naughty Attributes range
   - Maybe make my own to be able to have tooltips, or propose a fix
-- Inertia on Movement_XY should only appear when Input control
 - There's a strange bug with bounding boxes spawner, need to check it out (Breno project)
 - Target tag on Shake should disappear when an object is set
 - Shake should be linked to target, not to action itself (can't destroy action after a shake)

@@ -83,15 +83,15 @@ namespace OkapiKit.Editor
                     }
                 }
 
-                EditorGUILayout.PropertyField(propInertiaEnable, new GUIContent("Use Inertia?", "If true, the object will have inertia and take a bit to stop completely when input is released."));
-                if (propInertiaEnable.boolValue)
-                {
-                    EditorGUILayout.PropertyField(propInertiaStopTime, new GUIContent("Stop Time", "How long does the object take stopping?"));
-                }
-
                 EditorGUILayout.PropertyField(propInputEnabled, new GUIContent("Use Input?", "Is the object controlled by the player?"));
                 if (propInputEnabled.boolValue)
                 {
+                    EditorGUILayout.PropertyField(propInertiaEnable, new GUIContent("Use Inertia?", "If true, the object will have inertia and take a bit to stop completely when input is released."));
+                    if (propInertiaEnable.boolValue)
+                    {
+                        EditorGUILayout.PropertyField(propInertiaStopTime, new GUIContent("Stop Time", "How long does the object take stopping?"));
+                    }
+
                     EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type", "What's the input type?\nAxis: Use two axis to move\nButton: Use four keys to move\nKey: Use four keys to move"));
 
                     var inputType = (MovementXY.InputType)propInputType.enumValueIndex;

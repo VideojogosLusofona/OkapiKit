@@ -3,6 +3,7 @@
 ## V1.11.2
 
 - Can now build games made with Okapi Kit
+- Inertia on Movement_XY only appears when Input control is turned on
 
 
 ## V1.11.1
