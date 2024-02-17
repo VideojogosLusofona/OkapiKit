@@ -85,9 +85,16 @@ namespace OkapiKit
             }
             else
             {
-                int index = 0;
+                int     index = 0;
+                float   lastDelay = -float.MaxValue;
                 foreach (var action in actions)
                 {
+                    if (lastDelay > action.delay)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Warning, $"Action {index} does not happen after the action that comes before in the list!", "Although the system works properly as is, you should place the actions in the right order, by delay time"));
+                    }
+                    lastDelay = action.delay;
+
                     if (action.action == null)
                     {
                         _logs.Add(new LogEntry(LogEntry.Type.Error, $"Action {index} in not defined on action list!", "Empty actions don't do anything, so either remove it or fill it in."));

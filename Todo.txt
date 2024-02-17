@@ -28,7 +28,6 @@ Features:
 Usability:
 ----------
 
-- Warning: actions are not sorted properly (delays)
 - How to make simple actions more accessible? (see Simple Usage)
 - Add a tree view to explore objects in the games
   - Add triggers/actions directly in the objects

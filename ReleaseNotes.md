@@ -17,6 +17,7 @@
 - Shake returns object to initial state
 - Added warning when a button name is not defined (or doesn't exist)
 - Added warning when destroy action is not the last action in the list
+- Added warning when actions are not sorted properly
 
 ## V1.11.1
 
