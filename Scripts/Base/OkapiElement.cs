@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,6 +64,25 @@ namespace OkapiKit
             else ret = "[UNDEFINED]";
 
             return ret;
+        }
+
+        protected void CheckButton(string textName, string buttonName)
+        {
+            if (buttonName == "")
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, $"{textName} is not defined!", "We need to define a button name to be able to use it."));
+            }
+            else
+            {
+                try
+                {
+                    Input.GetButton(buttonName);
+                }
+                catch (Exception)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, $"{textName} {buttonName} is not defined!", $"We need to define a {buttonName} on Edit/Project Settings/Input to be able to use it."));
+                }
+            }
         }
     }
 }

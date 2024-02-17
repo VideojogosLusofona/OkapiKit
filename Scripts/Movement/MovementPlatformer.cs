@@ -4,6 +4,8 @@ using UnityEngine;
 using NaughtyAttributes;
 using static OkapiKit.MovementRotate;
 using UnityEngine.UIElements;
+using static OkapiKit.MovementPlatformer;
+using System;
 
 namespace OkapiKit
 {
@@ -327,6 +329,11 @@ namespace OkapiKit
         {
             base.CheckErrors();
 
+            if (horizontalInputType == InputType.Button)
+            {
+                CheckButton("Horizontal negative button", horizontalButtonNegative);
+                CheckButton("Horizontal positive button", horizontalButtonPositive);
+            }
             if (groundCheckCollider == null)
             {
                 _logs.Add(new LogEntry(LogEntry.Type.Error, "Ground check collider is necessary to see where the ground is!", $"Platformers depend on knowing if the character is on the ground, to know if it can jump, etc. For that, we need to use a trigger collider that we reference.\nWhen some objects that belong to the layer {GetLayerString(groundLayerMask)} are inside the defined collider, the character is set as being on the ground"));
@@ -353,6 +360,10 @@ namespace OkapiKit
             if ((groundCollider != null) && (airCollider == null))
             {
                 _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to define air collider (collider used when character is not on the ground)!", "Objects can have different colliders while in the air and on the ground.\nFor example, it's common to have a box collider while in the air, while having a capsule collider on the ground (better to go up ramps, for example).\nIf we want this behaviour, we need to set the air and ground colliders."));
+            }
+            if (jumpInputType == InputType.Button)
+            {
+                CheckButton("Jump button", jumpButton);
             }
             if (useAnimator)
             {

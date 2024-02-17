@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using static OkapiKit.MovementRotate;
 
 namespace OkapiKit
 {
@@ -151,6 +152,22 @@ namespace OkapiKit
                 }
             }
             return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (inputEnabled)
+            {
+                if (inputType == InputType.Button)
+                {
+                    CheckButton("Positive horizontal button", horizontalButtonNegative);
+                    CheckButton("Negative horizontal button", horizontalButtonPositive);
+                    CheckButton("Positive vertical button", verticalButtonNegative);
+                    CheckButton("Negative vertical button", verticalButtonPositive);
+                }
+            }
         }
 
         void FixedUpdate()

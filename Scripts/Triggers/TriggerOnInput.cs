@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using System;
 
 namespace OkapiKit
 {
@@ -172,6 +173,10 @@ namespace OkapiKit
                     }
                     index++;
                 }
+            }
+            if (inputType == InputType.Button)
+            {
+                CheckButton("Button", buttonName);
             }
         }
 
