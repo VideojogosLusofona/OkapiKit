@@ -173,7 +173,7 @@ namespace OkapiKit
                 }
             }
 
-            if (anm) 
+            if ((anm) && (anm.isActiveAndEnabled))
             {
                 if (anm.runtimeAnimatorController == null)
                 {
