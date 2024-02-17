@@ -11,6 +11,10 @@
 - Custom inspector for hypertags
 - Scale/Speed variance on spawner with more generous limits
 - Blink now refers what the on/off duration do
+- Blink throws warning with lack of renderer
+- Target tag on Shake now disappears when an object is set
+- Shake is now linked to target (through a Shaker behaviour), not to action itself - now we can destroy the object with the action when it's triggered
+- Shake returns object to initial state
 
 ## V1.11.1
 

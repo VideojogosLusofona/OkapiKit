@@ -12,18 +12,12 @@ namespace OkapiKit
         [SerializeField] private float strength = 10;
         [SerializeField] private float duration = 0.5f;
 
-        Vector3 prevDelta;
-        float timer;
-        Transform target;
-
         public override void Execute()
         {
             if (!enableAction) return;
             if (!EvaluatePreconditions()) return;
 
-            timer = duration;
-
-            target = null;
+            Transform target = null;
             if (targetObject)
             {
                 target = targetObject;
@@ -41,6 +35,15 @@ namespace OkapiKit
                         target = obj;
                     }
                 }
+            }
+            if (target)
+            {
+                var shaker = target.GetComponent<Shaker>();
+                if (shaker == null)
+                {
+                    shaker = target.gameObject.AddComponent<Shaker>();
+                }
+                shaker.Run(duration, strength);
             }
         }
 
@@ -86,37 +89,6 @@ namespace OkapiKit
             {
                 _logs.Add(new LogEntry(LogEntry.Type.Error, "Shake duration is less or equal to zero, object will not shake!", "Duration is for how long (in seconds) the shake will happen. A duration of zero means the object will not shake at all."));
             }
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            prevDelta = Vector3.zero;
-            timer = 0;
-            target = null;
-        }
-
-        void LateUpdate()
-        {
-            if (target == null)
-            {
-                target = transform;
-            }
-
-            // Revert previous movement
-            target.position -= prevDelta;
-
-            if (timer > 0.0f)
-            {
-                timer -= Time.deltaTime;
-
-                prevDelta = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0.0f);
-                prevDelta = prevDelta.normalized * strength;
-
-                target.position += prevDelta;
-            }
-            else prevDelta = Vector2.zero;
         }
     }
 }

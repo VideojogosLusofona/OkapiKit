@@ -51,10 +51,6 @@ Bugs:
 - Preserve gravity with velocity set (?)
 - Tooltips don't work with Naughty Attributes range
   - Maybe make my own to be able to have tooltips, or propose a fix
-- Target tag on Shake should disappear when an object is set
-- Shake should be linked to target, not to action itself (can't destroy action after a shake)
-- Shake should return object to initial state (or have option for it)
-- Blink doesn't check for lack of renderer
 
 Polish:
 -------

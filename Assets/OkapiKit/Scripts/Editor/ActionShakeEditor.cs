@@ -35,7 +35,7 @@ namespace OkapiKit.Editor
                 EditorGUI.BeginChangeCheck();
                 if (propTargetTag.objectReferenceValue == null)
                 {
-                    if (propTargetTag.objectReferenceValue == null)
+                    if (propTargetObject.objectReferenceValue == null)
                     {
                         EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "An object with this tag will be the target.\nYou can set either a tag or a target object, but not both at the same time."));
                         EditorGUILayout.PropertyField(propTargetObject, new GUIContent("Target Object", "What's the target object?\nYou can set either a tag or a target object, but not both at the same time."));
