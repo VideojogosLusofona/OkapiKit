@@ -13,8 +13,10 @@ namespace OkapiKit
         private float       strength;
         private RunType     runType = RunType.LateUpdate;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             prevDelta = Vector3.zero;
         }
 

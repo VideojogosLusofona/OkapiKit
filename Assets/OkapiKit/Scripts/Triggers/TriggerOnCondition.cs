@@ -95,6 +95,19 @@ namespace OkapiKit
                         {
                             _logs.Add(new LogEntry(log.type, $"On else action {index}: " + log.text, log.tooltip));
                         }
+
+                        var destroyObjectAction = action.action as ActionDestroyObject;
+                        if (destroyObjectAction != null)
+                        {
+                            if (destroyObjectAction.WillDestroyThis(gameObject))
+                            {
+                                // This is a destroy action
+                                if (index < actions.Length - 1)
+                                {
+                                    _logs.Add(new LogEntry(LogEntry.Type.Warning, $"Else action on index {index} is a Destroy Object action!", "Destroy actions should always be the last actions of the sequence of action, because they will destroyu the object and stop other actions after from being executed most of the times!"));
+                                }
+                            }
+                        }
                     }
                     index++;
                 }
