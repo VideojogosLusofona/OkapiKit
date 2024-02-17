@@ -6,7 +6,7 @@ using NaughtyAttributes;
 namespace OkapiKit
 {
     [CreateAssetMenu(menuName = "Okapi Kit/Variable")]
-    public class Variable : ScriptableObject
+    public class Variable : OkapiScriptableObject
     {
         public enum Type { Float, Integer };
 
@@ -19,9 +19,9 @@ namespace OkapiKit
         [SerializeField]
         private bool _hasLimits = true;
         [SerializeField]
-        private float _minValue = -float.MaxValue;
+        private float _minValue = 0;
         [SerializeField]
-        private float _maxValue = float.MaxValue;
+        private float _maxValue = 1000.0f;
 
         public float currentValue { get { return _currentValue; } }
         public float minValue { get { return _minValue; } }
@@ -73,5 +73,39 @@ namespace OkapiKit
 
             return currentValue.ToString();
         }
+
+        public override string GetRawDescription(string ident, ScriptableObject refObject)
+        {
+            string desc = "";
+
+            switch (_type)
+            {
+                case Type.Float:
+                case Type.Integer:
+                    desc += $"Defines a global variable of type float, with a default value {_defaultValue}.\n";
+                    desc += $"Currently it holds the value {_currentValue}.\n";
+                    if (hasLimits)
+                    {
+                        desc += $"It's limited between {_minValue} and {_maxValue}.";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return desc;
+        }
+
+        protected override string Internal_UpdateExplanation()
+        {
+            _explanation = "";
+            if (description != "") _explanation += description + "\n----------------\n";
+
+            _explanation += GetRawDescription("", this);
+
+            return _explanation;
+
+        }
+
     }
 }

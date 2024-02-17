@@ -56,7 +56,7 @@ Bugs:
 - Shake should return object to initial state (or have option for it)
 - Blink doesn't check for lack of renderer
 - Blink doesn't say nothing on description about on/off duration
-- Limits should disappear on a variable when the limits are turned off
+- Scale/Speed variance on spawner with more generous limits
 
 Polish:
 -------

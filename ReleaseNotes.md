@@ -7,6 +7,7 @@
 - Disabled colliders can't be used as spawn points
 - SetParameter action is having issues detecting an animation parameter
 - Fixed bug with selecting scene name when only one scene exists on Change Scene action
+- Limits no longer appear when they are turned off on a variable
 
 ## V1.11.1
 
