@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System.IO;
-using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

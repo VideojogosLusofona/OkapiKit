@@ -17,6 +17,8 @@ Features:
 - Spawner with boxes should have options for direction
 - Spawner should have random direction possibility
 - Path shows direction (debug)
+- Target can be collision object (being able to damage another object when there is a collision, for example)
+- Bool and string variables
 - Probes:
   - Circle
   - Box
@@ -54,6 +56,11 @@ Bugs:
 - Target tag on Shake should disappear when an object is set
 - Shake should be linked to target, not to action itself (can't destroy action after a shake)
 - Shake should return object to initial state (or have option for it)
+- Blink doesn't check for lack of renderer
+- Blink doesn't say nothing on description about on/off duration
+- Limits should disappear on a variable when the limits are turned off
+- When there's only one scene, we can't select it properly on ChangeScene action
+- SetParameter action is having issues detecting an animation parameter
 
 Polish:
 -------

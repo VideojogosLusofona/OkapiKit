@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.11.2
+
+- Can now build games made with Okapi Kit
+
+
 ## V1.11.1
 
 - Added access function to closed property on Path
