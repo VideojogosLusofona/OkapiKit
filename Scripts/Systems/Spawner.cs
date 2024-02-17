@@ -130,16 +130,27 @@ namespace OkapiKit
             if (prefab != null)
             {
                 int c = 1;
-                if ((spawnAreas == null) || (spawnAreas.Length == 0))
+                int nSpawnAreas = 0;
+                if (spawnAreas != null)
                 {
-                    if (spawnPointType == SpawnPointType.All) c = spawnPoints.Length;
-                }
-                if (spawnPath != null)
-                {
-                    if (spawnPointType == SpawnPointType.All)
+                    foreach (var spawnArea in spawnAreas)
                     {
-                        c = Mathf.FloorToInt(1.0f / spawnPathSpacing);
-                        if (Mathf.Abs(1.0f - spawnPathSpacing * c) < 1e-6) c++;
+                        if (spawnArea.enabled) nSpawnAreas++;
+                    }
+                }
+                if (nSpawnAreas > 0)
+                {
+                    if (spawnPointType == SpawnPointType.All) c = nSpawnAreas;
+                }
+                else
+                {
+                    if (spawnPath != null)
+                    {
+                        if (spawnPointType == SpawnPointType.All)
+                        {
+                            c = Mathf.FloorToInt(1.0f / spawnPathSpacing);
+                            if (Mathf.Abs(1.0f - spawnPathSpacing * c) < 1e-6) c++;
+                        }
                     }
                 }
 
@@ -147,10 +158,16 @@ namespace OkapiKit
                 {
                     Vector3 position = Vector3.zero;
                     Quaternion rotation = Quaternion.identity;
-                    if ((spawnAreas != null) && (spawnAreas.Length > 0))
+                    if (nSpawnAreas > 0)
                     {
-                        var ra = Random.Range(0, spawnAreas.Length);
-                        var spawnArea = spawnAreas[ra];
+                        var             ra = Random.Range(0, nSpawnAreas);
+                        BoxCollider2D   spawnArea = null;
+                        foreach (var collider in spawnAreas)
+                        {
+                            if (!collider.enabled) continue;
+                            if (ra == 0) { spawnArea = collider; break; }
+                            else ra--;
+                        }
 
                         float x = 0.5f * Random.Range(-spawnArea.size.x, spawnArea.size.x) + spawnArea.offset.x;
                         float y = 0.5f * Random.Range(-spawnArea.size.y, spawnArea.size.y) + spawnArea.offset.y;
@@ -312,11 +329,19 @@ namespace OkapiKit
                 _explanation += "There's currently no defined object to spawn.\n";
             }
             var colliders = GetComponents<BoxCollider2D>();
-            var path = GetComponent<Path>();
-            if ((colliders != null) && (colliders.Length > 0))
+            var nColliders = 0;
+            if (colliders != null)
             {
-                if (colliders.Length > 1)
-                    _explanation += $"These objects will spawn anywhere in the area defined by any of the {colliders.Length}\nBoxCollider2D attached to this object.\n";
+                foreach (var collider in colliders)
+                {
+                    if (collider.enabled) nColliders++;
+                }
+            }
+            var path = GetComponent<Path>();
+            if (nColliders > 0)
+            {
+                if (nColliders > 1)
+                    _explanation += $"These objects will spawn anywhere in the area defined by any of the {nColliders}\n active BoxCollider2D attached to this object.\n";
                 else
                     _explanation += $"These objects will spawn inside the BoxCollider2D attached to this object.\n";
             }
@@ -455,8 +480,16 @@ namespace OkapiKit
 #endif
 
             // Check if there's colliders
-            var collider = GetComponent<BoxCollider2D>();
-            if (collider == null)
+            var colliders = GetComponents<BoxCollider2D>();
+            var nColliders = 0;
+            if (colliders != null)
+            {
+                foreach (var collider in colliders)
+                {
+                    if (collider.enabled) nColliders++;
+                }
+            }
+            if (nColliders == 0)
             {
                 var path = GetComponent<Path>();
                 if (path != null)
@@ -536,10 +569,19 @@ namespace OkapiKit
             const float arrowSize = 10.0f;
 
             var spawnAreas = GetComponents<BoxCollider2D>();
-            if ((spawnAreas != null) && (spawnAreas.Length > 0))
+            var nColliders = 0;
+            if (spawnAreas != null)
             {
                 foreach (var collider in spawnAreas)
                 {
+                    if (collider.enabled) nColliders++;
+                }
+            }
+            if (nColliders > 0)
+            {
+                foreach (var collider in spawnAreas)
+                {
+                    if (!collider.enabled) continue;
                     Vector3 pA = collider.offset - collider.size * 0.5f;
 
                     var p1 = transform.transform.TransformPoint(pA);
