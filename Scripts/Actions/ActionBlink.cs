@@ -50,6 +50,7 @@ namespace OkapiKit
                 else
                     desc += $"blinks renderer {target.name} for {duration} seconds";
             }
+            desc += $"\nThe renderer will be on {blinkTimeOn} seconds, and then be turned off {blinkTimeOff} seconds, in a loop.";
 
             return desc;
         }
@@ -61,6 +62,13 @@ namespace OkapiKit
             if (GetTarget() == null)
             {
                 _logs.Add(new LogEntry(LogEntry.Type.Error, "No renderer available for blinking - place one in this object or in a child object", "Blinking is turning on/off a renderer, so for this to work, there has to be at least one renderer on this object, or reference a renderer."));
+            }
+            else
+            {
+                if (target == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "This blink will affect this renderer, but it should be explicitly linked!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
+                }
             }
         }
 
