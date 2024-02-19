@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.11.3
+
+- Fixed bug with coyote time enabling double jump
+
 ## V1.11.2
 
 - Can now build games made with Okapi Kit

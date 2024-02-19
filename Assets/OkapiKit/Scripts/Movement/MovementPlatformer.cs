@@ -547,6 +547,7 @@ namespace OkapiKit
         {
             rb.velocity = new Vector2(rb.velocity.x, speed.y);
             jumpBufferingTimer = 0.0f;
+            coyoteTimer = 0;
             jumpTime = Time.time;
             currentJumpCount--;
         }
@@ -693,6 +694,14 @@ namespace OkapiKit
                     actualIsGrounded = true;
                     isGrounded = true;
                     return;
+                }
+                else
+                {
+                    actualIsGrounded = false;
+                    if (rb.velocity.y > 0)
+                    {
+                        coyoteTimer = 0;
+                    }
                 }
             }
 
