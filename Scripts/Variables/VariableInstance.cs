@@ -33,8 +33,7 @@ namespace OkapiKit
 
         public void SetValue(float value)
         {
-            float delta = value - this.value.currentValue;
-            ChangeValue(value);
+            this.value.SetValue(value);
         }
 
         public void Reset()
@@ -47,10 +46,6 @@ namespace OkapiKit
 
         public void ChangeValue(float value)
         {
-            //Debug.Log($"Change value {name}: Old = {this.value.currentValue}, New = {this.value.currentValue + value}");
-
-            float prevValue = this.value.currentValue;
-
             this.value.ChangeValue(value);
         }
 
