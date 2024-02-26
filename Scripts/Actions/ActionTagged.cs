@@ -9,7 +9,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Action/Run Tagged Action")]
     public class ActionTagged : Action
     {
-        public enum SearchType { Global = 0, Tagged = 1, Children = 2, WithinCollider = 3 };
+        public enum SearchType { Global = 0, Tagged = 1, Children = 2, WithinCollider = 3, CollisionObject = 4 };
         public enum TriggerType { All = 0, Sequence = 1, Random = 2 };
 
         [SerializeField]
@@ -33,11 +33,11 @@ namespace OkapiKit
 
             if (searchType == SearchType.Global)
             {
-                desc = "find actions tagged with any of ["; ;
+                desc = "find actions tagged with any of [";
             }
             else if (searchType == SearchType.Children)
             {
-                desc = "find actions underneath this object tagged with any of ["; ;
+                desc = "find actions underneath this object tagged with any of [";
             }
             else if (searchType == SearchType.Tagged)
             {
@@ -86,6 +86,10 @@ namespace OkapiKit
                 {
                     desc += $"] inside any of the colliders defined and in them \nfind actions tagged with any of [";
                 }
+            }
+            else if (searchType == SearchType.CollisionObject)
+            {
+                desc = "find actions underneath the object with which this one collided, tagged with any of [";
             }
 
             if ((triggerTags != null) && (triggerTags.Length > 0))
@@ -190,7 +194,7 @@ namespace OkapiKit
             if (!enableAction) return;
             if (!EvaluatePreconditions()) return;
 
-            if ((targetActions == null) || (triggerType != TriggerType.Sequence))
+            if ((targetActions == null) || (triggerType != TriggerType.Sequence) || (searchType == SearchType.CollisionObject))
             {
                 RefreshActions();
             }
@@ -294,6 +298,18 @@ namespace OkapiKit
                             }
                         }
                     }
+                }
+            }
+            else if (searchType == SearchType.CollisionObject)
+            {
+                targetActions = new List<Action>();
+
+                var lastCollider = TriggerOnCollision.GetLastCollider();
+                if (lastCollider != null)
+                {
+                    targetActions = new List<Action>(lastCollider.GetComponentsInChildren<Action>());
+
+                    targetActions.RemoveAll((action) => !action.HasTag(triggerTags));
                 }
             }
             else
