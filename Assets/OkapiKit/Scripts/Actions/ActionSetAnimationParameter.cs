@@ -204,7 +204,7 @@ namespace OkapiKit
                                         else if (valueType == ValueType.Value)
                                         {
                                             if (variable) rightType = (variable.type == Variable.Type.Float);
-                                            else if (valueHandler) rightType = (valueHandler.type == Variable.Type.Float);
+                                            else if (valueHandler) rightType = (valueHandler.GetValueType() == Variable.Type.Float);
                                         }                                            
                                         break;
                                     case AnimatorControllerParameterType.Int:
@@ -215,7 +215,7 @@ namespace OkapiKit
                                         else if (valueType == ValueType.Value)
                                         {
                                             if (variable) rightType = (variable.type == Variable.Type.Integer);
-                                            else if (valueHandler) rightType = (valueHandler.type == Variable.Type.Integer);
+                                            else if (valueHandler) rightType = (valueHandler.GetValueType() == Variable.Type.Integer);
                                         }
                                         break;
                                     case AnimatorControllerParameterType.Bool:

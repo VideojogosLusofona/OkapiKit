@@ -57,7 +57,7 @@ namespace OkapiKit
             _currentValue = _defaultValue;
         }
 
-        public void SetProperties(Type type, float currentValue, float defaultValue, bool isInteger, bool hasLimits, float minValue, float maxValue)
+        public void SetProperties(Type type, float currentValue, float defaultValue, bool hasLimits, float minValue, float maxValue)
         {
             this._type = type;
             this._currentValue = currentValue;

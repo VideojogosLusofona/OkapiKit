@@ -122,7 +122,7 @@ namespace OkapiKit
         float GetCurrentValue()
         {
             float f = 0.0f;
-            if (valueHandler != null) f = valueHandler.currentValue;
+            if (valueHandler != null) f = valueHandler.GetValue();
             else if (variable != null) f = variable.currentValue;
 
             return f;
@@ -131,7 +131,7 @@ namespace OkapiKit
         float GetChangeValue()
         {
             float f = 0.0f;
-            if (changeValueHandler != null) f = changeValueHandler.currentValue;
+            if (changeValueHandler != null) f = changeValueHandler.GetValue();
             else if (changeVariable != null) f = changeVariable.currentValue;
             else f = changeValue;
 
