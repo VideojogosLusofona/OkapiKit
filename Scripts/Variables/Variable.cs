@@ -57,6 +57,13 @@ namespace OkapiKit
             _currentValue = _defaultValue;
         }
 
+        public object GetRawValue()
+        {
+            if (_type == Type.Float) return _currentValue;
+
+            return (int)_currentValue;
+        }
+
         public void SetProperties(Type type, float currentValue, float defaultValue, bool hasLimits, float minValue, float maxValue)
         {
             this._type = type;

@@ -30,6 +30,17 @@ namespace OkapiKit
         }
 
         public Variable.Type GetValueType() => type;
+        public object GetRawValue()
+        {
+            if (value)
+            {
+                return value.GetRawValue();
+            }
+
+            if (type == Variable.Type.Float) return currentValue;
+
+            return (int)currentValue;
+        }
 
         public Variable GetVariable()
         {

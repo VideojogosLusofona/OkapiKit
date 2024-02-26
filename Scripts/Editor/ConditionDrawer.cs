@@ -231,9 +231,9 @@ namespace OkapiKit.Editor
                     var r1 = propValueRect;
                     r1.height = r1.height / 3;
                     var r2 = r1;
-                    r2.y = r1.bottom;
+                    r2.y = r1.yMax;
                     var r3 = r1;
-                    r3.y = r2.bottom;
+                    r3.y = r2.yMax;
 
                     EditorGUI.PropertyField(r1, propComparisonValueHandler, GUIContent.none);
                     EditorGUI.PropertyField(r2, propComparisonVariable, GUIContent.none);
