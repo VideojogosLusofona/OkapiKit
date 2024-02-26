@@ -1,5 +1,11 @@
 # Release Notes
 
+## V1.12.0
+
+- Change Value action now can add/subtract a Variable/ValueHandler
+- Change Value action can now set now assign to Variable/ValueHandler the value of another Variable/ValueHandler
+- Change Value action can now multiply/divide, besides adding/subtracting
+
 ## V1.11.3
 
 - Fixed bug with coyote time enabling double jump

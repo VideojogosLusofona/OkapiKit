@@ -19,6 +19,8 @@ Features:
 - Path shows direction (debug)
 - Target can be collision object (being able to damage another object when there is a collision, for example)
 - Bool and string variables
+- Press '+' to add a point at cursor when editing a path
+- Add insert option for path
 - Probes:
   - Circle
   - Box
