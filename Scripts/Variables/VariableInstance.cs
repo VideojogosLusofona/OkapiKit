@@ -8,27 +8,38 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Other/Variable Instance")]
     public class VariableInstance : OkapiElement
     {
-        public Variable.Type type = Variable.Type.Float;
-        public float currentValue = 0;
-        public float defaultValue = 0;
-        public bool isInteger = false;
-        public bool hasLimits = false;
+        [SerializeField]
+        private Variable.Type type = Variable.Type.Float;
+        [SerializeField]
+        private float currentValue = 0;
+        [SerializeField]
+        private float defaultValue = 0;
+        [SerializeField]
+        private bool hasLimits = false;
         [SerializeField, ShowIf("hasLimits")]
-        public float minValue = -float.MaxValue;
+        private float minValue = -float.MaxValue;
         [SerializeField, ShowIf("hasLimits")]
-        public float maxValue = float.MaxValue;
+        private float maxValue = float.MaxValue;
 
         private Variable value;
 
         void Start()
         {
             value = ScriptableObject.CreateInstance<Variable>();
-            value.SetProperties(type, defaultValue, defaultValue, isInteger, hasLimits, minValue, maxValue);
+            value.SetProperties(type, defaultValue, defaultValue, hasLimits, minValue, maxValue);
         }
+
+        public Variable.Type GetValueType() => type;
 
         public Variable GetVariable()
         {
             return value;
+        }
+
+        public float GetValue()
+        {
+            if (value != null) return value.currentValue;
+            else return currentValue;
         }
 
         public void SetValue(float value)

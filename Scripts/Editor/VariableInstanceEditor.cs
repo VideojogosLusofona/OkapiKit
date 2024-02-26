@@ -38,30 +38,36 @@ namespace OkapiKit.Editor
 
         protected void StdEditor(bool useOriginalEditor = true)
         {
-            EditorGUI.BeginChangeCheck();
-
-            EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of variable."), true);
-            EditorGUILayout.PropertyField(propCurrentValue, new GUIContent("Current Value", "Current value of this variable."), true);
-            EditorGUILayout.PropertyField(propDefaultValue, new GUIContent("Default Value", "Default value of this variable.\nWhen variable is reset, application starts or object is spawned, it will be reset to this value."), true);
-            EditorGUILayout.PropertyField(propHasLimits, new GUIContent("Has Limits", "If we want this value to have limits.\nTo use ValueDisplayProgress, numbers have to have limits.\nNumbers with limits can never be smaller or larger than its limits."), true);
-            if (propHasLimits.boolValue)
+            if (EditorApplication.isPlaying)
             {
-                EditorGUILayout.PropertyField(propMinValue, new GUIContent("Minimum Value", "Minimum value"), true);
-                EditorGUILayout.PropertyField(propMaxValue, new GUIContent("Maximum Value", "Maximum value"), true);
+                EditorGUILayout.LabelField(new GUIContent("Can't edit these parameters while running!", "These parameters can't be changed while the application is running!"));
             }
-            EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."), true);
-
-            EditorGUI.EndChangeCheck();
-
-            serializedObject.ApplyModifiedProperties();
-            (target as OkapiElement).UpdateExplanation();
-
-            // Draw old editor, need it for now
-            if (useOriginalEditor)
+            else
             {
-                base.OnInspectorGUI();
-            }
+                EditorGUI.BeginChangeCheck();
 
+                EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of variable."), true);
+                EditorGUILayout.PropertyField(propCurrentValue, new GUIContent("Current Value", "Current value of this variable."), true);
+                EditorGUILayout.PropertyField(propDefaultValue, new GUIContent("Default Value", "Default value of this variable.\nWhen variable is reset, application starts or object is spawned, it will be reset to this value."), true);
+                EditorGUILayout.PropertyField(propHasLimits, new GUIContent("Has Limits", "If we want this value to have limits.\nTo use ValueDisplayProgress, numbers have to have limits.\nNumbers with limits can never be smaller or larger than its limits."), true);
+                if (propHasLimits.boolValue)
+                {
+                    EditorGUILayout.PropertyField(propMinValue, new GUIContent("Minimum Value", "Minimum value"), true);
+                    EditorGUILayout.PropertyField(propMaxValue, new GUIContent("Maximum Value", "Maximum value"), true);
+                }
+                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."), true);
+
+                EditorGUI.EndChangeCheck();
+
+                serializedObject.ApplyModifiedProperties();
+                (target as OkapiElement).UpdateExplanation();
+
+                // Draw old editor, need it for now
+                if (useOriginalEditor)
+                {
+                    base.OnInspectorGUI();
+                }
+            }
         }
 
         protected override GUIStyle GetTitleSyle()
