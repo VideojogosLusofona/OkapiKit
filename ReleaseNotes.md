@@ -7,7 +7,7 @@
 - Change Value action can now multiply/divide, besides adding/subtracting
 - Fixed a series of bugs with variable instances
 - Comparisons can now include variables instead of just literal values
-
+- Run Tagged Actions can now search on the object with which a collision just happened
 
 ## V1.11.3
 

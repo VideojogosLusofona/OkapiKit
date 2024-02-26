@@ -16,6 +16,10 @@ namespace OkapiKit
         [SerializeField]
         private Hypertag[] tags;
 
+        private static GameObject lastCollider = null;
+
+        public static GameObject GetLastCollider() => lastCollider;
+
         public override string GetTriggerTitle() { return "On Collision"; }
 
         public override string GetRawDescription(string ident, GameObject refObject)
@@ -76,69 +80,86 @@ namespace OkapiKit
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            lastCollider = null;
+
             if (!isTrigger) return;
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Enter) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
             if (!EvaluatePreconditions()) return;
 
+            lastCollider = collision.gameObject;
             ExecuteTrigger();
         }
 
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+            lastCollider = null;
+
             if (isTrigger) return;
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Enter) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
             if (!EvaluatePreconditions()) return;
 
+            lastCollider = collision.otherCollider.gameObject;
             ExecuteTrigger();
         }
         private void OnTriggerStay2D(Collider2D collision)
         {
+            lastCollider = null;
+
             if (!isTrigger) return;
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Stay) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
             if (!EvaluatePreconditions()) return;
 
+            lastCollider = collision.gameObject;
             ExecuteTrigger();
         }
 
 
         private void OnCollisionStay2D(Collision2D collision)
         {
+            lastCollider = null;
+
             if (isTrigger) return;
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Stay) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
             if (!EvaluatePreconditions()) return;
 
+            lastCollider = collision.otherCollider.gameObject;
             ExecuteTrigger();
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
+            lastCollider = null;
+
             if (!isTrigger) return;
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Exit) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
             if (!EvaluatePreconditions()) return;
 
+            lastCollider = collision.gameObject;
             ExecuteTrigger();
         }
 
-
         private void OnCollisionExit2D(Collision2D collision)
         {
+            lastCollider = null;
+
             if (isTrigger) return;
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Exit) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
             if (!EvaluatePreconditions()) return;
 
+            lastCollider = collision.otherCollider.gameObject;
             ExecuteTrigger();
         }
     }
