@@ -5,6 +5,9 @@
 - Change Value action now can add/subtract a Variable/ValueHandler
 - Change Value action can now set now assign to Variable/ValueHandler the value of another Variable/ValueHandler
 - Change Value action can now multiply/divide, besides adding/subtracting
+- Fixed a series of bugs with variable instances
+- Comparisons can now include variables instead of just literal values
+
 
 ## V1.11.3
 
