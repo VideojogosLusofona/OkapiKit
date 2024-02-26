@@ -179,8 +179,8 @@ namespace OkapiKit
                     break;
             }
 
-            if (valueHandler == null) valueHandler.SetValue(currentChangeValue);
-            else if (variable != null) variable.SetValue(currentChangeValue);
+            if (valueHandler == null) valueHandler.SetValue(finalValue);
+            else if (variable != null) variable.SetValue(finalValue);
         }
     }
 }
