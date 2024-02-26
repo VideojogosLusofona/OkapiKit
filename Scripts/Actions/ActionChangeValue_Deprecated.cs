@@ -5,8 +5,8 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Change Value")]
-    public class ActionChangeValue : Action
+    [AddComponentMenu("Okapi/Action/Deprecated/Change Value (Deprecated)")]
+    public class ActionChangeValue_Deprecated : Action
     {
         public enum OperationType { Set = 0, Change = 1, Reset = 2 };
 
