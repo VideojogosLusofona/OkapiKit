@@ -40,6 +40,8 @@ namespace OkapiKit.Editor
 
             var propComparison = property.FindPropertyRelative("comparison");
             var propValue = property.FindPropertyRelative("value");
+            var propComparisonValueHandler = property.FindPropertyRelative("comparisonValueHandler");
+            var propComparisonVariable = property.FindPropertyRelative("comparisonVariable");
             var propPercentage = property.FindPropertyRelative("percentageCompare");
 
             float positionValue = position.x + 50;
@@ -215,7 +217,29 @@ namespace OkapiKit.Editor
                 var propPercentageRect = new Rect(propPercentageLabelRect.max.x, position.y + offset_y, 30, height);
 
                 EditorGUI.PropertyField(propComparisonRect, propComparison, GUIContent.none);
-                EditorGUI.PropertyField(propValueRect, propValue, GUIContent.none);
+
+                if (propComparisonValueHandler.objectReferenceValue != null)
+                {
+                    EditorGUI.PropertyField(propValueRect, propComparisonValueHandler, GUIContent.none);
+                }
+                else if (propComparisonVariable.objectReferenceValue != null)
+                {
+                    EditorGUI.PropertyField(propValueRect, propComparisonVariable, GUIContent.none);
+                }
+                else
+                {
+                    var r1 = propValueRect;
+                    r1.height = r1.height / 3;
+                    var r2 = r1;
+                    r2.y = r1.bottom;
+                    var r3 = r1;
+                    r3.y = r2.bottom;
+
+                    EditorGUI.PropertyField(r1, propComparisonValueHandler, GUIContent.none);
+                    EditorGUI.PropertyField(r2, propComparisonVariable, GUIContent.none);
+                    EditorGUI.PropertyField(r3, propValue, GUIContent.none);
+                }
+
                 EditorGUI.LabelField(propPercentageLabelRect, "%");
                 EditorGUI.PropertyField(propPercentageRect, propPercentage, GUIContent.none);
             }
@@ -238,57 +262,81 @@ namespace OkapiKit.Editor
             var systemVariable = property.FindPropertyRelative("valueType");
             var baseHeight = base.GetPropertyHeight(property, label) + 2;
 
+            var propComparisonValueHandler = property.FindPropertyRelative("comparisonValueHandler");
+            var propComparisonVariable = property.FindPropertyRelative("comparisonVariable");
+
+            float height = baseHeight;
+
+            var condType = (Condition.ValueType)systemVariable.enumValueIndex;
+
             if (propValueHandler.objectReferenceValue == null)
             {
                 if (propVariable.objectReferenceValue == null)
                 {
                     if (systemVariable.enumValueIndex == 0)
                     {
-                        return baseHeight * 3;
+                        height = baseHeight * 3;
                     }
                     else if (systemVariable.enumValueIndex == (int)Condition.ValueType.TagCount)
                     {
-                        return baseHeight * 3;
+                        height = baseHeight * 3;
                     }
-                    else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.AbsoluteVelocityX) ||
-                             (systemVariable.enumValueIndex == (int)Condition.ValueType.AbsoluteVelocityY) ||
-                             (systemVariable.enumValueIndex == (int)Condition.ValueType.VelocityX) ||
-                             (systemVariable.enumValueIndex == (int)Condition.ValueType.VelocityY))
+                    else if ((condType == Condition.ValueType.AbsoluteVelocityX) ||
+                             (condType == Condition.ValueType.AbsoluteVelocityY) ||
+                             (condType == Condition.ValueType.VelocityX) ||
+                             (condType == Condition.ValueType.VelocityY))
                     {
-                        return baseHeight * 2;
+                        height = baseHeight * 2;
                     }
-                    else if (systemVariable.enumValueIndex == (int)Condition.ValueType.Distance)
-                    {
-                        var tagVariable = property.FindPropertyRelative("tag");
-                        var transformVariable = property.FindPropertyRelative("sourceTransform");
-
-                        if (tagVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 2;
-                        else if (transformVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 2;
-                        else return baseHeight * 3;
-                    }
-                    else if (systemVariable.enumValueIndex == (int)Condition.ValueType.Angle)
+                    else if (condType == Condition.ValueType.Distance)
                     {
                         var tagVariable = property.FindPropertyRelative("tag");
                         var transformVariable = property.FindPropertyRelative("sourceTransform");
 
-                        if (tagVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 3;
-                        else if (transformVariable.objectReferenceValue != null) return base.GetPropertyHeight(property, label) * 3;
-                        else return baseHeight * 4;
+                        if (tagVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 2;
+                        else if (transformVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 2;
+                        else height = baseHeight * 3;
                     }
-                    else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.Probe) ||
-                             (systemVariable.enumValueIndex == (int)Condition.ValueType.ProbeDistance))
+                    else if (condType == Condition.ValueType.Angle)
                     {
-                        return baseHeight * 2;
+                        var tagVariable = property.FindPropertyRelative("tag");
+                        var transformVariable = property.FindPropertyRelative("sourceTransform");
+
+                        if (tagVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
+                        else if (transformVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
+                        else height = baseHeight * 4;
                     }
-                    else if ((systemVariable.enumValueIndex == (int)Condition.ValueType.IsGrounded) ||
-                             (systemVariable.enumValueIndex == (int)Condition.ValueType.IsGliding))
+                    else if ((condType == Condition.ValueType.Probe) ||
+                             (condType == Condition.ValueType.ProbeDistance))
                     {
-                        return baseHeight * 2;
+                        height = baseHeight * 2;
+                    }
+                    else if ((condType == Condition.ValueType.IsGrounded) ||
+                             (condType == Condition.ValueType.IsGliding))
+                    {
+                        height = baseHeight * 2;
                     }
                 }
             }
 
-            return baseHeight;
+            if ((condType == Condition.ValueType.Probe) ||
+                (condType == Condition.ValueType.IsGrounded) ||
+                (condType == Condition.ValueType.IsGliding))
+            {
+                // No need for a comparison value
+            }
+            else
+            {
+                if (propComparisonValueHandler.objectReferenceValue == null)
+                {
+                    if (propComparisonVariable.objectReferenceValue == null)
+                    {
+                        height = Mathf.Max(height, baseHeight * 3);
+                    }
+                }
+            }
+
+            return height;
         }
 
         internal static void OnSceneGUI(SerializedObject serializedObject, SerializedProperty conditionElement)

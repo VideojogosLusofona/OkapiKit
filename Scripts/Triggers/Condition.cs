@@ -37,6 +37,8 @@ namespace OkapiKit
         public MovementPlatformer   movementPlatformer;
         public Comparison           comparison;
         public float                value;
+        public VariableInstance     comparisonValueHandler;
+        public Variable             comparisonVariable;
         public bool                 percentageCompare;
 
         public DataType GetDataType()
@@ -124,6 +126,14 @@ namespace OkapiKit
             return "[Unknown]";
         }
 
+        string GetComparisonValueString()
+        {
+            if (comparisonVariable) return comparisonVariable.name;
+            if (comparisonValueHandler) return comparisonValueHandler.name;
+
+            return $"{value}";
+        }
+
         public string GetRawDescription(GameObject gameObject)
         {
             string desc = "";
@@ -142,7 +152,7 @@ namespace OkapiKit
                     default:
                         break;
                 }
-                desc += value;
+                desc += GetComparisonValueString();
                 if (percentageCompare) desc += "%";
                 desc += ")";
             }
@@ -345,26 +355,31 @@ namespace OkapiKit
                     currentValue = 100 * (currentValue - minValue) / (maxValue - minValue);
                 }
 
+                float comparisonValue = value;
+
+                if (comparisonValueHandler) comparisonValue = comparisonValueHandler.GetValue();
+                else if (comparisonVariable) comparisonValue = comparisonVariable.currentValue;
+
                 b = false;
                 switch (comparison)
                 {
                     case Condition.Comparison.Equal:
-                        b = (currentValue == value);
+                        b = (currentValue == comparisonValue);
                         break;
                     case Condition.Comparison.Less:
-                        b = (currentValue < value);
+                        b = (currentValue < comparisonValue);
                         break;
                     case Condition.Comparison.LessEqual:
-                        b = (currentValue <= value);
+                        b = (currentValue <= comparisonValue);
                         break;
                     case Condition.Comparison.Greater:
-                        b = (currentValue > value);
+                        b = (currentValue > comparisonValue);
                         break;
                     case Condition.Comparison.GreaterEqual:
-                        b = (currentValue >= value);
+                        b = (currentValue >= comparisonValue);
                         break;
                     case Condition.Comparison.Different:
-                        b = (currentValue != value);
+                        b = (currentValue != comparisonValue);
                         break;
                     default:
                         break;
