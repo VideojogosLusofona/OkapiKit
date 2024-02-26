@@ -1,5 +1,11 @@
 # Release Notes
 
+## V1.13.0
+
+- Added multi-variable text display (you can now use as a formatter something like "XP {0}/{1}", and use a MultiValueDisplayText component to provide multiple variables)
+- Created structure to allow for in the future variables, literals or functions to be used as values for most things (internals)
+- Added deprecated directories for scripts that will eventually be phased out
+
 ## V1.12.0
 
 - Change Value action now can add/subtract a Variable/ValueHandler
