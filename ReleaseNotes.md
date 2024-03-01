@@ -14,6 +14,7 @@
 - Follow path can now happen in normalized space, instead of constant speed
 - Change transform action now can be scaled with time, can multiply/divide and can affect scaling as well as position
 - Fixed bug with enums on editor
+- Added snippets demonstrating a fuzzy aim system, and a alternate world game mechanic
 
 ## V1.13.0
 

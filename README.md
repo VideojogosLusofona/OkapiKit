@@ -110,6 +110,12 @@ To sidestep this issue, you have to follow some steps:
   - how to use the singleton system in the OkapiKit
   - how to keep a song playing throughout the game, even if it has multiple scenes
   - how to use a button to change the music playing
+- FuzzyAim:
+  - Demonstrate how to make a system for mouse aiming which is more precise the more time you press the fire button
+  - Uses paths in a creating way
+- Alternate World:
+  - Demonstrates how to create an alternative world system, in which the player can't cross over if there will be a
+    collision
 
 # Documentation
 
