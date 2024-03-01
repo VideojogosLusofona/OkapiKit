@@ -16,8 +16,23 @@ namespace OkapiKit
         [SerializeField] private Variable           variable;
         [SerializeField] private float              floatValue;
         [SerializeField] private int                intValue;
+        private float v;
 
-        public object GetRawValue()
+        public OkapiValue(float v) : this()
+        {
+            this.init = true;
+            this.type = Type.Float;
+            this.floatValue = v;
+        }
+
+        public OkapiValue(int v) : this()
+        {
+            this.init = true;
+            this.type = Type.Integer;
+            this.intValue = v;
+        }
+
+        public object GetRawValue(GameObject go)
         {
             switch (type)
             {
@@ -33,6 +48,45 @@ namespace OkapiKit
 
             return null;
         }
+
+        public float GetFloat(GameObject go)
+        {
+            switch (type)
+            {
+                case Type.Float:
+                    return floatValue;
+                case Type.Integer:
+                    return intValue;
+                case Type.VariableInstance:
+                    return (variableInstance) ? (variableInstance.GetValue()) : (0.0f);
+                case Type.Variable:
+                    return (variable) ? (variable.currentValue) : (0.0f);
+            }
+
+            return 0.0f;
+        }
+
+        public string GetDescription()
+        {
+            switch (type)
+            {
+                case Type.Float:
+                    return floatValue.ToString();
+                case Type.Integer:
+                    return intValue.ToString();
+                case Type.VariableInstance:
+                    if (variableInstance != null) return variableInstance.name;
+                    break;
+                case Type.Variable:
+                    if (variable != null) return variable.name;
+                    break;
+                default:
+                    break;
+            }
+
+            return "[UNDEFINED]";
+        }
+
 
         public string GetName()
         {
