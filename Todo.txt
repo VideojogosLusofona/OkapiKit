@@ -1,9 +1,10 @@
 Features:
 ---------
 
-- Unify ValueHandler/Value with single selector that can take any of them
+- OkapiValue options for random numbers (floats, integers, with variables as limits)
+- Change everything to use OkapiValue instead of actual values
+- An option to change values based on reflection
 - Movement targets should be redefinable
-- Replace ranges used for random number generation with a "ValueSelector", which allows a literal, a range and a ValueHandler/Variable. The range can also use ValueHandler/Variable for the limits.
 - Change numbers in most definitions (conditions, for example) by something that can be either a ValueHandler, a Variable, a literal, or a function, with a property drawer, etc
 - Add HueShift/Outline effect for sprites
 - Added debug system to Okapi
@@ -17,10 +18,9 @@ Features:
 - Spawner with boxes should have options for direction
 - Spawner should have random direction possibility
 - Path shows direction (debug)
-- Target can be collision object (being able to damage another object when there is a collision, for example)
 - Bool and string variables
 - Press '+' to add a point at cursor when editing a path
-- Add insert option for path
+- Add insert point option for path
 - Probes:
   - Circle
   - Box
@@ -35,6 +35,7 @@ Usability:
   - Add triggers/actions directly in the objects
   - Have the ability to have custom adds (SetVisibility, SetVelocity, etc)
 - Add node ID property to actions/triggers
+- Remove Naughty Attributes completely (reduce dependencies)
 
 Simple usage:
 -------------

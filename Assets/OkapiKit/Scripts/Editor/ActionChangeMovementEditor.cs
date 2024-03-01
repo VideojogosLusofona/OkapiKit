@@ -101,8 +101,9 @@ namespace OkapiKit.Editor
 
                         if (propUseRandom.boolValue)
                         {
-                            EditorGUILayout.PropertyField(propStartAngle, new GUIContent("Start Angle", "What's the minimum angle for the random."));
-                            EditorGUILayout.PropertyField(propEndAngle, new GUIContent("End Angle", "What's the maximum angle for the random."));
+                            string localText = (propUseRandom.boolValue)?("local"):("");
+                            EditorGUILayout.PropertyField(propStartAngle, new GUIContent("Start Angle", $"What's the minimum angle for the random. Angle = 0 means in the direction of the {localText} X axis"));
+                            EditorGUILayout.PropertyField(propEndAngle, new GUIContent("End Angle", $"What's the maximum angle for the random. Angle = 90 means in the direction of the {localText} Y axis"));
                             EditorGUILayout.PropertyField(propSpeedRange, new GUIContent("Speed Range", "The velocity will have a speed between the value in X and the value in Y."));
                         }
                         else

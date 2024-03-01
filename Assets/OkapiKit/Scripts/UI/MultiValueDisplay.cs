@@ -54,7 +54,7 @@ namespace OkapiKit
 
             foreach (var v in values)
             {
-                vars.Add(v.GetRawValue());
+                vars.Add(v.GetRawValue(gameObject));
             }
 
             return vars.ToArray();
