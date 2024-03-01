@@ -13,7 +13,10 @@ namespace OkapiKit
     public class MovementPlatformer : Movement
     {
         public enum InputType { Axis = 0, Button = 1, Key = 2 };
-        public enum FlipBehaviour { None = 0, VelocityFlipsSprite = 1, VelocityInvertsScale = 2, InputFlipsSprite = 3, InputInvertsScale = 4 };
+        public enum FlipBehaviour { None = 0, 
+                                    VelocityFlipsSprite = 1, VelocityInvertsScale = 2, 
+                                    InputFlipsSprite = 3, InputInvertsScale = 4,
+                                    VelocityRotatesSprite = 5, InputRotatesSprite = 6 };
         public enum JumpBehaviour { None = 0, Fixed = 1, Variable = 2 };
         public enum GlideBehaviour { None = 0, Enabled = 1, Timer = 2 };
 
@@ -295,6 +298,12 @@ namespace OkapiKit
                     break;
                 case FlipBehaviour.InputInvertsScale:
                     animDesc += "When the player intent is to go left, the horizontal scale of this object will be inverted.\n";
+                    break;
+                case FlipBehaviour.VelocityRotatesSprite:
+                    animDesc += "When the character is moving to the left, the object will be rotated 180 degrees around the Y axis.\n";
+                    break;
+                case FlipBehaviour.InputRotatesSprite:
+                    animDesc += "When the player intent is to go left, the object will be rotated 180 degrees around the Y axis.\n";
                     break;
                 default:
                     break;
@@ -664,6 +673,10 @@ namespace OkapiKit
                     if ((currentVelocity.x > epsilonZero) && (transform.localScale.x < 0.0f)) transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                     else if ((currentVelocity.x < -epsilonZero) && (transform.localScale.x > 0.0f)) transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                     break;
+                case FlipBehaviour.VelocityRotatesSprite:
+                    if ((currentVelocity.x > epsilonZero) && (transform.right.x < 0.0f)) transform.rotation *= Quaternion.Euler(0, 180, 0);
+                    else if ((currentVelocity.x < -epsilonZero) && (transform.right.x > 0.0f)) transform.rotation *= transform.rotation *= Quaternion.Euler(0, 180, 0); 
+                    break;
                 case FlipBehaviour.InputFlipsSprite:
                     if (deltaX > epsilonZero) spriteRenderer.flipX = false;
                     else if (deltaX < -epsilonZero) spriteRenderer.flipX = true;
@@ -671,6 +684,10 @@ namespace OkapiKit
                 case FlipBehaviour.InputInvertsScale:
                     if ((deltaX > epsilonZero) && (transform.localScale.x < 0.0f)) transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                     else if ((deltaX < -epsilonZero) && (transform.localScale.x > 0.0f)) transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                    break;
+                case FlipBehaviour.InputRotatesSprite:
+                    if ((deltaX > epsilonZero) && (transform.right.x < 0.0f)) transform.rotation *= Quaternion.Euler(0, 180, 0);
+                    else if ((deltaX < -epsilonZero) && (transform.right.x > 0.0f)) transform.rotation *= transform.rotation *= Quaternion.Euler(0, 180, 0);
                     break;
                 default:
                     break;
