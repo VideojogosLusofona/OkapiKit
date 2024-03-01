@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using static OkapiKit.MovementFollow;
+using TMPro;
 
 namespace OkapiKit
 {
@@ -12,23 +13,27 @@ namespace OkapiKit
         public enum RotationBehaviour { None = 0, AlignX = 1, AlignY = 2 };
 
         [SerializeField]
-        private float speed = 200.0f;
+        private float               speed = 200.0f;
         [SerializeField, ShowIf("needPath")]
-        private Path path;
+        private Path                path;
         [SerializeField, ShowIf("needTag")]
-        private Hypertag taggedPath;
+        private Hypertag            taggedPath;
         [SerializeField]
-        private bool loop = false;
+        private bool                useDuration = false;
         [SerializeField]
-        private bool relativePath = false;
+        private float               pathDuration = 1.0f;
         [SerializeField]
-        private RotationBehaviour rotationBehaviour = RotationBehaviour.None;
+        private bool                loop = false;
+        [SerializeField]
+        private bool                relativePath = false;
+        [SerializeField]
+        private RotationBehaviour   rotationBehaviour = RotationBehaviour.None;
         [SerializeField, ShowIf("hasRotation")]
-        private bool useFlip;
+        private bool                useFlip;
         [SerializeField, ShowIf("hasRotation")]
-        private bool hasMaxRotationSpeed = false;
+        private bool                hasMaxRotationSpeed = false;
         [SerializeField, ShowIf("hasMaxRotation")]
-        private float maxRotationSpeed = 360;
+        private float               maxRotationSpeed = 360;
 
         private bool needPath => taggedPath == null;
         private bool needTag => path == null;
@@ -47,16 +52,29 @@ namespace OkapiKit
             {
                 if (path != null)
                 {
-                    desc += $"Follows the [{path.name}] path, at {speed} units per second.\n";
+                    if (useDuration)
+                        desc += $"Follows the [{path.name}] path, doing a full loop in {pathDuration} seconds.\n";
+                    else
+                        desc += $"Follows the [{path.name}] path, at {speed} units per second.\n";
                 }
                 else if (taggedPath != null)
                 {
-                    desc += $"Follows a path tagged with [{taggedPath.name}], at {speed} units per second.\n";
+                    if (useDuration)
+                    {
+                        desc += $"Follows a path tagged with [{taggedPath.name}], in {pathDuration} seconds.\n";
+                    }
+                    else
+                    {
+                        desc += $"Follows a path tagged with [{taggedPath.name}], at {speed} units per second.\n";
+                    }
                     desc += $"If multiple paths have the [{taggedPath.name}] tag, a random one is selected.\n";
                 }
                 else
                 {
-                    desc += $"Follows a path, at {speed} units per second.\n";
+                    if (useDuration)
+                        desc += $"Follows a path, doing a full loop in {pathDuration} seconds.\n";
+                    else
+                        desc += $"Follows a path, at {speed} units per second.\n";
                 }
             }
             if (loop) desc += "The object will loop back to the beginning at the end of the path.\n";
@@ -89,10 +107,13 @@ namespace OkapiKit
             }
         }
 
-        List<Vector3> actualPath;
-        int pathIndex;
-        Vector3 startScale;
-        Vector3 offset;
+        List<Vector3>   actualPath;
+        int             pathIndex;
+        Vector3         startScale;
+        Vector3         offset;
+        Path            activePath;
+        float           t = 0.0f;
+        float           tInc;
 
         protected override void Start()
         {
@@ -104,29 +125,51 @@ namespace OkapiKit
                 if (paths.Length > 0)
                 {
                     int r = Random.Range(0, paths.Length);
-                    actualPath = paths[r].GetPoints();
+                    activePath = paths[r];
                 }
             }
             else if (path != null)
             {
-                actualPath = path.GetPoints();
+                activePath = path;
+            }
+            if (activePath)
+            {
+                actualPath = activePath.GetPoints();
             }
 
-            if ((actualPath != null) && (actualPath.Count > 0))
+            if (useDuration)
             {
-                pathIndex = 0;
+                t = 0.0f;
+                tInc = 1.0f / pathDuration;
 
                 if (relativePath)
                 {
-                    offset = transform.position - actualPath[pathIndex];
-
-                    pathIndex++;
+                    Vector3 startPos = activePath.EvaluateWorld(0.0f);
+                    offset = transform.position - startPos;
                 }
                 else
                 {
-                    transform.position = actualPath[pathIndex];
+                    offset = Vector3.zero;
+                }
+            }
+            else
+            {
+                if ((actualPath != null) && (actualPath.Count > 0))
+                {
+                    pathIndex = 0;
 
-                    pathIndex++;
+                    if (relativePath)
+                    {
+                        offset = transform.position - actualPath[pathIndex];
+
+                        pathIndex++;
+                    }
+                    else
+                    {
+                        transform.position = actualPath[pathIndex];
+
+                        pathIndex++;
+                    }
                 }
             }
 
@@ -140,44 +183,70 @@ namespace OkapiKit
             if (pathIndex >= actualPath.Count) return;
             if (!isMovementActive()) return;
 
-            float distanceToMove = Time.fixedDeltaTime * speed;
-
-            int initialIndex = pathIndex;
-
-            while (distanceToMove > 0)
+            if (useDuration)
             {
-                // Get next position
-                var targetPosition = actualPath[pathIndex];
+                Vector3 currentPosition = transform.position - offset;
+                Vector3 targetPosition = activePath.EvaluateWorld(t);
 
-                var currentPosition = transform.position - offset;
-                var newPosition = Vector3.MoveTowards(currentPosition, targetPosition, distanceToMove);
+                MoveDelta(targetPosition - currentPosition);
 
-                var distanceMoved = Vector3.Distance(targetPosition, currentPosition);
-
-                MoveDelta(newPosition - currentPosition);
-
-                distanceToMove -= distanceMoved;
-
-                if (Vector3.Distance(targetPosition, newPosition) <= 0.0001f)
+                t += tInc * Time.fixedDeltaTime;
+                if (t > 1.0f)
                 {
-                    // Go to next point
-                    pathIndex++;
-                    if (pathIndex >= actualPath.Count)
+                    if (loop) t -= 1.0f;
+                    else
                     {
-                        if (loop)
+                        StopMovement();
+                        t = 1.0f;
+                    }
+                }
+            }
+            else
+            {
+                if ((activePath) && (activePath.isLocalSpace))
+                {
+                    actualPath = activePath.GetPoints();
+                }
+
+                float distanceToMove = Time.fixedDeltaTime * speed;
+
+                int initialIndex = pathIndex;
+
+                while (distanceToMove > 0)
+                {
+                    // Get next position
+                    var targetPosition = actualPath[pathIndex];
+
+                    var currentPosition = transform.position - offset;
+                    var newPosition = Vector3.MoveTowards(currentPosition, targetPosition, distanceToMove);
+
+                    var distanceMoved = Vector3.Distance(targetPosition, currentPosition);
+
+                    MoveDelta(newPosition - currentPosition);
+
+                    distanceToMove -= distanceMoved;
+
+                    if (Vector3.Distance(targetPosition, newPosition) <= 0.0001f)
+                    {
+                        // Go to next point
+                        pathIndex++;
+                        if (pathIndex >= actualPath.Count)
                         {
-                            pathIndex = 0;
+                            if (loop)
+                            {
+                                pathIndex = 0;
+                            }
+                            else
+                            {
+                                StopMovement();
+                                break;
+                            }
                         }
-                        else
+                        if (initialIndex == pathIndex)
                         {
-                            StopMovement();
+                            // Error in path
                             break;
                         }
-                    }
-                    if (initialIndex == pathIndex)
-                    {
-                        // Error in path
-                        break;
                     }
                 }
             }
