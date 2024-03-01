@@ -8,6 +8,8 @@
 - Improved display of title on Change Value action
 - Probes now uses OkapiValues (can use numbers, or variables, etc)
 - Probes now support using colliders for probe - can only detect intersections between active objects!
+- Added Change Collider action, which allows to set the trigger option of a collider
+- Fixed issue with Platformer movement - only non-trigger colliders can set the ground property
 
 ## V1.13.0
 
