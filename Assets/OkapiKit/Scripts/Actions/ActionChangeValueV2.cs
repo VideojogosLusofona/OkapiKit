@@ -26,7 +26,32 @@ namespace OkapiKit
         [SerializeField]
         private bool                scaleWithTime = false;
 
-        public override string GetActionTitle() { return "Change Value"; }
+        public override string GetActionTitle() 
+        {
+            string title = "Change Value";
+            switch (operation)
+            {
+                case OperationType.Reset:
+                    return $"Reset {GetTargetName()}";
+                case OperationType.Set:
+                    return $"{GetTargetName()} = {GetShortChangeValueString()}";
+                case OperationType.Add:
+                    return $"{GetTargetName()} = {GetTargetName()} + {GetShortChangeValueString()}";
+                case OperationType.Subtract:
+                    return $"{GetTargetName()} = {GetTargetName()} - {GetShortChangeValueString()}";
+                case OperationType.RevSubtract:
+                    return $"{GetTargetName()} = {GetShortChangeValueString()} - {GetTargetName()}";
+                case OperationType.Multiply:
+                    return $"{GetTargetName()} = {GetTargetName()} * {GetShortChangeValueString()}";
+                case OperationType.Divide:
+                    return $"{GetTargetName()} = {GetTargetName()} / {GetShortChangeValueString()}";
+                case OperationType.RevDivide:
+                    return $"{GetTargetName()} = {GetShortChangeValueString()} / {GetTargetName()}";
+                default:
+                    break;
+            }
+            return title;
+        }
 
         string GetChangeValueString()
         {
@@ -40,6 +65,44 @@ namespace OkapiKit
             }
 
             return $"{changeValue}";
+        }
+
+        string GetTargetName()
+        {
+            if (variable) return variable.name;
+            else if (valueHandler) return valueHandler.name;
+
+            return "[UNDEFINED]";
+        }
+
+        string GetShortChangeValueString()
+        {
+            if (scaleWithTime)
+            {
+                if (changeValueHandler)
+                {
+                    return $"{changeValueHandler.name} * elapsedTime";
+                }
+                if (changeVariable)
+                {
+                    return $"{changeVariable.name} * elapsedTime";
+                }
+
+                return $"{changeValue} * elapsedTime";
+            }
+            else
+            {
+                if (changeValueHandler)
+                {
+                    return changeValueHandler.name;
+                }
+                if (changeVariable)
+                {
+                    return changeVariable.name;
+                }
+
+                return $"{changeValue}";
+            }
         }
 
         public override string GetRawDescription(string ident, GameObject gameObject)
