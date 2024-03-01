@@ -69,6 +69,8 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
+                DefaultMovementEditor();
+
                 EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Maximum rotation speed (degrees/second)"));
                 EditorGUILayout.PropertyField(propMode, new GUIContent("Mode", "Rotation mode.\nAuto: Object rotates automatically\nInput Set: Object will turn to the direction given by the input (point to)\nInput Delta: Controls make the object turn right/left (tank controls)\nTarget: Object rotates towards a target\nMovement: Object rotates towards the movement direction"));
                 if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.InputSet)

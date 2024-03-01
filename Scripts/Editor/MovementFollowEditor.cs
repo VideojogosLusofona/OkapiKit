@@ -45,6 +45,8 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
+                DefaultMovementEditor();
+
                 EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Maximum follow speed"));
                 EditorGUILayout.PropertyField(propTargetType, new GUIContent("Target Type", "Type of target to follow.\nTag: Find the closest object tagged with the given tag, and follow it\nObject: Follow the linked object\nMouse: Follow the mouse cursor"));
 

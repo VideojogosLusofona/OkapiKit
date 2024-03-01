@@ -7,8 +7,12 @@ namespace OkapiKit
 {
     abstract public class Movement : OkapiElement
     {
-        protected Rigidbody2D rb;
-        protected Vector3 lastDelta;
+        [SerializeField]
+        protected bool          hasConditions = false;
+        [SerializeField]
+        protected Condition[]   conditions;
+        protected Rigidbody2D   rb;
+        protected Vector3       lastDelta;
 
         abstract public Vector2 GetSpeed();
         abstract public void SetSpeed(Vector2 speed);
@@ -74,14 +78,72 @@ namespace OkapiKit
             }
         }
 
+        protected virtual bool isMovementActive()
+        {
+            if (hasConditions)
+            {
+                foreach (var condition in conditions)
+                {
+                    if (!condition.Evaluate(gameObject)) return false;
+                }
+            }
+
+            return true;
+        }
+
         override protected string Internal_UpdateExplanation()
         {
             _explanation = "";
             if (description != "") _explanation += description + "\n----------------\n";
 
-            _explanation += GetRawDescription("", gameObject);
+            string ident = "";
+            if (hasConditions)
+            {
+                if ((conditions != null) && (conditions.Length > 0))
+                {
+                    _explanation += "This movement will only affect the object if ";
+                    for (int i = 0; i < conditions.Length; i++)
+                    {
+                        if (i > 0) _explanation += " and ";
+                        _explanation += conditions[i].GetRawDescription(gameObject);
+                    }
+                    _explanation += ".\n\n";
+
+                    ident = "  ";
+                }
+            }
+
+            _explanation += GetRawDescription(ident, gameObject);
 
             return _explanation;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (hasConditions)
+            {
+                if ((conditions == null) || (conditions.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Conditions active, but no conditions defined!", "If there's no conditions defined, it's the same as having the use conditions flag turned off."));
+                }
+                else
+                {
+                    var condLogs = new List<LogEntry>();
+                    int index = 0;
+                    foreach (var condition in conditions)
+                    {
+                        condLogs.Clear();
+                        condition.CheckErrors(gameObject, condLogs);
+                        foreach (var l in condLogs)
+                        {
+                            _logs.Add(new LogEntry(l.type, $"Condition {index}: {l.text}", l.tooltip));
+                        }
+                        index++;
+                    }
+                }
+            }
         }
     }
 }

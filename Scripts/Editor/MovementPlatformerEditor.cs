@@ -105,6 +105,8 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
+                DefaultMovementEditor();
+
                 EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Maximum movement speed.\nX component is the maximum horizontal velocity\nY component is the jump velocity"));
 
                 EditorGUILayout.PropertyField(propHorizontalInputType, new GUIContent("Horizontal Input Type", "Control type for horizontal movement.\nAxis: Use an axis for movement\nButton: Use a button for the movement\nKey: Use a key for the movement"));

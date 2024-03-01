@@ -172,6 +172,8 @@ namespace OkapiKit
 
         void FixedUpdate()
         {
+            if (!isMovementActive()) return;
+
             Vector3 transformedDelta = moveVector;
             if (useRotation)
             {
@@ -231,6 +233,8 @@ namespace OkapiKit
 
         void Update()
         {
+            if (!isMovementActive()) return;
+
             moveVector = Vector3.zero;
             if (inputEnabled)
             {

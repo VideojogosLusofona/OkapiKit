@@ -41,6 +41,8 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
+                DefaultMovementEditor();
+
                 EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Movement speed (in pixels/second)."));
                 if (propPath.objectReferenceValue == null)
                 {

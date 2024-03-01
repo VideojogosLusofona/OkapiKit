@@ -27,6 +27,8 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
+                DefaultMovementEditor();
+
                 EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "What's the movement speed (pixels/second)?"));
                 EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis", "What is forward (i.e. is the object point to the right, or pointing up?)"));
 

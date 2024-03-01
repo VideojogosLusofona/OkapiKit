@@ -194,6 +194,8 @@ namespace OkapiKit
 
         void FixedUpdate()
         {
+            if (!isMovementActive()) return;
+
             if (mode == RotateMode.InputDelta)
             {
                 float rotationValue = 0.0f;

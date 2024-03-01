@@ -138,6 +138,7 @@ namespace OkapiKit
             if (actualPath == null) return;
             if (actualPath == null) return;
             if (pathIndex >= actualPath.Count) return;
+            if (!isMovementActive()) return;
 
             float distanceToMove = Time.fixedDeltaTime * speed;
 
