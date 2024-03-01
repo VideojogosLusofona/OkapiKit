@@ -1,5 +1,11 @@
 # Release Notes
 
+## V1.14.0
+
+- Added InputRotatesSprite and VelocityRotatesSprite to Flip Behaviour on platformer controller. Rotating instead of scaling changes the actual objects direction, so it can affect other movement systems, for example.
+- Movement components can now have conditions built in which take care of activating/deactivating that movement
+
+
 ## V1.13.0
 
 - Added multi-variable text display (you can now use as a formatter something like "XP {0}/{1}", and use a MultiValueDisplayText component to provide multiple variables)

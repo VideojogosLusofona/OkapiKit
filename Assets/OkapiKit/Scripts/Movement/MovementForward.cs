@@ -34,6 +34,8 @@ namespace OkapiKit
 
         void FixedUpdate()
         {
+            if (!isMovementActive()) return;
+
             switch (axis)
             {
                 case Axis.Up:

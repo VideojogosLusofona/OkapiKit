@@ -118,6 +118,8 @@ namespace OkapiKit
 
         void FixedUpdate()
         {
+            if (!isMovementActive()) return;
+
             Vector3 target = Vector3.zero;
             Vector3 delta = Vector3.zero;
 

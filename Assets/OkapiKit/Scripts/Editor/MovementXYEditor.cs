@@ -65,6 +65,8 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
+                DefaultMovementEditor();
+
                 EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Maximum movement speed in world units (pixels)/second"));
                 EditorGUILayout.PropertyField(propLimitSpeed, new GUIContent("Limit Speed?", "Should the speed be limited on diagonals?"));
                 if (propLimitSpeed.boolValue)

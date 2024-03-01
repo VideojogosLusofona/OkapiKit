@@ -450,6 +450,8 @@ namespace OkapiKit
 
         void FixedUpdate()
         {
+            if (!isMovementActive()) return;
+
             UpdateGroundState();
 
             // Jump buffering
@@ -602,6 +604,8 @@ namespace OkapiKit
         }
         void Update()
         {
+            if (!isMovementActive()) return;
+
             if (coyoteTimer > 0)
             {
                 coyoteTimer -= Time.deltaTime;
