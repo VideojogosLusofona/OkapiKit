@@ -75,7 +75,7 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(propLoop, new GUIContent("Loop", "If on, the object will loop around the path."));
                 EditorGUILayout.PropertyField(propRelativePath, new GUIContent("Is Path Relative?", "If on, the relative position of the object to the path's will be accounted for.\nThis means the object will follow the path as if the path's start was at the initial position of this object."));
                 EditorGUILayout.PropertyField(propRotationBehaviour, new GUIContent("Rotation Behaviour", "What happens in terms of rotation?\nNone: No rotation applied\nAxis X: the right (X) axis will be aligned with the movement direction\nAxis Y: the up (Y) axis will be aligned with the movement direction."));
-                if (propRotationBehaviour.enumValueIndex != (int)MovementPath.RotationBehaviour.None)
+                if (propRotationBehaviour.intValue != (int)MovementPath.RotationBehaviour.None)
                 {
                     EditorGUILayout.PropertyField(propUseFlip, new GUIContent("Use flip?", "If on, the object flips if the movement direction is to the left/down.\nFliping means scaling by negative coeficient."));
                     EditorGUILayout.PropertyField(propHasMaxRotationSpeed, new GUIContent("Has maximum rotation speed?", "If on, the object has a maximum rotation speed."));

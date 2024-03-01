@@ -45,7 +45,7 @@ namespace OkapiKit.Editor
 
                 EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of probe.\nRaycast: detects intersections in a straight line (line is super-thin)\nCirclecast: detects intersections in a straight line (line has thickness)"));
 
-                var probeType = (Probe.Type)propType.enumValueIndex;
+                var probeType = (Probe.Type)propType.intValue;
 
                 if ((probeType == Probe.Type.Raycast) || (probeType == Probe.Type.Circlecast))
                 {
@@ -55,7 +55,7 @@ namespace OkapiKit.Editor
 
                     }
                     EditorGUILayout.PropertyField(propDirection, new GUIContent("Direction", "Direction of line.\nUp/Down/Left/Right: Line is in that relative direction (based on rotation of object)\nTarget object/tag: Line is in the direction of a certain object until it reaches it.\nTarget object/tag direction: Line is in the direction of a certain object, until a maximum distance."));
-                    Probe.Direction direction = (Probe.Direction)propDirection.enumValueIndex;
+                    Probe.Direction direction = (Probe.Direction)propDirection.intValue;
 
                     switch (direction)
                     {

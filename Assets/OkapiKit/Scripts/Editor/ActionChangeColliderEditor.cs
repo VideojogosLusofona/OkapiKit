@@ -37,7 +37,7 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(propTarget, new GUIContent("Target", "What's the collider to change?"));
                 EditorGUILayout.PropertyField(propState, new GUIContent("State", "What is the property of the collider to change?\nIsTrigger - Set if state of the trigger flag of the collider"));
 
-                var state = (ActionChangeCollider.State)propState.enumValueIndex;
+                var state = (ActionChangeCollider.State)propState.intValue;
                 if (state == ActionChangeCollider.State.IsTrigger)
                 {
                     EditorGUILayout.PropertyField(propChangeState, new GUIContent("Change State", "What is the new state of the trigger flag after this action runs?\nOn - Collider is now a trigger\nOff - Collider is not a trigger\nToggle - If it is trigger, stop being one, and vice-versa."));

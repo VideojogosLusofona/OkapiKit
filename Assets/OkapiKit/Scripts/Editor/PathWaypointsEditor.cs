@@ -50,7 +50,7 @@ namespace OkapiKit.Editor
 
                 EditorGUI.BeginChangeCheck();
 
-                var type = (Path.Type)propType.enumValueIndex;
+                var type = (Path.Type)propType.intValue;
 
                 EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of path.\nLinear: Straight lines between points\nSmooth: Curved line that passes through some points and is influenced by the others.\nCircle: The first point defines the center, the second the radius of the circle. If there is a third point, it defines the radius in that approximate direction.\nArc: First point defines the center, the second and third define the beginning and end of an arc centered on the first point.\nPolygon: First point define the center, the second and third point define the radius in different directions, while the 'Sides' property defines the number of sides of the polygon."));
                 if ((type != Path.Type.Circle) && (type != Path.Type.Arc))
@@ -126,7 +126,7 @@ namespace OkapiKit.Editor
             var t = (target as Path);
 
             bool    localSpace = !t.isWorldSpace;
-            var     type = (Path.Type)propType.enumValueIndex;
+            var     type = (Path.Type)propType.intValue;
             
             if (t.isEditMode)
             {
@@ -315,7 +315,7 @@ namespace OkapiKit.Editor
 
         protected override Texture2D GetIcon()
         {
-            if (propType.enumValueIndex == (int)Path.Type.Linear)
+            if (propType.intValue == (int)Path.Type.Linear)
                 return GUIUtils.GetTexture("PathStraight");
             else
                 return GUIUtils.GetTexture("PathCurved");

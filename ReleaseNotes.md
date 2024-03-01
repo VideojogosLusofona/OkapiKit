@@ -12,6 +12,8 @@
 - Fixed issue with Platformer movement - only non-trigger colliders can set the ground property
 - Probes can now be identified by tag
 - Follow path can now happen in normalized space, instead of constant speed
+- Change transform action now can be scaled with time, can multiply/divide and can affect scaling as well as position
+- Fixed bug with enums on editor
 
 ## V1.13.0
 

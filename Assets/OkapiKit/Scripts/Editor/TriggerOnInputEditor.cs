@@ -54,7 +54,7 @@ namespace OkapiKit.Editor
                 var trigger = (target as TriggerOnInput);
                 if (trigger == null) return;
 
-                TriggerOnInput.InputType inputType = (TriggerOnInput.InputType)propInputType.enumValueIndex;
+                TriggerOnInput.InputType inputType = (TriggerOnInput.InputType)propInputType.intValue;
 
                 string actionsName = "Actions when pressed";
                 string elseActionsName = "Actions when released";

@@ -50,12 +50,12 @@ namespace OkapiKit.Editor
                     EditorGUILayout.PropertyField(propVariable, new GUIContent("Variable", "What's the variable you want to set?\nYou can only choose either a value instance (instance on an object) or a variable (global value), not both at the same time."));
                 }
                 EditorGUILayout.PropertyField(propOperation, new GUIContent("Operation", "What is the operation to perform on the variable/value instance?\nSet: Sets the variable to a certain value\nChange: Modifies the variable (add/subtract)\nReset: Sets a variable/value instance to its default value."));
-                if (propOperation.enumValueIndex == (int)ActionChangeValue_Deprecated.OperationType.Change)
+                if (propOperation.intValue == (int)ActionChangeValue_Deprecated.OperationType.Change)
                 {
                     EditorGUILayout.PropertyField(propDeltaValue, new GUIContent("Delta Value", "What is the value you want to add/subtract?"));
                     EditorGUILayout.PropertyField(propScaleWithTime, new GUIContent("Scale With Time", "Do you want to scale the value with time?\nThis is useful to have meters that go down a specific amount per second, for example."));
                 }
-                else if (propOperation.enumValueIndex == (int)ActionChangeValue_Deprecated.OperationType.Set)
+                else if (propOperation.intValue == (int)ActionChangeValue_Deprecated.OperationType.Set)
                 {
                     EditorGUILayout.PropertyField(propValue, new GUIContent("Value", "What is the value you want to set the value instance/variable?"));
                 }

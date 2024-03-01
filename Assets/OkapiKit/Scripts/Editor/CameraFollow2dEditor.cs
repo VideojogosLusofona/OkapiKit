@@ -61,7 +61,7 @@ namespace OkapiKit.Editor
                 {
                     EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "What's the tag of the object(s) to follow?\nNote that you can follow objects by tag or by linking, but not both at the same time."));
                     EditorGUILayout.PropertyField(propTagMode, new GUIContent("Tag Mode", "If there are multiple objects with this tag, what to do?\nClosest: Follow the closest to the camera\nFurthest: Follow the furthest away\nAverage: Follow the average position of the objects."));
-                    if (propTagMode.enumValueIndex == (int)CameraFollow2d.TagMode.Average)
+                    if (propTagMode.intValue == (int)CameraFollow2d.TagMode.Average)
                     {
                         EditorGUILayout.PropertyField(propAllowZoom, new GUIContent("Allow Zoom", "Should the camera zoom in/out to account for multiple objects being tracked?"));
                         if (propAllowZoom.boolValue)
@@ -72,11 +72,11 @@ namespace OkapiKit.Editor
                     }
                 }
 
-                if (propMode.enumValueIndex == (int)CameraFollow2d.Mode.SimpleFeedbackLoop)
+                if (propMode.intValue == (int)CameraFollow2d.Mode.SimpleFeedbackLoop)
                 {
                     EditorGUILayout.PropertyField(propFollowSpeed, new GUIContent("Follow Speed", "What's the speed of the camera while following, expressed as percentage per frame.\nIf 1, camera will be locked to the target.\nUsually a value like 0.05 (5% per frame) works fine."));
                 }
-                else if (propMode.enumValueIndex == (int)CameraFollow2d.Mode.Box)
+                else if (propMode.intValue == (int)CameraFollow2d.Mode.Box)
                 {
                     EditorGUILayout.PropertyField(propRect, new GUIContent("Box", "Camera trap position/size, you can see it in magenta on the scene view."));
                 }

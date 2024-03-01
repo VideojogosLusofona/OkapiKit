@@ -111,7 +111,7 @@ namespace OkapiKit.Editor
 
                 EditorGUILayout.PropertyField(propHorizontalInputType, new GUIContent("Horizontal Input Type", "Control type for horizontal movement.\nAxis: Use an axis for movement\nButton: Use a button for the movement\nKey: Use a key for the movement"));
 
-                var inputType = (MovementPlatformer.InputType)propHorizontalInputType.enumValueIndex;
+                var inputType = (MovementPlatformer.InputType)propHorizontalInputType.intValue;
 
                 switch (inputType)
                 {
@@ -144,11 +144,11 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(propGroundCollider, new GUIContent("Ground Collider", "What's the object's collider while on the ground?"));
 
                 EditorGUILayout.PropertyField(propJumpBehaviour, new GUIContent("Jump Type", "Type of jump.\nNone: Player can't jump\nFixed: Player always jumps the same height\nVariable: The longer the player holds the jump button, the higher he jumps"));
-                if (propJumpBehaviour.enumValueIndex != (int)MovementPlatformer.JumpBehaviour.None)
+                if (propJumpBehaviour.intValue != (int)MovementPlatformer.JumpBehaviour.None)
                 {
                     EditorGUILayout.PropertyField(propJumpInputType, new GUIContent("Jump Input Type", "What's the input to jump?\nAxis: Use an axis for movement\nButton: Use a button for the movement\nKey: Use a key for the movement"));
 
-                    var jumpInputType = (MovementPlatformer.InputType)propJumpInputType.enumValueIndex;
+                    var jumpInputType = (MovementPlatformer.InputType)propJumpInputType.intValue;
 
                     switch (jumpInputType)
                     {
@@ -167,17 +167,17 @@ namespace OkapiKit.Editor
 
                     EditorGUILayout.PropertyField(propMaxJumpCount, new GUIContent("Max Jump Count", "How many jumps can the player do before having to touch the ground?\nFor example, for double jump, use 2.\nIf zero, no jumping allowed."));
                     EditorGUILayout.PropertyField(propJumpBufferingTime, new GUIContent("Jump Buffering Time", "If the player presses the jump key before being on the ground, but hits the ground in less than this time, he will jump automatically.\nThis reduces player frustration and provides tighter controls."));
-                    if (propJumpBehaviour.enumValueIndex == (int)MovementPlatformer.JumpBehaviour.Variable)
+                    if (propJumpBehaviour.intValue == (int)MovementPlatformer.JumpBehaviour.Variable)
                     {
                         EditorGUILayout.PropertyField(propJumpHoldMaxTime, new GUIContent("Jump Max. Hold Time", "For how long can the player press jump and still be considered a single jump."));
                     }
                 }
                 EditorGUILayout.PropertyField(propGlideBehaviour, new GUIContent("Glide Behaviour", "Glide behaviour.\nNone: No gliding allowed.\nEnabled: Player can glide at will\nTimer: Player can glide for a certain amount of time.\nGliding is basically falling slower while pressing the glide input."));
-                if (propGlideBehaviour.enumValueIndex != (int)MovementPlatformer.GlideBehaviour.None)
+                if (propGlideBehaviour.intValue != (int)MovementPlatformer.GlideBehaviour.None)
                 {
                     EditorGUILayout.PropertyField(propGlideInputType, new GUIContent("Glide Input Type", "What's the input to glide?\nAxis: Use an axis for movement\nButton: Use a button for the movement\nKey: Use a key for the movement"));
 
-                    var glideInputType = (MovementPlatformer.InputType)propGlideInputType.enumValueIndex;
+                    var glideInputType = (MovementPlatformer.InputType)propGlideInputType.intValue;
 
                     switch (glideInputType)
                     {
@@ -194,7 +194,7 @@ namespace OkapiKit.Editor
                             break;
                     }
 
-                    if (propGlideBehaviour.enumValueIndex == (int)MovementPlatformer.GlideBehaviour.Timer)
+                    if (propGlideBehaviour.intValue == (int)MovementPlatformer.GlideBehaviour.Timer)
                     {
                         EditorGUILayout.PropertyField(propGlideMaxTime, new GUIContent("Glide Max. Time", "What's the maximum amount of glide time?"));
                     }

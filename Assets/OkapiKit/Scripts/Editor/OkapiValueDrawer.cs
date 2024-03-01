@@ -54,22 +54,22 @@ namespace OkapiKit.Editor
 
                 if (floatEnabled)
                 {
-                    propType.enumValueIndex = (int)OkapiValue.Type.Float;
+                    propType.intValue = (int)OkapiValue.Type.Float;
                     propFloat.floatValue = 0.0f;
                 }
                 else if (integerEnabled)
                 {
-                    propType.enumValueIndex = (int)OkapiValue.Type.Integer;
+                    propType.intValue = (int)OkapiValue.Type.Integer;
                     propInt.intValue = 0;
                 }
                 else if (variableInstanceEnabled)
                 {
-                    propType.enumValueIndex = (int)OkapiValue.Type.VariableInstance;
+                    propType.intValue = (int)OkapiValue.Type.VariableInstance;
                     propVariableInstance.objectReferenceValue = null;
                 }
                 else if (variableEnabled)
                 {
-                    propType.enumValueIndex = (int)OkapiValue.Type.Variable;
+                    propType.intValue = (int)OkapiValue.Type.Variable;
                     propVariable.objectReferenceValue = null;
                 }
 
@@ -85,14 +85,14 @@ namespace OkapiKit.Editor
 
             GetAvailableOptions(out var typeOptionStrings, out var typeOptionValues);
 
-            int currentIndex = Array.IndexOf(typeOptionValues, (OkapiValue.Type)propType.enumValueIndex);
+            int currentIndex = Array.IndexOf(typeOptionValues, (OkapiValue.Type)propType.intValue);
 
             int newIndex = EditorGUI.Popup(typeRect, GUIContent.none, currentIndex, typeOptionStrings);
 
             if (newIndex != currentIndex)
             {
                 // Update the actual value on the script based on the selected option
-                propType.enumValueIndex = (int)typeOptionValues[newIndex];
+                propType.intValue = (int)typeOptionValues[newIndex];
 
                 // Mark the entire object as dirty to ensure changes are saved
                 EditorUtility.SetDirty(property.serializedObject.targetObject);
@@ -105,7 +105,7 @@ namespace OkapiKit.Editor
             valueRect.x = typeRect.xMax;
             valueRect.width = valueRect.width * 0.75f;
 
-            var type = (OkapiValue.Type)propType.enumValueIndex;
+            var type = (OkapiValue.Type)propType.intValue;
             switch (type)
             {
                 case OkapiValue.Type.Float:

@@ -9,34 +9,29 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Action/Change Transform")]
     public class ActionChangeTransform : Action
     {
-        public enum ChangeType { Position = 0 };
+        public enum ChangeType { Position = 0, Scale = 2 };
 
-        public enum AxisChange { None = 0, Change = 1, Set = 2 };
+        public enum AxisChange { None = 0, AddSub = 1, Set = 2, Multiply = 3, Divide = 4 };
 
         [SerializeField]
         private Transform target;
 
         [SerializeField]
         private ChangeType changeType = ChangeType.Position;
-        [SerializeField, ShowIf("isPositionChange")]
+        [SerializeField]
         private AxisChange xAxis = AxisChange.None;
-        [SerializeField, ShowIf("isSetX")]
+        [SerializeField]
         private Vector2 positionX;
-        [SerializeField, ShowIf("isChangeX")]
+        [SerializeField]
         private Vector2 deltaX;
-        [SerializeField, ShowIf("isPositionChange")]
+        [SerializeField]
         private AxisChange yAxis = AxisChange.None;
-        [SerializeField, ShowIf("isSetY")]
+        [SerializeField]
         private Vector2 positionY;
-        [SerializeField, ShowIf("isChangeY")]
+        [SerializeField]
         private Vector2 deltaY;
-
-        private bool isPositionChange => changeType == ChangeType.Position;
-        private bool isSetX => isPositionChange && xAxis == AxisChange.Set;
-        private bool isChangeX => isPositionChange && xAxis == AxisChange.Change;
-        private bool isSetY => isPositionChange && yAxis == AxisChange.Set;
-        private bool isChangeY => isPositionChange && yAxis == AxisChange.Change;
-
+        [SerializeField]
+        private bool    scaleWithTime = false;
 
         private Transform GetTarget()
         {
@@ -48,20 +43,35 @@ namespace OkapiKit
             return (target != null) ? $"object {target.name}" : "this";
         }
 
-        private string GetAxisDesc(string targetName, string axisName, AxisChange type, Vector2 pos, Vector2 delta)
+        private string GetAxisDesc(string changeName, string targetName, string axisName, AxisChange type, Vector2 pos, Vector2 delta)
         {
             string desc = "";
             if (type == AxisChange.Set)
             {
-                desc += $"set the {axisName} position of {targetName} to ";
+                desc += $"set the {axisName} {changeName} of {targetName} to ";
                 if (pos.x == pos.y) desc += $"{pos.x}";
                 else desc += $"a random value between {pos.x} and {pos.y}";
             }
-            else if (type == AxisChange.Change)
+            else if (type == AxisChange.AddSub)
             {
-                desc += $"changes the {axisName} position of {targetName}, adding ";
+                desc += $"changes the {axisName} {changeName} of {targetName}, adding ";
                 if (delta.x == delta.y) desc += $"{delta.x}";
                 else desc += $"a random value between {delta.x} and {delta.y}";
+                if (scaleWithTime) desc += ", scaled with time.";
+            }
+            else if (type == AxisChange.Multiply)
+            {
+                desc += $"changes the {axisName} {changeName} of {targetName}, multiplying by ";
+                if (delta.x == delta.y) desc += $"{delta.x}";
+                else desc += $"a random value between {delta.x} and {delta.y}";
+                if (scaleWithTime) desc += ", scaled with time.";
+            }
+            else if (type == AxisChange.Divide)
+            {
+                desc += $"changes the {axisName} {changeName} of {targetName}, dividing by ";
+                if (delta.x == delta.y) desc += $"{delta.x}";
+                else desc += $"a random value between {delta.x} and {delta.y}";
+                if (scaleWithTime) desc += ", scaled with time.";
             }
 
             return desc;
@@ -77,8 +87,28 @@ namespace OkapiKit
 
             if (changeType == ChangeType.Position)
             {
-                string xDesc = GetAxisDesc(targetName, "X", xAxis, positionX, deltaX);
-                string yDesc = GetAxisDesc(targetName, "Y", yAxis, positionY, deltaY);
+                string xDesc = GetAxisDesc("position", targetName, "X", xAxis, positionX, deltaX);
+                string yDesc = GetAxisDesc("position", targetName, "Y", yAxis, positionY, deltaY);
+
+                if (xDesc != "")
+                {
+                    desc += $"{xDesc}";
+                    if (yDesc != "") desc += $", and {yDesc}.";
+                    else desc += ".";
+                }
+                else if (yDesc != "")
+                {
+                    desc += $"{yDesc}.";
+                }
+                else
+                {
+                    desc += "[No transform operation]";
+                }
+            }
+            else if (changeType == ChangeType.Scale)
+            {
+                string xDesc = GetAxisDesc("scale", targetName, "X", xAxis, positionX, deltaX);
+                string yDesc = GetAxisDesc("scale", targetName, "Y", yAxis, positionY, deltaY);
 
                 if (xDesc != "")
                 {
@@ -118,20 +148,29 @@ namespace OkapiKit
             if (!enableAction) return;
             if (!EvaluatePreconditions()) return;
 
-            if (changeType == ChangeType.Position)
+            if ((changeType == ChangeType.Position) || (changeType == ChangeType.Scale))
             {
                 var t = GetTarget();
-                Vector2 currentPos = t.position;
+                Vector2 current = Vector2.zero;
 
-                switch (xAxis)
+                if (changeType == ChangeType.Position) current = t.position;
+                else if (changeType == ChangeType.Scale) current = t.localScale;
+
+                    switch (xAxis)
                 {
                     case AxisChange.None:
                         break;
-                    case AxisChange.Change:
-                        currentPos.x += Random.Range(deltaX.x, deltaX.y);
+                    case AxisChange.AddSub:
+                        current.x += Random.Range(deltaX.x, deltaX.y) * ((scaleWithTime)?(Time.deltaTime):(1.0f));
+                        break;
+                    case AxisChange.Multiply:
+                        current.x *= Random.Range(deltaX.x, deltaX.y) * ((scaleWithTime) ? (Time.deltaTime) : (1.0f));
+                        break;
+                    case AxisChange.Divide:
+                        current.x /= Random.Range(deltaX.x, deltaX.y) * ((scaleWithTime) ? (Time.deltaTime) : (1.0f));
                         break;
                     case AxisChange.Set:
-                        currentPos.x = Random.Range(positionX.x, positionX.y);
+                        current.x = Random.Range(positionX.x, positionX.y);
                         break;
                     default:
                         break;
@@ -141,17 +180,26 @@ namespace OkapiKit
                 {
                     case AxisChange.None:
                         break;
-                    case AxisChange.Change:
-                        currentPos.y += Random.Range(deltaY.x, deltaY.y);
+                    case AxisChange.AddSub:
+                        current.y += Random.Range(deltaY.x, deltaY.y) * ((scaleWithTime) ? (Time.deltaTime) : (1.0f));
+                        break;
+                    case AxisChange.Multiply:
+                        current.y *= Random.Range(deltaY.x, deltaY.y) * ((scaleWithTime) ? (Time.deltaTime) : (1.0f));
+                        break;
+                    case AxisChange.Divide:
+                        current.y /= Random.Range(deltaY.x, deltaY.y) * ((scaleWithTime) ? (Time.deltaTime) : (1.0f));
                         break;
                     case AxisChange.Set:
-                        currentPos.y = Random.Range(positionY.x, positionY.y);
+                        current.y = Random.Range(positionY.x, positionY.y);
                         break;
                     default:
                         break;
                 }
 
-                t.position = currentPos;
+                if (changeType == ChangeType.Position)
+                    t.position = current;
+                else if (changeType == ChangeType.Scale)
+                    t.localScale = current;
             }
         }
     }

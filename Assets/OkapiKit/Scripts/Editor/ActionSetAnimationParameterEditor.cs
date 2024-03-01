@@ -47,7 +47,7 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(propAnimationParameter, new GUIContent("Parameter", "What parameter do you want to change?"));
                 EditorGUILayout.PropertyField(propValueType, new GUIContent("Type", "What data type do you want to change?"));
 
-                var type = (ActionSetAnimationParameter.ValueType)propValueType.enumValueIndex;
+                var type = (ActionSetAnimationParameter.ValueType)propValueType.intValue;
                 switch (type)
                 {
                     case ActionSetAnimationParameter.ValueType.Int:

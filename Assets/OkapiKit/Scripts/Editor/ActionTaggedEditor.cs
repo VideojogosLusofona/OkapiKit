@@ -36,11 +36,11 @@ namespace OkapiKit.Editor
 
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(propSearchType, new GUIContent("Search Type", "Where to find objects with actions tagged with the trigger tags?\nGlobal: Search for actions in all the scene\nTagged: Find actions tagged in this way in objects tagged by the search tags\nChildren: Find objects in the list of childrens of this object\nWithin collider: Find tagged action in objects inside a certain collider."));
-                if (propSearchType.enumValueIndex == (int)ActionTagged.SearchType.Tagged)
+                if (propSearchType.intValue == (int)ActionTagged.SearchType.Tagged)
                 {
                     EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags", "What objects to search for tagged actions?"));
                 }
-                if (propSearchType.enumValueIndex == (int)ActionTagged.SearchType.WithinCollider)
+                if (propSearchType.intValue == (int)ActionTagged.SearchType.WithinCollider)
                 {
                     EditorGUILayout.PropertyField(propSearchTags, new GUIContent("Search Tags", "What objects to search for tagged actions?\nThe objects tagged with this also have to be inside one of the given colliders."));
                     EditorGUILayout.PropertyField(propColliders, new GUIContent("Search Colliders", "In which colliders to search for objects?\nNote that for an object to be detected as being inside the collider, it needs to have a collider as well!"));
