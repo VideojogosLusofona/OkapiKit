@@ -21,8 +21,6 @@ Features:
 - Bool and string variables
 - Press '+' to add a point at cursor when editing a path
 - Add insert point option for path
-- Probes:
-  - Colliders
 - Comment Code
 - Documentation
 

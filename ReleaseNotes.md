@@ -7,6 +7,7 @@
 - Added Dash action, which enable short bursts of movement, using variables or values
 - Improved display of title on Change Value action
 - Probes now uses OkapiValues (can use numbers, or variables, etc)
+- Probes now support using colliders for probe - can only detect intersections between active objects!
 
 ## V1.13.0
 
