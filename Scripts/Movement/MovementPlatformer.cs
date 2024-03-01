@@ -703,7 +703,6 @@ namespace OkapiKit
             if (groundCheckCollider)
             {
                 ContactFilter2D contactFilter = new ContactFilter2D();
-                contactFilter.useTriggers = true;
                 contactFilter.useLayerMask = true;
                 contactFilter.layerMask = groundLayerMask;
 
