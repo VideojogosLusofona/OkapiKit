@@ -17,6 +17,8 @@ namespace OkapiKit.Editor
         SerializedProperty propUseFlip;
         SerializedProperty propHasMaxRotationSpeed;
         SerializedProperty propMaxRotationSpeed;
+        SerializedProperty propUseDuration;
+        SerializedProperty propPathDuration;
 
         protected override void OnEnable()
         {
@@ -31,6 +33,8 @@ namespace OkapiKit.Editor
             propUseFlip = serializedObject.FindProperty("useFlip");
             propHasMaxRotationSpeed = serializedObject.FindProperty("hasMaxRotationSpeed");
             propMaxRotationSpeed = serializedObject.FindProperty("maxRotationSpeed");
+            propUseDuration = serializedObject.FindProperty("useDuration");
+            propPathDuration = serializedObject.FindProperty("pathDuration");
         }
 
         public override void OnInspectorGUI()
@@ -43,7 +47,15 @@ namespace OkapiKit.Editor
 
                 DefaultMovementEditor();
 
-                EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Movement speed (in pixels/second)."));
+                EditorGUILayout.PropertyField(propUseDuration, new GUIContent("Use duration", "Should we specify the time of the full path traversal, or a constant speed?"));
+                if (!propUseDuration.boolValue)
+                {
+                    EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Movement speed (in pixels/second)."));
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField(propPathDuration, new GUIContent("Path duration", "How long does it take to follow the path (seconds)?"));
+                }
                 if (propPath.objectReferenceValue == null)
                 {
                     if (propTaggedPath.objectReferenceValue == null)

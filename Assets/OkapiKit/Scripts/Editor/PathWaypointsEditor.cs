@@ -6,7 +6,7 @@ using UnityEditor;
 namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(Path))]
-    public class PathWaypointsEditor : OkapiBaseEditor
+    public class PathEditor : OkapiBaseEditor
     {
         SerializedProperty propType;
         SerializedProperty propClosed;
@@ -240,6 +240,12 @@ namespace OkapiKit.Editor
 
                 DrawPath(type, t.GetPoints(), Color.white);
 
+                var prevMatrix = Handles.matrix;
+                if (!t.isWorldSpace)
+                {
+                    Handles.matrix = t.transform.localToWorldMatrix;
+                }
+
                 var editPoints = t.GetEditPoints();
                 if ((type == Path.Type.Smooth) && (!propClosed.boolValue))
                 {
@@ -268,6 +274,8 @@ namespace OkapiKit.Editor
                     Handles.color = Color.yellow;
                     Handles.DrawPolyLine(new Vector3[] { center - rightBound - upBound, center + rightBound - upBound, center + rightBound + upBound, center - rightBound + upBound, center - rightBound - upBound });
                 }
+
+                Handles.matrix = prevMatrix;
             }
             else
             {

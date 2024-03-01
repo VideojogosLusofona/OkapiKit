@@ -10,6 +10,8 @@
 - Probes now support using colliders for probe - can only detect intersections between active objects!
 - Added Change Collider action, which allows to set the trigger option of a collider
 - Fixed issue with Platformer movement - only non-trigger colliders can set the ground property
+- Probes can now be identified by tag
+- Follow path can now happen in normalized space, instead of constant speed
 
 ## V1.13.0
 
@@ -21,7 +23,7 @@
 
 - Change Value action now can add/subtract a Variable/ValueHandler
 - Change Value action can now set now assign to Variable/ValueHandler the value of another Variable/ValueHandler
-- Change Value action can now multiply/divide, besides adding/subtracting
+- Change Value action can now multiply/dibvide, besides adding/subtracting
 - Fixed a series of bugs with variable instances
 - Comparisons can now include variables instead of just literal values
 - Run Tagged Actions can now search on the object with which a collision just happened
