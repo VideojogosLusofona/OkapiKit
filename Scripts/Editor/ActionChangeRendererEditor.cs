@@ -34,7 +34,7 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(propRenderer, new GUIContent("Renderer", "What's the target renderer?"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type", "What kind of change to perform?\nVisibility: Visibility of the renderer."));
 
-                if (propChangeType.enumValueIndex == (int)ActionChangeRenderer.ChangeType.Visibility)
+                if (propChangeType.intValue == (int)ActionChangeRenderer.ChangeType.Visibility)
                 {
                     EditorGUILayout.PropertyField(propVisibility, new GUIContent("Visibility", "On: Turn on the renderer\nOff: turn off the renderer\nToggle: If on, turn off the renderer, otherwise turn on."));
                 }

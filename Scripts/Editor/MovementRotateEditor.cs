@@ -73,12 +73,12 @@ namespace OkapiKit.Editor
 
                 EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Maximum rotation speed (degrees/second)"));
                 EditorGUILayout.PropertyField(propMode, new GUIContent("Mode", "Rotation mode.\nAuto: Object rotates automatically\nInput Set: Object will turn to the direction given by the input (point to)\nInput Delta: Controls make the object turn right/left (tank controls)\nTarget: Object rotates towards a target\nMovement: Object rotates towards the movement direction"));
-                if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.InputSet)
+                if (propMode.intValue == (int)MovementRotate.RotateMode.InputSet)
                 {
                     EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align", "Direction to align.\nIs the object's 'front' pointing right or up?"));
                     EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type", "What's the input type?\nAxis: Use two axis to select a direction\nButton: Use four keys to select a direction\nKey: Use four keys to select a direction\nMouse: Use the mouse position relative to the object to select a direction."));
 
-                    var inputType = (MovementRotate.InputType)propInputType.enumValueIndex;
+                    var inputType = (MovementRotate.InputType)propInputType.intValue;
 
                     switch (inputType)
                     {
@@ -120,11 +120,11 @@ namespace OkapiKit.Editor
                             break;
                     }
                 }
-                else if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.InputDelta)
+                else if (propMode.intValue == (int)MovementRotate.RotateMode.InputDelta)
                 {
                     EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type", "What's the input type?\nAxis: Use one axis to rotate\nButton: Use two keys to rotate\nKey: Use two keys to rotate\nMouse: Use the mouse position relative to the object to rotate."));
 
-                    var inputType = (MovementRotate.InputType)propInputType.enumValueIndex;
+                    var inputType = (MovementRotate.InputType)propInputType.intValue;
 
                     switch (inputType)
                     {
@@ -161,7 +161,7 @@ namespace OkapiKit.Editor
                             break;
                     }
                 }
-                else if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.Target)
+                else if (propMode.intValue == (int)MovementRotate.RotateMode.Target)
                 {
                     EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align", "Is the object pointing right or up?"));
                     if (propTargetTag.objectReferenceValue == null)
@@ -181,7 +181,7 @@ namespace OkapiKit.Editor
                         EditorGUILayout.PropertyField(propTargetTag, new GUIContent("Target Tag", "What's the target's tag?\nYou can specify either a tag for the target, or link the target itself, but not both at the same time."));
                     }
                 }
-                else if (propMode.enumValueIndex == (int)MovementRotate.RotateMode.Movement)
+                else if (propMode.intValue == (int)MovementRotate.RotateMode.Movement)
                 {
                     EditorGUILayout.PropertyField(propAxisToAlign, new GUIContent("Axis To Align", "Is the object pointing right or up?"));
                 }

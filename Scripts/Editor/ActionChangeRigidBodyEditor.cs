@@ -36,7 +36,7 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(propTarget, new GUIContent("Target", "What's the target rigid body?"));
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type", "What kind of change on the rigid body?\nBody Type: Switch the type of body to static/dynamic or kinematic\nMass: Change the mass\nLinear Drag: Change the linear drag\nGravity Scale: Change the gravity scale."));
 
-                var changeType = (ActionChangeRigidBody.ChangeType)propChangeType.enumValueIndex;
+                var changeType = (ActionChangeRigidBody.ChangeType)propChangeType.intValue;
 
                 if (changeType == ActionChangeRigidBody.ChangeType.SetBodyType)
                 {

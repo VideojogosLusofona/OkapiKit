@@ -80,13 +80,13 @@ namespace OkapiKit.Editor
 
                 EditorGUILayout.PropertyField(propChangeType, new GUIContent("Change Type", "What is the type of change you want to perform on the movement?\nVelocity: change velocity of target\nGravity scale: scale factor for the gravity set in the project settings (Plaform Movement only)\nMax Jump Count: The maximum number of jumps the character can perform (Plaform Movement only)\nJump Hold Time: The time the player can press the jump button to jump higher (Platform Movement only)\nGliding Time: The time the player can hold the glide key ((Plaform Movement only)"));
 
-                var changeType = (ActionChangeMovement.ChangeType)propChangeType.enumValueIndex;
+                var changeType = (ActionChangeMovement.ChangeType)propChangeType.intValue;
 
                 if (changeType == ActionChangeMovement.ChangeType.Velocity)
                 {
                     EditorGUILayout.PropertyField(propOperation, new GUIContent("Operation", "What change to you want to perform to the velocity?\nSet: Select a value to set\nPercentage Modify: Selects a percentage of the current value to set the velocity\nAbsolute Modify: Selects an amount to increase/decrease the velocity."));
 
-                    var operation = (ActionChangeMovement.VelocityOperation)propOperation.enumValueIndex;
+                    var operation = (ActionChangeMovement.VelocityOperation)propOperation.intValue;
 
                     if (operation == ActionChangeMovement.VelocityOperation.Set)
                     {
@@ -150,7 +150,7 @@ namespace OkapiKit.Editor
                     {
                         EditorGUILayout.PropertyField(propFloatPlatformerOperation, new GUIContent("Operation", $"Choose what operation to perform on the current {changeType}.\nSet: Set a value\nPercentage Modify: Set to a percentage of the current value."));
 
-                        var operation = (ActionChangeMovement.FloatPlatformerPropertyOperation)propFloatPlatformerOperation.enumValueIndex;
+                        var operation = (ActionChangeMovement.FloatPlatformerPropertyOperation)propFloatPlatformerOperation.intValue;
 
                         if (operation == ActionChangeMovement.FloatPlatformerPropertyOperation.Set)
                         {

@@ -116,14 +116,14 @@ namespace OkapiKit.Editor
                 {
                     EditorGUILayout.PropertyField(propSpawnPointType, new GUIContent("Spawn Point Sequence", "How to choose a spawn point?\nRandom: A random point in the path is selected\nSequence: Points are chosen in sequence in a path, with the given spacing\nAll: Objects will spawn all over the path, with the given spacing"));
 
-                    if (propSpawnPointType.enumValueIndex != (int)Spawner.SpawnPointType.Random)
+                    if (propSpawnPointType.intValue != (int)Spawner.SpawnPointType.Random)
                     {
                         EditorGUILayout.PropertyField(propSpawnPathSpacing, new GUIContent("Point Spacing", "What is the spacing between spawn points on the path, in parametric space (percentage of the whole path - i.e. 0.5 means that there will be a point in the beginning, one in the middle, one at the end)"));
                     }
 
                     EditorGUILayout.PropertyField(propSpawnRotation, new GUIContent("Rotation", "What is the rotation of the spawned object?\nDefault: The original rotation is preserved\nThis: Uses the rotation of the object with the spawner\nAlign With Direction: Aligns object with the path's orientation\nAlign With Inverse Direction: Aligns object to point in the opposite direction of the path's orientation\nAlign With Perpendicular: Aligns objects to the outward direction of the path\nAlign With Inverse Perpendicular: Aligns object to the inner direction of the path"));
 
-                    var spawnRotation = (Spawner.SpawnRotation)propSpawnRotation.enumValueIndex;
+                    var spawnRotation = (Spawner.SpawnRotation)propSpawnRotation.intValue;
                     switch (spawnRotation)
                     {
                         case SpawnRotation.AlignWithDirection:

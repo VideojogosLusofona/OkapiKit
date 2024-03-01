@@ -96,7 +96,7 @@ namespace OkapiKit.Editor
 
                     EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type", "What's the input type?\nAxis: Use two axis to move\nButton: Use four keys to move\nKey: Use four keys to move"));
 
-                    var inputType = (MovementXY.InputType)propInputType.enumValueIndex;
+                    var inputType = (MovementXY.InputType)propInputType.intValue;
 
                     switch (inputType)
                     {

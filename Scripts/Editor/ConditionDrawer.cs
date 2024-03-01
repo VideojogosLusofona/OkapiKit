@@ -62,7 +62,7 @@ namespace OkapiKit.Editor
             {
                 if (propVariable.objectReferenceValue == null)
                 {
-                    if (propValueType.enumValueIndex == 0)
+                    if (propValueType.intValue == 0)
                     {
                         // Calculate rects
                         var systemRect = new Rect(positionValue, position.y + position.height / 3, 150 + extra_width_variable, position.height / 3);
@@ -78,7 +78,7 @@ namespace OkapiKit.Editor
                     }
                     else
                     {
-                        Condition.ValueType valueType = (Condition.ValueType)propValueType.enumValueIndex;
+                        Condition.ValueType valueType = (Condition.ValueType)propValueType.intValue;
                         if (valueType == Condition.ValueType.TagCount)
                         {
                             float heightPerElement = (position.height / 3) - 2.0f;
@@ -99,8 +99,8 @@ namespace OkapiKit.Editor
                                 EditorGUI.PropertyField(tagRangeRect, propTagRange, GUIContent.none);
                             }
                         }
-                        else if ((propValueType.enumValueIndex >= (int)Condition.ValueType.WorldPositionX) &&
-                                 (propValueType.enumValueIndex <= (int)Condition.ValueType.RelativePositionY))
+                        else if ((propValueType.intValue >= (int)Condition.ValueType.WorldPositionX) &&
+                                 (propValueType.intValue <= (int)Condition.ValueType.RelativePositionY))
                         {
                             var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 2);
                             var transformRect = new Rect(positionValue, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
@@ -288,17 +288,17 @@ namespace OkapiKit.Editor
 
             float height = baseHeight;
 
-            var condType = (Condition.ValueType)systemVariable.enumValueIndex;
+            var condType = (Condition.ValueType)systemVariable.intValue;
 
             if (propValueHandler.objectReferenceValue == null)
             {
                 if (propVariable.objectReferenceValue == null)
                 {
-                    if (systemVariable.enumValueIndex == 0)
+                    if (systemVariable.intValue == 0)
                     {
                         height = baseHeight * 3;
                     }
-                    else if (systemVariable.enumValueIndex == (int)Condition.ValueType.TagCount)
+                    else if (systemVariable.intValue == (int)Condition.ValueType.TagCount)
                     {
                         height = baseHeight * 3;
                     }
@@ -369,7 +369,7 @@ namespace OkapiKit.Editor
         {
             // Get type
             var propValueType = conditionElement.FindPropertyRelative("valueType");
-            var type = (Condition.ValueType)propValueType.enumValueIndex;
+            var type = (Condition.ValueType)propValueType.intValue;
 
             if (type == Condition.ValueType.TagCount)
             {

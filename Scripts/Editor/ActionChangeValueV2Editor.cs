@@ -53,7 +53,7 @@ namespace OkapiKit.Editor
                 }
                 EditorGUILayout.PropertyField(propOperation, new GUIContent("Operation", "What is the operation to perform on the variable/value instance?\nReset: Sets a variable/value instance to its default value.\nSet: Sets the variable to a certain value\nAdd: Adds a value to a variable\nSubtract: Subtracts a value from a variable\nRevSubtract: Subtracts this variable from a value\nMultiply: Multiplies the variable by a value\nDivide: Divides the variable by a value\nRevDivide: Divides a value by this variable"));
 
-                var opType = (ActionChangeValueV2.OperationType)propOperation.enumValueIndex;
+                var opType = (ActionChangeValueV2.OperationType)propOperation.intValue;
 
                 if (opType == ActionChangeValueV2.OperationType.Reset)
                 {
