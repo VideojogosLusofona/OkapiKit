@@ -65,14 +65,14 @@ namespace OkapiKit.Editor
                     if (propValueType.enumValueIndex == 0)
                     {
                         // Calculate rects
-                        var valueHandlerRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 3);
-                        var variableRect = new Rect(positionValue, position.y + position.height / 3, 150 + extra_width_variable, position.height / 3);
-                        var systemRect = new Rect(positionValue, position.y + 2 * position.height / 3, 150 + extra_width_variable, position.height / 3);
+                        var systemRect = new Rect(positionValue, position.y + position.height / 3, 150 + extra_width_variable, position.height / 3);
+                        var valueHandlerRect = new Rect(positionValue, position.y + 2 * position.height / 3, 150 + extra_width_variable, position.height / 3);
+                        var variableRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 3);
 
                         // Draw fields - pass GUIContent.none to each so they are drawn without labels
+                        EditorGUI.PropertyField(systemRect, propValueType, new GUIContent("", "Function"));
                         EditorGUI.PropertyField(valueHandlerRect, propValueHandler, GUIContent.none);
                         EditorGUI.PropertyField(variableRect, propVariable, GUIContent.none);
-                        EditorGUI.PropertyField(systemRect, propValueType, new GUIContent("", "Function"));
 
                         offset_y = position.height / 4;
                     }
@@ -161,13 +161,34 @@ namespace OkapiKit.Editor
                         }
                         else if ((valueType == Condition.ValueType.Probe) || (valueType == Condition.ValueType.ProbeDistance))
                         {
-                            var elemHeight = position.height / 2.0f;
+                            float lines = 2.0f;
+                            if ((propProbe.objectReferenceValue == null) &&  (propTag.objectReferenceValue == null)) lines = 3.0f;
+                            
+                            var elemHeight = position.height / lines;
 
                             var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
                             var probeRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+                            var probeTagRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
 
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
-                            EditorGUI.PropertyField(probeRect, propProbe, GUIContent.none);
+                            if (propProbe.objectReferenceValue == null)
+                            {
+                                if (propTag.objectReferenceValue == null)
+                                {
+                                    probeTagRect.y = probeRect.yMax;
+                                    EditorGUI.PropertyField(probeRect, propProbe, GUIContent.none);
+                                    EditorGUI.PropertyField(probeTagRect, propTag, GUIContent.none);
+                                }
+                                else
+                                {
+                                    EditorGUI.PropertyField(probeTagRect, propTag, GUIContent.none);
+                                }
+                            }
+                            else
+                            {
+                                EditorGUI.PropertyField(probeRect, propProbe, GUIContent.none);
+
+                            }
 
                             if (valueType == Condition.ValueType.Probe) dataType = Condition.DataType.Boolean;
                         }
@@ -309,7 +330,12 @@ namespace OkapiKit.Editor
                     else if ((condType == Condition.ValueType.Probe) ||
                              (condType == Condition.ValueType.ProbeDistance))
                     {
-                        height = baseHeight * 2;
+                        var propTag = property.FindPropertyRelative("tag");
+                        var propProbe = property.FindPropertyRelative("probe");
+
+                        if (propTag.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 2;
+                        else if (propProbe.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 2;
+                        else height = baseHeight * 3;
                     }
                     else if ((condType == Condition.ValueType.IsGrounded) ||
                              (condType == Condition.ValueType.IsGliding))

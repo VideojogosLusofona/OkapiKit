@@ -111,9 +111,11 @@ namespace OkapiKit
                     return $"AngleBetween([UNDEFINED], {axis})";
                 case ValueType.Probe:
                     if (probe != null) return $"ProbeIntersect({probe.name},{probe.GetTags()})";
+                    else if (tag != null) return $"ProbeIntersect(Tag({tag.name}))";
                     return $"ProbeIntersect([UNDEFINED])";
                 case ValueType.ProbeDistance:
                     if (probe != null) return $"ProbeIntersectionDistance({probe.name}, {probe.GetTags()})";
+                    else if (tag != null) return $"ProbeIntersect(Tag({tag.name}))";
                     return $"ProbeIntersectionDistance([UNDEFINED])";
                 case ValueType.IsGrounded:
                     if (movementPlatformer != null) return $"IsGrounded({movementPlatformer.name})";
@@ -172,6 +174,17 @@ namespace OkapiKit
                         if (probe)
                         {
                             b = probe.GetIntersectionState();
+                        }
+                        else
+                        {
+                            if (tag)
+                            {
+                                var probe = gameObject.FindObjectOfTypeWithHypertag<Probe>(tag);
+                                if (probe)
+                                {
+                                    b = probe.GetIntersectionState();
+                                }
+                            }
                         }
                         break;
                     case Condition.ValueType.IsGrounded:
@@ -326,11 +339,22 @@ namespace OkapiKit
                             }
                             break;
                         case Condition.ValueType.ProbeDistance:
+                            currentValue = float.MaxValue;
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+
                             if (probe == null)
                             {
-                                currentValue = float.MaxValue;
-                                minValue = 0;
-                                maxValue = float.MaxValue;
+                                if (tag)
+                                {
+                                    var probe = gameObject.FindObjectOfTypeWithHypertag<Probe>(tag);
+                                    if (probe)
+                                    {
+                                        currentValue = probe.GetIntersectionDistance();
+                                        minValue = probe.GetMinDistance();
+                                        maxValue = probe.GetMaxDistance();
+                                    }
+                                }
                             }
                             else
                             {
@@ -445,16 +469,16 @@ namespace OkapiKit
             }
             else if (valueType == ValueType.Probe)
             {
-                if (probe == null)
+                if ((probe == null) && (tag == null))
                 {
-                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined probe for line of sight condition", "We need to check the line of sight of a specific probe, so we need to define which one"));
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined probe for line of sight condition", "We need to check the line of sight of a specific probe, so we need to define which one, either by direct reference or by tag!"));
                 }
             }
             else if (valueType == ValueType.ProbeDistance)
             {
-                if (probe == null)
+                if ((probe == null) && (tag == null))
                 {
-                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined probe for intersection distance condition", "We need to check the distance to the intersection of a specific probe, so we need to define which one"));
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined probe for intersection distance condition", "We need to check the distance to the intersection of a specific probe, so we need to define which one, either by referencing the probe, or by using its tag!"));
                 }
             }
             else if (valueType == ValueType.IsGrounded)
