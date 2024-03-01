@@ -22,8 +22,7 @@ Features:
 - Press '+' to add a point at cursor when editing a path
 - Add insert point option for path
 - Probes:
-  - Circle
-  - Box
+  - Colliders
 - Comment Code
 - Documentation
 
@@ -36,6 +35,7 @@ Usability:
   - Have the ability to have custom adds (SetVisibility, SetVelocity, etc)
 - Add node ID property to actions/triggers
 - Remove Naughty Attributes completely (reduce dependencies)
+- On single-line OkapiValue, add a "Value" label to the edit boxes, so we can increase/decrease value by dragging
 
 Simple usage:
 -------------

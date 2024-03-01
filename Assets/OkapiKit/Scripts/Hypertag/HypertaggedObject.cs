@@ -218,6 +218,23 @@ namespace OkapiKit
                     if (comp) ret.Add(comp);
                 }
             }
+#if UNITY_EDITOR
+            else
+            {
+                if (!UnityEditor.EditorApplication.isPlaying)
+                {
+                    var hos = FindObjectsOfType<HypertaggedObject>(tag);
+                    foreach (var ho in hos)
+                    {
+                        if (ho.Has(tag))
+                        {
+                            var comp = ho.GetComponent<T>();
+                            if (comp) ret.Add(comp);
+                        }
+                    }
+                }
+            }
+#endif
 
             return ret;
         }

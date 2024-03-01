@@ -6,6 +6,7 @@
 - Movement components can now have conditions built in which take care of activating/deactivating that movement
 - Added Dash action, which enable short bursts of movement, using variables or values
 - Improved display of title on Change Value action
+- Probes now uses OkapiValues (can use numbers, or variables, etc)
 
 ## V1.13.0
 

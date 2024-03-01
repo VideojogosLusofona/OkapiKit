@@ -193,6 +193,7 @@ MonoBehaviour:
   negate: 0
   useCooldown: 0
   cooldown: 1
+  elseActions: []
 --- !u!4 &100101281
 Transform:
   m_ObjectHideFlags: 0
@@ -798,6 +799,8 @@ MonoBehaviour:
 
 '
   description: 
+  hasConditions: 0
+  conditions: []
   speed: 200
   mode: 3
   inputType: 0
@@ -1546,6 +1549,7 @@ MonoBehaviour:
   changeType: 1
   sprite: {fileID: 0}
   color: {r: 0.8490566, g: 0.10012458, b: 0.13006184, a: 1}
+  boolState: 0
 --- !u!114 &1507752131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1559,9 +1563,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When ((ProbeIntersect(ProbeLOS,[Obstacle]):\n          sets Turret's
+  _explanation: "When (ProbeIntersect(ProbeLOS,[Obstacle]):\n          sets Turret's
     sprite color to RGBA(0.849, 0.100, 0.130, 1.000)\nelse\n          sets Turret's
-    sprite color to RGBA(0.166, 0.851, 0.102, 1.000)\n"
+    sprite color to RGBA(0.166, 0.851, 0.102, 1.000)\n\nThis trigger will execute
+    only when the conditions change and they are all true."
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1570,12 +1575,15 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 1507752130}
+  continuous: 0
   conditions:
   - negate: 0
     valueHandler: {fileID: 0}
     variable: {fileID: 0}
     valueType: 10
     tag: {fileID: 0}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
     axis: 0
@@ -1583,6 +1591,8 @@ MonoBehaviour:
     movementPlatformer: {fileID: 0}
     comparison: 0
     value: 0
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
     percentageCompare: 0
   elseActions:
   - delay: 0
@@ -1605,19 +1615,38 @@ MonoBehaviour:
     ----------------
 
     Casts a ray
-    in the direction of the closest object with tag [Player],
+    the up direction of this object, from 0 units to 1000 units away,
 
-    detecting intersections
-    with objects with tags [Obstacle]
+    detecting
+    intersections with objects with tags [Obstacle]
 
-    The position of object crosshair will
-    be set to the intersection.'
+    The position of object crosshair
+    will be set to the intersection.'
   description: Detect LOS towards player
   type: 0
-  direction: 5
-  radius: 20
-  minDistance: 0
-  maxDistance: 1000
+  direction: 0
+  radius:
+    init: 1
+    type: 0
+    variableInstance: {fileID: 0}
+    variable: {fileID: 11400000, guid: e647a5beee1308a409ac895aff08eba2, type: 2}
+    floatValue: 20
+    intValue: 0
+  minDistance:
+    init: 1
+    type: 0
+    variableInstance: {fileID: 0}
+    variable: {fileID: 0}
+    floatValue: 0
+    intValue: 0
+  maxDistance:
+    init: 1
+    type: 0
+    variableInstance: {fileID: 0}
+    variable: {fileID: 0}
+    floatValue: 1000
+    intValue: 0
+  colliders: []
   tags:
   - {fileID: 11400000, guid: 3138ad8dc4cf4f74a98c1580707d1de8, type: 2}
   targetTransform: {fileID: 1187386988}
@@ -1647,6 +1676,7 @@ MonoBehaviour:
   changeType: 1
   sprite: {fileID: 0}
   color: {r: 0.16582114, g: 0.8509804, b: 0.10196077, a: 1}
+  boolState: 0
 --- !u!1 &1646311774
 GameObject:
   m_ObjectHideFlags: 0
@@ -2121,6 +2151,8 @@ MonoBehaviour:
 
 '
   description: 
+  hasConditions: 0
+  conditions: []
   speed: {x: 200, y: 200}
   limitSpeed: 0
   speedLimit: 100

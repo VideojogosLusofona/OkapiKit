@@ -14,13 +14,15 @@ namespace OkapiKit
 
         [SerializeField] private Type type = Type.Raycast;
         [SerializeField] private Direction direction = Direction.Up;
-        [SerializeField] private float radius = 20.0f;
-        [SerializeField] private float minDistance = 0.0f;
-        [SerializeField] private float maxDistance = 1000.0f;
+        [SerializeField, OVNoFunction] private OkapiValue radius = new OkapiValue(20.0f);
+        [SerializeField, OVNoFunction] private OkapiValue minDistance = new OkapiValue(0.0f);
+        [SerializeField, OVNoFunction] private OkapiValue maxDistance = new OkapiValue(1000.0f);
+        [SerializeField] private Collider2D[] colliders;
         [SerializeField] private Hypertag[] tags;
         [SerializeField] private Transform targetTransform;
         [SerializeField] private Transform dirTransform;
         [SerializeField] private Hypertag dirTag;
+
 
         private bool intersectionState = false;
         private RaycastHit2D[] intersectionResults = new RaycastHit2D[64];
@@ -100,25 +102,21 @@ namespace OkapiKit
                 case Type.Raycast:
                     if (hasMaxDistance)
                     {
-                        if (minDistance > 0) desc += $"Casts a ray {dirDesc}, from {minDistance} units to {maxDistance} units away,\n";
-                        else desc += $"Casts a ray {dirDesc}, up to {maxDistance} units away,\n";
+                        desc += $"Casts a ray {dirDesc}, from {minDistance.GetDescription()} units to {maxDistance.GetDescription()} units away,\n";
                     }
                     else
                     {
-                        if (minDistance > 0) desc += $"Casts a ray {dirDesc}, from {minDistance} units away,\n";
-                        else desc += $"Casts a ray {dirDesc},\n";
+                        desc += $"Casts a ray {dirDesc}, from {minDistance.GetDescription()} units away,\n";
                     }
                     break;
                 case Type.Circlecast:
                     if (hasMaxDistance)
                     {
-                        if (minDistance > 0) desc += $"Casts a circle with radius {radius} {dirDesc}, from {minDistance} units to {maxDistance} units away,\n";
-                        else desc += $"Casts a circle with radius {radius} {dirDesc}, up to {maxDistance} units away,\n";
+                        desc += $"Casts a circle with radius {radius.GetDescription()} {dirDesc}, from {minDistance.GetDescription()} units to {maxDistance.GetDescription()} units away,\n";
                     }
                     else
                     {
-                        if (minDistance > 0) desc += $"Casts a circle with radius {radius} {dirDesc}, from {minDistance} units away,\n";
-                        else desc += $"Casts a circle with radius {radius} {dirDesc},\n";
+                        desc += $"Casts a circle with radius {radius.GetDescription()} {dirDesc}, from {minDistance.GetDescription()} units away,\n";
                     }
                     break;
                 default:
@@ -195,7 +193,7 @@ namespace OkapiKit
 
         public bool GetIntersectionState() => intersectionState;
         public float GetIntersectionDistance() => closestIntersectionDistance;
-        public float GetMinDistance() => minDistance;
+        public float GetMinDistance() => minDistance.GetFloat(gameObject);
         public float GetMaxDistance()
         {
             switch (direction)
@@ -219,9 +217,9 @@ namespace OkapiKit
                 default:
                     break;
             }
-            return maxDistance;
+            return maxDistance.GetFloat(gameObject);
         }
-        public Vector3 GetStart(Vector3 dir) => transform.position + minDistance * dir;
+        public Vector3 GetStart(Vector3 dir) => transform.position + GetMinDistance() * dir;
         public Vector3 GetEnd(Vector3 dir) => transform.position + GetMaxDistance() * dir;
 
         private void Update()
@@ -231,7 +229,7 @@ namespace OkapiKit
 
             if ((direction == Direction.TargetObjectDirection) || (direction == Direction.TargetTagDirection))
             {
-                float dist = maxDistance;
+                float dist = maxDistance.GetFloat(gameObject);
                 if (direction == Direction.TargetObjectDirection)
                 {
                     dist = (dirTransform.position - transform.position).magnitude;
@@ -245,11 +243,11 @@ namespace OkapiKit
                     }
                 }
 
-                if ((dist < minDistance) || (dist > maxDistance))
+                if ((dist < minDistance.GetFloat(gameObject)) || (dist > maxDistance.GetFloat(gameObject)))
                 {
                     intersectionState = true;
                     intersectionPoint = GetEnd(GetDirection());
-                    closestIntersectionDistance = maxDistance;
+                    closestIntersectionDistance = maxDistance.GetFloat(gameObject);
                     return;
                 }
             }
@@ -259,11 +257,11 @@ namespace OkapiKit
             int n = 0;
             if (type == Type.Raycast)
             {
-                n = Physics2D.Raycast(GetStart(dir), dir, contactFilter, intersectionResults, (GetMaxDistance() - minDistance));
+                n = Physics2D.Raycast(GetStart(dir), dir, contactFilter, intersectionResults, (GetMaxDistance() - GetMinDistance()));
             }
             else if (type == Type.Circlecast)
             {
-                n = Physics2D.CircleCast(GetStart(dir), radius, dir, contactFilter, intersectionResults, (GetMaxDistance() - minDistance));
+                n = Physics2D.CircleCast(GetStart(dir), radius.GetFloat(gameObject), dir, contactFilter, intersectionResults, (GetMaxDistance() - GetMinDistance()));
             }
             if (n > 0)
             {
@@ -342,6 +340,7 @@ namespace OkapiKit
         private void OnDrawGizmos()
         {
             Vector3 dir = GetDirection();
+            float   r = 1.0f;
             if (type == Type.Raycast)
             {
                 Gizmos.color = Color.yellow;
@@ -349,16 +348,18 @@ namespace OkapiKit
             }
             else
             {
+                r = radius.GetFloat(gameObject);
+
                 Gizmos.color = Color.yellow;
-                Gizmos.DrawWireSphere(GetStart(dir), radius);
-                Gizmos.DrawWireSphere(GetEnd(dir), radius);
+                Gizmos.DrawWireSphere(GetStart(dir), r);
+                Gizmos.DrawWireSphere(GetEnd(dir), r);
 
                 var perp = new Vector3(dir.y, -dir.x, dir.z);
 
-                var p1 = GetStart(dir) - perp * radius;
-                var p2 = GetStart(dir) + perp * radius;
-                var p3 = GetEnd(dir) - perp * radius;
-                var p4 = GetEnd(dir) + perp * radius;
+                var p1 = GetStart(dir) - perp * r;
+                var p2 = GetStart(dir) + perp * r;
+                var p3 = GetEnd(dir) - perp * r;
+                var p4 = GetEnd(dir) + perp * r;
                 Gizmos.DrawLine(p1, p3);
                 Gizmos.DrawLine(p2, p4);
             }
@@ -366,7 +367,7 @@ namespace OkapiKit
             if (intersectionState)
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawSphere(intersectionPoint, radius);
+                Gizmos.DrawSphere(intersectionPoint, r);
             }
         }
     }
