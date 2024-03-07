@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.14.1
+
+- Fixed issue with builds in version V1.14.0
+
 ## V1.14.0
 
 - Added InputRotatesSprite and VelocityRotatesSprite to Flip Behaviour on platformer controller. Rotating instead of scaling changes the actual objects direction, so it can affect other movement systems, for example.
