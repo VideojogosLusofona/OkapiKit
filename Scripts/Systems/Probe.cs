@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
-using static OkapiKit.Path;
 
 namespace OkapiKit
 {
