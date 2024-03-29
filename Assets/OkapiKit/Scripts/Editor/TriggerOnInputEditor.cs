@@ -70,7 +70,7 @@ namespace OkapiKit.Editor
                     {
                         actionsName = "Actions while pressed";
                         elseActionsName = "Actions while released";
-                    }                    
+                    }
                 }
                 else if (inputType == TriggerOnInput.InputType.Key)
                 {
@@ -87,6 +87,10 @@ namespace OkapiKit.Editor
                 {
                     EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis", "Axis"));
                     EditorGUILayout.PropertyField(propDeadArea, new GUIContent("Dead Area", "How far from center does the axis have to go for it to execute this trigger?"));
+                }
+                else if (inputType == TriggerOnInput.InputType.AnyKey)
+                {
+                    EditorGUILayout.PropertyField(propContinuous, new GUIContent("Continuous", "If active, this triggers while any key is pressed, if not this trigger only executes when a key is just pressed."));
                 }
                 if ((propContinuous.boolValue) || (inputType == TriggerOnInput.InputType.Axis))
                 {

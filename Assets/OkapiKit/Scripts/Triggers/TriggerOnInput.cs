@@ -9,7 +9,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Trigger/On Input")]
     public class TriggerOnInput : Trigger
     {
-        public enum InputType { Button = 0, Key = 1, Axis = 2 };
+        public enum InputType { Button = 0, Key = 1, Axis = 2, AnyKey = 3 };
 
         [SerializeField]
         InputType inputType = InputType.Button;
@@ -33,6 +33,7 @@ namespace OkapiKit
         protected ActionTrigger[] elseActions;
 
         float cooldownTimer = 0.0f;
+        bool prevAnyKey = false;
 
         public override string GetTriggerTitle() => "On Input";
 
@@ -41,10 +42,15 @@ namespace OkapiKit
             string desc = "When ";
             if (inputType == InputType.Button) desc += $"button {buttonName} ";
             else if (inputType == InputType.Key) desc += $"key {key} ";
-            else
+            else if (inputType == InputType.Axis)
             {
                 desc += $"axis {axis} ";
             }
+            else
+            {
+                desc += $"any key ";
+            }
+
             if (continuous)
             {
                 if (negate) desc += "is not held";
@@ -109,6 +115,20 @@ namespace OkapiKit
                 isTrigger = (a < deadArea.x) || (a > deadArea.y);
                 elseTrigger = !isTrigger;
                 c = true;
+            }
+            else if (inputType == InputType.AnyKey)
+            {
+                if (continuous)
+                {
+                    isTrigger = Input.anyKey;
+                    elseTrigger = !Input.anyKey;
+                }
+                else
+                {
+                    isTrigger = Input.anyKeyDown;
+                    elseTrigger = !Input.anyKey && prevAnyKey;
+                }
+                prevAnyKey = Input.anyKey;
             }
 
             if ((c) && (negate))

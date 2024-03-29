@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.15.0
+
+- Added "any key" option to OnInput trigger
+
 ## V1.14.1
 
 - Fixed issue with builds in version V1.14.0

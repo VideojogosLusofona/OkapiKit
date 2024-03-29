@@ -180,6 +180,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 [Master484]:http://m484games.ucoz.com/
 [Warspawn]:https://opengameart.org/users/warspawn
 [pansapiens]:https://opengameart.org/users/pansapiens
+[rileygombart]:https://opengameart.org/users/rileygombart
 [chabull]:https://opengameart.org/users/chabull
 [IMakeGames]:http://www.imake-games.com/
 [Winternaut]:https://opengameart.org/users/winternaut

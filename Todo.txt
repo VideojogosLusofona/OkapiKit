@@ -23,6 +23,8 @@ Features:
 - Add insert point option for path
 - Comment Code
 - Documentation
+- Support for Analytics (extra package?)
+- Add OnDestroy event
 
 Usability:
 ----------
@@ -34,6 +36,7 @@ Usability:
 - Add node ID property to actions/triggers
 - Remove Naughty Attributes completely (reduce dependencies)
 - On single-line OkapiValue, add a "Value" label to the edit boxes, so we can increase/decrease value by dragging
+- Disable hierarchy icons on OkapiConfig
 
 Simple usage:
 -------------
