@@ -9,10 +9,6 @@ namespace NodeEditor
 
     public class AddNodePopup : EditorWindow
     {
-        protected Vector2       scrollPosition;
-        protected string        searchString = "";
-        protected Action<Type>  onTypeSelected;
-
         static protected GUIStyle      toolbarSkinStyle;
         static protected GUIStyle      toolbarSearchTextField;
         static protected GUIStyle      toolbarSearchCancelButton;
@@ -20,10 +16,14 @@ namespace NodeEditor
         static protected Texture2D     highlightTexture;
         static protected bool          skinCache = false;
         
+        protected Vector2                       scrollPosition;
+        protected string                        searchString = "";
+        protected Action<Type, Vector2>         onTypeSelected;
         protected bool                          autoFocus = true;
         protected TreeNode                      rootNode;
         protected object                        lastHighlight;
         protected object                        newHighlight;
+        protected Vector2                       addPosition;
         protected Dictionary<TreeNode, bool>    foldoutStates = new();
 
         protected class TreeNode
@@ -92,10 +92,11 @@ namespace NodeEditor
             }
         }
 
-        public static AddNodePopup Init(NodeType[] nodeTypes, Action<Type> onTypeSelected)
+        public static AddNodePopup Init(NodeType[] nodeTypes, Action<Type, Vector2> onTypeSelected, Vector2 position)
         {
             AddNodePopup window = GetWindow<AddNodePopup>(true, "Add Node");
             window.onTypeSelected = onTypeSelected;
+            window.addPosition = position;
             window.Build(nodeTypes);
             window.ShowPopup();
             window.wantsMouseMove = true;
@@ -218,7 +219,7 @@ namespace NodeEditor
                 EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
                 if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
                 {
-                    onTypeSelected?.Invoke(nodeType.type);
+                    onTypeSelected?.Invoke(nodeType.type, addPosition);
                     Close();
                     Event.current.Use(); // Consume the event
                 }

@@ -1,5 +1,7 @@
+using NodeEditor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,19 +18,26 @@ namespace OkapiKitV2
             var theme = new Theme()
             {
                 windowName = "Okapi Script",
-                toolbarAddNode = true
+                menuAddNode = true
             };
             var editor = Init<OkapiScriptEditor>(theme);
         }
 
-        void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+
             var theme = new Theme()
             {
                 windowName = "Okapi Script",
-                toolbarAddNode = true
+                menuAddNode = true
             };
             var editor = Init<OkapiScriptEditor>(theme);
+        }
+
+        protected override UnityEngine.Object GetSelection()
+        {
+            return currentScript;
         }
 
         protected override void SetActiveSelection()
@@ -130,7 +139,7 @@ namespace OkapiKitV2
             }
         }
 
-        protected override void OnNodeCreate(object newNode)
+        protected override void OnNodeCreate(object newNode, Vector2 addPosition)
         {
             var okapiNode = newNode as OkapiNode;
 
@@ -145,14 +154,19 @@ namespace OkapiKitV2
 
             currentScript.Add(okapiNode);
 
-            SetPositionOfNewNode(okapiNode);
+            SetPositionOfNewNode(okapiNode, addPosition);
 
             EditorUtility.SetDirty(currentScript);
         }
 
-        void SetPositionOfNewNode(OkapiNode node)
+        void SetPositionOfNewNode(OkapiNode node, Vector2 addPosition)
         {
-            node.position = Vector2.zero;
+            node.position = addPosition;
+        }
+
+        protected override List<BaseNode> GetNodes()
+        {
+            return currentScript.GetNodes().Select(node => node as BaseNode).ToList();
         }
     }
 }

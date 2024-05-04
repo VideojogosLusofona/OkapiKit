@@ -28,5 +28,7 @@ namespace OkapiKitV2
 
             return nodes.Count - 1;
         }
+
+        public List<OkapiNode> GetNodes() => nodes;
     }
 }
