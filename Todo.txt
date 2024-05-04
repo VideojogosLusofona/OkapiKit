@@ -1,3 +1,7 @@
+
+OKAPI 1
+-------
+
 Features:
 ---------
 
@@ -69,6 +73,13 @@ Games:
 - Create Commando 2 game (add AI system - 2d path finding)
 - Create Visual Novel game
 - Convert probe thing to racing game with probe based AI
+
+OKAPI 2
+-------
+
+- Custom editor for OkapiObject
+- OkapiObject has tags
+
 
 Ideas Okapi V2.0:
 -----------------

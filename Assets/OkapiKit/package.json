@@ -6,7 +6,8 @@
     "description": "OkapiKit is a toolkit for creation of simple games without code.",
     "keywords": [ "kit" ],
     "category": "kit",
-    "dependencies": {},
+    "dependencies": {
+    },
     "author": {
       "name": "Videojogos ULHT",
       "url": "https://github.com/VideojogosLusofona"
