@@ -30,6 +30,15 @@ namespace NodeEditor
         protected abstract void OnInit();
         protected abstract void OnRender();
         protected abstract void CommitChanges();
+
+        protected void DrawBoxWithOutline(Rect rect, Color boxColor, Color outlineColor, float outlineThickness)
+        {
+            // Draw outline
+            EditorGUI.DrawRect(new Rect(rect.x - outlineThickness, rect.y - outlineThickness, rect.width + (outlineThickness * 2), rect.height + (outlineThickness * 2)), outlineColor);
+
+            // Draw box
+            EditorGUI.DrawRect(rect, boxColor);
+        }
     }
 
     [NodeRenderer(typeof(BaseNode))]
@@ -83,7 +92,7 @@ namespace NodeEditor
             // Get color and width from node attributes
             Rect rect = new Rect(node.position.x, node.position.y, width, GetHeight());
 
-            EditorGUI.DrawRect(rect, new Color(0.2f, 0.2f, 0.2f, 1.0f));
+            DrawBoxWithOutline(rect, new Color(0.2f, 0.2f, 0.2f, 1.0f), Color.black, 1);
 
             // Draw the node rectangle
             Rect titleRect = rect;
