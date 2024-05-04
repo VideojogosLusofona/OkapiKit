@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -13,6 +14,8 @@ namespace OkapiKitV2
 
         public int Add(OkapiNode node)
         {
+            Undo.RecordObject(this, "Add Node");
+
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (nodes[i] == null)

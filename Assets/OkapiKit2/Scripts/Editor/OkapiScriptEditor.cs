@@ -140,9 +140,14 @@ namespace OkapiKitV2
                 return;
             }
 
+            // Before I change the current script, record its state
+            Undo.RecordObject(currentScript, "Add New Node");
+
             currentScript.Add(okapiNode);
 
             SetPositionOfNewNode(okapiNode);
+
+            EditorUtility.SetDirty(currentScript);
         }
 
         void SetPositionOfNewNode(OkapiNode node)

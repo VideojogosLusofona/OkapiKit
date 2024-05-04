@@ -28,6 +28,7 @@ namespace NodeEditor
         protected Texture2D     toolbarTexture;
         protected string        disableReason = "";
         protected Rect          worldSpaceExtents;
+        protected bool          isPanning = false;
 
         protected static T Init<T>(Theme theme) where T : BaseNodeEditor
         {
@@ -93,6 +94,18 @@ namespace NodeEditor
             if (!hasSelection)
             {
                 GUILayout.Label(disableReason);
+            }
+
+            if (isPanning)
+            {
+                if (!hasFocus)
+                {
+                    isPanning = false; // Reset panning if the window loses focus while panning
+                }
+                else
+                {
+                    EditorGUIUtility.AddCursorRect(new Rect(0, 0, position.width, position.height), MouseCursor.Pan);
+                }
             }
         }
 
@@ -211,10 +224,28 @@ namespace NodeEditor
                     {
                         gridPanPosition += e.delta / zoomScale;
                         Repaint();
+                        isPanning = true;
                     }
                     break;
                 case EventType.ScrollWheel:
                     HandleZoom(e);
+                    break;
+                case EventType.MouseUp:
+                    if (e.button == 1)  // End panning on mouse up
+                    {
+                        if (isPanning)
+                        {
+                            isPanning = false;
+                            Repaint();
+                        }
+                    }
+                    break;
+                case EventType.Ignore: // Potentially handle ending a drag when mouse goes out of window
+                    if (isPanning)
+                    {
+                        isPanning = false;
+                        Repaint();
+                    }
                     break;
             }
         }
