@@ -46,8 +46,9 @@ namespace NodeEditor
         protected List<BaseNodeRenderer>                    initialSelection = new();
         protected DateTime[]                                timeOfClick = new DateTime[8];
         protected bool                                      isNodeMove = false;
+        protected Dictionary<BaseNodeRenderer, Vector2>     originalPosition;
+        protected Vector2                                   totalDelta;
         protected Vector2Int                                sortIndices = Vector2Int.zero;
-        
 
         protected bool isPanning
         {
@@ -126,8 +127,8 @@ namespace NodeEditor
                             }
                             else if (isNodeMove)
                             {
-                                var delta = op - panPosition;
-                                MoveNodes(delta);
+                                totalDelta += op - panPosition;
+                                MoveNodes();
                             }
 
                             Repaint();
@@ -392,6 +393,13 @@ namespace NodeEditor
                                     if (!ctrl) ClearNodeSelection();
                                     AddNodeToSelection(node);
                                 }
+
+                                totalDelta = Vector2.zero;
+                                originalPosition = new();
+                                foreach (var selectedNode in nodeSelection)
+                                {
+                                    originalPosition[selectedNode] = selectedNode.node.position;
+                                }
                             }
                             else if (!isRectSelecting)
                             {
@@ -411,8 +419,8 @@ namespace NodeEditor
                         if (isNodeMove)
                         {
                             // Move nodes
-                            var delta = e.delta / zoomScale;
-                            MoveNodes(delta);
+                            totalDelta += e.delta / zoomScale;
+                            MoveNodes();
                             Repaint();
                         }
                     }
@@ -719,7 +727,7 @@ namespace NodeEditor
             }
         }
 
-        protected void MoveNodes(Vector2 delta)
+        protected void MoveNodes()
         {
             var uniqueScripts = nodeSelection
                 .Where(renderer => renderer != null && renderer.node != null && renderer.node.owner != null) // Filter out nulls
@@ -730,7 +738,8 @@ namespace NodeEditor
             Undo.RecordObjects(uniqueScripts, "Move Nodes");
             foreach (var node in nodeSelection)
             {
-                node.node.position += delta;
+                // Check if we have the original position
+                node.node.position = originalPosition[node] + totalDelta;
             }
             foreach (var scripts in uniqueScripts)
             {
