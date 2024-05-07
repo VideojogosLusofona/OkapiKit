@@ -29,6 +29,20 @@ namespace OkapiKitV2
             return nodes.Count - 1;
         }
 
+        public void Remove(OkapiNode node)
+        {
+            Undo.RecordObject(this, "Remove Node");
+
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i] == node)
+                {
+                    nodes[i] = null;
+                    return;
+                }
+            }
+        }
+
         public List<OkapiNode> GetNodes() => nodes;
     }
 }

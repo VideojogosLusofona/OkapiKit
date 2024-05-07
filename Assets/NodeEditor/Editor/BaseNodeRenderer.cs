@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.Graphs;
@@ -8,6 +9,7 @@ namespace NodeEditor
     public abstract class BaseNodeRenderer
     {
         public BaseNode node;
+        public bool     selected = false;
 
         public void Init(BaseNode node)
         {
@@ -39,10 +41,14 @@ namespace NodeEditor
             // Draw box
             EditorGUI.DrawRect(rect, boxColor);
         }
+
+        public abstract bool IsHovering(float x, float y);
+        public virtual void OnSelect() { }
+        public virtual void OnDeselect() { }
     }
 
     [NodeRenderer(typeof(BaseNode))]
-    public class PlaceholderRenderer : BaseNodeRenderer
+    public class BasicNodeRenderer : BaseNodeRenderer
     {
         Color       bgColor = Color.black;
         Color       textColor = Color.white;
@@ -89,10 +95,11 @@ namespace NodeEditor
 
         protected override void OnRender()
         {
+            // All the part below is non-interactive (background, border, labels)
             // Get color and width from node attributes
             Rect rect = new Rect(node.position.x, node.position.y, width, GetHeight());
 
-            DrawBoxWithOutline(rect, new Color(0.2f, 0.2f, 0.2f, 1.0f), Color.black, 1);
+            DrawBoxWithOutline(rect, new Color(0.2f, 0.2f, 0.2f, 1.0f), (selected) ? (Color.white) : (Color.black), (selected) ? (2) : (1));
 
             // Draw the node rectangle
             Rect titleRect = rect;
@@ -126,5 +133,13 @@ namespace NodeEditor
         {
             return titleHeight + 50.0f;
         }
+
+        public override bool IsHovering(float x, float y)
+        {
+            Rect rect = new Rect(node.position.x, node.position.y, width, GetHeight());
+
+            return rect.Contains(new Vector2(x, y));
+        }
+
     }
 }

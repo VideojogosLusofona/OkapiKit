@@ -139,7 +139,7 @@ namespace OkapiKitV2
             }
         }
 
-        protected override void OnNodeCreate(object newNode, Vector2 addPosition)
+        protected override void OnNodeCreate(BaseNode newNode, Vector2 addPosition)
         {
             var okapiNode = newNode as OkapiNode;
 
@@ -157,6 +157,28 @@ namespace OkapiKitV2
             SetPositionOfNewNode(okapiNode, addPosition);
 
             EditorUtility.SetDirty(currentScript);
+            ActiveEditorTracker.sharedTracker.ForceRebuild();
+        }
+
+
+
+        protected override void OnNodeDelete(BaseNode newNode)
+        {
+            var okapiNode = newNode as OkapiNode;
+
+            if (okapiNode == null)
+            {
+                Debug.LogError("Unexpected error after deleting node!");
+                return;
+            }
+
+            // Before I change the current script, record its state
+            Undo.RecordObject(currentScript, "Remove Node");
+
+            currentScript.Remove(okapiNode);
+
+            EditorUtility.SetDirty(currentScript);
+            ActiveEditorTracker.sharedTracker.ForceRebuild();
         }
 
         void SetPositionOfNewNode(OkapiNode node, Vector2 addPosition)

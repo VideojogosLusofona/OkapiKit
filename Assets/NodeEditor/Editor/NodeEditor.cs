@@ -29,11 +29,18 @@ namespace NodeEditor
         protected Texture2D                                 toolbarTexture;
         protected string                                    disableReason = "";
         protected Rect                                      worldSpaceExtents;
-        protected bool                                      isPanning = false;
+        protected bool                                      _isPanning = false;
+        protected DateTime                                  lastPan;
         protected Matrix4x4                                 currentMatrix;
         protected Matrix4x4                                 invCurrentMatrix;
-        protected Dictionary<Type, Type>                    cachedRendererTypes;
         protected Dictionary<BaseNode, BaseNodeRenderer>    renderers = new();
+        protected List<BaseNodeRenderer>                    nodeSelection = new();
+
+        protected bool isPanning
+        {
+            get { return _isPanning; }
+            set { _isPanning = value; if (!_isPanning) lastPan = DateTime.Now; }
+        }
 
         protected static T Init<T>(Theme theme) where T : BaseNodeEditor
         {
@@ -59,7 +66,8 @@ namespace NodeEditor
         protected virtual int GetSubSelectorSelected() => -1;
         protected virtual void SetSubSelector(string str) { }
         protected abstract void AddNode(Vector2 position);
-        protected abstract void OnNodeCreate(object newNode, Vector2 addPosition);
+        protected abstract void OnNodeCreate(BaseNode newNode, Vector2 addPosition);
+        protected abstract void OnNodeDelete(BaseNode newNode);
         protected abstract List<BaseNode> GetNodes();
 
         void OnGUI()
@@ -121,28 +129,23 @@ namespace NodeEditor
         {
             // Subscribe to the undo/redo event
             Undo.undoRedoPerformed += OnUndoRedo;
-
-            Debug.Log("Registering undo performed");
         }
 
         private void OnDisable()
         {
             // Unsubscribe when the window is closed to clean up
             Undo.undoRedoPerformed -= OnUndoRedo;
-
-            Debug.Log("Unregistering undo performed");
         }
 
         private void OnUndoRedo()
         {
             // Repaint the window whenever an undo or redo operation is performed
             Repaint();
-            Debug.Log("Undo/redo performed");
         }
 
         void OnSelectionChange()
         {
-            Repaint();  // This will refresh the editor window when the selection changes
+            Repaint();
         }
 
         void DrawToolbar()
@@ -243,10 +246,11 @@ namespace NodeEditor
 
         void DrawNode(BaseNode node)
         {
+            if (node == null) return;
             if ((!renderers.TryGetValue(node, out BaseNodeRenderer renderer)) ||
                 (renderer == null))
             {
-                var rendererType = GetRendererType(node.GetType());
+                var rendererType = Info.GetRendererType(node.GetType());
                 if (rendererType == null)
                 {
                     Debug.LogWarning($"No renderer for node type {node.GetType()}!");
@@ -261,53 +265,28 @@ namespace NodeEditor
             renderer.Render();
         }
 
-        Type GetRendererType(Type type)
-        {
-            if ((cachedRendererTypes == null) || (cachedRendererTypes.Count == 0))
-            {
-                cachedRendererTypes = new();
-
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    foreach (var t in assembly.GetTypes())
-                    {
-                        if (t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(BaseNodeRenderer)))
-                        {
-                            var attr = t.GetCustomAttribute<NodeRendererAttribute>();
-                            if (attr != null)
-                            {
-                                cachedRendererTypes.Add(attr.type, t);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (cachedRendererTypes.TryGetValue(type, out var rendererType))
-            {
-                return rendererType;
-            }
-
-            if (type.BaseType != null)
-            {
-                if (type.BaseType.IsClass)
-                {
-                    rendererType = GetRendererType(type.BaseType);
-                    if (rendererType != null)
-                    {
-                        cachedRendererTypes[type] = rendererType;
-                        return rendererType;
-                    }
-                }
-            }
-
-            return null;
-        }
-
         protected virtual void ProcessEvents(Event e)
         {
             switch (e.type)
             {
+                case EventType.MouseDown:
+                    if ((e.button == 0) && (!isPanning))
+                    {
+                        bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
+
+                        // Can be a selection
+                        var node = GetNodeAtMouse(e.mousePosition);
+
+                        if (!ctrl) ClearNodeSelection();
+                        if (node != null)
+                        {
+                            if (ctrl) ToggleNodeSelection(node);
+                            else AddNodeToSelection(node);
+                        }
+                        Repaint();
+                        //e.Use();
+                    }
+                    break;
                 case EventType.MouseDrag:
                     if (e.button == 1)
                     {
@@ -341,14 +320,37 @@ namespace NodeEditor
                     break;
                 case EventType.ContextClick:
                     {
-                        Vector2 mousePosition = Event.current.mousePosition; // Get the position of the mouse
-                        if (ShowContextMenu(mousePosition))
+                        if ((!isPanning) && ((DateTime.Now - lastPan).Milliseconds > 100.0f))
                         {
-                            Event.current.Use(); // Mark the event as used so it doesn't propagate further
+                            Vector2 mousePosition = Event.current.mousePosition; // Get the position of the mouse
+                            if (ShowContextMenu(mousePosition))
+                            {
+                                Event.current.Use(); // Mark the event as used so it doesn't propagate further
+                            }
                         }
                     }
                     break;
             }
+        }
+
+        BaseNodeRenderer GetNodeAtMouse(Vector2 pos)
+        {
+            var deltaY = (theme.toolbarEnabled) ? (21.0f) : (0.0f);
+
+            // Convert position to world coordinates
+            var worldPos4 = invCurrentMatrix * new Vector4(pos.x, pos.y + deltaY, 0, 1);
+
+            foreach (var nodeRenderer in renderers)
+            {
+                var node = nodeRenderer.Value;
+
+                if (node.IsHovering(worldPos4.x, worldPos4.y))
+                {
+                    return node;
+                }
+            }
+
+            return null;
         }
 
         void HandleZoom(Event e)
@@ -359,6 +361,8 @@ namespace NodeEditor
 
             // Optional: Adjust grid pan to zoom into the mouse position
             Vector2 screenCoordsMousePos = Event.current.mousePosition;
+            //Vector4 worldCoordsMousePos4 = invCurrentMatrix * new Vector4(screenCoordsMousePos.x, screenCoordsMousePos.y, 0, 1);
+            //Vector2 worldCoordsMousePos = new Vector2(worldCoordsMousePos4.x, worldCoordsMousePos4.y);
             Vector2 delta = screenCoordsMousePos - new Vector2(position.width / 2, position.height / 2);
             float diff = zoomScale - oldZoom;
             gridPanPosition -= delta * diff;
@@ -370,10 +374,8 @@ namespace NodeEditor
 
         void ComputeWorldSpaceExtents()
         {
-            var invMatrix = invCurrentMatrix;
-
-            var c1 = invMatrix * new Vector4(0, 0, 0, 1);
-            var c2 = invMatrix * new Vector4(position.width, position.height, 0, 1);
+            var c1 = invCurrentMatrix * new Vector4(0, 0, 0, 1);
+            var c2 = invCurrentMatrix * new Vector4(position.width, position.height, 0, 1);
 
             worldSpaceExtents = new Rect(c1.x, c1.y, c2.x - c1.x, c2.y - c1.y);
         }
@@ -396,11 +398,45 @@ namespace NodeEditor
         {
             GenericMenu menu = new GenericMenu();
 
-            // Add menu items
+            var hoverNode = GetNodeAtMouse(position);
+
+            // Add nodes option
             if (theme.menuAddNode)
             {
-                menu.AddItem(new GUIContent("Add Node"), false, () => AddNode(invCurrentMatrix * new Vector4(position.x, position.y, 0, 1)));
+                if (hoverNode == null)
+                    menu.AddItem(new GUIContent("Add Node"), false, () => AddNode(invCurrentMatrix * new Vector4(position.x, position.y, 0, 1)));
+                else
+                    menu.AddDisabledItem(new GUIContent("Add Node"), false);
             }
+
+            // Delete node option
+            var delName = "Delete Node";
+            var delEnable = false;
+
+            if (hoverNode != null)
+            {
+                if (hoverNode.selected)
+                {
+                    delEnable = true;
+                    if (selectedNodeCount > 1)
+                    {
+                        delName = "Delete Nodes";
+                    }
+                }
+            }
+            else
+            {
+                if (selectedNodeCount > 0)
+                {
+                    delEnable = true;
+                    if (selectedNodeCount > 1)
+                        delName = "Delete Nodes";
+                }
+            }
+            if (delEnable)
+                menu.AddItem(new GUIContent(delName), false, () => DeleteSelectedNodes());
+            else
+                menu.AddDisabledItem(new GUIContent(delName), false);
 
             if (menu.GetItemCount() > 0)
             {
@@ -411,6 +447,67 @@ namespace NodeEditor
             }
 
             return false;
+        }
+
+        public int selectedNodeCount => nodeSelection.Count;
+        public void ClearNodeSelection()
+        {
+            var tmp = nodeSelection;
+            nodeSelection = new();
+            foreach (var n in tmp)
+            {
+                n.OnDeselect();
+                n.selected = false;
+            }
+        }
+
+        public void AddNodeToSelection(BaseNodeRenderer node)
+        {
+            // Get node renderer
+            if ((node != null) && (!node.selected))
+            {
+                nodeSelection.Add(node);
+                node.selected = true;
+                node.OnSelect();
+            }
+        }
+
+        public void RemoveNodeFromSelection(BaseNodeRenderer node)
+        {
+            if ((node != null) && (node.selected))
+            {
+                nodeSelection.Remove(node);
+                node.selected = false;
+                node.OnDeselect();
+            }
+        }
+
+        public void ToggleNodeSelection(BaseNodeRenderer node)
+        {
+            if (node != null)
+            {
+                if (node.selected)
+                {
+                    RemoveNodeFromSelection(node);
+                }
+                else
+                {
+                    AddNodeToSelection(node);
+                }
+            }
+        }
+
+        protected void DeleteSelectedNodes()
+        {
+            var tmp = nodeSelection;
+            nodeSelection = new();
+            ClearNodeSelection();
+
+            foreach (var node in tmp)
+            {
+                renderers.Remove(node.node);
+                OnNodeDelete(node.node);
+            }
         }
     }
 
