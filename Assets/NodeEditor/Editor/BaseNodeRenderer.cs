@@ -10,6 +10,7 @@ namespace NodeEditor
     public abstract class BaseNodeRenderer
     {
         public BaseNode node;
+        public int      sortOrder = 0;
         public bool     selected = false;
 
         public void Init(BaseNode node)

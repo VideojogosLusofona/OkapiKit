@@ -4,8 +4,6 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using UnityEditor.PackageManager.UI;
 
 namespace NodeEditor
 {
@@ -21,6 +19,7 @@ namespace NodeEditor
             public bool     toolbarEnabled = true;
             public Color    toolbarBackgroundColor = new Color(0.1f, 0.1f, 0.1f, 1.0f);
             public bool     menuAddNode = false;
+            public int      panButton = 2;
             public bool     panEdge = true;
             public float    panMargin = 20.0f;
             public float    panSpeed = 2.0f;
@@ -45,6 +44,9 @@ namespace NodeEditor
         protected Dictionary<BaseNode, BaseNodeRenderer>    renderers = new();
         protected List<BaseNodeRenderer>                    nodeSelection = new();
         protected List<BaseNodeRenderer>                    initialSelection = new();
+        protected DateTime[]                                timeOfClick = new DateTime[8];
+        protected bool                                      isNodeMove = false;
+        protected Vector2Int                                sortIndices = Vector2Int.zero;
         
 
         protected bool isPanning
@@ -82,7 +84,7 @@ namespace NodeEditor
         protected abstract void OnNodeDelete(BaseNode newNode);
         protected abstract List<BaseNode> GetNodes();
 
-        protected bool shouldPan => (theme.panEdge) && (isRectSelecting);
+        protected bool shouldPan => (theme.panEdge) && ((isRectSelecting) || (isNodeMove));
 
         void OnGUI()
         {
@@ -105,6 +107,7 @@ namespace NodeEditor
                     // Run edge pan
                     if (shouldPan)
                     {
+                        var op = panPosition;
                         var mp = e.mousePosition;
                         bool shouldUpdate = false;
                         float ps = theme.panSpeed / zoomScale;
@@ -117,7 +120,15 @@ namespace NodeEditor
                         {
                             ComputeMatrix();
 
-                            UpdateSelectionRect();
+                            if (isRectSelecting)
+                            {
+                                UpdateSelectionRect();
+                            }
+                            else if (isNodeMove)
+                            {
+                                var delta = op - panPosition;
+                                MoveNodes(delta);
+                            }
 
                             Repaint();
                         }
@@ -159,6 +170,17 @@ namespace NodeEditor
                 else
                 {
                     EditorGUIUtility.AddCursorRect(new Rect(0, 0, position.width, position.height), MouseCursor.Pan);
+                }
+            }
+            else if (isNodeMove)
+            {
+                if (!hasFocus)
+                {
+                    isNodeMove = false; // Reset panning if the window loses focus while panning
+                }
+                else
+                {
+                    EditorGUIUtility.AddCursorRect(new Rect(0, 0, position.width, position.height), MouseCursor.MoveArrow);
                 }
             }
         }
@@ -248,10 +270,18 @@ namespace NodeEditor
                 DrawGrid();
             }
 
-            var nodes = GetNodes();
-            foreach (var node in nodes)
+            InitializeNodes();
+            var rendererNodes = renderers.Values.ToList();
+            if (rendererNodes.Count > 0)
             {
-                DrawNode(node);
+                rendererNodes.Sort((o1, o2) => o1.sortOrder.CompareTo(o2.sortOrder));
+                sortIndices = new Vector2Int(rendererNodes[0].sortOrder, rendererNodes[rendererNodes.Count - 1].sortOrder);
+
+                foreach (var renderer in rendererNodes)
+                {
+                    renderer.Render();
+                    renderer.sortOrder -= sortIndices.x;
+                }
             }
 
             if (isRectSelecting)
@@ -312,25 +342,28 @@ namespace NodeEditor
             Handles.EndGUI();
         }
 
-        void DrawNode(BaseNode node)
+        void InitializeNodes()
         {
-            if (node == null) return;
-            if ((!renderers.TryGetValue(node, out BaseNodeRenderer renderer)) ||
-                (renderer == null))
+            var nodes = GetNodes();
+            foreach (var node in nodes)
             {
-                var rendererType = Info.GetRendererType(node.GetType());
-                if (rendererType == null)
-                {
-                    Debug.LogWarning($"No renderer for node type {node.GetType()}!");
-                    return;
-                }
-                renderer = Activator.CreateInstance(rendererType) as BaseNodeRenderer;
-                renderer.Init(node);
+                if (node == null) continue;
 
-                renderers[node] = renderer;
+                if ((!renderers.TryGetValue(node, out BaseNodeRenderer renderer)) ||
+                    (renderer == null))
+                {
+                    var rendererType = Info.GetRendererType(node.GetType());
+                    if (rendererType == null)
+                    {
+                        Debug.LogWarning($"No renderer for node type {node.GetType()}!");
+                        return;
+                    }
+                    renderer = Activator.CreateInstance(rendererType) as BaseNodeRenderer;
+                    renderer.Init(node);
+
+                    renderers[node] = renderer;
+                }
             }
-            
-            renderer.Render();
         }
 
         protected virtual void ProcessEvents(Event e)
@@ -338,38 +371,52 @@ namespace NodeEditor
             switch (e.type)
             {
                 case EventType.MouseDown:
-                    if ((e.button == 0) && (!isPanning) && (!isRectSelecting))
-                    {
-                        bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
-
-                        // Can be a selection
-                        var node = GetNodeAtMouse();
-
-                        if (!ctrl) ClearNodeSelection();
-                        if (node != null)
-                        {
-                            if (ctrl) ToggleNodeSelection(node);
-                            else AddNodeToSelection(node);
-                        }
-                        Repaint();
-                    }
+                    timeOfClick[e.button] = DateTime.Now;
                     break;
                 case EventType.MouseDrag:
-                    if ((e.button == 0) && (!isPanning))
+                    if (e.button == 0)
                     {
-                        if (!isRectSelecting)
+                        if ((!isPanning) && (!isNodeMove))
                         {
-                            // Start selection
-                            selectionRect = new Rect(GetMouseWorldPosition(), Vector2.zero); 
-                            isRectSelecting = true;
-                            initialSelection = new(nodeSelection);
+                            // On the title bar of a node, or on empty space?
+                            var node = (isRectSelecting) ? (null) : (GetNodeAtMouse(true));
+                            if (node != null)
+                            {
+                                bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
+
+                                // Start node move
+                                isNodeMove = true;
+                                // Check if this node is selected, if not, select it
+                                if (!node.selected)
+                                {
+                                    if (!ctrl) ClearNodeSelection();
+                                    AddNodeToSelection(node);
+                                }
+                            }
+                            else if (!isRectSelecting)
+                            {
+                                bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
+                                if (!ctrl) { ClearNodeSelection(); initialSelection.Clear(); }
+                                else initialSelection = new(nodeSelection);
+
+                                // Start selection
+                                selectionRect = new Rect(GetMouseWorldPosition(), Vector2.zero);
+                                isRectSelecting = true;
+                            }
+                            else
+                            {
+                                UpdateSelectionRect();
+                            }
                         }
-                        else
+                        if (isNodeMove)
                         {
-                            UpdateSelectionRect();
+                            // Move nodes
+                            var delta = e.delta / zoomScale;
+                            MoveNodes(delta);
+                            Repaint();
                         }
                     }
-                    else if ((e.button == 1) && (!isRectSelecting))
+                    else if ((e.button == theme.panButton) && (!isRectSelecting))
                     {
                         panPosition += e.delta / zoomScale;
                         ComputeMatrix();
@@ -383,12 +430,39 @@ namespace NodeEditor
                     Repaint();
                     break;
                 case EventType.MouseUp:
-                    if ((e.button == 0) && (isRectSelecting))
+                    float elapsedTime = 0.001f * (float)(DateTime.Now - timeOfClick[e.button]).TotalMilliseconds; 
+                    if (e.button == 0)
                     {
-                        isRectSelecting = false;
-                        Repaint();
+                        if (isRectSelecting)
+                        {
+                            isRectSelecting = false;
+                            Repaint();
+                        }
+                        else if (isNodeMove)
+                        {
+                            isNodeMove = false;
+                            Repaint();
+                        }
+                        else if (!isPanning)
+                        {
+                            if (elapsedTime < 0.4f)
+                            {
+                                bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
+
+                                // Can be a selection
+                                var node = GetNodeAtMouse();
+
+                                if (!ctrl) ClearNodeSelection();
+                                if (node != null)
+                                {
+                                    if (ctrl) ToggleNodeSelection(node);
+                                    else AddNodeToSelection(node);
+                                }
+                                Repaint();
+                            }
+                        }
                     }
-                    else if ((e.button == 1)  && (isPanning)) // End panning on mouse up
+                    else if ((e.button == theme.panButton)  && (isPanning)) // End panning on mouse up
                     {
                         isPanning = false;
                         Repaint();
@@ -403,7 +477,7 @@ namespace NodeEditor
                     break;
                 case EventType.ContextClick:
                     {
-                        if ((!isPanning) && (!isRectSelecting) && ((DateTime.Now - lastPan).Milliseconds > 100.0f))
+                        if ((!isPanning) && (!isRectSelecting) && ((DateTime.Now - lastPan).TotalMilliseconds > 100.0f))
                         {
                             Vector2 mousePosition = Event.current.mousePosition; // Get the position of the mouse
                             if (ShowContextMenu(mousePosition))
@@ -436,21 +510,39 @@ namespace NodeEditor
             return new Vector2(worldPos4.x, worldPos4.y);
         }
 
-        protected BaseNodeRenderer GetNodeAtMouse()
+        protected BaseNodeRenderer GetNodeAtMouse(bool forDragMove = false)
         {
-            var pos = GetMouseWorldPosition();
+            BaseNodeRenderer    ret = null;
+            var                 pos = GetMouseWorldPosition();
 
-            foreach (var nodeRenderer in renderers)
+            if (forDragMove)
             {
-                var node = nodeRenderer.Value;
-
-                if (node.IsHovering(pos))
+                foreach (var nodeRenderer in renderers)
                 {
-                    return node;
+                    var node = nodeRenderer.Value;
+
+                    if (node.IsHovering(pos))
+                    {
+                        if (ret == null) ret = node;
+                        else if (ret.sortOrder < node.sortOrder) ret = node;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var nodeRenderer in renderers)
+                {
+                    var node = nodeRenderer.Value;
+
+                    if (node.IsHovering(pos))
+                    {
+                        if (ret == null) ret = node;
+                        else if (ret.sortOrder < node.sortOrder) ret = node;
+                    }
                 }
             }
 
-            return null;
+            return ret;
         }
 
         protected List<BaseNodeRenderer> GetNodesAtRect(Rect rect)
@@ -583,6 +675,8 @@ namespace NodeEditor
             {
                 nodeSelection.Add(node);
                 node.selected = true;
+                node.sortOrder = sortIndices.y + 1;
+                sortIndices.y++;
                 node.OnSelect();
             }
         }
@@ -622,6 +716,25 @@ namespace NodeEditor
             {
                 renderers.Remove(node.node);
                 OnNodeDelete(node.node);
+            }
+        }
+
+        protected void MoveNodes(Vector2 delta)
+        {
+            var uniqueScripts = nodeSelection
+                .Where(renderer => renderer != null && renderer.node != null && renderer.node.owner != null) // Filter out nulls
+                .Select(renderer => renderer.node.owner)  // Select the owner from each node
+                .Distinct()  
+                .ToArray();
+            
+            Undo.RecordObjects(uniqueScripts, "Move Nodes");
+            foreach (var node in nodeSelection)
+            {
+                node.node.position += delta;
+            }
+            foreach (var scripts in uniqueScripts)
+            {
+                EditorUtility.SetDirty(scripts);
             }
         }
     }
