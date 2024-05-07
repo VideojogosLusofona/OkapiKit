@@ -21,11 +21,14 @@ namespace NodeEditor
             public bool     toolbarEnabled = true;
             public Color    toolbarBackgroundColor = new Color(0.1f, 0.1f, 0.1f, 1.0f);
             public bool     menuAddNode = false;
+            public bool     panEdge = true;
+            public float    panMargin = 20.0f;
+            public float    panSpeed = 2.0f;
             public string   windowName = "NodeEditor";
         }
 
         protected Theme                                     theme;
-        protected Vector2                                   gridPanPosition = Vector2.zero;
+        protected Vector2                                   panPosition = Vector2.zero;
         protected float                                     zoomScale = 1.0f;
         protected Vector2                                   zoomLimits = new Vector2(0.2f, 3.0f);   // Minimum zoom scale
         protected Texture2D                                 backgroundTexture;
@@ -34,7 +37,7 @@ namespace NodeEditor
         protected string                                    disableReason = "";
         protected Rect                                      worldSpaceExtents;
         protected bool                                      isRectSelecting = false;
-        protected Vector2                                   anchorPosition;
+        protected Rect                                      selectionRect;
         protected bool                                      _isPanning = false;
         protected DateTime                                  lastPan;
         protected Matrix4x4                                 currentMatrix;
@@ -79,6 +82,8 @@ namespace NodeEditor
         protected abstract void OnNodeDelete(BaseNode newNode);
         protected abstract List<BaseNode> GetNodes();
 
+        protected bool shouldPan => (theme.panEdge) && (isRectSelecting);
+
         void OnGUI()
         {
             if (theme == null)
@@ -93,7 +98,31 @@ namespace NodeEditor
             if (hasSelection)
             {
                 Event e = Event.current;
-                if (e != null) ProcessEvents(e);
+                if (e != null)
+                {
+                    ProcessEvents(e);
+
+                    // Run edge pan
+                    if (shouldPan)
+                    {
+                        var mp = e.mousePosition;
+                        bool shouldUpdate = false;
+                        float ps = theme.panSpeed / zoomScale;
+                        if (mp.x < theme.panMargin) { panPosition.x += ps; shouldUpdate = true; }
+                        if (mp.y < theme.panMargin) { panPosition.y += ps; shouldUpdate = true; }
+                        if (mp.x > position.width - theme.panMargin) { panPosition.x -= ps; shouldUpdate = true; }
+                        if (mp.y > position.height - theme.panMargin) { panPosition.y -= ps; shouldUpdate = true; }
+
+                        if (shouldUpdate)
+                        {
+                            ComputeMatrix();
+
+                            UpdateSelectionRect();
+
+                            Repaint();
+                        }
+                    }
+                }
 
                 Clear();
 
@@ -187,7 +216,7 @@ namespace NodeEditor
                 var resetGUIContent = new GUIContent("Reset", "Reset View");
                 if (GUILayout.Button(resetGUIContent, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(resetGUIContent).x)))
                 {
-                    gridPanPosition = Vector2.zero;
+                    panPosition = Vector2.zero;
                     zoomScale = 1.0f;
                     ComputeMatrix();
                     Repaint();
@@ -227,12 +256,10 @@ namespace NodeEditor
 
             if (isRectSelecting)
             {
-                var currentPos = GetMouseWorldPosition(false);
-                var rect = new Rect(anchorPosition.x, anchorPosition.y, currentPos.x - anchorPosition.x, currentPos.y - anchorPosition.y);
-                GUI.DrawTexture(rect, selectionTexture);
+                GUI.DrawTexture(selectionRect, selectionTexture);
 
                 // Check who is highlighted
-                var nodesOnCursor = GetNodesAtRect(rect);
+                var nodesOnCursor = GetNodesAtRect(selectionRect);
                 foreach (var nodeRenderer in nodesOnCursor)
                 {
                     if (!nodeRenderer.selected)
@@ -333,14 +360,18 @@ namespace NodeEditor
                         if (!isRectSelecting)
                         {
                             // Start selection
-                            anchorPosition = GetMouseWorldPosition();
+                            selectionRect = new Rect(GetMouseWorldPosition(), Vector2.zero); 
                             isRectSelecting = true;
                             initialSelection = new(nodeSelection);
+                        }
+                        else
+                        {
+                            UpdateSelectionRect();
                         }
                     }
                     else if ((e.button == 1) && (!isRectSelecting))
                     {
-                        gridPanPosition += e.delta / zoomScale;
+                        panPosition += e.delta / zoomScale;
                         ComputeMatrix();
                         Repaint();
                         isPanning = true;
@@ -385,11 +416,19 @@ namespace NodeEditor
             }
         }
 
-        protected Vector2 GetMouseWorldPosition(bool accountForToolbar = true)
+        void UpdateSelectionRect()
+        {
+            Vector2 currentPos = GetMouseWorldPosition();
+            selectionRect.width = currentPos.x - selectionRect.x;
+            selectionRect.height = currentPos.y - selectionRect.y;
+
+        }
+
+        protected Vector2 GetMouseWorldPosition()
         {
             var pos = Event.current.mousePosition;
 
-            var deltaY = (accountForToolbar && theme.toolbarEnabled) ? (21.0f) : (0.0f);
+            var deltaY = (theme.toolbarEnabled) ? (21.0f) : (0.0f);
 
             // Convert position to world coordinates
             var worldPos4 = invCurrentMatrix * new Vector4(pos.x, pos.y + deltaY, 0, 1);
@@ -443,7 +482,7 @@ namespace NodeEditor
             //Vector2 worldCoordsMousePos = new Vector2(worldCoordsMousePos4.x, worldCoordsMousePos4.y);
             Vector2 delta = screenCoordsMousePos - new Vector2(position.width / 2, position.height / 2);
             float diff = zoomScale - oldZoom;
-            gridPanPosition -= delta * diff;
+            panPosition -= delta * diff;
 
             e.Use();
         }
@@ -461,7 +500,7 @@ namespace NodeEditor
         void ComputeMatrix()
         {
             // Prepare the transformation matrix
-            Matrix4x4 translation = Matrix4x4.TRS(gridPanPosition, Quaternion.identity, Vector3.one);
+            Matrix4x4 translation = Matrix4x4.TRS(panPosition, Quaternion.identity, Vector3.one);
             Matrix4x4 scale = Matrix4x4.Scale(Vector3.one * zoomScale);
             Matrix4x4 pivot = Matrix4x4.TRS(new Vector3(position.width / 2, position.height / 2, 0), Quaternion.identity, Vector3.one);
 
