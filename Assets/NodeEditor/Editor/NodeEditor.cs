@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
+using UnityEditor.PackageManager.UI;
 
 namespace NodeEditor
 {
@@ -12,6 +14,7 @@ namespace NodeEditor
         public class Theme
         {
             public Color    backgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+            public Color    selectionRectangleColor = new Color(0.4f, 1.0f, 1.0f, 0.25f);
             public bool     gridEnabled = true;
             public Color    gridColor = new Color(0.3f, 0.3f, 0.3f, 1.0f);
             public float    gridSpacing = 100.0f;
@@ -27,14 +30,19 @@ namespace NodeEditor
         protected Vector2                                   zoomLimits = new Vector2(0.2f, 3.0f);   // Minimum zoom scale
         protected Texture2D                                 backgroundTexture;
         protected Texture2D                                 toolbarTexture;
+        protected Texture2D                                 selectionTexture;
         protected string                                    disableReason = "";
         protected Rect                                      worldSpaceExtents;
+        protected bool                                      isRectSelecting = false;
+        protected Vector2                                   anchorPosition;
         protected bool                                      _isPanning = false;
         protected DateTime                                  lastPan;
         protected Matrix4x4                                 currentMatrix;
         protected Matrix4x4                                 invCurrentMatrix;
         protected Dictionary<BaseNode, BaseNodeRenderer>    renderers = new();
         protected List<BaseNodeRenderer>                    nodeSelection = new();
+        protected List<BaseNodeRenderer>                    initialSelection = new();
+        
 
         protected bool isPanning
         {
@@ -54,6 +62,7 @@ namespace NodeEditor
             window.theme = theme;
             window.backgroundTexture = EditorUtils.GetColorTexture($"{theme.windowName}Background", theme.backgroundColor);
             window.toolbarTexture = EditorUtils.GetColorTexture($"{theme.windowName}ToolbarBackground", theme.toolbarBackgroundColor);
+            window.selectionTexture = EditorUtils.GetColorTexture($"{theme.windowName}SelectionRectangle", theme.selectionRectangleColor);
             window.ComputeMatrix();
 
             return window;
@@ -216,6 +225,38 @@ namespace NodeEditor
                 DrawNode(node);
             }
 
+            if (isRectSelecting)
+            {
+                var currentPos = GetMouseWorldPosition(false);
+                var rect = new Rect(anchorPosition.x, anchorPosition.y, currentPos.x - anchorPosition.x, currentPos.y - anchorPosition.y);
+                GUI.DrawTexture(rect, selectionTexture);
+
+                // Check who is highlighted
+                var nodesOnCursor = GetNodesAtRect(rect);
+                foreach (var nodeRenderer in nodesOnCursor)
+                {
+                    if (!nodeRenderer.selected)
+                    {
+                        AddNodeToSelection(nodeRenderer);
+                    }
+                }
+                List<BaseNodeRenderer> toRemove = new();
+                foreach (var nodeRenderer in nodeSelection)
+                {
+                    if ((initialSelection.IndexOf(nodeRenderer) < 0) &&
+                        (nodesOnCursor.IndexOf(nodeRenderer) < 0))
+                    {
+                        toRemove.Add(nodeRenderer);
+                    }
+                }
+                foreach (var nodeRenderer in toRemove)
+                {
+                    RemoveNodeFromSelection(nodeRenderer);
+                }
+
+                Repaint();
+            }
+
             // Restore the original GUI matrix and end the group
             GUI.matrix = prevMatrix;
         }
@@ -270,12 +311,12 @@ namespace NodeEditor
             switch (e.type)
             {
                 case EventType.MouseDown:
-                    if ((e.button == 0) && (!isPanning))
+                    if ((e.button == 0) && (!isPanning) && (!isRectSelecting))
                     {
                         bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
 
                         // Can be a selection
-                        var node = GetNodeAtMouse(e.mousePosition);
+                        var node = GetNodeAtMouse();
 
                         if (!ctrl) ClearNodeSelection();
                         if (node != null)
@@ -284,11 +325,20 @@ namespace NodeEditor
                             else AddNodeToSelection(node);
                         }
                         Repaint();
-                        //e.Use();
                     }
                     break;
                 case EventType.MouseDrag:
-                    if (e.button == 1)
+                    if ((e.button == 0) && (!isPanning))
+                    {
+                        if (!isRectSelecting)
+                        {
+                            // Start selection
+                            anchorPosition = GetMouseWorldPosition();
+                            isRectSelecting = true;
+                            initialSelection = new(nodeSelection);
+                        }
+                    }
+                    else if ((e.button == 1) && (!isRectSelecting))
                     {
                         gridPanPosition += e.delta / zoomScale;
                         ComputeMatrix();
@@ -302,13 +352,15 @@ namespace NodeEditor
                     Repaint();
                     break;
                 case EventType.MouseUp:
-                    if (e.button == 1)  // End panning on mouse up
+                    if ((e.button == 0) && (isRectSelecting))
                     {
-                        if (isPanning)
-                        {
-                            isPanning = false;
-                            Repaint();
-                        }
+                        isRectSelecting = false;
+                        Repaint();
+                    }
+                    else if ((e.button == 1)  && (isPanning)) // End panning on mouse up
+                    {
+                        isPanning = false;
+                        Repaint();
                     }
                     break;
                 case EventType.Ignore: // Potentially handle ending a drag when mouse goes out of window
@@ -320,7 +372,7 @@ namespace NodeEditor
                     break;
                 case EventType.ContextClick:
                     {
-                        if ((!isPanning) && ((DateTime.Now - lastPan).Milliseconds > 100.0f))
+                        if ((!isPanning) && (!isRectSelecting) && ((DateTime.Now - lastPan).Milliseconds > 100.0f))
                         {
                             Vector2 mousePosition = Event.current.mousePosition; // Get the position of the mouse
                             if (ShowContextMenu(mousePosition))
@@ -333,24 +385,50 @@ namespace NodeEditor
             }
         }
 
-        BaseNodeRenderer GetNodeAtMouse(Vector2 pos)
+        protected Vector2 GetMouseWorldPosition(bool accountForToolbar = true)
         {
-            var deltaY = (theme.toolbarEnabled) ? (21.0f) : (0.0f);
+            var pos = Event.current.mousePosition;
+
+            var deltaY = (accountForToolbar && theme.toolbarEnabled) ? (21.0f) : (0.0f);
 
             // Convert position to world coordinates
             var worldPos4 = invCurrentMatrix * new Vector4(pos.x, pos.y + deltaY, 0, 1);
+
+            return new Vector2(worldPos4.x, worldPos4.y);
+        }
+
+        protected BaseNodeRenderer GetNodeAtMouse()
+        {
+            var pos = GetMouseWorldPosition();
 
             foreach (var nodeRenderer in renderers)
             {
                 var node = nodeRenderer.Value;
 
-                if (node.IsHovering(worldPos4.x, worldPos4.y))
+                if (node.IsHovering(pos))
                 {
                     return node;
                 }
             }
 
             return null;
+        }
+
+        protected List<BaseNodeRenderer> GetNodesAtRect(Rect rect)
+        {
+            var ret = new List<BaseNodeRenderer>();
+
+            foreach (var nodeRenderer in renderers)
+            {
+                var node = nodeRenderer.Value;
+
+                if (node.IsOnRect(rect))
+                {
+                    ret.Add(node);
+                }
+            }
+
+            return ret;
         }
 
         void HandleZoom(Event e)
@@ -382,12 +460,10 @@ namespace NodeEditor
 
         void ComputeMatrix()
         {
-            float posY = (theme.toolbarEnabled) ? 21.0f : 0.0f;
-
             // Prepare the transformation matrix
             Matrix4x4 translation = Matrix4x4.TRS(gridPanPosition, Quaternion.identity, Vector3.one);
             Matrix4x4 scale = Matrix4x4.Scale(Vector3.one * zoomScale);
-            Matrix4x4 pivot = Matrix4x4.TRS(new Vector3(position.width / 2, position.height / 2 - posY, 0), Quaternion.identity, Vector3.one);
+            Matrix4x4 pivot = Matrix4x4.TRS(new Vector3(position.width / 2, position.height / 2, 0), Quaternion.identity, Vector3.one);
 
             // Apply the combined transformation matrix
             currentMatrix = pivot * scale * translation * pivot.inverse;
@@ -398,7 +474,7 @@ namespace NodeEditor
         {
             GenericMenu menu = new GenericMenu();
 
-            var hoverNode = GetNodeAtMouse(position);
+            var hoverNode = GetNodeAtMouse();
 
             // Add nodes option
             if (theme.menuAddNode)

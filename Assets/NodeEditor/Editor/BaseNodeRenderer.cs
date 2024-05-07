@@ -3,6 +3,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEditor.Graphs;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace NodeEditor
 {
@@ -42,7 +43,19 @@ namespace NodeEditor
             EditorGUI.DrawRect(rect, boxColor);
         }
 
-        public abstract bool IsHovering(float x, float y);
+        public bool IsHovering(Vector2 pos)
+        {
+            return GetRect().Contains(pos, true);
+        }
+
+        public bool IsOnRect(Rect rect)
+        {
+            Rect nodeRect = GetRect();
+
+            return nodeRect.Overlaps(rect, true);
+        }
+
+        public abstract Rect GetRect();
         public virtual void OnSelect() { }
         public virtual void OnDeselect() { }
     }
@@ -134,12 +147,9 @@ namespace NodeEditor
             return titleHeight + 50.0f;
         }
 
-        public override bool IsHovering(float x, float y)
+        public override Rect GetRect()
         {
-            Rect rect = new Rect(node.position.x, node.position.y, width, GetHeight());
-
-            return rect.Contains(new Vector2(x, y));
+            return new Rect(node.position.x, node.position.y, width, GetHeight());
         }
-
     }
 }
