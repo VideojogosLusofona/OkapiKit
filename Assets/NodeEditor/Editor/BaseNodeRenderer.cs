@@ -18,11 +18,11 @@ namespace NodeEditor
             this.node = node;
             OnInit();
         }
-        public void Render()
+        public void Render(float zoomFactor)
         {
             EditorGUI.BeginChangeCheck();
 
-            OnRender();
+            OnRender(zoomFactor);
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -32,7 +32,7 @@ namespace NodeEditor
             }
         }
         protected abstract void OnInit();
-        protected abstract void OnRender();
+        protected abstract void OnRender(float zoomFactor);
         protected abstract void CommitChanges();
 
         protected void DrawBoxWithOutline(Rect rect, Color boxColor, Color outlineColor, float outlineThickness)
@@ -107,13 +107,16 @@ namespace NodeEditor
             width = Mathf.Max(titleStyle.CalcSize(label).x + (enableMargin + enableWidth + enableSpacing + rightMargin), width);
         }
 
-        protected override void OnRender()
+        protected override void OnRender(float zoomFactor)
         {
             // All the part below is non-interactive (background, border, labels)
             // Get color and width from node attributes
             Rect rect = new Rect(node.position.x, node.position.y, width, GetHeight());
 
-            DrawBoxWithOutline(rect, new Color(0.2f, 0.2f, 0.2f, 1.0f), (selected) ? (Color.white) : (Color.black), (selected) ? (2) : (1));
+            float outlineThickness = (selected) ? (2) : (1);
+            outlineThickness /= zoomFactor;
+
+            DrawBoxWithOutline(rect, new Color(0.2f, 0.2f, 0.2f, 1.0f), (selected) ? (Color.white) : (Color.black), outlineThickness);
 
             // Draw the node rectangle
             Rect titleRect = rect;

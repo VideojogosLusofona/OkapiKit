@@ -49,6 +49,9 @@ namespace NodeEditor
         protected Dictionary<BaseNodeRenderer, Vector2>     originalPosition;
         protected Vector2                                   totalDelta;
         protected Vector2Int                                sortIndices = Vector2Int.zero;
+        protected List<string>                              clipboard;
+        protected bool                                      runPaste = false;
+        protected int                                       pasteCount = 0;
 
         protected bool isPanning
         {
@@ -94,6 +97,13 @@ namespace NodeEditor
             {
                 GUILayout.Label("Restart window, missing theme...");
                 return;
+            }
+
+            if (runPaste)
+            {
+                // A paste has been schedulled, but it should only be done on OnGUI
+                ActualPaste();
+                runPaste = false;
             }
 
             SetActiveSelection();
@@ -282,7 +292,7 @@ namespace NodeEditor
 
                 foreach (var renderer in rendererNodes)
                 {
-                    renderer.Render();
+                    renderer.Render(zoomScale);
                     renderer.sortOrder -= sortIndices.x;
                 }
             }
@@ -345,6 +355,27 @@ namespace NodeEditor
             Handles.EndGUI();
         }
 
+        BaseNodeRenderer CreateNodeRendererIfNeeded(BaseNode node)
+        {
+            if ((!renderers.TryGetValue(node, out BaseNodeRenderer renderer)) ||
+                (renderer == null))
+            {
+                var rendererType = Info.GetRendererType(node.GetType());
+                if (rendererType == null)
+                {
+                    Debug.LogWarning($"No renderer for node type {node.GetType()}!");
+                    return null;
+                }
+                renderer = Activator.CreateInstance(rendererType) as BaseNodeRenderer;
+                renderer.Init(node);
+                renderer.sortOrder = sortIndices.y;
+                sortIndices.y++;
+
+                renderers[node] = renderer;
+            }
+            return renderer;
+        }
+
         void SetupNodes()
         {
             var nodes = GetNodes();
@@ -352,20 +383,7 @@ namespace NodeEditor
             {
                 if (node == null) continue;
 
-                if ((!renderers.TryGetValue(node, out BaseNodeRenderer renderer)) ||
-                    (renderer == null))
-                {
-                    var rendererType = Info.GetRendererType(node.GetType());
-                    if (rendererType == null)
-                    {
-                        Debug.LogWarning($"No renderer for node type {node.GetType()}!");
-                        return;
-                    }
-                    renderer = Activator.CreateInstance(rendererType) as BaseNodeRenderer;
-                    renderer.Init(node);
-
-                    renderers[node] = renderer;
-                }
+                CreateNodeRendererIfNeeded(node);
             }
 
             List<BaseNode> toRemove = null;
@@ -388,9 +406,11 @@ namespace NodeEditor
 
         protected virtual void ProcessEvents(Event e)
         {
+            bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
+
             switch (e.type)
             {
-                case EventType.KeyDown:
+                case EventType.KeyDown:                    
                     if (e.keyCode == KeyCode.Delete) 
                     {
                         if (selectedNodeCount > 0)
@@ -398,6 +418,18 @@ namespace NodeEditor
                             DeleteSelectedNodes();
                             Repaint();
                         }
+                    }
+                    if ((e.keyCode == KeyCode.C) && (ctrl))
+                    {
+                        CopyNodes();
+                    }
+                    if ((e.keyCode == KeyCode.X) && (ctrl))
+                    {
+                        CutNodes();
+                    }
+                    if ((e.keyCode == KeyCode.V) && (ctrl))
+                    {
+                        PasteNodes();
                     }
                     break;
                 case EventType.MouseDown:
@@ -412,8 +444,6 @@ namespace NodeEditor
                             var node = (isRectSelecting) ? (null) : (GetNodeAtMouse(true));
                             if (node != null)
                             {
-                                bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
-
                                 // Start node move
                                 isNodeMove = true;
                                 // Check if this node is selected, if not, select it
@@ -432,7 +462,6 @@ namespace NodeEditor
                             }
                             else if (!isRectSelecting)
                             {
-                                bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
                                 if (!ctrl) { ClearNodeSelection(); initialSelection.Clear(); }
                                 else initialSelection = new(nodeSelection);
 
@@ -484,8 +513,6 @@ namespace NodeEditor
                         {
                             if (elapsedTime < 0.4f)
                             {
-                                bool ctrl = (e.control || e.command); // Ctrl on Windows/Linux, Command on macOS
-
                                 // Can be a selection
                                 var node = GetNodeAtMouse();
 
@@ -682,6 +709,27 @@ namespace NodeEditor
             else
                 menu.AddDisabledItem(new GUIContent(delName), false);
 
+            menu.AddSeparator("");
+
+            if (selectedNodeCount > 0)
+            {
+                menu.AddItem(new GUIContent("Copy"), false, () => CopyNodes());
+                menu.AddItem(new GUIContent("Cut"), false, () => CutNodes());
+            }
+            else
+            {
+                menu.AddDisabledItem(new GUIContent("Copy"), false);
+                menu.AddDisabledItem(new GUIContent("Cut"), false);
+            }
+            if (clipboard != null)
+            {
+                menu.AddItem(new GUIContent("Paste"), false, () => PasteNodes());
+            }
+            else
+            {
+                menu.AddDisabledItem(new GUIContent("Paste"), false);
+            }
+
             if (menu.GetItemCount() > 0)
             {
                 // Show the menu at the mouse position
@@ -774,6 +822,74 @@ namespace NodeEditor
             {
                 EditorUtility.SetDirty(scripts);
             }
+        }
+
+        protected void CopyNodes()
+        {
+            clipboard = null;            
+            foreach (var nodeRenderer in nodeSelection)
+            {
+                if (nodeRenderer != null)
+                {
+                    var node = nodeRenderer.node;
+                    var str = JsonUtility.ToJson(node);
+                    var type = node.GetType().ToString();
+                    var nodeString = $"{type}|{str}";
+                    if (!string.IsNullOrEmpty(nodeString))
+                    {
+                        if (clipboard == null) clipboard = new();
+                        clipboard.Add(nodeString);
+                    }
+                }
+            }
+            pasteCount = 1;
+        }
+        protected void CutNodes()
+        {
+            CopyNodes();
+            DeleteSelectedNodes();
+        }
+
+        protected void PasteNodes()
+        {
+            if (clipboard == null) return;
+
+            runPaste = true;
+            Repaint();
+        }
+
+        protected void ActualPaste()
+        { 
+            ClearNodeSelection();
+
+            foreach (var elem in clipboard)
+            {
+                // Split name
+                int index = elem.IndexOf('|');
+                string typeString = elem.Substring(0, index);
+                string json = elem.Substring(index + 1);
+
+                Type nodeType = Info.GetNodeType(typeString);
+                if (nodeType == null)
+                {
+                    Debug.LogError($"Unknown type {typeString}!");
+                    continue;
+                }
+                BaseNode newNode = (BaseNode)JsonUtility.FromJson(json, nodeType);
+                // Change owner (we might be on another object)
+                newNode.owner = GetSelection();
+                // Assume we are managing nodes in some way in your editor window
+                // This is where you would add the newNode to your system
+                OnNodeCreate(newNode, newNode.position + new Vector2(20.0f * pasteCount, 20.0f * pasteCount));
+
+                var renderer = CreateNodeRendererIfNeeded(newNode);
+                if (renderer != null)
+                {
+                    AddNodeToSelection(renderer);
+                }
+            }
+
+            pasteCount++;
         }
     }
 

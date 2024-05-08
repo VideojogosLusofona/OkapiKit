@@ -10,10 +10,12 @@ namespace NodeEditor
     public class Info
     {
         protected static Dictionary<Type, Type> cachedRendererTypes;
+        protected static Dictionary<string, Type> cachedNodeTypes;
 
         static Info()
         {
             cachedRendererTypes = new();
+            cachedNodeTypes = new();
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
@@ -26,6 +28,10 @@ namespace NodeEditor
                         {
                             cachedRendererTypes.Add(attr.type, t);
                         }
+                    }
+                    if (t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(BaseNode)))
+                    {
+                        cachedNodeTypes.Add(t.ToString(), t);
                     }
                 }
             }
@@ -54,5 +60,14 @@ namespace NodeEditor
             return null;
         }
 
+        public static Type GetNodeType(string nodeTypeName)
+        {
+            if (cachedNodeTypes.TryGetValue(nodeTypeName, out Type ret))
+            {
+                return ret;
+            }
+
+            return null;
+        }
     }
 }
