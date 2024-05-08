@@ -43,6 +43,11 @@ namespace OkapiKitV2
             }
         }
 
+        public bool Exists(OkapiNode node)
+        {
+            return nodes.IndexOf(node) >= 0;
+        }
+
         public List<OkapiNode> GetNodes() => nodes;
     }
 }

@@ -84,6 +84,7 @@ namespace NodeEditor
         protected abstract void OnNodeCreate(BaseNode newNode, Vector2 addPosition);
         protected abstract void OnNodeDelete(BaseNode newNode);
         protected abstract List<BaseNode> GetNodes();
+        protected abstract bool NodeExists(BaseNode node);
 
         protected bool shouldPan => (theme.panEdge) && ((isRectSelecting) || (isNodeMove));
 
@@ -201,6 +202,7 @@ namespace NodeEditor
         private void OnUndoRedo()
         {
             // Repaint the window whenever an undo or redo operation is performed
+            // Check if nodes should be deleted
             Repaint();
         }
 
@@ -271,7 +273,7 @@ namespace NodeEditor
                 DrawGrid();
             }
 
-            InitializeNodes();
+            SetupNodes();
             var rendererNodes = renderers.Values.ToList();
             if (rendererNodes.Count > 0)
             {
@@ -343,7 +345,7 @@ namespace NodeEditor
             Handles.EndGUI();
         }
 
-        void InitializeNodes()
+        void SetupNodes()
         {
             var nodes = GetNodes();
             foreach (var node in nodes)
@@ -365,12 +367,39 @@ namespace NodeEditor
                     renderers[node] = renderer;
                 }
             }
+
+            List<BaseNode> toRemove = null;
+            foreach (var nodeEntry in renderers)
+            {
+                if (!NodeExists(nodeEntry.Key))
+                {
+                    if (toRemove == null) toRemove = new();
+                    toRemove.Add(nodeEntry.Key);
+                }
+            }
+            if (toRemove != null)
+            {
+                foreach (var node in toRemove)
+                {
+                    renderers.Remove(node);
+                }
+            }
         }
 
         protected virtual void ProcessEvents(Event e)
         {
             switch (e.type)
             {
+                case EventType.KeyDown:
+                    if (e.keyCode == KeyCode.Delete) 
+                    {
+                        if (selectedNodeCount > 0)
+                        {
+                            DeleteSelectedNodes();
+                            Repaint();
+                        }
+                    }
+                    break;
                 case EventType.MouseDown:
                     timeOfClick[e.button] = DateTime.Now;
                     break;

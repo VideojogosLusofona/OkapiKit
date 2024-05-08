@@ -190,5 +190,7 @@ namespace OkapiKitV2
         {
             return currentScript.GetNodes().Select(node => node as BaseNode).ToList();
         }
+
+        protected override bool NodeExists(BaseNode node) => (currentScript != null) ? (currentScript.Exists(node as OkapiNode)) : (false); 
     }
 }
