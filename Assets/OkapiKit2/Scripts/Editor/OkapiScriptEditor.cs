@@ -27,12 +27,7 @@ namespace OkapiKitV2
         {
             base.OnEnable();
 
-            var theme = new Theme()
-            {
-                windowName = "Okapi Script",
-                menuAddNode = true
-            };
-            var editor = Init<OkapiScriptEditor>(theme);
+            Init();
         }
 
         protected override UnityEngine.Object GetSelection()

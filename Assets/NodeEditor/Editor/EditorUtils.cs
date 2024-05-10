@@ -16,8 +16,18 @@ namespace NodeEditor
 
         static public Texture2D GetColorTexture(string name, Color color)
         {
-            var ret = GetTexture(name);
-            if (ret != null) return ret;
+            if (textures == null)
+            {
+                textures = new Dictionary<string, Texture2D>();
+            }
+            else
+            {
+                Texture2D texture;
+                if (textures.TryGetValue(name, out texture))
+                {
+                    if (texture) return texture;
+                }
+            }
 
             var bitmap = new GUIBitmap(4, 4);
             bitmap.Fill(color);
@@ -40,6 +50,27 @@ namespace NodeEditor
             return BitmapToTexture(name, bitmap);
         }
 
+        struct TexturePath
+        {
+            public string path;
+            public string packagePath;
+        }
+        static List<TexturePath> texturePaths = new List<TexturePath>();
+
+        static public void AddTexturePath(string path, string packagePath)
+        {
+            foreach (var texturePath in texturePaths) 
+            { 
+                if ((path == texturePath.path) &&
+                    (packagePath == texturePath.packagePath))
+                {
+                    return;
+                }
+            }
+
+            texturePaths.Add(new TexturePath { path = path, packagePath = packagePath });
+        }
+
         static public Texture2D GetTexture(string name)
         {
             if (textures == null) textures = new Dictionary<string, Texture2D>();
@@ -50,15 +81,40 @@ namespace NodeEditor
                 if (texture) return texture;
             }
 
-            // Find path
-            string path = $"Assets/OkapiKit/UI/{name}.png";
-            if (!File.Exists(path))
+            string path = null;
+            foreach (var texturePath in texturePaths)
             {
-                path = System.IO.Path.GetFullPath($"Packages/com.videojogoslusofona.okapikit/UI/{name}.png");
-                if (!File.Exists(path))
+                // Find path
+                string tmp = $"{texturePath.path}/{name}.png";
+                if (!File.Exists(tmp))
                 {
-                    return null;
+                    tmp = System.IO.Path.GetFullPath($"{texturePath.packagePath}/{name}.png");
+                    if (File.Exists(tmp))
+                    {
+                        path = tmp;
+                        break;
+                    }
                 }
+                else
+                {
+                    path = tmp;
+                    break;
+                }
+            }
+
+            if (path == null)
+            {
+                Debug.LogWarning($"Can't find texture {name}!");
+                Debug.LogWarning("Searched for:");
+                foreach (var texturePath in texturePaths)
+                {
+                    // Find path
+                    string tmp = $"{texturePath.path}/{name}.png";
+                    Debug.LogWarning(tmp);
+                    tmp = System.IO.Path.GetFullPath($"{texturePath.packagePath}/{name}.png");
+                    Debug.LogWarning(tmp);
+                }
+                return null;
             }
 
             texture = new Texture2D(1, 1);
@@ -68,6 +124,8 @@ namespace NodeEditor
                 AddTexture(name, texture);
                 return texture;
             }
+
+            Debug.LogWarning($"Failed to load texture {path}!");
 
             return null;
         }

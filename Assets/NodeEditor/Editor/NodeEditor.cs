@@ -4,20 +4,30 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEditor.PackageManager.UI;
+using UnityEditor.Graphs;
 
 namespace NodeEditor
 {
     public abstract class BaseNodeEditor : EditorWindow
     {
+        protected struct Line
+        {
+            public Vector2  p1, p2;
+            public Color    color;
+        };
         public class Theme
         {
             public Color    backgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
             public Color    selectionRectangleColor = new Color(0.4f, 1.0f, 1.0f, 0.25f);
             public bool     gridEnabled = true;
             public Color    gridColor = new Color(0.3f, 0.3f, 0.3f, 1.0f);
-            public float    gridSpacing = 100.0f;
+            public float    gridSpacing = 200.0f;
             public bool     toolbarEnabled = true;
             public Color    toolbarBackgroundColor = new Color(0.1f, 0.1f, 0.1f, 1.0f);
+            public bool     toolbarEnableSnapToGrid = true;
+            public bool     toolbarEnableSnapToNode = true;
+            public bool     enableCornerSnap = true;
             public bool     menuAddNode = false;
             public int      panButton = 2;
             public bool     panEdge = true;
@@ -33,6 +43,8 @@ namespace NodeEditor
         protected Texture2D                                 backgroundTexture;
         protected Texture2D                                 toolbarTexture;
         protected Texture2D                                 selectionTexture;
+        protected Texture2D                                 snapToGridTexture;
+        protected Texture2D                                 snapToNodeTexture;
         protected string                                    disableReason = "";
         protected Rect                                      worldSpaceExtents;
         protected bool                                      isRectSelecting = false;
@@ -52,7 +64,16 @@ namespace NodeEditor
         protected List<string>                              clipboard;
         protected bool                                      runPaste = false;
         protected int                                       pasteCount = 0;
-
+        protected bool                                      snapToGrid = true;
+        protected bool                                      snapToNode = true;
+        protected GUIStyle                                  toggleButtonStyle;
+        protected Texture2D                                 defaultToggleButtonTexture;
+        protected Texture2D                                 selectedToggleButtonTexture;
+        protected Texture2D                                 defaultHoverToggleButtonTexture;
+        protected Texture2D                                 selectedHoverToggleButtonTexture;
+        protected bool                                      initSkin = false;
+        protected List<Line>                                renderSnapLines = new();
+        
         protected bool isPanning
         {
             get { return _isPanning; }
@@ -61,6 +82,8 @@ namespace NodeEditor
 
         protected static T Init<T>(Theme theme) where T : BaseNodeEditor
         {
+            EditorUtils.AddTexturePath("Assets/NodeEditor/UI/", "Packages/com.videojogoslusofona.nodeeditor/UI/");
+
             T window = (T)GetWindow(typeof(T));
             if (window == null)
             {
@@ -69,9 +92,6 @@ namespace NodeEditor
             }
 
             window.theme = theme;
-            window.backgroundTexture = EditorUtils.GetColorTexture($"{theme.windowName}Background", theme.backgroundColor);
-            window.toolbarTexture = EditorUtils.GetColorTexture($"{theme.windowName}ToolbarBackground", theme.toolbarBackgroundColor);
-            window.selectionTexture = EditorUtils.GetColorTexture($"{theme.windowName}SelectionRectangle", theme.selectionRectangleColor);
             window.ComputeMatrix();
 
             return window;
@@ -97,6 +117,26 @@ namespace NodeEditor
             {
                 GUILayout.Label("Restart window, missing theme...");
                 return;
+            }
+
+            if (!initSkin)
+            {
+                backgroundTexture = EditorUtils.GetColorTexture($"{theme.windowName}Background", theme.backgroundColor);
+                toolbarTexture = EditorUtils.GetColorTexture($"{theme.windowName}ToolbarBackground", theme.toolbarBackgroundColor);
+                selectionTexture = EditorUtils.GetColorTexture($"{theme.windowName}SelectionRectangle", theme.selectionRectangleColor);
+                if (theme.toolbarEnableSnapToGrid)
+                    snapToGridTexture = EditorUtils.GetTexture("snap_to_grid");
+                if (theme.toolbarEnableSnapToNode)
+                    snapToNodeTexture = EditorUtils.GetTexture("snap_to_node");
+                toggleButtonStyle = new GUIStyle(EditorStyles.toolbarButton);
+                defaultToggleButtonTexture = EditorUtils.GetColorTexture("defaultToggleButtonTexture", new Color(0.235f, 0.235f, 0.235f, 1.0f));
+                defaultHoverToggleButtonTexture = EditorUtils.GetColorTexture("defaultHoverToggleButtonTexture", new Color(0.27f, 0.27f, 0.27f, 1.0f));
+                selectedHoverToggleButtonTexture = EditorUtils.GetColorTexture("selectedHoverToggleButtonTexture", new Color(0.31451f, 0.41647f, 0.52627f, 1.0f));
+                selectedToggleButtonTexture = EditorUtils.GetColorTexture("selectedToggleButtonTexture", new Color(0.27451f, 0.37647f, 0.48627f, 1.0f));
+
+                initSkin = true;
+
+                Debug.Log("Skin initialized...");
             }
 
             if (runPaste)
@@ -225,8 +265,9 @@ namespace NodeEditor
         {
             if (!theme.toolbarEnabled) return;
 
-            GUI.DrawTexture(new Rect(0, 0, position.width, 21.0f), toolbarTexture);
+            GUI.DrawTexture(new Rect(0, 0, position.width, 22.0f), toolbarTexture);
 
+            GUILayout.Space(1);
             GUILayout.BeginHorizontal(EditorStyles.toolbar);
 
             string[] subSelectorOptions = GetSubSelectorOptions();
@@ -255,6 +296,31 @@ namespace NodeEditor
                     zoomScale = 1.0f;
                     ComputeMatrix();
                     Repaint();
+                    GUILayout.Space(2);
+                    initSkin = false;
+                }
+
+                if (theme.toolbarEnableSnapToGrid)
+                {
+                    toggleButtonStyle.normal.background = (snapToGrid) ? selectedToggleButtonTexture : defaultToggleButtonTexture;
+                    toggleButtonStyle.hover.background = (snapToGrid) ? selectedHoverToggleButtonTexture : defaultHoverToggleButtonTexture;
+                    if (GUILayout.Button(new GUIContent(snapToGridTexture, "Snap to Grid"), toggleButtonStyle, GUILayout.Width(24.0f)))
+                    {
+                        snapToGrid = !snapToGrid;
+                        Repaint();
+                    }
+                    GUILayout.Space(2);
+                }
+                if (theme.toolbarEnableSnapToNode)
+                {
+                    toggleButtonStyle.normal.background = (snapToNode) ? selectedToggleButtonTexture : defaultToggleButtonTexture;
+                    toggleButtonStyle.hover.background = (snapToNode) ? selectedHoverToggleButtonTexture : defaultHoverToggleButtonTexture;
+                    if (GUILayout.Button(new GUIContent(snapToNodeTexture, "Snap to Node"), toggleButtonStyle, GUILayout.Width(24.0f)))
+                    {
+                        snapToNode = !snapToNode;
+                        Repaint();
+                    }
+                    GUILayout.Space(2);
                 }
             }
             GUILayout.EndHorizontal();
@@ -281,6 +347,15 @@ namespace NodeEditor
             if (theme.gridEnabled)
             {
                 DrawGrid();
+            }
+
+            if ((renderSnapLines != null) && (isNodeMove))
+            {
+                foreach (var line in renderSnapLines)
+                {
+                    Handles.color = line.color;
+                    Handles.DrawDottedLine(line.p1, line.p2, 2.0f);
+                }
             }
 
             SetupNodes();
@@ -811,17 +886,165 @@ namespace NodeEditor
                 .Select(renderer => renderer.node.owner)  // Select the owner from each node
                 .Distinct()  
                 .ToArray();
-            
+
+            if (renderSnapLines != null) renderSnapLines.Clear();
+            else renderSnapLines = new();
+
             Undo.RecordObjects(uniqueScripts, "Move Nodes");
             foreach (var node in nodeSelection)
             {
                 // Check if we have the original position
-                node.node.position = originalPosition[node] + totalDelta;
+                node.node.position = Snap(node, originalPosition[node] + totalDelta, node.GetRect(), ref renderSnapLines);
             }
             foreach (var scripts in uniqueScripts)
             {
                 EditorUtility.SetDirty(scripts);
             }
+        }
+
+        protected Vector2 Snap(BaseNodeRenderer excludeNodeRenderer, Vector2 sourcePosition, Rect rect, ref List<Line> lines)
+        {
+            Vector2 ret = Vector2.zero;
+            ret.x = SnapHorizontal(excludeNodeRenderer, sourcePosition.x, sourcePosition.y, rect.width, ref lines);
+            ret.y = SnapVertical(excludeNodeRenderer, sourcePosition.y, sourcePosition.x, rect.height, ref lines);
+
+            return ret;
+        }
+
+        protected float SnapHorizontal(BaseNodeRenderer excludeNodeRenderer, float x, float baseY, float width, ref List<Line> lines)
+        {
+            if ((!theme.toolbarEnableSnapToGrid) || (!theme.gridEnabled)) return x;
+
+            float       snapPos = x;
+            float       snapPosDist = float.MaxValue;
+            List<Line>  snapLines = null;
+            float       tolerance = 20.0f / zoomScale;
+
+            void SnapHorizontal(float testX, float offsetX, float candidateX, float y1, float y2, Color lineColor)
+            {
+                float testPos = testX + offsetX;
+                float d = Mathf.Abs(testPos - candidateX);
+                if ((d < tolerance) && (d < snapPosDist))
+                {
+                    snapPosDist = d;
+                    snapPos = candidateX - offsetX;
+                    snapLines = new List<Line>
+                        {
+                            new Line()
+                            {
+                                p1 = new Vector2(candidateX, y1),
+                                p2 = new Vector2(candidateX, y2),
+                                color = lineColor
+                            }
+                        };
+                }
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                float offset = 0;
+                if (i == 1) offset = width;
+
+                if (snapToGrid)
+                {
+                    // Check snap with grid lines
+                    float closestGridLine = Mathf.Round((x + offset) / theme.gridSpacing) * theme.gridSpacing;
+
+                    SnapHorizontal(x, offset, closestGridLine, baseY - 1000.0f, baseY + 1000.0f, Color.yellow);
+                }
+                if (snapToNode)
+                {
+                    // Check snap with nodes
+                    foreach (var renderNode in renderers.Values)
+                    {
+                        if (renderNode == excludeNodeRenderer) continue;
+
+                        var rect = renderNode.GetRect();
+
+                        SnapHorizontal(x, offset, rect.xMin, baseY, rect.yMin, Color.red);
+                        if (theme.enableCornerSnap)
+                        {
+                            SnapHorizontal(x, offset, rect.xMax, baseY, rect.yMin, Color.red);
+                        }
+                    }
+                }
+
+                if (!theme.enableCornerSnap) break;
+            }
+
+            if (snapLines != null)
+            {
+                lines.AddRange(snapLines);
+            }
+            return snapPos;
+        }
+
+        protected float SnapVertical(BaseNodeRenderer excludeNodeRenderer, float y, float baseX, float height, ref List<Line> lines)
+        {
+            if ((!theme.toolbarEnableSnapToGrid) || (!theme.gridEnabled)) return y;
+
+            float       snapPos = y;
+            float       snapPosDist = float.MaxValue;
+            List<Line>  snapLines = null;
+            float       tolerance = 20.0f / zoomScale;
+
+            void SnapVertical(float testY, float offsetY, float candidateY, float x1, float x2, Color lineColor)
+            {
+                float testPos = testY + offsetY;
+                float d = Mathf.Abs(testPos - candidateY);
+                if ((d < tolerance) && (d < snapPosDist))
+                {
+                    snapPosDist = d;
+                    snapPos = candidateY - offsetY;
+                    snapLines = new List<Line>
+                        {
+                            new Line()
+                            {
+                                p1 = new Vector2(x1, candidateY),
+                                p2 = new Vector2(x2, candidateY),
+                                color = lineColor
+                            }
+                        };
+                }
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                float offset = 0;
+                if (i == 1) offset = height;
+
+                if (snapToGrid)
+                {
+                    // Check snap with grid lines
+                    float closestGridLine = Mathf.Round((y + offset) / theme.gridSpacing) * theme.gridSpacing;
+
+                    SnapVertical(y, offset, closestGridLine, baseX - 1000.0f, baseX + 1000.0f, Color.yellow);
+                }
+                if (snapToNode)
+                {
+                    // Check snap with nodes
+                    foreach (var renderNode in renderers.Values)
+                    {
+                        if (renderNode == excludeNodeRenderer) continue;
+
+                        var rect = renderNode.GetRect();
+
+                        SnapVertical(y, offset, rect.yMin, baseX, rect.xMin, Color.red);
+                        if (theme.enableCornerSnap)
+                        {
+                            SnapVertical(y, offset, rect.yMax, baseX, rect.xMin, Color.red);
+                        }
+                    }
+                }
+
+                if (!theme.enableCornerSnap) break;
+            }
+
+            if (snapLines != null)
+            {
+                lines.AddRange(snapLines);
+            }
+            return snapPos;
         }
 
         protected void CopyNodes()
