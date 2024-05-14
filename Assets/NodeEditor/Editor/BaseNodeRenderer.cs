@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.Graphs;
@@ -64,13 +65,24 @@ namespace NodeEditor
     [NodeRenderer(typeof(BaseNode))]
     public class BasicNodeRenderer : BaseNodeRenderer
     {
-        Color       bgColor = Color.black;
-        Color       textColor = Color.white;
-        float       width = 100.0f;
-        GUIStyle    titleStyle;
-        string      titleString;
+        protected Color     bgColor = Color.black;
+        protected Color     textColor = Color.white;
+        protected float     width = 100.0f;
+        protected GUIStyle  titleStyle;
+        protected string    titleString;
 
-        bool        newNodeEnabled;
+        protected bool      newNodeEnabled;
+
+        SerializedObject            serializedNode;
+        SerializedProperty          nodeList;
+        SerializedProperty          nodeProperty;
+
+        protected class NodeProperty
+        {
+            public SerializedProperty  property;
+        }
+
+        protected List<NodeProperty>    nodeProperties;
 
         const float titleHeight = 30.0f;
         const float enableMargin = 5.0f;
@@ -105,6 +117,107 @@ namespace NodeEditor
 
             var label = new GUIContent(titleString);
             width = Mathf.Max(titleStyle.CalcSize(label).x + (enableMargin + enableWidth + enableSpacing + rightMargin), width);
+
+            // Prepare data for display - This is kind of convoluted because
+            // Unity expects UnityEngine.Object classes, but nodes aren't
+            // So I need to use the scriptable object as the serialized object that gets modified, etc, and for the list of properties 
+            // I have to search for a list of BaseNode or derived, and then go into that looking for the SerializedProperty that matches
+            // this node, and then I can get the serialized properties that I actually need.
+            serializedNode = new SerializedObject(node.owner);
+            Type nodeOwnerType = node.owner.GetType();
+            Type nodeType = node.GetType();
+            nodeList = SearchForNodeList();
+            if (nodeList == null)
+            {
+                Debug.LogWarning("No list of Nodes that can be analyzed on the owner object!");
+                return;
+            }
+            // Find the node I want in the nodeList
+            nodeProperty = FindNode(node);
+            if (nodeProperty == null)
+            {
+                Debug.LogWarning($"Node could not be found in owner's node list (property {nodeList.name})!");
+                return;
+            }
+
+            // Create list of properties
+            nodeProperties = new();
+
+            var     nodePropertyIterator = nodeProperty.Copy();
+            bool    enterChildren = true;
+            // Enter the children of the root property (the BaseNode itself)
+            while (nodePropertyIterator.NextVisible(enterChildren))
+            {
+                // Stop when we get back to the parent depth
+                if (nodePropertyIterator.depth == nodeProperty.depth + 1)
+                {
+                    enterChildren = false;
+
+                    FieldInfo   fieldInfo = nodeType.GetFieldInfo(nodePropertyIterator.name);
+                    Type        propertyOriginType = fieldInfo.DeclaringType;
+                    bool        visible = false;
+                    var         visProp = fieldInfo.GetCustomAttribute<NodePropertyVisibilityAttribute>();
+                    if (visProp != null)
+                    {
+                        visible = visProp.nodeVisibility;
+                    }
+                    else
+                    {
+                        var defaultVisProp = propertyOriginType.GetCustomAttribute<NodeDefaultPropertyVisibilityAttribute>();
+                        if (defaultVisProp != null)
+                        {
+                            visible = defaultVisProp.defaultVisibility;
+                        }
+                    }
+                    if (visible)
+                    {
+                        nodeProperties.Add(new NodeProperty { property = nodePropertyIterator.Copy() });
+                    }
+                }
+                else if (nodePropertyIterator.depth <= nodeProperty.depth)
+                {
+                    break; // We've iterated past the children we care about
+                }
+            }
+
+            foreach (var p in nodeProperties)
+            {
+                Debug.Log($"Property {p.property.propertyPath} found");
+            }
+        }
+        
+        protected SerializedProperty SearchForNodeList()
+        {
+            SerializedProperty property = serializedNode.GetIterator();
+            bool next = property.NextVisible(true);
+            while (next)
+            {
+                if (property.IsListOfT<BaseNode>())
+                { 
+                    return property;
+                }
+                 
+                next = property.NextVisible(false);
+            }
+
+            return null;
+        }
+
+        protected SerializedProperty FindNode(BaseNode node)
+        {
+            for (int i = 0; i < nodeList.arraySize; i++)
+            {
+                var element = nodeList.GetArrayElementAtIndex(i);
+
+                // Check if node object is the same as pointed by the serialized property element
+                if (element.GetSerializedPropertyValue() == node)
+                {
+                    // Return the serialized property pointing to this node
+                    return element;
+                }
+            }
+
+            return null;
         }
 
         protected override void OnRender(float zoomFactor)

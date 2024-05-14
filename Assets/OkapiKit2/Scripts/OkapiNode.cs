@@ -4,6 +4,7 @@ using NodeEditor;
 namespace OkapiKitV2
 {
     [System.Serializable]
+    [NodeDefaultPropertyVisibility(true)]
     public abstract class OkapiNode : BaseNode
     {
     }
