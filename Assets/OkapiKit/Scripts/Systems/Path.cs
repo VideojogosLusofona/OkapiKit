@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
-using static OkapiKit.CameraFollow2d;
 using UnityEditor;
 
 namespace OkapiKit

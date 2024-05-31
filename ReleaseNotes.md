@@ -2,7 +2,7 @@
 
 ## V1.15.2
 
-- "Else" trigger on conditions and input will no longer throw an exception when an action is null
+- 'Else' trigger on conditions and input will no longer throw an exception when an action is null
 
 ## V1.15.1
 
