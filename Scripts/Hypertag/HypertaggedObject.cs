@@ -125,6 +125,13 @@ namespace OkapiKit
         {
             List<GameObject> ret = new List<GameObject>();
 
+            FindGameObjectsWithHypertag(tags, ret);
+
+            return ret;
+        }
+
+        public static List<GameObject> FindGameObjectsWithHypertag(Hypertag[] tags, List<GameObject> ret)
+        {
             foreach (var t in tags)
             {
                 hypertaggedObjects.TryGetValue(t, out var list);
@@ -141,6 +148,13 @@ namespace OkapiKit
         {
             List<GameObject> ret = new List<GameObject>();
 
+            FindGameObjectsWithHypertag(tag, ret);
+
+            return ret;
+        }
+
+        public static List<GameObject> FindGameObjectsWithHypertag(Hypertag tag, List<GameObject> ret)
+        {
             hypertaggedObjects.TryGetValue(tag, out var list);
             if (list != null)
             {
