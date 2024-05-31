@@ -5,7 +5,7 @@ using UnityEditor;
 
 namespace OkapiKit.Editor
 {
-    [CustomEditor(typeof(Path))]
+    [CustomEditor(typeof(Path)), CanEditMultipleObjects]
     public class PathEditor : OkapiBaseEditor
     {
         SerializedProperty propType;
@@ -48,75 +48,142 @@ namespace OkapiKit.Editor
             {
                 var t = (target as Path);
 
-                EditorGUI.BeginChangeCheck();
-
-                var type = (Path.Type)propType.intValue;
-
-                EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of path.\nLinear: Straight lines between points\nSmooth: Curved line that passes through some points and is influenced by the others.\nCircle: The first point defines the center, the second the radius of the circle. If there is a third point, it defines the radius in that approximate direction.\nArc: First point defines the center, the second and third define the beginning and end of an arc centered on the first point.\nPolygon: First point define the center, the second and third point define the radius in different directions, while the 'Sides' property defines the number of sides of the polygon."));
-                if ((type != Path.Type.Circle) && (type != Path.Type.Arc))
+                if (targets.Length == 1)
                 {
-                    EditorGUILayout.PropertyField(propClosed, new GUIContent("Closed", "If the path should end where it starts."));
-                }
-                if (type == Path.Type.Polygon)
-                {
-                    EditorGUILayout.PropertyField(propSides, new GUIContent("Sides", "Number of sides in the polygon."));
-                }
-                EditorGUILayout.PropertyField(propPoints, new GUIContent("Points", "Waypoints"));
-                EditorGUILayout.PropertyField(propWorldSpace, new GUIContent("World Space", "Are the positions in world space, or relative to this object."));
-                EditorGUILayout.PropertyField(propEditMode, new GUIContent("Edit Mode", "If edit mode is on, you can edit the points the scene view.\nClick on a point to select it, use the gizmo to move them around."));
-                EditorGUILayout.PropertyField(propOnlyDisplayWhenSelected, new GUIContent("Only display when selected", "If on, it will only display the path when the object is selected, otherwise it will show the object with the selected color."));
-                EditorGUILayout.PropertyField(propDisplayColor, new GUIContent("Display Color", "What color should the path be rendered when not being edited"));
+                    EditorGUI.BeginChangeCheck();
 
-                EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
+                    var type = (Path.Type)propType.intValue;
 
-                bool prevEnabled = GUI.enabled;
-                GUI.enabled = (propPoints.arraySize < 3) || ((type != Path.Type.Circle) && (type != Path.Type.Arc) && (type != Path.Type.Polygon));
-
-                if (type == Path.Type.Smooth)
-                {
-                    if (GUILayout.Button("Add Segment"))
+                    EditorGUILayout.PropertyField(propType, new GUIContent("Type", "Type of path.\nLinear: Straight lines between points\nSmooth: Curved line that passes through some points and is influenced by the others.\nCircle: The first point defines the center, the second the radius of the circle. If there is a third point, it defines the radius in that approximate direction.\nArc: First point defines the center, the second and third define the beginning and end of an arc centered on the first point.\nPolygon: First point define the center, the second and third point define the radius in different directions, while the 'Sides' property defines the number of sides of the polygon."));
+                    if ((type != Path.Type.Circle) && (type != Path.Type.Arc))
                     {
-                        t.AddPoint();
-                        // Change to edit mode
-                        propEditMode.boolValue = true;
+                        EditorGUILayout.PropertyField(propClosed, new GUIContent("Closed", "If the path should end where it starts."));
+                    }
+                    if (type == Path.Type.Polygon)
+                    {
+                        EditorGUILayout.PropertyField(propSides, new GUIContent("Sides", "Number of sides in the polygon."));
+                    }
+                    EditorGUILayout.PropertyField(propPoints, new GUIContent("Points", "Waypoints"));
+                    EditorGUILayout.PropertyField(propWorldSpace, new GUIContent("World Space", "Are the positions in world space, or relative to this object."));
+                    EditorGUILayout.PropertyField(propEditMode, new GUIContent("Edit Mode", "If edit mode is on, you can edit the points the scene view.\nClick on a point to select it, use the gizmo to move them around."));
+                    EditorGUILayout.PropertyField(propOnlyDisplayWhenSelected, new GUIContent("Only display when selected", "If on, it will only display the path when the object is selected, otherwise it will show the object with the selected color."));
+                    EditorGUILayout.PropertyField(propDisplayColor, new GUIContent("Display Color", "What color should the path be rendered when not being edited"));
 
-                        EditorUtility.SetDirty(target);
+                    EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
+
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        serializedObject.ApplyModifiedProperties();
+                    }
+
+                    bool prevEnabled = GUI.enabled;
+                    GUI.enabled = (propPoints.arraySize < 3) || ((type != Path.Type.Circle) && (type != Path.Type.Arc) && (type != Path.Type.Polygon));
+
+                    if (type == Path.Type.Smooth)
+                    {
+                        if (GUILayout.Button("Add Segment"))
+                        {
+                            t.AddPoint();
+                            serializedObject.Update();
+
+                            // Change to edit mode
+                            propEditMode.boolValue = true;
+                            serializedObject.ApplyModifiedProperties();
+
+                            EditorUtility.SetDirty(target);
+                        }
+                    }
+                    else
+                    {
+                        if (GUILayout.Button("Add Point"))
+                        {
+                            t.AddPoint();
+                            serializedObject.Update();
+
+                            // Change to edit mode
+                            propEditMode.boolValue = true;
+                            serializedObject.ApplyModifiedProperties();
+
+                            EditorUtility.SetDirty(target);
+                        }
+                    }
+
+                    GUI.enabled = prevEnabled;
+                }
+
+                bool repaint = false;
+
+                bool canInvert = true;
+                foreach (Path tpath in targets)
+                {
+                    if ((tpath.pathType != Path.Type.Linear) &&
+                        (tpath.pathType != Path.Type.Smooth) &&
+                        (tpath.pathType != Path.Type.Arc))
+                    {
+                        canInvert = false;
+                        break;
                     }
                 }
-                else
-                {
-                    if (GUILayout.Button("Add Point"))
-                    {
-                        t.AddPoint();
-                        // Change to edit mode
-                        propEditMode.boolValue = true;
 
-                        EditorUtility.SetDirty(target);
-                    }
-                }
-                GUI.enabled = prevEnabled;
-
-                if ((type == Path.Type.Linear) || (type == Path.Type.Smooth) || (type == Path.Type.Arc))
+                if (canInvert)
                 {
                     if (GUILayout.Button("Invert Path"))
                     {
                         Undo.RecordObject(target, "Invert path");
                         t.InvertPath();
+                        serializedObject.Update();
 
-                        SceneView.RepaintAll();
+                        repaint = true;
                     }
                 }
                 if (GUILayout.Button("Center Path"))
                 {
                     Undo.RecordObject(target, "Center path");
-                    t.CenterPath();
+                    foreach (Path tpath in targets) tpath.CenterPath();
+                    serializedObject.Update();
 
-                    SceneView.RepaintAll();
+                    repaint = true;
                 }
 
-                EditorGUI.EndChangeCheck();
+                bool allInSameSpace = true;
+                bool isWorld = (targets[0] as Path).isWorldSpace;
+                for (int i = 1; i < targets.Length; i++)
+                {
+                    if ((targets[i] as Path).isWorldSpace != isWorld)
+                    {
+                        allInSameSpace = false;
+                        break;
+                    }
+                }
 
-                serializedObject.ApplyModifiedProperties();
+                if (allInSameSpace)
+                {
+                    string convertButtonText = (propWorldSpace.boolValue) ? ("Convert to Local Space") : ("Convert to World Space");
+
+                    if (GUILayout.Button(convertButtonText))
+                    {
+                        Undo.RecordObject(target, convertButtonText);
+
+                        foreach (Path tpath in targets)
+                        {
+                            if (propWorldSpace.boolValue)
+                                tpath.ConvertToLocalSpace();
+                            else
+                                tpath.ConvertToWorldSpace();
+                        }
+                        serializedObject.Update();
+
+                        propWorldSpace.boolValue = !propWorldSpace.boolValue;
+                        serializedObject.ApplyModifiedProperties();
+
+                        foreach (Path tpath in targets) EditorUtility.SetDirty(tpath);
+
+                        repaint = true;
+                    }
+                }
+
+                if (repaint) SceneView.RepaintAll();
+
                 (target as OkapiElement).UpdateExplanation();
             }
         }

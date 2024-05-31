@@ -41,6 +41,10 @@ namespace OkapiKit
         public Variable             comparisonVariable;
         public bool                 percentageCompare;
 
+        // Objects to minimize GC allocs
+        static List<Transform> potentialTransforms = new();
+        static List<GameObject> gameObjects = new();
+
         public DataType GetDataType()
         {
             if (valueType == ValueType.Probe) return DataType.Boolean;
@@ -218,11 +222,12 @@ namespace OkapiKit
                     {
                         case Condition.ValueType.TagCount:
                             {
-                                var objects = HypertaggedObject.FindGameObjectsWithHypertag(tag);
+                                gameObjects.Clear();
+                                HypertaggedObject.FindGameObjectsWithHypertag(tag, gameObjects);
                                 if (tagCountRangeEnabled)
                                 {
                                     currentValue = 0;
-                                    foreach (var obj in objects)
+                                    foreach (var obj in gameObjects)
                                     {
                                         if (Vector3.Distance(obj.transform.position, gameObject.transform.position) < tagCountRange)
                                         {
@@ -232,10 +237,10 @@ namespace OkapiKit
                                 }
                                 else
                                 {
-                                    currentValue = objects.Count;
+                                    currentValue = gameObjects.Count;
                                 }
                                 minValue = 0;
-                                maxValue = objects.Count;
+                                maxValue = gameObjects.Count;
                             }
                             break;
                         case Condition.ValueType.WorldPositionX:
@@ -296,8 +301,9 @@ namespace OkapiKit
                                 if (sourceTransform) target = sourceTransform;
                                 else if (tag)
                                 {
-                                    var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(tag);
-                                    foreach (var obj in potentialObjects)
+                                    potentialTransforms.Clear();
+                                    gameObject.FindObjectsOfTypeWithHypertag<Transform>(tag, potentialTransforms);
+                                    foreach (var obj in potentialTransforms)
                                     {
                                         var d = Vector3.Distance(obj.position, gameObject.transform.position);
                                         if (d < currentValue)
