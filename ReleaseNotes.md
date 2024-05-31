@@ -1,10 +1,14 @@
 # Release Notes
 
+## V1.15.2
+
+- "Else" trigger on conditions and input will no longer throw an exception when an action is null
+
 ## V1.15.1
 
 - Trigger will no longer throw an exception when an action is null
 - Removed some GC from condition evaluation
-- Renamed "Box" mode on camera follow to "Camera Trap"
+- Renamed 'Box' mode on camera follow to 'Camera Trap'
 - Added Exponential Decay camera mode, which is like Feedback Loop, but frame independent
 - Added function to convert a path to world/local space, plus the ability to do that in multiple objects at the same time
 
