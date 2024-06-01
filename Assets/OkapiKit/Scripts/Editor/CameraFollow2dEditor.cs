@@ -72,11 +72,14 @@ namespace OkapiKit.Editor
                     }
                 }
 
-                if (propMode.intValue == (int)CameraFollow2d.Mode.SimpleFeedbackLoop)
+                var mode = (CameraFollow2d.Mode)propMode.intValue;
+
+                if ((mode == CameraFollow2d.Mode.SimpleFeedbackLoop) ||
+                    (mode == CameraFollow2d.Mode.ExponentialDecay))
                 {
                     EditorGUILayout.PropertyField(propFollowSpeed, new GUIContent("Follow Speed", "What's the speed of the camera while following, expressed as percentage per frame.\nIf 1, camera will be locked to the target.\nUsually a value like 0.05 (5% per frame) works fine."));
                 }
-                else if (propMode.intValue == (int)CameraFollow2d.Mode.Box)
+                else if (mode == CameraFollow2d.Mode.CameraTrap)
                 {
                     EditorGUILayout.PropertyField(propRect, new GUIContent("Box", "Camera trap position/size, you can see it in magenta on the scene view."));
                 }

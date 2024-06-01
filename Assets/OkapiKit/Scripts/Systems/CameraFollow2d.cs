@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
 
 namespace OkapiKit
 {
     [AddComponentMenu("Okapi/Other/Camera Follow")]
     public class CameraFollow2d : OkapiElement
     {
-        public enum Mode { SimpleFeedbackLoop = 0, Box = 1 };
+        public enum Mode { SimpleFeedbackLoop = 0, CameraTrap = 1, ExponentialDecay = 2 };
         public enum TagMode { Closest = 0, Furthest = 1, Average = 2 };
 
         [SerializeField] Mode mode = Mode.SimpleFeedbackLoop;
@@ -24,6 +23,7 @@ namespace OkapiKit
 
         private new Camera camera;
         private Bounds allObjectsBound;
+        private List<Transform> potentialTransforms = new();
 
         protected override string Internal_UpdateExplanation()
         {
@@ -66,9 +66,13 @@ namespace OkapiKit
             {
                 _explanation += $"It will trail the target, closing {100 * followSpeed}% of the distance each frame.\n";
             }
-            else
+            else if (mode == Mode.CameraTrap)
             {
                 _explanation += $"It will box the target within the given rect.\n";
+            }
+            else if (mode == Mode.ExponentialDecay)
+            {
+                _explanation += $"It will trail the target, closing {100 * followSpeed}% of the distance each second.\n";
             }
 
             if (cameraLimits)
@@ -105,7 +109,7 @@ namespace OkapiKit
         {
             camera = GetComponent<Camera>();
 
-            if (mode == Mode.Box)
+            if (mode == Mode.CameraTrap)
             {
                 float currentZ = transform.position.z;
                 Vector3 targetPos = GetTargetPos();
@@ -122,8 +126,11 @@ namespace OkapiKit
                 case Mode.SimpleFeedbackLoop:
                     FixedUpdate_SimpleFeedbackLoop();
                     break;
-                case Mode.Box:
+                case Mode.CameraTrap:
                     FixedUpdate_Box();
+                    break;
+                case Mode.ExponentialDecay:
+                    FixedUpdate_ExponentialDecay();
                     break;
             }
         }
@@ -136,6 +143,19 @@ namespace OkapiKit
 
             Vector3 newPos = transform.position + err * followSpeed;
             newPos.z = currentZ;
+
+            transform.position = newPos;
+
+            RunZoom();
+            CheckBounds();
+        }
+        void FixedUpdate_ExponentialDecay()
+        {
+            // Nice explanation of this: https://www.youtube.com/watch?v=LSNQuFEDOyQ&ab_channel=FreyaHolm%C3%A9r
+            Vector3 targetPos = GetTargetPos();
+
+            Vector3 newPos = targetPos + (transform.position - targetPos) * Mathf.Pow((1.0f - followSpeed), Time.fixedDeltaTime);
+            newPos.z = transform.position.z;
 
             transform.position = newPos;
 
@@ -204,11 +224,13 @@ namespace OkapiKit
             else if (targetTag)
             {
                 Vector3 selectedPosition = transform.position;
-                var potentialObjects = gameObject.FindObjectsOfTypeWithHypertag<Transform>(targetTag);
+
+                potentialTransforms.Clear();
+                gameObject.FindObjectsOfTypeWithHypertag(targetTag, potentialTransforms);
                 if (tagMode == TagMode.Closest)
                 {
                     var minDist = float.MaxValue;
-                    foreach (var obj in potentialObjects)
+                    foreach (var obj in potentialTransforms)
                     {
                         var d = Vector3.Distance(obj.position, transform.position);
                         if (d < minDist)
@@ -221,7 +243,7 @@ namespace OkapiKit
                 else if (tagMode == TagMode.Furthest)
                 {
                     var maxDist = 0.0f;
-                    foreach (var obj in potentialObjects)
+                    foreach (var obj in potentialTransforms)
                     {
                         var d = Vector3.Distance(obj.position, transform.position);
                         if (d > maxDist)
@@ -233,17 +255,17 @@ namespace OkapiKit
                 }
                 else if (tagMode == TagMode.Average)
                 {
-                    if (potentialObjects.Length > 0)
+                    if (potentialTransforms.Count > 0)
                     {
-                        allObjectsBound = new Bounds(potentialObjects[0].position, Vector3.zero);
+                        allObjectsBound = new Bounds(potentialTransforms[0].position, Vector3.zero);
                         selectedPosition = Vector3.zero;
-                        foreach (var obj in potentialObjects)
+                        foreach (var obj in potentialTransforms)
                         {
                             var d = Vector3.Distance(obj.position, transform.position);
                             selectedPosition += obj.position;
                             allObjectsBound.Encapsulate(obj.position);
                         }
-                        selectedPosition /= potentialObjects.Length;
+                        selectedPosition /= potentialTransforms.Count;
                     }
                 }
 
@@ -258,7 +280,7 @@ namespace OkapiKit
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(GetTargetPos(), 0.5f);
 
-            if (mode == Mode.Box)
+            if (mode == Mode.CameraTrap)
             {
                 Vector2 delta = transform.position;
                 Rect r = rect;

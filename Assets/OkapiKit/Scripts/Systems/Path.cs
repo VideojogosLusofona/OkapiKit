@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
-using static OkapiKit.CameraFollow2d;
 using UnityEditor;
 
 namespace OkapiKit
@@ -30,8 +28,6 @@ namespace OkapiKit
         private bool        onlyDisplayWhenSelected = true;
         [SerializeField]
         private Color       displayColor = Color.yellow;
-
-        private bool isSmooth => type == Type.Smooth;
 
         private float           primaryRadius;
         private Vector2         primaryDir;
@@ -61,8 +57,9 @@ namespace OkapiKit
         public bool isEditMode => editMode;
         public bool isWorldSpace => worldSpace;
         public bool isLocalSpace => !worldSpace;
-
         public bool isClosed => closed;
+        public Type pathType => type;
+
 
         protected override void Awake()
         {
@@ -370,6 +367,32 @@ namespace OkapiKit
             for (int i = 0; i < points.Count; i++)
             {
                 points[i] = points[i] + delta;
+            }
+        }
+
+        public void ConvertToLocalSpace()
+        {
+            var matrix = transform.worldToLocalMatrix;
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                Vector4 pt = points[i];
+                pt.w = 1;
+
+                points[i] = matrix * pt;
+            }
+        }
+
+        public void ConvertToWorldSpace()
+        {
+            var matrix = transform.localToWorldMatrix;
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                Vector4 pt = points[i];
+                pt.w = 1;
+
+                points[i] = matrix * pt;
             }
         }
 

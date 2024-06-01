@@ -13,8 +13,7 @@ Features:
 - Add HueShift/Outline effect for sprites
 - Added debug system to Okapi
   - Enable debug system for nodes 
-  - Debug is just logging to the console what's happening in terms of triggers
-    and actions
+  - Debug is just logging to the console what's happening in terms of triggers and actions
 - Tagged variables with search for variables beneath an object, etc...
 - Conditions that can have visual support and interfaces on scene view should be created
 - Add Network Object support to Okapi
@@ -29,6 +28,8 @@ Features:
 - Documentation
 - Support for Analytics (extra package?)
 - Add OnDestroy event
+- Add stairs/moving platforms to system
+- Move platformer stuff to different package
 
 Usability:
 ----------

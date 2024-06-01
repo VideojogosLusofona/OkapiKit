@@ -201,15 +201,18 @@ namespace OkapiKit
 
             foreach (var action in actions)
             {
-                if (action.action.isActionEnabled)
+                if (action.action != null)
                 {
-                    if (action.delay > 0)
+                    if (action.action.isActionEnabled)
                     {
-                        StartCoroutine(ExecuteTriggerCR(action));
-                    }
-                    else
-                    {
-                        action.action.Execute();
+                        if (action.delay > 0)
+                        {
+                            StartCoroutine(ExecuteTriggerCR(action));
+                        }
+                        else
+                        {
+                            action.action.Execute();
+                        }
                     }
                 }
             }
