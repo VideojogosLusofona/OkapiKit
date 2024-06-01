@@ -9,7 +9,7 @@ namespace NodeEditor
     {
         public Object   owner;
         public Vector2  position = Vector2.zero;
-        [NodePropertyVisibility(true)]
+        [NodePropertyVisibility(true), NodeInput]
         public bool     nodeEnabled = true;
     }
 }

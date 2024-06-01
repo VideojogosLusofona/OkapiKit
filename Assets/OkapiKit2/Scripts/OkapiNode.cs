@@ -30,9 +30,13 @@ namespace OkapiKitV2
 
     [System.Serializable]
     [NodePath("Actions/Flash")]
+    [NodeWidth(300.0f)]
     public class OkapiFlashNode : OkapiAction
     {
+        [NodeInput,NodeOutput]
         public string anotherNode2;
+        [NodeOutput]
+        public int    xpto = 123;
     }
 
     [System.Serializable]

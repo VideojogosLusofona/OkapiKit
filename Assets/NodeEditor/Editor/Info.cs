@@ -11,6 +11,7 @@ namespace NodeEditor
     {
         protected static Dictionary<Type, Type> cachedRendererTypes;
         protected static Dictionary<string, Type> cachedNodeTypes;
+        protected static Dictionary<Type, Color> cachedTypeColors;
 
         static Info()
         {
@@ -35,6 +36,17 @@ namespace NodeEditor
                     }
                 }
             }
+
+            cachedTypeColors = new()
+            {
+                { typeof(int), EditorUtils.ColorFromHex("#11c5d0") },
+                { typeof(bool), EditorUtils.ColorFromHex("#d01128") },
+                { typeof(string), EditorUtils.ColorFromHex("#c67e21") },
+                { typeof(Color), EditorUtils.ColorFromHex("#44c621") },
+                { typeof(Vector2), EditorUtils.ColorFromHex("#44c621") },
+                { typeof(Vector3), EditorUtils.ColorFromHex("#44c621") },
+                { typeof(Vector4), EditorUtils.ColorFromHex("#44c621") },
+            };
         }
 
         public static Type GetRendererType(Type type)
@@ -68,6 +80,15 @@ namespace NodeEditor
             }
 
             return null;
+        }
+
+        public static Color GetTypeColor(Type type)
+        {
+            if (cachedTypeColors.TryGetValue(type, out Color ret))
+            {
+                return ret;
+            }
+            return Color.white;
         }
     }
 }

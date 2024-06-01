@@ -57,6 +57,7 @@ namespace NodeEditor
         protected List<BaseNodeRenderer>                    nodeSelection = new();
         protected List<BaseNodeRenderer>                    initialSelection = new();
         protected DateTime[]                                timeOfClick = new DateTime[8];
+        protected bool[]                                    clickOnNode = new bool[8];
         protected bool                                      isNodeMove = false;
         protected Dictionary<BaseNodeRenderer, Vector2>     originalPosition;
         protected Vector2                                   totalDelta;
@@ -118,6 +119,8 @@ namespace NodeEditor
                 GUILayout.Label("Restart window, missing theme...");
                 return;
             }
+
+            initSkin &= (selectionTexture != null) && (backgroundTexture != null);
 
             if (!initSkin)
             {
@@ -509,6 +512,7 @@ namespace NodeEditor
                     break;
                 case EventType.MouseDown:
                     timeOfClick[e.button] = DateTime.Now;
+                    clickOnNode[e.button] = (GetNodeAtMouse(false) != null);
                     break;
                 case EventType.MouseDrag:
                     if (e.button == 0)
@@ -537,12 +541,16 @@ namespace NodeEditor
                             }
                             else if (!isRectSelecting)
                             {
-                                if (!ctrl) { ClearNodeSelection(); initialSelection.Clear(); }
-                                else initialSelection = new(nodeSelection);
+                                // We can only start rect select outside of a node
+                                if (!clickOnNode[e.button])
+                                {
+                                    if (!ctrl) { ClearNodeSelection(); initialSelection.Clear(); }
+                                    else initialSelection = new(nodeSelection);
 
-                                // Start selection
-                                selectionRect = new Rect(GetMouseWorldPosition(), Vector2.zero);
-                                isRectSelecting = true;
+                                    // Start selection
+                                    selectionRect = new Rect(GetMouseWorldPosition(), Vector2.zero);
+                                    isRectSelecting = true;
+                                }
                             }
                             else
                             {
@@ -654,30 +662,15 @@ namespace NodeEditor
             BaseNodeRenderer    ret = null;
             var                 pos = GetMouseWorldPosition();
 
-            if (forDragMove)
+            foreach (var nodeRenderer in renderers)
             {
-                foreach (var nodeRenderer in renderers)
-                {
-                    var node = nodeRenderer.Value;
+                var node = nodeRenderer.Value;
 
-                    if (node.IsHovering(pos))
-                    {
-                        if (ret == null) ret = node;
-                        else if (ret.sortOrder < node.sortOrder) ret = node;
-                    }
-                }
-            }
-            else
-            {
-                foreach (var nodeRenderer in renderers)
+                if (((forDragMove) && (node.IsHoveringForMove(pos)))  ||
+                    ((!forDragMove) && (node.IsHovering(pos))))
                 {
-                    var node = nodeRenderer.Value;
-
-                    if (node.IsHovering(pos))
-                    {
-                        if (ret == null) ret = node;
-                        else if (ret.sortOrder < node.sortOrder) ret = node;
-                    }
+                    if (ret == null) ret = node;
+                    else if (ret.sortOrder < node.sortOrder) ret = node;
                 }
             }
 
