@@ -1,5 +1,6 @@
 using UnityEngine;
 using NodeEditor;
+using NaughtyAttributes;
 
 namespace OkapiKitV2
 {
@@ -29,6 +30,15 @@ namespace OkapiKitV2
     }
 
     [System.Serializable]
+    [NodePath("Actions/Log")]
+    [NodeWidth(300.0f)]
+    public class OkapiLogNode : OkapiAction
+    {
+        [NodeInput]
+        public string text1;
+    }
+
+    [System.Serializable]
     [NodePath("Actions/Flash")]
     [NodeWidth(300.0f)]
     public class OkapiFlashNode : OkapiAction
@@ -50,5 +60,31 @@ namespace OkapiKitV2
     public class Okapi2DMovementNode : OkapiMovementNode
     {
         public bool thirdTimeIsTheCharm;
+    }
+
+    [System.Serializable]
+    [NodeColor("#ffcaca", "#2f4858", "#ff6060")]
+    public abstract class OkapiLiteral : OkapiNode
+    {
+    }
+
+    [System.Serializable]
+    [NodeColor("#ffcaca", "#2f4858", "#ff6060")]
+    [NodePath("Literal/String")]
+    [NodeWidth(300.0f)]
+    public class OkapiString : OkapiLiteral
+    {
+        [NodeOutput]
+        public string text2;
+    }
+
+    [System.Serializable]
+    [NodeColor("#ffcaca", "#2f4858", "#ff6060")]
+    [NodePath("Literal/Text")]
+    [NodeWidth(400.0f)]
+    public class OkapiText : OkapiLiteral
+    {
+        [ResizableTextArea, NodeOutput]
+        public string text3;
     }
 }

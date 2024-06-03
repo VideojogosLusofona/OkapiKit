@@ -8,11 +8,25 @@ using static UnityEditor.PlayerSettings;
 
 namespace NodeEditor
 {
+    public class Endpoint
+    {
+        public const int None = 0;
+        public const int Input = 1 << 0;
+        public const int Output = 1 << 1;
+
+        public string   propertyName;
+        public Rect     relativeRect;
+        public int      flags;
+        public Type     propertyType;
+        public Color    color;
+    }
+
     public abstract class BaseNodeRenderer
     {
-        public BaseNode node;
-        public int      sortOrder = 0;
-        public bool     selected = false;
+        public BaseNode         node;
+        public int              sortOrder = 0;
+        public bool             selected = false;
+        public List<Endpoint>   endpoints = new List<Endpoint>();
 
         public void Init(BaseNode node)
         {
@@ -82,16 +96,11 @@ namespace NodeEditor
 
         protected class NodeProperty
         {
-            public const int None = 0;
-            public const int Input = 1 << 0;  
-            public const int Output = 1 << 1;
-
             public string              name;
             public SerializedProperty  property;
-            public int                 flags = None;
             public float               height;
-            public Type                propertyType;
-            public Color               connectorColor;
+            public Endpoint            input;
+            public Endpoint            output;
         }
 
         protected List<NodeProperty>    nodeProperties;
@@ -187,26 +196,39 @@ namespace NodeEditor
                     }
                     if (visible)
                     {
-                        int     f = NodeProperty.None;
+                        Endpoint input = null, output = null;
 
                         var nodeInput = fieldInfo.GetCustomAttribute<NodeInputAttribute>();
                         if (nodeInput != null)
                         {
-                            f |= NodeProperty.Input;
+                            input = new Endpoint()
+                            {
+                                propertyName = nodePropertyIterator.name,
+                                propertyType = fieldInfo.FieldType,
+                                color = Info.GetTypeColor(fieldInfo.FieldType),
+                                flags = Endpoint.Input,
+                            };
+                            endpoints.Add(input);
                         }
                         var nodeOutput = fieldInfo.GetCustomAttribute<NodeOutputAttribute>();
                         if (nodeOutput != null)
                         {
-                            f |= NodeProperty.Output;
+                            output = new Endpoint()
+                            {
+                                propertyName = nodePropertyIterator.name,
+                                propertyType = fieldInfo.FieldType,
+                                color = Info.GetTypeColor(fieldInfo.FieldType),
+                                flags = Endpoint.Output,
+                            };
+                            endpoints.Add(output);
                         }
 
                         var nodeProperty = new NodeProperty
                         {
                             name = nodePropertyIterator.name,
                             property = nodePropertyIterator.Copy(),
-                            flags = f,
-                            propertyType = fieldInfo.FieldType,
-                            connectorColor = Info.GetTypeColor(fieldInfo.FieldType)
+                            input = input,
+                            output = output
                         };
 
                         nodeProperties.Add(nodeProperty);
@@ -264,8 +286,20 @@ namespace NodeEditor
             {
                 property.height = EditorGUI.GetPropertyHeight(property.property);
 
+                if (property.input != null)
+                {
+                    propertyFlags |= Endpoint.Input;
+                    property.input.relativeRect = new Rect(0, propertyHeight + titleHeight + titleToPropertySpacing,
+                                                           connectorWidth + connectorMargin * 2, property.height);
+                }
+                if (property.output != null)
+                {
+                    propertyFlags |= Endpoint.Output;
+                    property.output.relativeRect = new Rect(0, propertyHeight + titleHeight + titleToPropertySpacing,
+                                                           connectorWidth + connectorMargin * 2, property.height);
+                }
+
                 propertyHeight += property.height + EditorGUIUtility.standardVerticalSpacing;
-                propertyFlags |= property.flags;
             }
         }
 
@@ -317,22 +351,13 @@ namespace NodeEditor
             propertyRect.width -= xPadding * 2.0f;
             propertyRect.height -= titleHeight + titleToPropertySpacing;
 
-            Rect inputRect = rect;
-            inputRect.x += connectorMargin;
-            inputRect.width = connectorWidth;
-            inputRect.height = connectorWidth;
-            Rect outputRect = rect;
-            outputRect.x += outputRect.width - connectorWidth - connectorMargin;
-            outputRect.width = connectorWidth;
-            outputRect.height = connectorWidth;
-
-            if ((propertyFlags & NodeProperty.Input) != 0)
+            if ((propertyFlags & Endpoint.Input) != 0)
             {
                 propertyRect.x += connectorWidth + connectorMargin;
                 propertyRect.width -= connectorWidth + connectorMargin * 2;
             }
 
-            if ((propertyFlags & NodeProperty.Output) != 0)
+            if ((propertyFlags & Endpoint.Output) != 0)
             {
                 propertyRect.width -= connectorWidth + connectorMargin * 2;
             }
@@ -343,25 +368,26 @@ namespace NodeEditor
 
                 EditorGUI.PropertyField(propertyRect, property.property, true);
 
-                if ((property.flags & NodeProperty.Input) != 0)
-                {
-                    inputRect.y = propertyRect.y + (property.height - connectorHeight) * 0.5f;
-                    var prevColor = GUI.color;
-                    GUI.color = property.connectorColor;
-                    GUI.DrawTexture(inputRect, connectorTexture);
-                    GUI.color = prevColor;
-                }
-
-                if ((property.flags & NodeProperty.Output) != 0)
-                {
-                    outputRect.y = propertyRect.y + (property.height - connectorHeight) * 0.5f;
-                    var prevColor = GUI.color;
-                    GUI.color = property.connectorColor;
-                    GUI.DrawTexture(outputRect, connectorTexture);
-                    GUI.color = prevColor;
-                }
-
                 propertyRect.y += propertyRect.height + EditorGUIUtility.standardVerticalSpacing;
+            }
+
+            float xOffsetLeft = rect.x + connectorMargin;
+            float xOffsetRight = rect.x + rect.width - connectorMargin - connectorWidth;
+
+            Rect endpointRect = new Rect();
+            endpointRect.width = connectorWidth;
+            endpointRect.height = connectorHeight;
+
+            foreach (var endpoint in endpoints)
+            {
+                if ((endpoint.flags & Endpoint.Input) != 0) endpointRect.x = endpoint.relativeRect.x + xOffsetLeft;
+                else if ((endpoint.flags & Endpoint.Output) != 0) endpointRect.x = endpoint.relativeRect.x + xOffsetRight;
+                endpointRect.y = rect.y + endpoint.relativeRect.y + (endpoint.relativeRect.height - endpointRect.height) * 0.5f;
+
+                var prevColor = GUI.color;
+                GUI.color = endpoint.color;
+                GUI.DrawTexture(endpointRect, connectorTexture);
+                GUI.color = prevColor;
             }
         }
 

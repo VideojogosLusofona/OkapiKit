@@ -491,6 +491,7 @@ namespace NodeEditor
                 case EventType.KeyDown:                    
                     if (e.keyCode == KeyCode.Delete) 
                     {
+                        Debug.Log($"Delete pressed, focused key = [{GUI.GetNameOfFocusedControl()}], EditorGUIUtility.keyboardControl = {EditorGUIUtility.keyboardControl}");
                         if (selectedNodeCount > 0)
                         {
                             DeleteSelectedNodes();
