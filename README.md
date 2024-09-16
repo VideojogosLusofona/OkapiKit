@@ -33,28 +33,6 @@ Use the Unity Package Manager to install the OkapiKit:
 
 6. With this option, everytime you want to update the package, you will have to remove it and re-add it (the Update option doesn't work properly in this context)
 
-## Option 3 - More complicated, best option - UpmGitExtension
-
-Use the UPM Git extension to install the OkapiKit:
-
-1. Open the Unity Package Manager
-
-![Install1](Screenshots/install01.png)
-
-2. Select "Add package from git URL"
-
-![Install1](Screenshots/install02.png)
-
-3. Install the UPM Git Extension, by pasting the URL "https://github.com/mob-sakai/UpmGitExtension.git"
-
-4. You can now install Naughty Attributes, selecting again "Add package from git URL", and pasting the URL "https://github.com/dbrizov/NaughtyAttributes.git#upm"
-
-5. Finally, install the OkapiKit, selecting again "Add package from git URL", and pasting the URL "https://github.com/VideojogosLusofona/OkapiKit.git#upm"
-
-6. If you want to install the samples, select again "Add package from git URL", and pasting the URL "https://github.com/VideojogosLusofona/OkapiKit.git#samples"
-
-7. When you want to update, just use the Update button.
-
 # Sample
 
 It currently has seven sample 'games' (each a Scene under the Samples directory), accessible through a menu (Samples scene, also in the Samples directory).
