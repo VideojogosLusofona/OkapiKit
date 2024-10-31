@@ -20,7 +20,7 @@ namespace OkapiKit
             {
                 if (_instance == null)
                 {
-                    _instance = FindObjectOfType<SoundManager>();
+                    _instance = FindFirstObjectByType<SoundManager>();
                 }
                 return _instance;
             }

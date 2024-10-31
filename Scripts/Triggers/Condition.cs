@@ -269,25 +269,25 @@ namespace OkapiKit
                             break;
                         case Condition.ValueType.VelocityX:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
-                            if (rb) currentValue = rb.velocity.x;
+                            if (rb) currentValue = rb.linearVelocity.x;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
                         case Condition.ValueType.VelocityY:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
-                            if (rb) currentValue = rb.velocity.y;
+                            if (rb) currentValue = rb.linearVelocity.y;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
                         case Condition.ValueType.AbsoluteVelocityX:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
-                            if (rb) currentValue = Mathf.Abs(rb.velocity.x);
+                            if (rb) currentValue = Mathf.Abs(rb.linearVelocity.x);
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
                         case Condition.ValueType.AbsoluteVelocityY:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
-                            if (rb) currentValue = Mathf.Abs(rb.velocity.y);
+                            if (rb) currentValue = Mathf.Abs(rb.linearVelocity.y);
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;

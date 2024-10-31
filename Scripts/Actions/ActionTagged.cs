@@ -253,7 +253,7 @@ namespace OkapiKit
         {
             if (searchType == SearchType.Global)
             {
-                targetActions = new List<Action>(GameObject.FindObjectsOfType<Action>());
+                targetActions = new List<Action>(GameObject.FindObjectsByType<Action>(FindObjectsSortMode.None));
 
                 targetActions.RemoveAll((action) => !action.HasTag(triggerTags));
             }

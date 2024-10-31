@@ -3,8 +3,9 @@ using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Movement/XY Movement")]
-    public class MovementXY : Movement
+    [RequireComponent(typeof(GridObject))]
+    [AddComponentMenu("Okapi/Movement/XY Grid Movement")]
+    public class MovementGridXY : MovementGrid
     {
         public enum InputType { Axis = 0, Button = 1, Key = 2 };
         public enum Axis { UpAxis = 0, RightAxis = 1 };
