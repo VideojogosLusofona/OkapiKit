@@ -337,7 +337,7 @@ namespace OkapiKit
                     }
                     else if (rb)
                     {
-                        velocity = rb.velocity;
+                        velocity = rb.linearVelocity;
                     }
 
                     float r = Random.Range(percentageValue.x, percentageValue.y);
@@ -352,7 +352,7 @@ namespace OkapiKit
                     }
                     else if (rb)
                     {
-                        velocity = rb.velocity;
+                        velocity = rb.linearVelocity;
                     }
 
                     float r = Random.Range(value.x, value.y);
@@ -410,7 +410,7 @@ namespace OkapiKit
                 }
                 else if (rb)
                 {
-                    rb.velocity = velocity;
+                    rb.linearVelocity = velocity;
                 }
             }
             else if (changeType == ChangeType.GravityScale)

@@ -314,7 +314,7 @@ namespace OkapiKit
             else if (mode == RotateMode.Movement)
             {
                 Vector3 dir = Vector3.zero;
-                if (rb) dir = rb.velocity;
+                if (rb) dir = rb.linearVelocity;
                 if (dir.sqrMagnitude < 1e-6)
                 {
                     dir = transform.position - prevPosition;

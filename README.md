@@ -133,6 +133,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 * Survivor top down sprites by [rileygombart], licensed under [CC-BY 3.0]
 * Top-down buildings by [chabull], licensed under [CC-BY 3.0]
 * Platformer sprites by [IMakeGames], licensed under [CC-BY 3.0]
+* 1-Bit Pack by [KenneyNL], licensed under [CC0]
 * Gems by [Winternaut], licensed under [CC0]
 * NES Shooter Music by [SketchyLogic], licensed under [CC0]
 * Editor icons from [FlatIcon]

@@ -506,7 +506,7 @@ namespace OkapiKit
                     }
                     else if ((Time.time - jumpTime) < jumpHoldMaxTime)
                     {
-                        rb.velocity = new Vector2(rb.velocity.x, speed.y);
+                        rb.linearVelocity = new Vector2(rb.linearVelocity.x, speed.y);
                     }
                 }
                 else
@@ -545,18 +545,18 @@ namespace OkapiKit
 
             if (limitFallSpeed)
             {
-                var currentVelocity = rb.velocity;
+                var currentVelocity = rb.linearVelocity;
                 if (currentVelocity.y < -maxFallSpeed)
                 {
                     currentVelocity.y = -maxFallSpeed;
-                    rb.velocity = currentVelocity;
+                    rb.linearVelocity = currentVelocity;
                 }
             }
         }
 
         void Jump()
         {
-            rb.velocity = new Vector2(rb.velocity.x, speed.y);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, speed.y);
             jumpBufferingTimer = 0.0f;
             coyoteTimer = 0;
             jumpTime = Time.time;
@@ -634,7 +634,7 @@ namespace OkapiKit
                         break;
                 }
 
-                rb.velocity = new Vector2(deltaX, rb.velocity.y);
+                rb.linearVelocity = new Vector2(deltaX, rb.linearVelocity.y);
             }
 
             // Need to check with actual is grounded or else coyote time will make the jump count reset immediately after flying off
@@ -653,7 +653,7 @@ namespace OkapiKit
                 if (groundCollider) groundCollider.enabled = false;
             }
 
-            var currentVelocity = rb.velocity;
+            var currentVelocity = rb.linearVelocity;
 
             if ((useAnimator) && (animator))
             {
@@ -718,7 +718,7 @@ namespace OkapiKit
                 else
                 {
                     actualIsGrounded = false;
-                    if (rb.velocity.y > 0)
+                    if (rb.linearVelocity.y > 0)
                     {
                         coyoteTimer = 0;
                     }

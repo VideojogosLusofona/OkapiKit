@@ -31,7 +31,7 @@ namespace OkapiKit
         {
             if (rb != null)
             {
-                rb.velocity = delta / Time.deltaTime;
+                rb.linearVelocity = delta / Time.deltaTime;
             }
             else
             {
@@ -44,7 +44,7 @@ namespace OkapiKit
         {
             if (rb != null)
             {
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
             }
         }
 

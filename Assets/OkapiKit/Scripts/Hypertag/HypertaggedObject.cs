@@ -236,7 +236,7 @@ namespace OkapiKit
             {
                 if (!UnityEditor.EditorApplication.isPlaying)
                 {
-                    var hos = FindObjectsOfType<HypertaggedObject>(tag);
+                    var hos = FindObjectsByType<HypertaggedObject>(FindObjectsSortMode.None);
                     foreach (var ho in hos)
                     {
                         if (ho.Has(tag))

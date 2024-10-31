@@ -10,7 +10,6 @@ namespace OkapiKit
     {
         public enum Type { Float = 0, Integer = 1, VariableInstance = 2, Variable = 3 };
 
-        [SerializeField] private bool               init;
         [SerializeField] private Type               type;
         [SerializeField] private VariableInstance   variableInstance;
         [SerializeField] private Variable           variable;
@@ -20,14 +19,12 @@ namespace OkapiKit
 
         public OkapiValue(float v) : this()
         {
-            this.init = true;
             this.type = Type.Float;
             this.floatValue = v;
         }
 
         public OkapiValue(int v) : this()
         {
-            this.init = true;
             this.type = Type.Integer;
             this.intValue = v;
         }

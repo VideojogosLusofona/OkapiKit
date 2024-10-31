@@ -40,10 +40,10 @@ namespace OkapiKit
                     rb.mass = value;
                     break;
                 case ChangeType.LinearDrag:
-                    rb.drag = value;
+                    rb.linearDamping = value;
                     break;
                 case ChangeType.AngularDrag:
-                    rb.angularDrag = value;
+                    rb.angularDamping = value;
                     break;
                 case ChangeType.GravityScale:
                     rb.gravityScale = value;
