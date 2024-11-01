@@ -8,9 +8,21 @@ namespace OkapiKit.Editor
     [CustomEditor(typeof(GridObject))]
     public class GridObjectEditor : OkapiBaseEditor
     {
+        SerializedProperty propPivot;
+        SerializedProperty propCanPush;
+        SerializedProperty propMass;
+        SerializedProperty propSize;
+        SerializedProperty propStepAnimationCurve;
+
         protected override void OnEnable()
         {
             base.OnEnable();
+
+            propPivot = serializedObject.FindProperty("_pivot");
+            propCanPush = serializedObject.FindProperty("_canPush");
+            propMass = serializedObject.FindProperty("_mass");
+            propSize = serializedObject.FindProperty("_size");
+            propStepAnimationCurve = serializedObject.FindProperty("stepAnimationCurve");
         }
 
         public override void OnInspectorGUI()
@@ -20,6 +32,22 @@ namespace OkapiKit.Editor
             if (WriteTitle())
             {
                 EditorGUI.BeginChangeCheck();
+
+                EditorGUILayout.PropertyField(propPivot, new GUIContent("Pivot", "Pivot of the visual object associated with this grid object.\nShould match the sprite placed on the sprite renderer, for example."));
+                EditorGUILayout.PropertyField(propCanPush, new GUIContent("Can be pushed?", "Can this object be pushed by others?"));
+                if (propCanPush.boolValue)
+                {
+                    EditorGUILayout.PropertyField(propMass, new GUIContent("Mass", "What's the mass of this object? This is compared to the push strength of the object that's trying to push this one."));
+                    EditorGUILayout.PropertyField(propSize, new GUIContent("Size", "What's the size of this object? This is used to test for overlaps during pushing."));
+                }
+                // Separator
+                Rect separatorRect = GUILayoutUtility.GetLastRect();
+                separatorRect.yMin = separatorRect.yMax + 5;
+                separatorRect.height = 5.0f;
+                EditorGUI.DrawRect(separatorRect, GUIUtils.ColorFromHex("#ff6060"));
+                EditorGUILayout.Space(separatorRect.height + 5);
+
+                EditorGUILayout.PropertyField(propStepAnimationCurve, new GUIContent("Animation Curve", "How do we animate each step position update. Simplest mode is to have a line going from bottom left to upper right."));
 
                 EditorGUI.EndChangeCheck();
 
