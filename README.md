@@ -135,6 +135,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 * Platformer sprites by [IMakeGames], licensed under [CC-BY 3.0]
 * 1-Bit Pack by [KenneyNL], licensed under [CC0]
 * Gems by [Winternaut], licensed under [CC0]
+* [Simple Knight sprites](https://opengameart.org/content/simple-knight) by [Calciumtrice](https://opengameart.org/users/calciumtrice), licensed through [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/)
 * NES Shooter Music by [SketchyLogic], licensed under [CC0]
 * Editor icons from [FlatIcon]
 * Title imagem from [Midjourney]

@@ -374,6 +374,16 @@ namespace OkapiKit
             {
                 CheckButton("Jump button", jumpButton);
             }
+            if ((flipBehaviour == FlipBehaviour.InputFlipsSprite) ||
+                (flipBehaviour == FlipBehaviour.VelocityFlipsSprite))
+            {
+                spriteRenderer = GetComponentInParent<SpriteRenderer>();
+                if (spriteRenderer == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Flip behaviour is set to flip the sprite, but sprite doesn't exist!", "Flip behaviour acts on sprite, but no sprite is present!"));
+                }
+            }
+
             if (useAnimator)
             {
                 Animator anm = animator;
@@ -397,37 +407,15 @@ namespace OkapiKit
                     }
                     else
                     {
-                        CheckErrorAnim(anm, "horizontal velocity", horizontalVelocityParameter, AnimatorControllerParameterType.Float);
-                        CheckErrorAnim(anm, "absolute horizontal velocity", absoluteHorizontalVelocityParameter, AnimatorControllerParameterType.Float);
-                        CheckErrorAnim(anm, "vertical velocity", verticalVelocityParameter, AnimatorControllerParameterType.Float);
-                        CheckErrorAnim(anm, "absolute vertical velocity", absoluteVerticalVelocityParameter, AnimatorControllerParameterType.Float);
-                        CheckErrorAnim(anm, "is grounded", isGroundedParameter, AnimatorControllerParameterType.Bool);
-                        CheckErrorAnim(anm, "is gliding", isGlidingParameter, AnimatorControllerParameterType.Bool);
+                        Helpers.CheckErrorAnim(anm, "horizontal velocity", horizontalVelocityParameter, AnimatorControllerParameterType.Float, _logs);
+                        Helpers.CheckErrorAnim(anm, "absolute horizontal velocity", absoluteHorizontalVelocityParameter, AnimatorControllerParameterType.Float, _logs);
+                        Helpers.CheckErrorAnim(anm, "vertical velocity", verticalVelocityParameter, AnimatorControllerParameterType.Float, _logs);
+                        Helpers.CheckErrorAnim(anm, "absolute vertical velocity", absoluteVerticalVelocityParameter, AnimatorControllerParameterType.Float, _logs);
+                        Helpers.CheckErrorAnim(anm, "is grounded", isGroundedParameter, AnimatorControllerParameterType.Bool, _logs);
+                        Helpers.CheckErrorAnim(anm, "is gliding", isGlidingParameter, AnimatorControllerParameterType.Bool, _logs);
                     }
                 }
             }
-        }
-
-        void CheckErrorAnim(Animator anm, string logParameter, string parameterName, AnimatorControllerParameterType type)
-        {
-            if (parameterName == "")
-            {
-                return;
-            }
-            for (int i = 0; i < anm.parameterCount; i++)
-            {
-                var param = anm.GetParameter(i);
-                if (param.name == parameterName)
-                {
-                    if (param.type != type)
-                    {
-                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!", $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!"));
-                    }
-                    return;
-                }
-            }
-
-            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter {parameterName} for {logParameter} not found!", "The given animator doesn't have this parameter. Either set it to empty (so we don't try to drive it), or add it on the animator."));
         }
 
         protected override void Start()

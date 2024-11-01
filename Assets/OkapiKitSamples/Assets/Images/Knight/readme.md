@@ -1,0 +1,1 @@
+* [Simple Knight sprites](https://opengameart.org/content/simple-knight) by [Calciumtrice](https://opengameart.org/users/calciumtrice), licensed through [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/)

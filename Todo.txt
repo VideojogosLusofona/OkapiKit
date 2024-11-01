@@ -25,7 +25,7 @@ Features:
 - Support for Analytics (extra package?)
 - Add OnDestroy event
 - Add stairs/moving platforms to system
-- Move platformer stuff to different package
+- Add animator control on XY movement
 
 Usability:
 ----------
