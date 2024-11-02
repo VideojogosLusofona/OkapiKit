@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace OkapiKit
 {
@@ -19,6 +20,7 @@ namespace OkapiKit
         private int                     stride;
         private Dictionary<int, byte[]> mapsByLayer = new();
         private List<GridObject>        gridObjects = new();
+        private List<Tilemap>           tilemaps = new(); 
 
         private Grid grid
         {
@@ -112,6 +114,8 @@ namespace OkapiKit
         protected void Start()
         {
             UpdateColliders();
+
+            tilemaps = new(GetComponentsInChildren<Tilemap>());
         }
 
         void UpdateColliders()
@@ -229,6 +233,28 @@ namespace OkapiKit
         internal void Unregister(GridObject gridObject)
         {
             gridObjects.Remove(gridObject);
+        }
+
+        internal bool IsOnTile(Vector3 worldPos, TileBase tile)
+        {
+            foreach (var tilemap in tilemaps)
+            {
+                var cellPos = tilemap.WorldToCell(worldPos);
+                if (tile == tilemap.GetTile(cellPos)) return true;
+            }
+
+            return false;
+        }
+
+        internal bool IsOnTile(Vector3 worldPos, TileSet tileSet)
+        {
+            foreach (var tilemap in tilemaps)
+            {
+                var cellPos = tilemap.WorldToCell(worldPos);
+                if (tileSet.IsOnSet(tilemap.GetTile(cellPos))) return true;
+            }
+
+            return false;
         }
     }
 }

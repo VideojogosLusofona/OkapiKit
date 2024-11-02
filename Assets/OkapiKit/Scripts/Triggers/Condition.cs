@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace OkapiKit
 {
@@ -17,6 +19,7 @@ namespace OkapiKit
             Distance = 8, Angle = 9,
             Probe = 10, ProbeDistance = 11,
             IsGrounded = 12, IsGliding = 13,
+            OnTile = 16, OnTileSet = 17,
         };
         [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5 };
         [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
@@ -40,6 +43,10 @@ namespace OkapiKit
         public VariableInstance     comparisonValueHandler;
         public Variable             comparisonVariable;
         public bool                 percentageCompare;
+        public TileBase             tile;
+        public TileSet              tileSet;
+        
+        private GridObject          gridObject;
 
         // Objects to minimize GC allocs
         static List<Transform> potentialTransforms = new();
@@ -50,6 +57,8 @@ namespace OkapiKit
             if (valueType == ValueType.Probe) return DataType.Boolean;
             if (valueType == ValueType.IsGrounded) return DataType.Boolean;
             if (valueType == ValueType.IsGliding) return DataType.Boolean;
+            if (valueType == ValueType.OnTile) return DataType.Boolean;
+            if (valueType == ValueType.OnTileSet) return DataType.Boolean;
             else return DataType.Number;
         }
 
@@ -127,6 +136,21 @@ namespace OkapiKit
                 case ValueType.IsGliding:
                     if (movementPlatformer != null) return $"IsGliding({movementPlatformer.name})";
                     return $"IsGliding([UNDEFINED])";
+                case ValueType.OnTile:
+                case ValueType.OnTileSet:
+                    {
+                        string tileName = "[UNDEFINED]";
+                        if ((valueType == ValueType.OnTile) && (tile != null)) tileName = $"[{tile.name}]";
+                        else if ((valueType == ValueType.OnTileSet) && (tileSet != null)) tileName = $"[{tileSet.name}]";
+                        
+                        string targetName = "[UNDEFINED]";
+                        if (tag != null) targetName = $"Tag[{tag.name}]";
+                        else if (sourceTransform) targetName = $"Transform[{sourceTransform.name}]";
+
+                        if (valueType == ValueType.OnTile) return $"OnTile({targetName}, {tileName})";
+                        else if (valueType == ValueType.OnTileSet) return $"OnTileSet({targetName}, {tileName})";
+                    }
+                    break;
             }
 
             return "[Unknown]";
@@ -201,6 +225,26 @@ namespace OkapiKit
                         if (movementPlatformer)
                         {
                             b = movementPlatformer.isGliding;
+                        }
+                        break;
+                    case Condition.ValueType.OnTile:
+                        {
+                            var targetTransform = GetTransform(gameObject);
+                            if (gridObject == null) gridObject = gameObject.GetComponent<GridObject>();
+                            if ((targetTransform) && (gridObject) && (tile))
+                            {
+                                b = gridObject.IsOnTile(targetTransform.position, tile);
+                            }
+                        }
+                        break;
+                    case Condition.ValueType.OnTileSet:
+                        {
+                            var targetTransform = GetTransform(gameObject);
+                            if (gridObject == null) gridObject = gameObject.GetComponent<GridObject>();
+                            if ((targetTransform) && (gridObject) && (tile))
+                            {
+                                b = gridObject.IsOnTile(targetTransform.position, tileSet);
+                            }
                         }
                         break;
                     default:
@@ -421,6 +465,21 @@ namespace OkapiKit
             return b;
         }
 
+        Transform GetTransform(GameObject gameObject)
+        {
+            if (tag)
+            {
+                var t = gameObject.FindObjectOfTypeWithHypertag<Transform>(tag);
+                if (t) return t;
+            }
+            else if (sourceTransform)
+            {
+                return sourceTransform;
+            }
+
+            return gameObject.transform;
+        }
+
         public void CheckErrors(GameObject go, List<LogEntry> errors)
         {
             if ((variable == null) && (valueHandler == null) && (valueType == ValueType.None))
@@ -499,6 +558,44 @@ namespace OkapiKit
                 if (movementPlatformer == null)
                 {
                     errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined platform movement target to check for gliding", "We need to check if a specific character is glidding, so we need to know which character"));
+                }
+            }
+            else if (valueType == ValueType.OnTile)
+            {
+                if (tile == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined tile to check for", "We need to specific a tile to search for"));
+                }
+                if ((tag == null) && (sourceTransform == null))
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined target for OnTile value!", "We need to check the tile below an object, so we need to define which object, either by using tags or using a reference.\nIf none is specified this object will be used, but that's usually error prone, and it's better to explicitly define it!"));
+                }
+                if (gridObject == null)
+                {
+                    gridObject = go.GetComponent<GridObject>();
+                    if (gridObject == null)
+                    {
+                        errors.Add(new LogEntry(LogEntry.Type.Error, "No Grid Object object present!", "Only objects with a Grid Object can use the OnTile condition."));
+                    }
+                }
+            }
+            else if (valueType == ValueType.OnTileSet)
+            {
+                if (tileSet == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined tile set to check for", "We need to specific a tile set to search for"));
+                }
+                if ((tag == null) && (sourceTransform == null))
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Undefined target for OnTileSet value!", "We need to check the tile below an object, so we need to define which object, either by using tags or using a reference.\nIf none is specified this object will be used, but that's usually error prone, and it's better to explicitly define it!"));
+                }
+                if (gridObject == null)
+                {
+                    gridObject = go.GetComponent<GridObject>();
+                    if (gridObject == null)
+                    {
+                        errors.Add(new LogEntry(LogEntry.Type.Error, "No Grid Object object present!", "Only objects with a Grid Object can use the OnTileSet condition."));
+                    }
                 }
             }
         }
