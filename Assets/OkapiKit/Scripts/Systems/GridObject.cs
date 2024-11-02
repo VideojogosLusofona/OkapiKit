@@ -1,6 +1,5 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace OkapiKit
 {
@@ -43,10 +42,16 @@ namespace OkapiKit
         public bool isMoving => targetPos.HasValue;
         public Vector2 size => _size;
 
+        List<GridObject> exclusionList;
+
         private void Start()
         {
             _grid = GetComponentInParent<GridSystem>();
             rb = GetComponent<Rigidbody2D>();
+            exclusionList = new()
+            {
+                this
+            };
 
             transform.position = grid.Snap(transform.position, _pivot);
 
@@ -152,7 +157,7 @@ namespace OkapiKit
             // Check if object can move to this position
             var targetWorldPos = grid.GridToWorld(gridPos, pivot);
             var originalGridPos = grid.WorldToGrid(transform.position);
-            var obstacleQuery = grid.IsObstacle(targetWorldPos, _size, gameObject.layer);
+            var obstacleQuery = grid.IsObstacle(targetWorldPos, _size, gameObject.layer, exclusionList);
             if (obstacleQuery.hasObstacle)
             {
                 // Is it a wall? If it is, just give up
@@ -244,6 +249,16 @@ namespace OkapiKit
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireCube(transform.position, _size);
             }
+        }
+
+        public Vector3 Snap(Vector3 worldPos)
+        {
+            return grid.Snap(worldPos, pivot);
+        }
+
+        internal Vector3 GridToWorld(Vector2Int gridPos)
+        {
+            return grid.GridToWorld(gridPos, pivot);
         }
     }
 }

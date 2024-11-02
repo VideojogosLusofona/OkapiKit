@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace OkapiKit
 {
+    [RequireComponent(typeof(GridObject))]
     [AddComponentMenu("Okapi/Movement/Follow Grid Movement")]
     public class MovementGridFollow : MovementGrid
     {

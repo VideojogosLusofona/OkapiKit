@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UIElements;
 
 namespace OkapiKit
 {
@@ -67,29 +68,51 @@ namespace OkapiKit
             ComputeVariables();
         }
 
-        public void AddPoint()
+        public int AddPoint(int insertionPoint = -1)
         {
+            int ret = points.Count;
+
             if (points == null) points = new List<Vector3>();
 
-            if (points.Count >= 2)
+            if ((insertionPoint >= 0) && (insertionPoint < points.Count))
             {
-                // Get last two points and make the new point in that direction
-                Vector3 delta = points[points.Count - 1] - points[points.Count - 2];
+                if (points.Count >= 2)
+                {
+                    Vector3 p1 = points[insertionPoint];
+                    Vector3 p2 = points[(insertionPoint + 1) % points.Count];
 
-                points.Add(points[points.Count - 1] + delta);
-            }
-            else if (points.Count >= 1)
-            {
-                // Create a point next to the last point
-                points.Add(points[points.Count - 1] + new Vector3(20, 20, 0));
+                    points.Insert(insertionPoint + 1, (p1 + p2) * 0.5f);
+                    ret = insertionPoint + 1;
+                }
+                else
+                {
+                    points.Add(points[points.Count - 1] + new Vector3(20, 20, 0));
+                }                
             }
             else
             {
-                // Create point in (0,0,0)
-                points.Add(Vector3.zero);
+                if (points.Count >= 2)
+                {
+                    // Get last two points and make the new point in that direction
+                    Vector3 delta = points[points.Count - 1] - points[points.Count - 2];
+
+                    points.Add(points[points.Count - 1] + delta);
+                }
+                else if (points.Count >= 1)
+                {
+                    // Create a point next to the last point
+                    points.Add(points[points.Count - 1] + new Vector3(20, 20, 0));
+                }
+                else
+                {
+                    // Create point in (0,0,0)
+                    points.Add(Vector3.zero);
+                }
             }
 
             dirty = true;
+
+            return ret;
         }
 
         static private Vector3 ComputeBezier(Vector3[] pt, float t)
@@ -562,24 +585,34 @@ namespace OkapiKit
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if (onlyDisplayWhenSelected) return;
-
+            bool selected = false;
             foreach (var obj in Selection.gameObjects)
             {
-                if (obj == gameObject) return;
+                if (obj == gameObject) { selected = true; break; }
             }
 
-            Handles.color = displayColor;
+            if ((onlyDisplayWhenSelected) && (!selected)) return;
+
+            Handles.color = (selected && editMode) ? (Color.white) : (displayColor);
 
             var renderPoints = GetPoints();
             for (int i = 1; i < renderPoints.Count; i++)
             {
                 Handles.DrawLine(renderPoints[i - 1], renderPoints[i], 1.0f);
             }
+
+            float s = 1.0f;
+            for (int i = 0; i < points.Count; i++)
+            {
+                Vector2 p = points[i];
+
+                Handles.DrawLine(p + new Vector2(s, s), p + new Vector2(-s, -s), 1.0f);
+                Handles.DrawLine(p + new Vector2(s, -s), p + new Vector2(-s, s), 1.0f);
+            }
         }
 #endif
 
-        private void ComputeVariables()
+    private void ComputeVariables()
         {
             // Compute length
             linearLength = 0.0f;
@@ -623,6 +656,93 @@ namespace OkapiKit
         public void SetDirty()
         {
             dirty = true;
+        }
+
+        public (float distance, int point) GetDistance(Ray ray, float startMinDist)
+        {
+            float minDist = startMinDist;
+            int pointIndex = -1;
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                Vector3 p = points[i];
+
+                Vector3 originToPoint = p - ray.origin;
+
+                // Project originToPoint onto the ray direction to find the closest point on the ray
+                float t = Vector3.Dot(originToPoint, ray.direction);
+
+                // If t is negative, the closest point is the origin of the ray
+                Vector3 closestPointOnRay = t < 0 ? ray.origin : ray.origin + t * ray.direction;
+
+                float d = Vector3.Distance(closestPointOnRay, p);
+                if (d < minDist)
+                {
+                    minDist = d;
+                    pointIndex = i;
+                }
+            }
+
+            if (pointIndex != -1)
+            {
+                // Make it so that the points have priority (distance to points is 10 times smaller than distance to segment)
+                minDist *= 0.1f;
+            }
+
+            var renderPoints = GetPoints();
+            for (int i = 1; i < renderPoints.Count; i++)
+            {
+                var p1 = renderPoints[i - 1];
+                var p2 = renderPoints[i];
+
+                float d = DistanceRayToSegment(ray, p1, p2);
+                if (d < minDist) 
+                { 
+                    minDist = d;
+                    pointIndex = -1;
+                }
+            }
+
+            return (minDist, pointIndex);
+        }
+
+        public static float DistanceRayToSegment(Ray ray, Vector3 segmentStart, Vector3 segmentEnd)
+        {
+            Vector3 u = ray.direction; // Direction of the ray
+            Vector3 v = segmentEnd - segmentStart; // Direction of the segment
+            Vector3 w = ray.origin - segmentStart;
+
+            float a = Vector3.Dot(u, u);         // Squared length of the ray direction
+            float b = Vector3.Dot(u, v);         // Dot product of ray and segment directions
+            float c = Vector3.Dot(v, v);         // Squared length of the segment direction
+            float d = Vector3.Dot(u, w);         // Dot product of ray direction and w
+            float e = Vector3.Dot(v, w);         // Dot product of segment direction and w
+
+            float denominator = a * c - b * b;   // Denominator for calculating sc and tc
+
+            float sc, tc;
+
+            // If denominator is close to zero, the lines are almost parallel
+            if (denominator < Mathf.Epsilon)
+            {
+                sc = 0.0f;
+                tc = (b > c ? d / b : e / c);  // Use the larger of the two factors to find tc
+            }
+            else
+            {
+                sc = (b * e - c * d) / denominator;
+                tc = (a * e - b * d) / denominator;
+            }
+
+            // Clamp tc to the segment
+            tc = Mathf.Clamp(tc, 0.0f, 1.0f);
+
+            // Closest points on the ray and the segment
+            Vector3 closestPointOnRay = ray.origin + sc * u;
+            Vector3 closestPointOnSegment = segmentStart + tc * v;
+
+            // Return the distance between the closest points
+            return Vector3.Distance(closestPointOnRay, closestPointOnSegment);
         }
     }
 }

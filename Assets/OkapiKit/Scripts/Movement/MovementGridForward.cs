@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using UnityEngine;
 
 namespace OkapiKit
 {
+    [RequireComponent(typeof(GridObject))]
     [AddComponentMenu("Okapi/Movement/Forward Grid Movement")]
     public class MovementGridForward : MovementGrid
     {

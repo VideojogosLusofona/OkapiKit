@@ -176,7 +176,7 @@ namespace OkapiKit
             return ret;
         }
 
-        public (bool hasObstacle, GridObject obj) IsObstacle(Vector2 worldPos, Vector2 size, int layer)
+        public (bool hasObstacle, GridObject obj) IsObstacle(Vector2 worldPos, Vector2 size, int layer, List<GridObject> exclusionList)
         {
             Vector2Int maskTilePos = GetGridPos(worldPos);
             int idx = maskTilePos.y * stride + maskTilePos.x / 8;
@@ -189,6 +189,7 @@ namespace OkapiKit
 
             foreach (var obj in gridObjects)
             {
+                if (exclusionList.Contains(obj)) continue;
                 if (!Physics2D.GetIgnoreLayerCollision(layer, obj.gameObject.layer))
                 {
                     if ((size.x > 0.0f) && (size.y > 0.0f) && (obj.size.x > 0.0f) && (obj.size.y > 0.0f))

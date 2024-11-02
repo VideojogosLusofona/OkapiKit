@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 namespace OkapiKit.Editor
 {
+    [InitializeOnLoad]
     [CustomEditor(typeof(Path)), CanEditMultipleObjects]
     public class PathEditor : OkapiBaseEditor
     {
@@ -19,6 +21,42 @@ namespace OkapiKit.Editor
 
         int editPoint = -1;
         Tool lastTool = Tool.None;
+
+        static int nextPointToSelect = -1;
+
+        static PathEditor()
+        {
+            SceneView.duringSceneGui += UpdatePathEditors;
+        }
+
+        static void UpdatePathEditors(SceneView sceneView)
+        {
+            Event e = Event.current;
+
+            if ((e.type == EventType.MouseDown) && (e.button == 0))
+            {
+                var paths = FindObjectsByType<Path>(FindObjectsSortMode.None);
+                Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
+
+                foreach (var path in paths)
+                {
+                    if (Selection.objects.Contains(path)) continue;
+                    if (Selection.objects.Contains(path.gameObject)) continue;
+
+                    var ret = path.GetDistance(ray, 5.0f);
+                    if (ret.distance < 5.0f)
+                    {
+                        Selection.activeObject = path.gameObject;
+                        if (ret.point >= 0)
+                        {
+                            nextPointToSelect = ret.point;
+                        }
+                        e.Use();
+                        break;
+                    }
+                }
+            }
+        }
 
         protected override void OnEnable()
         {
@@ -83,7 +121,25 @@ namespace OkapiKit.Editor
                     {
                         if (GUILayout.Button("Add Segment"))
                         {
+                            Undo.RecordObject(target, "Add segment");
                             t.AddPoint();
+                            serializedObject.Update();
+
+                            // Change to edit mode
+                            propEditMode.boolValue = true;
+                            serializedObject.ApplyModifiedProperties();
+
+                            EditorUtility.SetDirty(target);
+
+                            editPoint = t.GetEditPointsCount() - 1;
+                        }
+                    }
+                    else
+                    {
+                        if (GUILayout.Button("Add Point"))
+                        {
+                            Undo.RecordObject(target, "Add point");
+                            editPoint = t.AddPoint();
                             serializedObject.Update();
 
                             // Change to edit mode
@@ -93,19 +149,17 @@ namespace OkapiKit.Editor
                             EditorUtility.SetDirty(target);
                         }
                     }
-                    else
+                    if ((editPoint >= 0) && (GUILayout.Button("Insert Point")))
                     {
-                        if (GUILayout.Button("Add Point"))
-                        {
-                            t.AddPoint();
-                            serializedObject.Update();
+                        Undo.RecordObject(target, "Insert point");
+                        editPoint = t.AddPoint(editPoint);
+                        serializedObject.Update();
 
-                            // Change to edit mode
-                            propEditMode.boolValue = true;
-                            serializedObject.ApplyModifiedProperties();
+                        // Change to edit mode
+                        propEditMode.boolValue = true;
+                        serializedObject.ApplyModifiedProperties();
 
-                            EditorUtility.SetDirty(target);
-                        }
+                        EditorUtility.SetDirty(target);
                     }
 
                     GUI.enabled = prevEnabled;
@@ -190,11 +244,17 @@ namespace OkapiKit.Editor
 
         public void OnSceneGUI()
         {
+            if (nextPointToSelect != -1)
+            {
+                editPoint = nextPointToSelect;
+                nextPointToSelect = -1;
+            }
+
             var t = (target as Path);
 
             bool    localSpace = !t.isWorldSpace;
             var     type = (Path.Type)propType.intValue;
-            
+
             if (t.isEditMode)
             {
                 List<Vector3> newPoints = t.GetEditPoints();
@@ -212,12 +272,25 @@ namespace OkapiKit.Editor
                         if (editPoint >= 0)
                         {
                             // Remove this point
+                            Undo.RecordObject(target, "Delete point");
                             newPoints.RemoveAt(editPoint);
                             editPoint = -1;
                             manualDirty = true;
 
                             e.Use();
                         }
+                    }
+                    if ((e.keyCode == KeyCode.KeypadPlus) && (editPoint >= 0))
+                    {
+                        // Plus pressed, insert a point
+                        // Get new position for this point (halfway between this and the next one)
+                        Undo.RecordObject(target, "Add point");
+                        editPoint = t.AddPoint(editPoint);
+
+                        newPoints = t.GetEditPoints();
+                        manualDirty = true;
+
+                        e.Use();
                     }
                 }
 
@@ -233,7 +306,8 @@ namespace OkapiKit.Editor
 
                 for (int i = 0; i < newPoints.Count; i++)
                 {
-                    float s = (editPoint == i) ? (10.0f) : (5.0f);
+                    float s = (editPoint == i) ? (6.0f) : (5.0f);
+                    Handles.color = (editPoint == i) ? (Color.yellow) : (Color.white);                    
                     bool selectable = true;
 
                     // Render text
@@ -263,12 +337,18 @@ namespace OkapiKit.Editor
                         {
                             editPoint = i;
                         }
+                        if (editPoint == i)
+                        {
+                            Handles.CircleHandleCap(-1, newPoints[i], Quaternion.identity, s * 0.8f, EventType.Repaint);
+                        }
                     }
                     if (text != "")
                     {
                         Handles.Label(newPoints[i] + Vector3.right * s * 1.25f, text);
                     }
                 }
+
+                Handles.color = Color.white;
 
                 if ((editPoint >= 0) && (editPoint < newPoints.Count))
                 {
@@ -304,8 +384,6 @@ namespace OkapiKit.Editor
                     Undo.RecordObject(target, "Move point");
                     t.SetEditPoints(newPoints);
                 }
-
-                DrawPath(type, t.GetPoints(), Color.white);
 
                 var prevMatrix = Handles.matrix;
                 if (!t.isWorldSpace)
@@ -347,13 +425,11 @@ namespace OkapiKit.Editor
             else
             {
                 if (lastTool != Tool.None) Tools.current = lastTool;
-                lastTool = Tool.None;
-
-                DrawPath(type, t.GetPoints(), propDisplayColor.colorValue);
+                lastTool = Tool.None;    
             }
         }
 
-        void DrawPath(Path.Type type, List<Vector3> points, Color color)
+        void DrawPath(Path.Type type, List<Vector3> points, Color color, bool drawDirection)
         {
             if (points == null) return;
 
@@ -361,7 +437,9 @@ namespace OkapiKit.Editor
 
             for (int i = 1; i < points.Count; i++)
             {
-                Handles.DrawLine(points[i - 1], points[i], 1.0f);
+                Vector2 p = points[i - 1];
+
+                Handles.DrawLine(p, points[i], 1.0f);
             }
         }
 
