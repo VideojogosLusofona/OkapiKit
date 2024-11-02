@@ -21,6 +21,7 @@ namespace OkapiKit
         private Dictionary<int, byte[]> mapsByLayer = new();
         private List<GridObject>        gridObjects = new();
         private List<Tilemap>           tilemaps = new(); 
+        private bool                    collidersDirty = false;
 
         private Grid grid
         {
@@ -113,7 +114,7 @@ namespace OkapiKit
 
         protected void Start()
         {
-            UpdateColliders();
+            collidersDirty = true;
 
             tilemaps = new(GetComponentsInChildren<Tilemap>());
         }
@@ -140,6 +141,8 @@ namespace OkapiKit
             stride = mapSizeX / 8;
             mapSizeY = Mathf.CeilToInt(bounds.size.y / grid.cellSize.y);
 
+            mapsByLayer.Clear();
+
             // Compute collision masks
             foreach (var collider in gridcolliders)
             {
@@ -165,6 +168,8 @@ namespace OkapiKit
                     worldPos.y += grid.cellSize.y;
                 }
             }
+
+            collidersDirty = false;
         }
 
         byte[] GetMapByLayer(int layer)
@@ -182,6 +187,11 @@ namespace OkapiKit
 
         public (bool hasObstacle, GridObject obj) IsObstacle(Vector2 worldPos, Vector2 size, int layer, List<GridObject> exclusionList)
         {
+            if (collidersDirty)
+            {
+                UpdateColliders();
+            }
+
             Vector2Int maskTilePos = GetGridPos(worldPos);
             int idx = maskTilePos.y * stride + maskTilePos.x / 8;
 
@@ -254,6 +264,40 @@ namespace OkapiKit
                 if (tileSet.IsOnSet(tilemap.GetTile(cellPos))) return true;
             }
 
+            return false;
+        }
+
+        internal void RunRules(Vector3 worldPos, TileConverterRule[] rules)
+        {            
+            foreach (var tilemap in tilemaps)
+            {
+                var test = tilemap.WorldToCell(new Vector3(-1000.0f, 1000.0f, 0));
+
+                var cellPos = tilemap.WorldToCell(worldPos);
+                if (tilemap.cellBounds.Contains(cellPos))
+                {
+                    var tile = tilemap.GetTile(cellPos);
+                    if (MatchRule(tile, rules, out var newTile))
+                    {
+                        tilemap.SetTile(cellPos, newTile);
+                        collidersDirty = true;
+                    }
+                }
+            }
+        }
+
+        bool MatchRule(TileBase tile, TileConverterRule[] rules, out TileBase newTile)
+        {
+            foreach (var rule in rules)
+            {
+                if (rule.source == tile)
+                {
+                    newTile = rule.dest;
+                    return true;
+                }
+            }
+
+            newTile = null;
             return false;
         }
     }

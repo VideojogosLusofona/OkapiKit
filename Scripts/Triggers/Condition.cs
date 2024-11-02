@@ -231,6 +231,7 @@ namespace OkapiKit
                         {
                             var targetTransform = GetTransform(gameObject);
                             if (gridObject == null) gridObject = gameObject.GetComponent<GridObject>();
+                            if (gridObject == null) gridObject = gameObject.GetComponentInParent<GridObject>();
                             if ((targetTransform) && (gridObject) && (tile))
                             {
                                 b = gridObject.IsOnTile(targetTransform.position, tile);
@@ -241,7 +242,8 @@ namespace OkapiKit
                         {
                             var targetTransform = GetTransform(gameObject);
                             if (gridObject == null) gridObject = gameObject.GetComponent<GridObject>();
-                            if ((targetTransform) && (gridObject) && (tile))
+                            if (gridObject == null) gridObject = gameObject.GetComponentInParent<GridObject>();
+                            if ((targetTransform) && (gridObject) && (tileSet))
                             {
                                 b = gridObject.IsOnTile(targetTransform.position, tileSet);
                             }
@@ -573,6 +575,7 @@ namespace OkapiKit
                 if (gridObject == null)
                 {
                     gridObject = go.GetComponent<GridObject>();
+                    if (gridObject == null) gridObject = go.GetComponentInParent<GridObject>();
                     if (gridObject == null)
                     {
                         errors.Add(new LogEntry(LogEntry.Type.Error, "No Grid Object object present!", "Only objects with a Grid Object can use the OnTile condition."));
@@ -592,6 +595,7 @@ namespace OkapiKit
                 if (gridObject == null)
                 {
                     gridObject = go.GetComponent<GridObject>();
+                    if (gridObject == null) gridObject = go.GetComponentInParent<GridObject>();
                     if (gridObject == null)
                     {
                         errors.Add(new LogEntry(LogEntry.Type.Error, "No Grid Object object present!", "Only objects with a Grid Object can use the OnTileSet condition."));

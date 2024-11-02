@@ -57,6 +57,7 @@ namespace OkapiKit
         private void Start()
         {
             _grid = GetComponentInParent<GridSystem>();
+            if (_grid == null) _grid = FindAnyObjectByType<GridSystem>();
             rb = GetComponent<Rigidbody2D>();
             exclusionList = new()
             {
@@ -306,6 +307,11 @@ namespace OkapiKit
             return grid.GridToWorld(gridPos, pivot);
         }
 
+        internal Vector2Int WorldToGrid(Vector3 worldPos)
+        {
+            return grid.WorldToGrid(worldPos);
+        }
+
         internal bool RotateOnGrid(float rotationSpeed, float angularStepSize)
         {
             if (Mathf.Abs(rotationSpeed) < 1e-3) return false;
@@ -336,6 +342,17 @@ namespace OkapiKit
         internal bool IsOnTile(Vector3 worldPos, TileSet tileSet)
         {
             return grid.IsOnTile(worldPos, tileSet);
+        }
+
+        internal void RunRules(Vector3 worldPos, TileConverterRule[] rules)
+        {
+            grid.RunRules(worldPos, rules);
+        }
+        internal void RunRules(Vector2Int gridPos, TileConverterRule[] rules)
+        {
+            var worldPos = grid.GridToWorld(gridPos, pivot);
+
+            grid.RunRules(worldPos, rules);
         }
     }
 }

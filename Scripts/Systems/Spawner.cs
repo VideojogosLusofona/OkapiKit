@@ -254,6 +254,23 @@ namespace OkapiKit
                     {
                         newObject.transform.SetParent(transform);
                     }
+                    else
+                    {
+                        GridObject gridObject = newObject.GetComponent<GridObject>();
+                        if (gridObject)
+                        {
+                            // This object has a grid object, need to parent it to something that has a grid
+                            GridObject selfGridObject = GetComponent<GridObject>();
+                            GridSystem parentGridObject;
+                            if (selfGridObject == null) parentGridObject = GetComponentInParent<GridSystem>();
+                            else parentGridObject = selfGridObject.grid;
+                            if (parentGridObject == null) parentGridObject = FindAnyObjectByType<GridSystem>();
+                            if (parentGridObject != null)
+                            {
+                                newObject.transform.SetParent(parentGridObject.transform);
+                            }
+                        }
+                    }
 
                     if ((modifiers & Modifiers.Scale) != 0)
                     {
