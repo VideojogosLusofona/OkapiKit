@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 namespace OkapiKit
@@ -11,16 +12,24 @@ namespace OkapiKit
             {
                 return;
             }
+            if (!anm.isActiveAndEnabled) return;
             for (int i = 0; i < anm.parameterCount; i++)
             {
-                var param = anm.GetParameter(i);
-                if (param.name == parameterName)
+                try
                 {
-                    if (param.type != type)
+                    var param = anm.GetParameter(i);
+                    if (param.name == parameterName)
                     {
-                        ret.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!", $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!"));
+                        if (param.type != type)
+                        {
+                            ret.Add(new LogEntry(LogEntry.Type.Error, $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!", $"Animation parameter type {parameterName} for {logParameter} is of wrong type (expected {type}, found {param.type})!"));
+                        }
+                        return;
                     }
-                    return;
+                }
+                catch
+                {
+                    // Unity screws up sometimes and returns an IndexOutOfRangeException when it should work properly
                 }
             }
 
