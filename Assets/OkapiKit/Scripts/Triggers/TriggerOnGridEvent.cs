@@ -9,7 +9,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Trigger/On Grid Event")]
     public class TriggerOnGridEvent : Trigger
     {
-        public enum GridEvent { HitWall, PushObject, HitObject, Step };
+        public enum GridEvent { HitWall, PushObject, HitObject, StepEnd, RotateEnd };
 
         [SerializeField]
         private GridEvent eventType;
@@ -32,8 +32,11 @@ namespace OkapiKit
                 case GridEvent.HitObject:
                     desc = "When this hits an object ";
                     break;
-                case GridEvent.Step:
+                case GridEvent.StepEnd:
                     desc = "When this does a step ";
+                    break;
+                case GridEvent.RotateEnd:
+                    desc = "When this finishes a rotation step ";
                     break;
                 default:
                     break;
@@ -97,7 +100,8 @@ namespace OkapiKit
                     if (!otherObject.HasHypertags(tags)) return;
                     break;
                 case GridEvent.HitWall:
-                case GridEvent.Step:
+                case GridEvent.StepEnd:
+                case GridEvent.RotateEnd:
                     break;
                 default:
                     break;

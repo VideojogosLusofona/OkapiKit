@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,25 +7,32 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Other/Grid Object")]
     public class GridObject : OkapiElement
     {
-        [SerializeField] private Pivot      _pivot = Pivot.Center;
-        [SerializeField] private bool       _canPush;
-        [SerializeField] private float      _mass = 1.0f;
-        [SerializeField] private Vector2    _size = Vector2.zero;
+        [SerializeField] private Pivot _pivot = Pivot.Center;
+        [SerializeField] private bool _canPush;
+        [SerializeField] private float _mass = 1.0f;
+        [SerializeField] private Vector2 _size = Vector2.zero;
         [SerializeField]
         protected AnimationCurve stepAnimationCurve;
 
-        private GridSystem  _grid;
-        private Vector2     originalPos;
-        private Vector2?    targetPos = null;
-        protected float     moveElapsedTime;
-        protected float     moveTotalDistance;
-        protected float     moveTotalTime;
-        protected Vector2   moveTotalDelta;
-        protected Vector2   moveDirection;
-        protected Vector2   moveSpeed;
+        private GridSystem _grid;
+        private Vector2 originalPos;
+        private Vector2? targetPos = null;
+        protected float moveElapsedTime;
+        protected float moveTotalDistance;
+        protected float moveTotalTime;
+        protected Vector2 moveTotalDelta;
+        protected Vector2 moveDirection;
+        protected Vector2 moveSpeed;
 
-        protected Rigidbody2D   rb;
+        protected float originalAngle;
+        protected float? targetAngle;
+        protected float rotateElapsedTime = 0.0f;
+        protected float rotateTotalAngle;
+        protected float rotateTotalTime;
+
+        protected Rigidbody2D rb;
         public Vector2 lastDelta { get; private set; }
+        public float lastAngularDelta { get; private set; }
 
         public GridSystem grid
         {
@@ -40,6 +48,7 @@ namespace OkapiKit
         public bool canPush => _canPush;
         public float mass => _mass;
         public bool isMoving => targetPos.HasValue;
+        public bool isRotating => targetAngle.HasValue;
         public Vector2 size => _size;
 
         List<GridObject> exclusionList;
@@ -77,7 +86,7 @@ namespace OkapiKit
                 {
                     newPos = targetPos.Value;
                     targetPos = null;
-                    ThrowEvent(TriggerOnGridEvent.GridEvent.Step, null);
+                    ThrowEvent(TriggerOnGridEvent.GridEvent.StepEnd, null);
                 }
                 else
                 {
@@ -93,6 +102,41 @@ namespace OkapiKit
                     transform.position = newPos;
                 }
                 lastDelta = newPos - prevPos;
+            }
+
+            if (targetAngle.HasValue)
+            {
+                rotateElapsedTime += Time.fixedDeltaTime;
+
+                float currentT = rotateElapsedTime / rotateTotalTime;
+                float animT = currentT;
+                if ((stepAnimationCurve != null) && (stepAnimationCurve.length > 0))
+                {
+                    animT = stepAnimationCurve.Evaluate(animT);
+                }
+
+                float prevAngle = transform.rotation.eulerAngles.z;
+                float newAngle;
+                if (currentT >= 1.0f)
+                {
+                    newAngle = targetAngle.Value;
+                    targetAngle = null;
+                    ThrowEvent(TriggerOnGridEvent.GridEvent.RotateEnd, null);
+                }
+                else
+                {
+                    newAngle = originalAngle + rotateTotalAngle * animT;
+                }
+
+                if (rb != null)
+                {
+                    rb.MoveRotation(newAngle);
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Euler(0.0f, 0.0f, newAngle);
+                }
+                lastAngularDelta = newAngle - prevAngle;
             }
         }
 
@@ -222,7 +266,7 @@ namespace OkapiKit
             moveTotalDelta = new Vector2(transform.position.x, transform.position.y) - originalPos;
             moveTotalDistance = moveTotalDelta.magnitude;
             moveTotalTime = 0.0f;
-            moveDirection = moveTotalDelta / moveTotalDistance;            
+            moveDirection = moveTotalDelta / moveTotalDistance;
         }
 
         void ThrowEvent(TriggerOnGridEvent.GridEvent evt, GridObject obj)
@@ -259,6 +303,29 @@ namespace OkapiKit
         internal Vector3 GridToWorld(Vector2Int gridPos)
         {
             return grid.GridToWorld(gridPos, pivot);
+        }
+
+        internal bool RotateOnGrid(float rotationSpeed, float angularStepSize)
+        {
+            if (Mathf.Abs(rotationSpeed) < 1e-3) return false;
+
+            originalAngle = SnapAngle(transform.rotation.eulerAngles.z, angularStepSize);
+            targetAngle = SnapAngle(originalAngle + Mathf.Sign(rotationSpeed) * angularStepSize, angularStepSize);
+            rotateElapsedTime = 0.0f;
+            rotateTotalAngle = Mathf.DeltaAngle(originalAngle, targetAngle.Value);
+            rotateTotalTime = Mathf.Abs(rotateTotalAngle) / Mathf.Abs(rotationSpeed);
+
+            return true;
+        }
+
+        float SnapAngle(float angle, float angularStepSize)
+        {
+            while (angle < 0) { angle += 360.0f; }
+            while (angle > 360) { angle -= 360.0f; }
+
+            angle = (Mathf.RoundToInt(angle / angularStepSize)) * angularStepSize;
+
+            return angle;
         }
     }
 }
