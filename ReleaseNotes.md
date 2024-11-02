@@ -1,5 +1,20 @@
 # Release Notes
 
+## V1.16.0
+
+- Updated OkapiKit to Unity 6 (should work with previous versions)
+- Added grid system
+  - Unity Grid component can have a Grid System component, that allows for the Okapi Kit to use it for grid-based actions and movement.
+  - Objects can now have a Grid Object component, that adds some functionality regarding grid based movement and actions like pushing
+  - Most Movement components have a Grid counterpart now that acts as the original, but adapted for grid-based movement
+  - New conditions that can test for Tiles or Tilesets at a specific position
+  - New Change Tile action that allows users to changes tilemaps during runtime
+- Improved Path UI in general
+  - Numpad + now inserts points
+  - Paths and points can be selected directly from the scene view
+- Fixed some bugs with error reporting with animators
+- Added animator control on MovementXY component
+
 ## V1.15.2
 
 - 'Else' trigger on conditions and input will no longer throw an exception when an action is null
