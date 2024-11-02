@@ -119,6 +119,187 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &165688148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 165688149}
+  - component: {fileID: 165688152}
+  - component: {fileID: 165688151}
+  - component: {fileID: 165688150}
+  m_Layer: 0
+  m_Name: Ghost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &165688149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165688148}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 72.1, y: -25.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1498646240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &165688150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165688148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0182577912281d44e9278892898afe33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Follows the closest object tagged with [Knight], at 32 units per
+    second (2 cells/sec).
+
+    The movement steps can only happen once every 0.5
+    seconds.
+
+    This object''s up''s axis will rotate towards the direction of
+    movement, at a maximum speed of 360 degrees/sec.
+
+    This object can push objects
+    as long as their mass combined doesn''t exceed 1.
+
+'
+  description: 
+  hasConditions: 0
+  conditions: []
+  cooldown: 0.5
+  pushStrength: 1
+  speed: 32
+  targetType: 0
+  targetTag: {fileID: 11400000, guid: ef738cdf582e7b74ca6542cab74d7ad0, type: 2}
+  targetObject: {fileID: 0}
+  relativeMovement: 0
+  rotateTowardsDirection: 1
+  alignAxis: 0
+  maxRotationSpeed: 360
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 0}
+--- !u!114 &165688151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165688148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9ea011d587d4144844f647e64ab30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Object is centered around the Center of the visual representation.
+
+    This
+    object can not be pushed by other objects.
+
+    The character will use an animation
+    curve while moving.
+
+'
+  description: 
+  _pivot: 0
+  _canPush: 0
+  _mass: 1
+  _size: {x: 0, y: 0}
+  stepAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!212 &165688152
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165688148}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 3551726477311712550, guid: 4df684548e4f9894785c359094976f86, type: 3}
+  m_Color: {r: 0.07413671, g: 0.80739385, b: 0.9245283, a: 0.6156863}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 16, y: 16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &408848339
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,13 +311,14 @@ GameObject:
   - component: {fileID: 408848340}
   - component: {fileID: 408848342}
   - component: {fileID: 408848341}
+  - component: {fileID: 408848343}
   m_Layer: 0
   m_Name: Skull (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &408848340
 Transform:
   m_ObjectHideFlags: 0
@@ -171,6 +353,9 @@ MonoBehaviour:
     object can be pushed by other objects, as long as their strength is larger or
     equal to 1.
 
+    This object will be treated for pushing purposes as a box of
+    size (10.00, 10.00).
+
     The character will use an animation curve while moving.
 
 '
@@ -178,6 +363,7 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 1
   _mass: 1
+  _size: {x: 10, y: 10}
   stepAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -257,6 +443,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &408848343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408848339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  hypertags:
+  - {fileID: 11400000, guid: af2086267f233d54e9a14529b5654533, type: 2}
 --- !u!1 &579899362
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,13 +474,14 @@ GameObject:
   - component: {fileID: 579899366}
   - component: {fileID: 579899368}
   - component: {fileID: 579899367}
+  - component: {fileID: 579899369}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &579899363
 Transform:
   m_ObjectHideFlags: 0
@@ -287,7 +491,7 @@ Transform:
   m_GameObject: {fileID: 579899362}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -39.2, y: 56.9, z: 0}
+  m_LocalPosition: {x: -40.6, y: 56.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -309,16 +513,20 @@ MonoBehaviour:
   _explanation: 'Object is centered around the Center of the visual representation.
 
     This
-    object can not be pushed by other objects.
+    object can be pushed by other objects, as long as their strength is larger or
+    equal to 1.
 
-    The character will use an animation
-    curve while moving.
+    This object will be treated for pushing purposes as a box of
+    size (10.00, 10.00).
+
+    The character will use an animation curve while moving.
 
 '
   description: 
   _pivot: 0
-  _canPush: 0
+  _canPush: 1
   _mass: 1
+  _size: {x: 10, y: 10}
   stepAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -414,18 +622,15 @@ MonoBehaviour:
   _explanation: 'Single axis grid movement towards the Down axis of the object, at
     32 units per second (2 cells/sec).
 
-    The movement steps can only happen once
-    every 1 seconds.
-
-    This object can push objects as long as their mass combined
-    doesn''t exceed 1.
+    This object can push objects as long
+    as their mass combined doesn''t exceed 5.
 
 '
   description: 
   hasConditions: 0
   conditions: []
-  cooldown: 1
-  pushStrength: 1
+  cooldown: 0
+  pushStrength: 5
   axis: 1
   speed: 32
 --- !u!114 &579899367
@@ -448,7 +653,7 @@ MonoBehaviour:
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  target: 3
+  target: 0
   targetObject: {fileID: 0}
   tags: []
 --- !u!114 &579899368
@@ -464,17 +669,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: 'When this object hits a grid wall :
-
-'
+  _explanation: "When this object hits a grid wall :\n          destroys this object\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
   hasPreconditions: 0
   preConditions: []
-  actions: []
+  actions:
+  - delay: 0
+    action: {fileID: 579899367}
   eventType: 0
-  tags: []
+  tags:
+  - {fileID: 11400000, guid: af2086267f233d54e9a14529b5654533, type: 2}
+--- !u!114 &579899369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579899362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  hypertags:
+  - {fileID: 11400000, guid: e674918a218329f41863b4fc18dbe6cd, type: 2}
 --- !u!1 &593023261
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,6 +713,9 @@ GameObject:
   - component: {fileID: 593023267}
   - component: {fileID: 593023264}
   - component: {fileID: 593023263}
+  - component: {fileID: 593023270}
+  - component: {fileID: 593023269}
+  - component: {fileID: 593023271}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -506,7 +732,7 @@ Transform:
   m_GameObject: {fileID: 593023261}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: 0, z: 0}
+  m_LocalPosition: {x: -8.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -528,22 +754,24 @@ MonoBehaviour:
   _explanation: 'Dual axis grid movement, at (64.00, 64.00) units per second ((4.00,
     4.00) cells/sec).
 
-    Horizontal movement will be controlled by the [Left] and
-    [Right] buttons.
-
-    Vertical movement will be controlled by the [Down] and
-    [Up] buttons.
-
-    This object can push objects as long as their mass combined
-    doesn''t exceed 2.
-
-    Some values will be set on animator Player:
+    The movement steps can only happen once every 0.26 seconds.
 
     Horizontal
-    velocity will be set to parameter VelocityX.
+    movement will be controlled by the [Left] and [Right] buttons.
 
-    Vertical velocity will be set
-    to parameter VelocityY.
+    Vertical
+    movement will be controlled by the [Down] and [Up] buttons.
+
+    This object
+    can push objects as long as their mass combined doesn''t exceed 2.
+
+    Some
+    values will be set on animator Player:
+
+    Horizontal velocity will be set to
+    parameter VelocityX.
+
+    Vertical velocity will be set to parameter VelocityY.
 
 '
   description: 
@@ -601,6 +829,7 @@ MonoBehaviour:
   _pivot: 5
   _canPush: 0
   _mass: 0
+  _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -775,6 +1004,72 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &593023269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593023261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Destroys this object
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: 0
+  targetObject: {fileID: 0}
+  tags: []
+--- !u!114 &593023270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593023261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c88d2b3270b03c44a0ca3a28b6d9030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When this hits an object with tags [Fireball] :\n          destroys
+    this object\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 593023269}
+  eventType: 2
+  tags:
+  - {fileID: 11400000, guid: e674918a218329f41863b4fc18dbe6cd, type: 2}
+--- !u!114 &593023271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593023261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  hypertags:
+  - {fileID: 11400000, guid: ef738cdf582e7b74ca6542cab74d7ad0, type: 2}
 --- !u!1 &889623478
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,13 +1081,14 @@ GameObject:
   - component: {fileID: 889623479}
   - component: {fileID: 889623481}
   - component: {fileID: 889623480}
+  - component: {fileID: 889623482}
   m_Layer: 0
   m_Name: Skull (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &889623479
 Transform:
   m_ObjectHideFlags: 0
@@ -802,7 +1098,7 @@ Transform:
   m_GameObject: {fileID: 889623478}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -56.1, y: -24.3, z: 0}
+  m_LocalPosition: {x: 23.7, y: -24.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -827,6 +1123,9 @@ MonoBehaviour:
     object can be pushed by other objects, as long as their strength is larger or
     equal to 1.
 
+    This object will be treated for pushing purposes as a box of
+    size (10.00, 10.00).
+
     The character will use an animation curve while moving.
 
 '
@@ -834,6 +1133,7 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 1
   _mass: 1
+  _size: {x: 10, y: 10}
   stepAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -913,6 +1213,490 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &889623482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889623478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  hypertags:
+  - {fileID: 11400000, guid: af2086267f233d54e9a14529b5654533, type: 2}
+--- !u!1 &893070076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 893070077}
+  - component: {fileID: 893070078}
+  m_Layer: 0
+  m_Name: Path
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &893070077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893070076}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1788469552}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &893070078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893070076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57b15e0e5935f3469dd55ce55b9acda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  type: 1
+  closed: 1
+  nSides: 4
+  points:
+  - {x: 65.88003, y: 8.939676, z: 0}
+  - {x: 7.022928, y: 9.073929, z: 0}
+  - {x: 6.1648617, y: -52.42135, z: 0}
+  - {x: -56.93702, y: -49.820404, z: 0}
+  - {x: -47.87953, y: 55.518055, z: 0}
+  - {x: 69.701546, y: 49.69494, z: 0}
+  worldSpace: 1
+  editMode: 1
+  onlyDisplayWhenSelected: 0
+  displayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!1 &958481727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958481728}
+  m_Layer: 0
+  m_Name: RelativePaths
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &958481728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958481727}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 959208492}
+  - {fileID: 1119638954}
+  - {fileID: 1496064287}
+  m_Father: {fileID: 1498646240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &959208491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 959208492}
+  - component: {fileID: 959208495}
+  - component: {fileID: 959208494}
+  - component: {fileID: 959208493}
+  m_Layer: 0
+  m_Name: Flyer Patrol (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &959208492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959208491}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 57, y: 40.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 958481728}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &959208493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959208491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263298879145d7b4dbee7d6538538232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Follows the [TestPath] path, at 64 units per second (4 cells/sec).
+
+    The
+    movement steps can only happen once every 0.25 seconds.
+
+    The object will
+    loop back to the beginning at the end of the path.
+
+    This object can not push
+    objects.
+
+'
+  description: 
+  hasConditions: 0
+  conditions: []
+  cooldown: 0.25
+  pushStrength: 0
+  speed: 64
+  path: {fileID: 1496064288}
+  taggedPath: {fileID: 0}
+  loop: 1
+  displayPath: 1
+  relativePath: 0
+  rotationBehaviour: 0
+  useFlip: 0
+  maxRotationSpeed: 360
+  useAnimator: 0
+  animator: {fileID: 0}
+  horizontalVelocityParameter: 
+  absoluteHorizontalVelocityParameter: 
+  verticalVelocityParameter: 
+  absoluteVerticalVelocityParameter: 
+--- !u!114 &959208494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959208491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9ea011d587d4144844f647e64ab30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Object is centered around the Center of the visual representation.
+
+    This
+    object can not be pushed by other objects.
+
+    The character will use an animation
+    curve while moving.
+
+'
+  description: 
+  _pivot: 0
+  _canPush: 0
+  _mass: 1
+  _size: {x: 0, y: 0}
+  stepAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!212 &959208495
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959208491}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 6363666800081127614, guid: 4df684548e4f9894785c359094976f86, type: 3}
+  m_Color: {r: 0.8679245, g: 0.71876425, b: 0.13510147, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 16, y: 16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &1119638953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1119638954}
+  - component: {fileID: 1119638957}
+  - component: {fileID: 1119638956}
+  - component: {fileID: 1119638955}
+  m_Layer: 0
+  m_Name: Flyer Patrol (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1119638954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119638953}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.8, y: -20.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 958481728}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1119638955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119638953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263298879145d7b4dbee7d6538538232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Follows the [TestPath] path, at 64 units per second (4 cells/sec).
+
+    The
+    movement steps can only happen once every 0.25 seconds.
+
+    The object will
+    loop back to the beginning at the end of the path.
+
+    The path will be relative
+    to the initial position of the object.
+
+    This object can not push objects.
+
+'
+  description: 
+  hasConditions: 0
+  conditions: []
+  cooldown: 0.25
+  pushStrength: 0
+  speed: 64
+  path: {fileID: 1496064288}
+  taggedPath: {fileID: 0}
+  loop: 1
+  displayPath: 1
+  relativePath: 1
+  rotationBehaviour: 0
+  useFlip: 0
+  maxRotationSpeed: 360
+  useAnimator: 0
+  animator: {fileID: 0}
+  horizontalVelocityParameter: 
+  absoluteHorizontalVelocityParameter: 
+  verticalVelocityParameter: 
+  absoluteVerticalVelocityParameter: 
+--- !u!114 &1119638956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119638953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9ea011d587d4144844f647e64ab30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Object is centered around the Center of the visual representation.
+
+    This
+    object can not be pushed by other objects.
+
+    The character will use an animation
+    curve while moving.
+
+'
+  description: 
+  _pivot: 0
+  _canPush: 0
+  _mass: 1
+  _size: {x: 0, y: 0}
+  stepAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!212 &1119638957
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119638953}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 6363666800081127614, guid: 4df684548e4f9894785c359094976f86, type: 3}
+  m_Color: {r: 0.8679245, g: 0.71876425, b: 0.13510147, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 16, y: 16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1175461702
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,6 +1757,7 @@ GameObject:
   - component: {fileID: 1458539886}
   - component: {fileID: 1458539888}
   - component: {fileID: 1458539887}
+  - component: {fileID: 1458539889}
   m_Layer: 0
   m_Name: Skull (1)
   m_TagString: Untagged
@@ -989,7 +1774,7 @@ Transform:
   m_GameObject: {fileID: 1458539885}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.4, y: 25.7, z: 0}
+  m_LocalPosition: {x: -40.2, y: 25.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1014,6 +1799,9 @@ MonoBehaviour:
     object can be pushed by other objects, as long as their strength is larger or
     equal to 1.
 
+    This object will be treated for pushing purposes as a box of
+    size (10.00, 10.00).
+
     The character will use an animation curve while moving.
 
 '
@@ -1021,6 +1809,7 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 1
   _mass: 1
+  _size: {x: 10, y: 10}
   stepAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -1100,6 +1889,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1458539889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458539885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  hypertags:
+  - {fileID: 11400000, guid: af2086267f233d54e9a14529b5654533, type: 2}
 --- !u!1 &1490823437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,6 +2044,64 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1496064286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1496064287}
+  - component: {fileID: 1496064288}
+  m_Layer: 0
+  m_Name: TestPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1496064287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496064286}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.7, y: 40.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 958481728}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1496064288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496064286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57b15e0e5935f3469dd55ce55b9acda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  type: 1
+  closed: 1
+  nSides: 4
+  points:
+  - {x: 56.61295, y: 34.63681, z: 0}
+  - {x: -7.0521784, y: 37.335342, z: 0}
+  - {x: 25.425407, y: 16.548027, z: 0}
+  worldSpace: 1
+  editMode: 1
+  onlyDisplayWhenSelected: 0
+  displayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1498646238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,6 +2152,10 @@ Transform:
   - {fileID: 408848340}
   - {fileID: 889623479}
   - {fileID: 579899363}
+  - {fileID: 165688149}
+  - {fileID: 2084898422}
+  - {fileID: 958481728}
+  - {fileID: 1788469552}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1498646241
@@ -1307,6 +2175,67 @@ MonoBehaviour:
   description: 
   gridcolliders:
   - {fileID: 1708525178}
+--- !u!1 &1561648187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1561648188}
+  - component: {fileID: 1561648189}
+  m_Layer: 0
+  m_Name: Path
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1561648188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561648187}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2084898422}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1561648189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561648187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57b15e0e5935f3469dd55ce55b9acda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  type: 1
+  closed: 1
+  nSides: 4
+  points:
+  - {x: 65.88003, y: 8.939676, z: 0}
+  - {x: 7.022928, y: 9.073929, z: 0}
+  - {x: 6.1648617, y: -52.42135, z: 0}
+  - {x: -56.93702, y: -49.820404, z: 0}
+  - {x: -47.87953, y: 55.518055, z: 0}
+  - {x: 69.701546, y: 49.69494, z: 0}
+  worldSpace: 1
+  editMode: 1
+  onlyDisplayWhenSelected: 0
+  displayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1708525175
 GameObject:
   m_ObjectHideFlags: 0
@@ -2047,6 +2976,224 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1788469551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1788469552}
+  - component: {fileID: 1788469556}
+  - component: {fileID: 1788469555}
+  - component: {fileID: 1788469554}
+  - component: {fileID: 1788469553}
+  m_Layer: 0
+  m_Name: Patrol Guard (Animations with Grid Path)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1788469552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788469551}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 72, y: 23.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 893070077}
+  m_Father: {fileID: 1498646240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1788469553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788469551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263298879145d7b4dbee7d6538538232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Follows the [Path] path, at 64 units per second (4 cells/sec).
+
+    The
+    movement steps can only happen once every 0.25 seconds.
+
+    The object will
+    loop back to the beginning at the end of the path.
+
+    This object can push
+    objects as long as their mass combined doesn''t exceed 1.
+
+    Some values will
+    be set on animator Patrol Guard (Animations with Grid Path):
+
+    Horizontal
+    velocity will be set to parameter VelocityX.
+
+    Vertical velocity will be set
+    to parameter VelocityY.
+
+'
+  description: 
+  hasConditions: 0
+  conditions: []
+  cooldown: 0.25
+  pushStrength: 1
+  speed: 64
+  path: {fileID: 893070078}
+  taggedPath: {fileID: 0}
+  loop: 1
+  displayPath: 1
+  relativePath: 0
+  rotationBehaviour: 0
+  useFlip: 0
+  maxRotationSpeed: 1440
+  useAnimator: 1
+  animator: {fileID: 1788469555}
+  horizontalVelocityParameter: VelocityX
+  absoluteHorizontalVelocityParameter: 
+  verticalVelocityParameter: VelocityY
+  absoluteVerticalVelocityParameter: 
+--- !u!114 &1788469554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788469551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9ea011d587d4144844f647e64ab30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Object is centered around the BottomCenter of the visual representation.
+
+    This
+    object can not be pushed by other objects.
+
+    The character will use an animation
+    curve while moving.
+
+'
+  description: 
+  _pivot: 5
+  _canPush: 0
+  _mass: 1
+  _size: {x: 0, y: 0}
+  stepAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!95 &1788469555
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788469551}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5fb69b8e0767b2a48899cbd0d9ddfe6b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!212 &1788469556
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788469551}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 584348604, guid: 7c8f885d64f6acd4c882fcb599882917, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 16, y: 16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1885370827
 GameObject:
   m_ObjectHideFlags: 0
@@ -3334,6 +4481,192 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2084898421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2084898422}
+  - component: {fileID: 2084898423}
+  - component: {fileID: 2084898425}
+  - component: {fileID: 2084898424}
+  m_Layer: 0
+  m_Name: Flyer (Major Path)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2084898422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084898421}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 72, y: 23.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1561648188}
+  m_Father: {fileID: 1498646240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &2084898423
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084898421}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 6363666800081127614, guid: 4df684548e4f9894785c359094976f86, type: 3}
+  m_Color: {r: 0.8679245, g: 0.71876425, b: 0.13510147, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 16, y: 16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &2084898424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084898421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263298879145d7b4dbee7d6538538232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Follows the [Path] path, at 64 units per second (4 cells/sec).
+
+    The
+    movement steps can only happen once every 0.25 seconds.
+
+    The object will
+    loop back to the beginning at the end of the path.
+
+    This object can push
+    objects as long as their mass combined doesn''t exceed 1.
+
+'
+  description: 
+  hasConditions: 0
+  conditions: []
+  cooldown: 0.25
+  pushStrength: 1
+  speed: 64
+  path: {fileID: 1561648189}
+  taggedPath: {fileID: 0}
+  loop: 1
+  displayPath: 1
+  relativePath: 0
+  rotationBehaviour: 0
+  useFlip: 0
+  maxRotationSpeed: 1440
+  useAnimator: 0
+  animator: {fileID: 0}
+  horizontalVelocityParameter: 
+  absoluteHorizontalVelocityParameter: 
+  verticalVelocityParameter: 
+  absoluteVerticalVelocityParameter: 
+--- !u!114 &2084898425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084898421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9ea011d587d4144844f647e64ab30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Object is centered around the Center of the visual representation.
+
+    This
+    object can not be pushed by other objects.
+
+    The character will use an animation
+    curve while moving.
+
+'
+  description: 
+  _pivot: 0
+  _canPush: 0
+  _mass: 1
+  _size: {x: 0, y: 0}
+  stepAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
