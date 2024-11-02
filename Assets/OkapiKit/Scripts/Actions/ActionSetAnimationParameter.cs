@@ -189,45 +189,53 @@ namespace OkapiKit
                         
                         for (int i = 0; i < anm.parameterCount; i++)
                         {
-                            var param = anm.GetParameter(i);
-                            if (param.name == animationParameter)
+                            try
                             {
-                                found = true;
-                                pType = param.type.ToString();
-                                switch (param.type)
+                                var param = anm.GetParameter(i);
+                                if (param.name == animationParameter)
                                 {
-                                    case AnimatorControllerParameterType.Float:
-                                        if ((valueType == ValueType.Float) || (valueType == ValueType.VelocityX) || (valueType == ValueType.VelocityY))
-                                        {
-                                            rightType = true;
-                                        }                                        
-                                        else if (valueType == ValueType.Value)
-                                        {
-                                            if (variable) rightType = (variable.type == Variable.Type.Float);
-                                            else if (valueHandler) rightType = (valueHandler.GetValueType() == Variable.Type.Float);
-                                        }                                            
-                                        break;
-                                    case AnimatorControllerParameterType.Int:
-                                        if (valueType == ValueType.Int)
-                                        {
-                                            rightType = true;
-                                        }
-                                        else if (valueType == ValueType.Value)
-                                        {
-                                            if (variable) rightType = (variable.type == Variable.Type.Integer);
-                                            else if (valueHandler) rightType = (valueHandler.GetValueType() == Variable.Type.Integer);
-                                        }
-                                        break;
-                                    case AnimatorControllerParameterType.Bool:
-                                        rightType = (valueType == ValueType.Boolean);
-                                        break;
-                                    case AnimatorControllerParameterType.Trigger:
-                                        rightType = (valueType == ValueType.Trigger);
-                                        break;
-                                    default:
-                                        break;
+                                    found = true;
+                                    pType = param.type.ToString();
+                                    switch (param.type)
+                                    {
+                                        case AnimatorControllerParameterType.Float:
+                                            if ((valueType == ValueType.Float) || (valueType == ValueType.VelocityX) || (valueType == ValueType.VelocityY))
+                                            {
+                                                rightType = true;
+                                            }
+                                            else if (valueType == ValueType.Value)
+                                            {
+                                                if (variable) rightType = (variable.type == Variable.Type.Float);
+                                                else if (valueHandler) rightType = (valueHandler.GetValueType() == Variable.Type.Float);
+                                            }
+                                            break;
+                                        case AnimatorControllerParameterType.Int:
+                                            if (valueType == ValueType.Int)
+                                            {
+                                                rightType = true;
+                                            }
+                                            else if (valueType == ValueType.Value)
+                                            {
+                                                if (variable) rightType = (variable.type == Variable.Type.Integer);
+                                                else if (valueHandler) rightType = (valueHandler.GetValueType() == Variable.Type.Integer);
+                                            }
+                                            break;
+                                        case AnimatorControllerParameterType.Bool:
+                                            rightType = (valueType == ValueType.Boolean);
+                                            break;
+                                        case AnimatorControllerParameterType.Trigger:
+                                            rightType = (valueType == ValueType.Trigger);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    break;
                                 }
-                                break;
+                            }
+                            catch
+                            {
+                                // Unity throws an exception sometimes, I think it's a bug on the animator when we list the parameters, since we ask for the number of parameters
+                                // and he complains that the parameter doesn't exist with an error like "index must be between 0 and 2", and the index is 0.
                             }
                         }
 

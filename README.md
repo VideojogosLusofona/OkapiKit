@@ -94,6 +94,11 @@ To sidestep this issue, you have to follow some steps:
 - Alternate World:
   - Demonstrates how to create an alternative world system, in which the player can't cross over if there will be a
     collision
+- Grid system:
+  - Demonstrates most of the grid-based systems. By default, it has a crate that can be pushed into the water, which makes that part of the water disappear.
+  - It also allows you to place a bomb by pressing z, which will explode destroying the solid walls in a one tile radius
+  - You can also approach the trees, and press X to harvest them. A indicator will appear for you to know you can harvest them.
+  - You can also activate some other objects, like enemies, to test the different types of Movement Grid systems.
 
 # Documentation
 

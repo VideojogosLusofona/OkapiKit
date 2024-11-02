@@ -50,4 +50,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OkapiKitSamples/Snippets/AlternateZones.unity
     guid: 36f1b140be972704fb9aff4fdf6a1928
+  - enabled: 1
+    path: Assets/OkapiKitSamples/Grid/GridSnippet.unity
+    guid: fe1bb11cfcffe3243834fca68c2e80ce
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

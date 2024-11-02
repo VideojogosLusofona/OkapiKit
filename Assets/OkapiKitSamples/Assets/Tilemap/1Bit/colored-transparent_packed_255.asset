@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: colored-transparent_packed_255a
+  m_Name: colored-transparent_packed_255
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 7799636179149173114, guid: 4df684548e4f9894785c359094976f86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

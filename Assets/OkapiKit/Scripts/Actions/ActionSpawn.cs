@@ -144,28 +144,29 @@ namespace OkapiKit
             }
             else
             {
+                GameObject newObject = null;
                 if (prefabObject)
                 {
                     switch (spawnPosition)
                     {
                         case SpawnPosition.Default:
-                            Instantiate(prefabObject);
+                            newObject = Instantiate(prefabObject);
                             break;
                         case SpawnPosition.This:
                             {
-                                var obj = Instantiate(prefabObject, transform.position, transform.rotation);
+                                newObject = Instantiate(prefabObject, transform.position, transform.rotation);
                                 if (setParent)
                                 {
-                                    obj.transform.SetParent(transform);
+                                    newObject.transform.SetParent(transform);
                                 }
                             }
                             break;
                         case SpawnPosition.Target:
                             {
-                                var obj = Instantiate(prefabObject, targetPosition.position, targetPosition.rotation);
+                                newObject = Instantiate(prefabObject, targetPosition.position, targetPosition.rotation);
                                 if (setParent)
                                 {
-                                    obj.transform.SetParent(targetPosition.transform);
+                                    newObject.transform.SetParent(targetPosition.transform);
                                 }
                             }
                             break;
@@ -177,10 +178,10 @@ namespace OkapiKit
                                     var targetObj = targetObjs[UnityEngine.Random.Range(0, targetObjs.Count)];
                                     if (targetObj)
                                     {
-                                        var obj = Instantiate(prefabObject, targetObj.transform.position, targetObj.transform.rotation);
+                                        newObject = Instantiate(prefabObject, targetObj.transform.position, targetObj.transform.rotation);
                                         if (setParent)
                                         {
-                                            obj.transform.SetParent(targetObj.transform);
+                                            newObject.transform.SetParent(targetObj.transform);
                                         }
                                     }
                                 }
@@ -189,6 +190,28 @@ namespace OkapiKit
                         default:
                             break;
                     }
+
+                    if (newObject != null)
+                    {
+                        if (!setParent)
+                        {
+                            GridObject gridObject = newObject.GetComponent<GridObject>();
+                            if (gridObject)
+                            {
+                                // This object has a grid object, need to parent it to something that has a grid
+                                GridObject selfGridObject = GetComponent<GridObject>();
+                                GridSystem parentGridObject;
+                                if (selfGridObject == null) parentGridObject = GetComponentInParent<GridSystem>();
+                                else parentGridObject = selfGridObject.grid;
+                                if (parentGridObject == null) parentGridObject = FindAnyObjectByType<GridSystem>();
+                                if (parentGridObject != null)
+                                {
+                                    newObject.transform.SetParent(parentGridObject.transform);
+                                }
+                            }
+                        }
+                    }
+
                     return;
                 }
             }
