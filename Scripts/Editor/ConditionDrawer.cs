@@ -43,6 +43,8 @@ namespace OkapiKit.Editor
             var propComparisonValueHandler = property.FindPropertyRelative("comparisonValueHandler");
             var propComparisonVariable = property.FindPropertyRelative("comparisonVariable");
             var propPercentage = property.FindPropertyRelative("percentageCompare");
+            var propTile = property.FindPropertyRelative("tile");
+            var propTileSet = property.FindPropertyRelative("tileSet");
 
             float positionValue = position.x + 50;
 
@@ -216,6 +218,34 @@ namespace OkapiKit.Editor
 
                             dataType = Condition.DataType.Boolean;
                         }
+                        else if ((valueType == Condition.ValueType.OnTile) ||
+                                 (valueType == Condition.ValueType.OnTileSet))
+                        {
+                            var elemHeight = position.height / 3.0f;
+                            if ((propTransform.objectReferenceValue == null) && (propTag.objectReferenceValue == null)) elemHeight = position.height / 4;
+
+                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                            var rect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+
+                            EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                            if ((propTag.objectReferenceValue) || (propTransform.objectReferenceValue == null))
+                            {
+                                EditorGUI.PropertyField(rect, propTag, GUIContent.none);
+                                rect.y += elemHeight;
+                            }
+                            if ((propTransform.objectReferenceValue) || (propTag.objectReferenceValue == null))
+                            {
+                                EditorGUI.PropertyField(rect, propTransform, GUIContent.none);
+                                rect.y += elemHeight;
+                            }
+
+                            if (valueType == Condition.ValueType.OnTile)
+                                EditorGUI.PropertyField(rect, propTile, GUIContent.none);
+                            else if (valueType == Condition.ValueType.OnTileSet)
+                                EditorGUI.PropertyField(rect, propTileSet, GUIContent.none);
+
+                            dataType = Condition.DataType.Boolean;
+                        }                        
                     }
                 }
                 else
@@ -342,12 +372,24 @@ namespace OkapiKit.Editor
                     {
                         height = baseHeight * 2;
                     }
+                    else if ((condType == Condition.ValueType.OnTile) ||
+                             (condType == Condition.ValueType.OnTileSet))
+                    {
+                        var tagVariable = property.FindPropertyRelative("tag");
+                        var transformVariable = property.FindPropertyRelative("sourceTransform");
+
+                        if (tagVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
+                        else if (transformVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
+                        else height = baseHeight * 4;
+                    }
                 }
             }
 
             if ((condType == Condition.ValueType.Probe) ||
                 (condType == Condition.ValueType.IsGrounded) ||
-                (condType == Condition.ValueType.IsGliding))
+                (condType == Condition.ValueType.IsGliding) ||
+                (condType == Condition.ValueType.OnTile) ||
+                (condType == Condition.ValueType.OnTileSet))
             {
                 // No need for a comparison value
             }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace OkapiKit
 {
@@ -326,6 +327,15 @@ namespace OkapiKit
             angle = (Mathf.RoundToInt(angle / angularStepSize)) * angularStepSize;
 
             return angle;
+        }
+
+        internal bool IsOnTile(Vector3 worldPos, TileBase tile)
+        {
+            return grid.IsOnTile(worldPos, tile);
+        }
+        internal bool IsOnTile(Vector3 worldPos, TileSet tileSet)
+        {
+            return grid.IsOnTile(worldPos, tileSet);
         }
     }
 }
