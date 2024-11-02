@@ -29,6 +29,13 @@ namespace OkapiKit.Editor
         SerializedProperty propVerticalKeyNegative;
         SerializedProperty propInertiaEnable;
         SerializedProperty propInertiaStopTime;
+        SerializedProperty propFlipBehaviour;
+        SerializedProperty propUseAnimator;
+        SerializedProperty propAnimator;
+        SerializedProperty propHorizontalVelocityParameter;
+        SerializedProperty propAbsoluteHorizontalVelocityParameter;
+        SerializedProperty propVerticalVelocityParameter;
+        SerializedProperty propAbsoluteVerticalVelocityParameter;
 
         protected override void OnEnable()
         {
@@ -55,6 +62,13 @@ namespace OkapiKit.Editor
             propVerticalKeyNegative = serializedObject.FindProperty("verticalKeyNegative");
             propInertiaEnable = serializedObject.FindProperty("inertiaEnable");
             propInertiaStopTime = serializedObject.FindProperty("inertiaStopTime");
+            propFlipBehaviour = serializedObject.FindProperty("flipBehaviour");
+            propUseAnimator = serializedObject.FindProperty("useAnimator");
+            propAnimator = serializedObject.FindProperty("animator");
+            propHorizontalVelocityParameter = serializedObject.FindProperty("horizontalVelocityParameter");
+            propAbsoluteHorizontalVelocityParameter = serializedObject.FindProperty("absoluteHorizontalVelocityParameter");
+            propVerticalVelocityParameter = serializedObject.FindProperty("verticalVelocityParameter");
+            propAbsoluteVerticalVelocityParameter = serializedObject.FindProperty("absoluteVerticalVelocityParameter");
         }
 
         public override void OnInspectorGUI()
@@ -120,6 +134,25 @@ namespace OkapiKit.Editor
                             break;
                     }
                 }
+
+                // Separator
+                Rect separatorRect = GUILayoutUtility.GetLastRect();
+                separatorRect.yMin = separatorRect.yMax + 5;
+                separatorRect.height = 5.0f;
+                EditorGUI.DrawRect(separatorRect, GUIUtils.ColorFromHex("#ff6060"));
+                EditorGUILayout.Space(separatorRect.height + 5);
+
+                EditorGUILayout.PropertyField(propFlipBehaviour, new GUIContent("Flip Behaviour", "What to do visually when we turn?\nVelocity Flips Sprite: When horizontal velocity is negative (moving left), the sprite renderer is flipped horizontal\nVelocity Inverts Scale: When horizontal velocity is negative (moving left), the horizontal scale is negated\nInput Flips Sprite: When players presses left, the sprite renderer is flipped horizontal\nInput Inverts Scale: When player presses left, the horizontal scale is negated\nVelocity Rotate Sprite: When horizontal velocity is negative (moving left), the object is rotated 180 degrees around the Y axis.\nInput Rotate Sprite: When the player presses left, the object is rotated 180 degrees around the Y axis.\nScaling doesn't affect the internal object's direction, while rotating does."));
+                EditorGUILayout.PropertyField(propUseAnimator, new GUIContent("Use Animator", "Should we drive an animator with this movement controller?"));
+                if (propUseAnimator.boolValue)
+                {
+                    EditorGUILayout.PropertyField(propAnimator, new GUIContent("Animator", "What animator to use?"));
+                    EditorGUILayout.PropertyField(propHorizontalVelocityParameter, new GUIContent("Horizontal Velocity Parameter", "What is the parameter to set to the horizontal velocity?"));
+                    EditorGUILayout.PropertyField(propAbsoluteHorizontalVelocityParameter, new GUIContent("Absolute Horizontal Velocity Parameter", "What is the parameter to set to the absolute horizontal velocity?"));
+                    EditorGUILayout.PropertyField(propVerticalVelocityParameter, new GUIContent("Vertical Velocity Parameter", "What is the parameter to set to the vertical velocity?"));
+                    EditorGUILayout.PropertyField(propAbsoluteVerticalVelocityParameter, new GUIContent("Absolute Vertical Velocity Parameter", "What is the parameter to set to the absolute horizontal velocity?"));
+                }
+
                 EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
                 EditorGUI.EndChangeCheck();

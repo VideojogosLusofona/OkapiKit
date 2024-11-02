@@ -225,7 +225,7 @@ namespace OkapiKit
 
             if (flipBehaviour == FlipBehaviour.VelocityFlipsSprite)
             {
-                spriteRenderer = GetComponentInParent<SpriteRenderer>();
+                spriteRenderer = GetComponent<SpriteRenderer>();
                 if (spriteRenderer == null)
                 {
                     _logs.Add(new LogEntry(LogEntry.Type.Error, "Flip behaviour is set to flip the sprite, but sprite doesn't exist!", "Flip behaviour acts on sprite, but no sprite is present!"));
@@ -262,6 +262,13 @@ namespace OkapiKit
                     }
                 }
             }
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            spriteRenderer = GetComponent<SpriteRenderer>(); 
         }
 
         protected override void Update()

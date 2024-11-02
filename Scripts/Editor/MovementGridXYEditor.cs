@@ -141,7 +141,6 @@ namespace OkapiKit.Editor
                     EditorGUILayout.PropertyField(propAbsoluteVerticalVelocityParameter, new GUIContent("Absolute Vertical Velocity Parameter", "What is the parameter to set to the absolute horizontal velocity?"));
                 }
 
-
                 EditorGUILayout.PropertyField(propDescription, new GUIContent("Description", "This is for you to leave a comment for yourself or others."));
 
                 EditorGUI.EndChangeCheck();
