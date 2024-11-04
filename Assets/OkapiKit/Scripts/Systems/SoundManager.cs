@@ -29,6 +29,10 @@ namespace OkapiKit
         // Start is called before the first frame update
         void Start()
         {
+            if (_instance == null)
+            {
+                _instance = this;
+            }
             // Find all audio sources
             audioSources = new List<AudioSource>(GetComponentsInChildren<AudioSource>());
             if (audioSources == null)

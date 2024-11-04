@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.16.1
+
+- Fixed issue with SoundManager initialization of singleton
+
 ## V1.16.0
 
 - Updated OkapiKit to Unity 6 (should work with previous versions)
