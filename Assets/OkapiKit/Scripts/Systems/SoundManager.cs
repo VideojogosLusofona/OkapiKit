@@ -41,7 +41,7 @@ namespace OkapiKit
             }
         }
 
-        private void _PlaySound(AudioClip clip, float volume = 1.0f, float pitch = 1.0f)
+        private AudioSource _PlaySound(AudioClip clip, float volume = 1.0f, float pitch = 1.0f)
         {
             var audioSource = GetSource();
 
@@ -51,6 +51,8 @@ namespace OkapiKit
             audioSource.outputAudioMixerGroup = defaultMixerOutput;
 
             audioSource.Play();
+
+            return audioSource;
         }
 
         private AudioSource GetSource()
@@ -85,9 +87,9 @@ namespace OkapiKit
             return audioSource;
         }
 
-        static public void PlaySound(AudioClip clip, float volume = 1.0f, float pitch = 1.0f)
+        static public AudioSource PlaySound(AudioClip clip, float volume = 1.0f, float pitch = 1.0f)
         {
-            _instance._PlaySound(clip, volume, pitch);
+            return _instance._PlaySound(clip, volume, pitch);
         }
 
         public override string GetRawDescription(string ident, GameObject refObject)

@@ -18,14 +18,11 @@ Features:
 - Spawner should have random direction possibility
 - Path shows direction (debug)
 - Bool and string variables
-- Press '+' to add a point at cursor when editing a path
-- Add insert point option for path
 - Comment Code
 - Documentation
 - Support for Analytics (extra package?)
 - Add OnDestroy event
 - Add stairs/moving platforms to system
-- Add animator control on XY movement
 
 Usability:
 ----------
@@ -45,20 +42,11 @@ Simple usage:
 - Set object visible/invisible
 - Set object velocity
 
-Videos:
--------
-- Ricochet bullet
-- Look at player
-
 Bugs:
 -----
 - Preserve gravity with velocity set (?)
 - Tooltips don't work with Naughty Attributes range
   - Maybe make my own to be able to have tooltips, or propose a fix
-
-Polish:
--------
-- Rounded corners on title boxes
 
 Games:
 ------

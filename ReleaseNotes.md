@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.16.2
+
+- SoundManager now returns the AudioSource that's playing
+- Fixed issues with compilation for builds
+
 ## V1.16.1
 
 - Fixed issue with SoundManager initialization of singleton
