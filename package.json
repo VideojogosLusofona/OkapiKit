@@ -1,14 +1,14 @@
 {
     "name": "com.videojogoslusofona.okapikit.samples",
     "displayName": "OkapiKit Samples",
-    "version": "1.16.1",
+    "version": "1.16.2",
     "unity": "6000.0",
     "description": "OkapiKit is a toolkit for creation of simple games without code. This package is just the samples for OkapiKit, they are not required to use Okapi Kit, and requires the Okapi Kit package.",
     "keywords": [ "okapi", "samples" ],
     "category": "samples",
     "dependencies": {},
     "relatedPackages": {
-      "com.videojogoslusofona.okapikit": "1.16.1"
+      "com.videojogoslusofona.okapikit": "1.16.2"
     },
     "author": {
       "name": "Videojogos ULHT",
