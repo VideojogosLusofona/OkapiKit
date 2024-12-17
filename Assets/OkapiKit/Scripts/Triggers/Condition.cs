@@ -145,10 +145,10 @@ namespace OkapiKit
                         
                         string targetName = "[UNDEFINED]";
                         if (tag != null) targetName = $"Tag[{tag.name}]";
-                        else if (sourceTransform) targetName = $"Transform[{sourceTransform.name}]";
+                        else if (sourceTransform) targetName = $"Position[{sourceTransform.name}]";
 
-                        if (valueType == ValueType.OnTile) return $"OnTile({targetName}, {tileName})";
-                        else if (valueType == ValueType.OnTileSet) return $"OnTileSet({targetName}, {tileName})";
+                        if (valueType == ValueType.OnTile) return $"{targetName} is on top of {tileName})";
+                        else if (valueType == ValueType.OnTileSet) return $"{targetName} is on top of {tileName})";
                     }
                     break;
             }

@@ -130,19 +130,7 @@ namespace OkapiKit
 
             if (gridObject.isMoving)
             {
-                if (rotateTowardsDirection)
-                {
-                    if (gridObject.lastDelta.sqrMagnitude > 1e-6)
-                    {
-                        Vector3 upAxis = gridObject.lastDelta.normalized;
-
-                        if (alignAxis == Axis.RightAxis) upAxis = new Vector3(-upAxis.y, upAxis.x);
-
-                        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, upAxis);
-
-                        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxRotationSpeed * Time.fixedDeltaTime);
-                    }
-                }
+                RotateTowardsDirection(gridObject.lastDelta);
             }
             else if (moveCooldownTimer <= 0.0f)
             {
@@ -231,14 +219,22 @@ namespace OkapiKit
                     if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
                     {
                         // More to move in X, prioritize that
-                        moveVector = new Vector2Int((int)Mathf.Sign(delta.x), 0);
+                        moveVector = new Vector2Int((int)Sign(delta.x), 0);
                         if (!gridObject.MoveToGrid(currentPos + moveVector, GetSpeed(), pushStrength))
                         {
                             // Can't move in X, try to move in Y
-                            moveVector = new Vector2Int(0, (int)Mathf.Sign(delta.y));
-                            if (!gridObject.MoveToGrid(currentPos + moveVector, GetSpeed(), pushStrength))
+                            moveVector = new Vector2Int(0, (int)Sign(delta.y));
+                            if (moveVector.y != 0)
                             {
-                                // Can't move, try later
+                                if (!gridObject.MoveToGrid(currentPos + moveVector, GetSpeed(), pushStrength))
+                                {
+                                    // Can't move, try later
+                                    moveCooldownTimer = 0.0f;
+                                }
+                            }
+                            else
+                            {
+                                RotateTowardsDirection(new Vector3(Sign(delta.x), 0, 0));
                                 moveCooldownTimer = 0.0f;
                             }
                         }
@@ -246,18 +242,43 @@ namespace OkapiKit
                     else
                     {
                         // More to move in Y, prioritize that
-                        moveVector = new Vector2Int(0, (int)Mathf.Sign(delta.y));
+                        moveVector = new Vector2Int(0, (int)Sign(delta.y));
                         if (!gridObject.MoveToGrid(currentPos + moveVector, GetSpeed(), pushStrength))
                         {
                             // Can't move in Y, try to move in X
-                            moveVector = new Vector2Int((int)Mathf.Sign(delta.x), 0);
-                            if (!gridObject.MoveToGrid(currentPos + moveVector, GetSpeed(), pushStrength))
+                            moveVector = new Vector2Int((int)Sign(delta.x), 0);
+                            if (moveVector.x != 0)
                             {
-                                // Can't move, try later
+                                if (!gridObject.MoveToGrid(currentPos + moveVector, GetSpeed(), pushStrength))
+                                {
+                                    // Can't move, try later
+                                    moveCooldownTimer = 0.0f;
+                                }
+                            }
+                            else
+                            {
+                                RotateTowardsDirection(new Vector3(0.0f, Sign(delta.y), 0.0f));
                                 moveCooldownTimer = 0.0f;
                             }
                         }
                     }
+                }
+            }
+        }
+
+        void RotateTowardsDirection(Vector3 direction)
+        {
+            if (rotateTowardsDirection)
+            {
+                if (direction.sqrMagnitude > 1e-6)
+                {
+                    Vector3 upAxis = direction.normalized;
+
+                    if (alignAxis == Axis.RightAxis) upAxis = new Vector3(-upAxis.y, upAxis.x);
+
+                    Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, upAxis);
+
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxRotationSpeed * Time.fixedDeltaTime);
                 }
             }
         }
@@ -270,6 +291,14 @@ namespace OkapiKit
             }
 
             return cameraObject;
+        }
+
+        static float Sign(float v)
+        {
+            if (v > 0.0f) return 1.0f;
+            else if (v < 0.0f) return -1.0f;
+
+            return 0.0f;
         }
     }
 }

@@ -1,5 +1,14 @@
 # Release Notes
 
+## V1.17.0
+
+- DestroyObject action can now reference collider object
+- Grid follow movement now doesn't keep moving when next to target position (and can't push)
+- With grid follow movement, object turns to the right direction even if it can't move that way
+- Grid object now has collision filtering options - events aren't triggered in these cases
+- Added Teleport action
+- Added grid events WasHit and WasPushed, that get triggered when an object is hit or pushed by another.
+
 ## V1.16.2
 
 - SoundManager now returns the AudioSource that's playing

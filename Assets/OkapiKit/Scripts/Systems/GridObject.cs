@@ -1,5 +1,7 @@
+using Codice.CM.Common.Tree.Partial;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,10 +10,12 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Other/Grid Object")]
     public class GridObject : OkapiElement
     {
-        [SerializeField] private Pivot _pivot = Pivot.Center;
-        [SerializeField] private bool _canPush;
-        [SerializeField] private float _mass = 1.0f;
-        [SerializeField] private Vector2 _size = Vector2.zero;
+        [SerializeField] private Pivot          _pivot = Pivot.Center;
+        [SerializeField] private bool           _canPush;
+        [SerializeField] private float          _mass = 1.0f;
+        [SerializeField] private GridObject[]   ignoreCollisionObjects;
+        [SerializeField] private Hypertag[]     ignoreCollisionTags; 
+        [SerializeField] private Vector2        _size = Vector2.zero;
         [SerializeField]
         protected AnimationCurve stepAnimationCurve;
 
@@ -63,6 +67,21 @@ namespace OkapiKit
             {
                 this
             };
+            if (ignoreCollisionObjects != null)
+            {
+                foreach (var obj in ignoreCollisionObjects)
+                {
+                    if (obj != null)
+                    {
+                        exclusionList.Add(obj);
+                        var children = obj.GetComponentsInChildren<GridObject>();
+                        foreach (var c in children)
+                        {
+                            exclusionList.Add(c);
+                        }
+                    }
+                }
+            }
 
             transform.position = grid.Snap(transform.position, _pivot);
 
@@ -178,6 +197,29 @@ namespace OkapiKit
             {
                 desc += $"This object can not be pushed by other objects.\n";
             }
+            if ((ignoreCollisionObjects != null) && (ignoreCollisionObjects.Length > 0))
+            {
+                desc += "This object will ignore collision with objects ";
+                for (int i = 0; i < ignoreCollisionObjects.Length; i++)
+                {
+                    if (ignoreCollisionObjects[i] == null) desc += "NULL";
+                    else desc += ignoreCollisionObjects[i].name;
+                    if (i < ignoreCollisionObjects.Length - 1) desc += ",";
+                }
+                desc += ".\n";
+            }
+            if ((ignoreCollisionTags != null) && (ignoreCollisionTags.Length > 0))
+            {
+                desc += "This object will ignore collision with tags [";
+
+                for (int i = 0; i < ignoreCollisionTags.Length; i++)
+                {
+                    if (ignoreCollisionTags[i] == null) desc += "NULL";
+                    else desc += ignoreCollisionTags[i].name;
+                    if (i < ignoreCollisionTags.Length - 1) desc += ",";
+                }
+                desc += "].\n";
+            }
             if ((stepAnimationCurve != null) && (stepAnimationCurve.length > 0))
             {
                 desc += "The character will use an animation curve while moving.\n";
@@ -200,10 +242,27 @@ namespace OkapiKit
 
         public bool MoveToGrid(Vector2Int gridPos, Vector2 speed, float pushStrength)
         {
+            var currentExclusionList = exclusionList;
+            if ((ignoreCollisionTags != null) && (ignoreCollisionTags.Length > 0))
+            {
+                currentExclusionList = new(exclusionList);
+
+                var objs = HypertaggedObject.FindObjectsByHypertag<GridObject>(ignoreCollisionTags);
+                foreach (var obj in objs)
+                {
+                    currentExclusionList.Add(obj);
+                    var children = obj.GetComponentsInChildren<GridObject>();
+                    foreach (var c in children)
+                    {
+                        exclusionList.Add(c);
+                    }
+                }
+            }
+
             // Check if object can move to this position
             var targetWorldPos = grid.GridToWorld(gridPos, pivot);
             var originalGridPos = grid.WorldToGrid(transform.position);
-            var obstacleQuery = grid.IsObstacle(targetWorldPos, _size, gameObject.layer, exclusionList);
+            var obstacleQuery = grid.IsObstacle(targetWorldPos, _size, gameObject.layer, currentExclusionList);
             if (obstacleQuery.hasObstacle)
             {
                 // Is it a wall? If it is, just give up
@@ -271,8 +330,27 @@ namespace OkapiKit
             moveDirection = moveTotalDelta / moveTotalDistance;
         }
 
+        bool EventNeedsCollider(TriggerOnGridEvent.GridEvent evt)
+        {
+            switch (evt)
+            {
+                case TriggerOnGridEvent.GridEvent.PushObject:
+                case TriggerOnGridEvent.GridEvent.HitObject:
+                case TriggerOnGridEvent.GridEvent.WasPushed:
+                case TriggerOnGridEvent.GridEvent.WasHit:
+                    return true;
+            }
+
+            return false;
+        }
+
         void ThrowEvent(TriggerOnGridEvent.GridEvent evt, GridObject obj)
         {
+            if (EventNeedsCollider(evt))
+            {
+                TriggerOnCollision.PushLastCollider(obj.gameObject);
+            }
+
             var allEventHandlers = GetComponentsInChildren<TriggerOnGridEvent>();
             foreach (var handler in allEventHandlers)
             {
@@ -286,6 +364,20 @@ namespace OkapiKit
                     handler.ThrowEvent(evt, this);
                 }
             }
+
+            if (EventNeedsCollider(evt))
+            {
+                TriggerOnCollision.PopLastCollider();
+
+                if (evt == TriggerOnGridEvent.GridEvent.HitObject)
+                {
+                    obj.ThrowEvent(TriggerOnGridEvent.GridEvent.WasHit, this);
+                }
+                else if (evt == TriggerOnGridEvent.GridEvent.PushObject)
+                {
+                    obj.ThrowEvent(TriggerOnGridEvent.GridEvent.WasPushed, this);
+                }
+            }
         }
 
         private void OnDrawGizmosSelected()
@@ -295,6 +387,11 @@ namespace OkapiKit
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireCube(transform.position, _size);
             }
+        }
+
+        public void Snap()
+        {
+            transform.position = grid.Snap(transform.position, _pivot);
         }
 
         public Vector3 Snap(Vector3 worldPos)

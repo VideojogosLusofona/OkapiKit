@@ -42,7 +42,9 @@ namespace OkapiKit.Editor
 
                 var eventType = (TriggerOnGridEvent.GridEvent)propEventType.enumValueIndex;
                 if ((eventType == TriggerOnGridEvent.GridEvent.PushObject) ||
-                    (eventType == TriggerOnGridEvent.GridEvent.HitObject))
+                    (eventType == TriggerOnGridEvent.GridEvent.HitObject) ||
+                    (eventType == TriggerOnGridEvent.GridEvent.WasHit) ||
+                    (eventType == TriggerOnGridEvent.GridEvent.WasPushed))
                 {
                     EditorGUILayout.PropertyField(propTags, new GUIContent("Tags", "Which tags to use for the interaction.\nOnly objects with these tags can throw an event"));
                 }

@@ -8,7 +8,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Action/Destroy Object")]
     public class ActionDestroyObject : Action
     {
-        public enum Target { Self = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4 };
+        public enum Target { Self = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4, Collider = 5 };
 
         [SerializeField]
         private Target target = Target.Object;
@@ -54,6 +54,8 @@ namespace OkapiKit
                         if (IsChild(gameObject, otherGameObject)) return true;
                     }
                     break;
+                case Target.Collider:
+                    return false;
             }
 
             return false;
@@ -123,6 +125,9 @@ namespace OkapiKit
                     {
                         desc += "destroys objects with tags [undefined]!";
                     }
+                    break;
+                case Target.Collider:
+                    desc += "destroys object that collided with this - only valid when called from a collision event";
                     break;
                 default:
                     break;
@@ -201,6 +206,13 @@ namespace OkapiKit
                     foreach (var obj in objs)
                     {
                         Destroy(obj);
+                    }
+                    break;
+                case Target.Collider:
+                    var collider = TriggerOnCollision.GetLastCollider();
+                    if (collider != null)
+                    {
+                        Destroy(collider);
                     }
                     break;
                 default:
