@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When (OnTileSet(Transform[HarvestPoint], [Trees]):\n          enables
+  _explanation: "When (Position[HarvestPoint] is on top of [Trees]):\n          enables
     renderer HarvestPoint\nelse\n          disables renderer HarvestPoint\n\nThis
     trigger will execute only when the conditions change and they are all true."
   description: 
@@ -303,6 +303,39 @@ MonoBehaviour:
   elseActions:
   - delay: 0
     action: {fileID: 92217950}
+--- !u!1 &107874793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107874794}
+  m_Layer: 0
+  m_Name: Teleporter Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &107874794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107874793}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1132682567}
+  - {fileID: 1932467762}
+  m_Father: {fileID: 1498646240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &165688148
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &165688149
 Transform:
   m_ObjectHideFlags: 0
@@ -357,7 +390,7 @@ MonoBehaviour:
     seconds.
 
     This object''s up''s axis will rotate towards the direction of
-    movement, at a maximum speed of 360 degrees/sec.
+    movement, at a maximum speed of 720 degrees/sec.
 
     This object can push objects
     as long as their mass combined doesn''t exceed 1.
@@ -375,7 +408,7 @@ MonoBehaviour:
   relativeMovement: 0
   rotateTowardsDirection: 1
   alignAxis: 0
-  maxRotationSpeed: 360
+  maxRotationSpeed: 720
   cameraObject: {fileID: 0}
   cameraTag: {fileID: 0}
 --- !u!114 &165688151
@@ -396,14 +429,19 @@ MonoBehaviour:
     This
     object can not be pushed by other objects.
 
-    The character will use an animation
-    curve while moving.
+    This object will ignore collision
+    with tags [Knight].
+
+    The character will use an animation curve while moving.
 
 '
   description: 
   _pivot: 0
   _canPush: 0
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags:
+  - {fileID: 11400000, guid: ef738cdf582e7b74ca6542cab74d7ad0, type: 2}
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
@@ -547,6 +585,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 1
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 10, y: 10}
   stepAnimationCurve:
     serializedVersion: 2
@@ -1128,6 +1168,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 1
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 10, y: 10}
   stepAnimationCurve:
     serializedVersion: 2
@@ -1438,6 +1480,8 @@ MonoBehaviour:
   _pivot: 5
   _canPush: 0
   _mass: 0
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
@@ -1506,7 +1550,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 584348604, guid: 7c8f885d64f6acd4c882fcb599882917, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1649,8 +1693,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When this hits an object with tags [Fireball] :\n          destroys
-    this object\n"
+  _explanation: "When this objects hits another object with tags [Fireball] :\n         
+    destroys this object\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -1922,6 +1966,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 1
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 10, y: 10}
   stepAnimationCurve:
     serializedVersion: 2
@@ -2186,6 +2232,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 0
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
@@ -2332,6 +2380,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 0
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
@@ -2523,6 +2573,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 0
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
@@ -2710,6 +2762,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 0
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
@@ -2790,6 +2844,199 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1132682566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1132682567}
+  - component: {fileID: 1132682569}
+  - component: {fileID: 1132682571}
+  - component: {fileID: 1132682570}
+  - component: {fileID: 1132682573}
+  - component: {fileID: 1132682572}
+  m_Layer: 0
+  m_Name: Teleporter1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1132682567
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132682566}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8, y: 24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 107874794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1132682569
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132682566}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 3460394203692409738, guid: c507dab7c1d13a04c9bb7eff8e9dab8f, type: 3}
+  m_Color: {r: 0.9811321, g: 0.0509078, b: 0.0509078, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 16, y: 16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &1132682570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132682566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9ea011d587d4144844f647e64ab30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Object is centered around the Center of the visual representation.
+
+    This
+    object can not be pushed by other objects.
+
+'
+  description: 
+  _pivot: 0
+  _canPush: 0
+  _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
+  _size: {x: 0, y: 0}
+  stepAnimationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1132682571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132682566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 0
+  _explanation: 
+  description: 
+  hypertags:
+  - {fileID: 11400000, guid: cdad527fae3b09b4cb251b9c29774cc6, type: 2}
+--- !u!114 &1132682572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132682566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0385faaee562d5e489301afa1669cb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Teleports colliding object to the position of Teleporter2
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  subject: 3
+  subjectTransform: {fileID: 0}
+  subjectTag: {fileID: 0}
+  teleportTarget: 0
+  targetTransforms:
+  - {fileID: 1932467762}
+  targetTags: []
+--- !u!114 &1132682573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132682566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c88d2b3270b03c44a0ca3a28b6d9030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When this object was hit by another object with tags [Knight] :\n         
+    Teleports colliding object to the position of Teleporter2\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1132682572}
+  eventType: 5
+  tags:
+  - {fileID: 11400000, guid: ef738cdf582e7b74ca6542cab74d7ad0, type: 2}
 --- !u!1 &1175461702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2902,6 +3149,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 1
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 10, y: 10}
   stepAnimationCurve:
     serializedVersion: 2
@@ -3252,6 +3501,7 @@ Transform:
   - {fileID: 1788469552}
   - {fileID: 1070259469}
   - {fileID: 1806824676}
+  - {fileID: 107874794}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1498646241
@@ -4199,6 +4449,8 @@ MonoBehaviour:
   _pivot: 5
   _canPush: 0
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
@@ -4316,12 +4568,12 @@ GameObject:
   - component: {fileID: 1806824679}
   - component: {fileID: 1806824681}
   m_Layer: 11
-  m_Name: Crate
+  m_Name: Crate (Remove Water)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1806824676
 Transform:
   m_ObjectHideFlags: 0
@@ -4366,6 +4618,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 1
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
@@ -4482,11 +4736,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "If (OnTileSet(Transform[Crate], [Water]) and When this does a step
-    :\n          changes tiles at Crate according to the given rules:\n           
-    1. colored-transparent_packed_253 => Deleted\n            2. colored-transparent_packed_254
-    => Deleted\n            3. colored-transparent_packed_255 => Deleted\n         
-    destroys this object\n"
+  _explanation: "If (Position[Crate (Remove Water)] is on top of [Water]) and when
+    this object finishes a movement step :\n          changes tiles at Crate (Remove
+    Water) according to the given rules:\n            1. colored-transparent_packed_253
+    => Deleted\n            2. colored-transparent_packed_254 => Deleted\n           
+    3. colored-transparent_packed_255 => Deleted\n          destroys this object\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -4531,9 +4785,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "Changes tiles at Crate according to the given rules:\n  1. colored-transparent_packed_253
-    => Deleted\n  2. colored-transparent_packed_254 => Deleted\n  3. colored-transparent_packed_255
-    => Deleted"
+  _explanation: "Changes tiles at Crate (Remove Water) according to the given rules:\n 
+    1. colored-transparent_packed_253 => Deleted\n  2. colored-transparent_packed_254
+    => Deleted\n  3. colored-transparent_packed_255 => Deleted"
   description: 
   enableAction: 1
   hasTags: 0
@@ -5838,6 +6092,199 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1932467761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1932467762}
+  - component: {fileID: 1932467767}
+  - component: {fileID: 1932467766}
+  - component: {fileID: 1932467765}
+  - component: {fileID: 1932467764}
+  - component: {fileID: 1932467763}
+  m_Layer: 0
+  m_Name: Teleporter2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1932467762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932467761}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -39.7, y: 24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 107874794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1932467763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932467761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0385faaee562d5e489301afa1669cb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Teleports colliding object to the position of Teleporter1
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  subject: 3
+  subjectTransform: {fileID: 0}
+  subjectTag: {fileID: 0}
+  teleportTarget: 0
+  targetTransforms:
+  - {fileID: 1132682567}
+  targetTags: []
+--- !u!114 &1932467764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932467761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c88d2b3270b03c44a0ca3a28b6d9030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When this object was hit by another object with tags [Knight] :\n         
+    Teleports colliding object to the position of Teleporter1\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1932467763}
+  eventType: 5
+  tags:
+  - {fileID: 11400000, guid: ef738cdf582e7b74ca6542cab74d7ad0, type: 2}
+--- !u!114 &1932467765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932467761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9ea011d587d4144844f647e64ab30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Object is centered around the Center of the visual representation.
+
+    This
+    object can not be pushed by other objects.
+
+'
+  description: 
+  _pivot: 0
+  _canPush: 0
+  _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
+  _size: {x: 0, y: 0}
+  stepAnimationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1932467766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932467761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 0
+  _explanation: 
+  description: 
+  hypertags:
+  - {fileID: 11400000, guid: cdad527fae3b09b4cb251b9c29774cc6, type: 2}
+--- !u!212 &1932467767
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932467761}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 3460394203692409738, guid: c507dab7c1d13a04c9bb7eff8e9dab8f, type: 3}
+  m_Color: {r: 0.13287437, g: 0.98039216, b: 0.050980378, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 16, y: 16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &2084898421
 GameObject:
   m_ObjectHideFlags: 0
@@ -5999,6 +6446,8 @@ MonoBehaviour:
   _pivot: 0
   _canPush: 0
   _mass: 1
+  ignoreCollisionObjects: []
+  ignoreCollisionTags: []
   _size: {x: 0, y: 0}
   stepAnimationCurve:
     serializedVersion: 2
