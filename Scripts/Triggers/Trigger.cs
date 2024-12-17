@@ -33,6 +33,7 @@ namespace OkapiKit
 
             if (description != "") _explanation += description + "\n----------------\n";
 
+            bool hasIf = false;
             if (hasPreconditions)
             {
                 if ((preConditions != null) && (preConditions.Length > 0))
@@ -42,10 +43,13 @@ namespace OkapiKit
                     {
                         _explanation += preConditions[i].GetRawDescription(gameObject) + " and ";
                     }
-                }
+                    hasIf = true;
+                }                
             }
 
-            _explanation += GetRawDescription("", gameObject) + ":\n";
+            string remainingExplanation = GetRawDescription("", gameObject) + ":\n";
+            if (hasIf) remainingExplanation = remainingExplanation.ToLower();
+            _explanation += remainingExplanation;
 
             _explanation += GetDescriptionActions(actions);
 

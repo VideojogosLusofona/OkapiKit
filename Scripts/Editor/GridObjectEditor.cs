@@ -13,6 +13,8 @@ namespace OkapiKit.Editor
         SerializedProperty propMass;
         SerializedProperty propSize;
         SerializedProperty propStepAnimationCurve;
+        SerializedProperty propIgnoreCollisionObjects;
+        SerializedProperty propIgnoreCollisionTags;
 
         protected override void OnEnable()
         {
@@ -23,6 +25,8 @@ namespace OkapiKit.Editor
             propMass = serializedObject.FindProperty("_mass");
             propSize = serializedObject.FindProperty("_size");
             propStepAnimationCurve = serializedObject.FindProperty("stepAnimationCurve");
+            propIgnoreCollisionObjects = serializedObject.FindProperty("ignoreCollisionObjects");
+            propIgnoreCollisionTags = serializedObject.FindProperty("ignoreCollisionTags");
         }
 
         public override void OnInspectorGUI()
@@ -40,6 +44,8 @@ namespace OkapiKit.Editor
                     EditorGUILayout.PropertyField(propMass, new GUIContent("Mass", "What's the mass of this object? This is compared to the push strength of the object that's trying to push this one."));
                     EditorGUILayout.PropertyField(propSize, new GUIContent("Size", "What's the size of this object? This is used to test for overlaps during pushing."));
                 }
+                EditorGUILayout.PropertyField(propIgnoreCollisionObjects, new GUIContent("Ignore collision with objects", "These objects are ignored from the point of view of grid collision"));
+                EditorGUILayout.PropertyField(propIgnoreCollisionTags, new GUIContent("Ignore collision with tags", "Objects with these tags are ignored from the point of view of grid collision"));
                 // Separator
                 Rect separatorRect = GUILayoutUtility.GetLastRect();
                 separatorRect.yMin = separatorRect.yMax + 5;

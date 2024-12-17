@@ -5,7 +5,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Trigger/On Grid Event")]
     public class TriggerOnGridEvent : Trigger
     {
-        public enum GridEvent { HitWall, PushObject, HitObject, StepEnd, RotateEnd };
+        public enum GridEvent { HitWall, PushObject, HitObject, StepEnd, RotateEnd, WasHit, WasPushed };
 
         [SerializeField]
         private GridEvent eventType;
@@ -23,22 +23,29 @@ namespace OkapiKit
                     desc = "When this object hits a grid wall ";
                     break;
                 case GridEvent.PushObject:
-                    desc = "When this pushes another ";
+                    desc = "When this object pushes another ";
                     break;
                 case GridEvent.HitObject:
-                    desc = "When this hits an object ";
+                    desc = "When this objects hits another object ";
                     break;
                 case GridEvent.StepEnd:
-                    desc = "When this does a step ";
+                    desc = "When this object finishes a movement step ";
                     break;
                 case GridEvent.RotateEnd:
-                    desc = "When this finishes a rotation step ";
+                    desc = "When this object finishes a rotation step ";
+                    break;
+                case GridEvent.WasHit:
+                    desc = "When this object was hit by another object ";
+                    break;
+                case GridEvent.WasPushed:
+                    desc = "When this object was pushed by another object ";
                     break;
                 default:
                     break;
             }
 
-            if ((eventType == GridEvent.PushObject) || (eventType == GridEvent.HitObject))
+            if ((eventType == GridEvent.PushObject) || (eventType == GridEvent.HitObject) ||
+                (eventType == GridEvent.WasPushed) || (eventType == GridEvent.WasHit))
             {
                 if ((tags != null) && (tags.Length > 0))
                 {
@@ -60,7 +67,8 @@ namespace OkapiKit
         {
             base.CheckErrors();
 
-            if ((eventType == GridEvent.PushObject) || (eventType == GridEvent.HitObject))
+            if ((eventType == GridEvent.PushObject) || (eventType == GridEvent.HitObject) ||
+                (eventType == GridEvent.WasPushed) || (eventType == GridEvent.WasHit))
             {
                 if ((tags == null) || (tags.Length == 0))
                 {
@@ -92,6 +100,8 @@ namespace OkapiKit
             {
                 case GridEvent.PushObject:
                 case GridEvent.HitObject:
+                case GridEvent.WasHit:
+                case GridEvent.WasPushed:
                     if (otherObject == null) return;
                     if (!otherObject.HasHypertags(tags)) return;
                     break;
