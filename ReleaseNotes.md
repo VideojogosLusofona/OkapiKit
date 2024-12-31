@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.17.1
+
+- Fixed issues with builds (auto-added using clauses that stopped compilation in release mode)
+
 ## V1.17.0
 
 - DestroyObject action can now reference collider object
