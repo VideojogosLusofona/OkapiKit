@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.17.2
+
+- Added tests for lack of grid colliders on GridSystem
+
 ## V1.17.1
 
 - Fixed issues with builds (auto-added using clauses that stopped compilation in release mode)
