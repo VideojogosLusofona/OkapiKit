@@ -110,6 +110,14 @@ namespace OkapiKit
             {
                 _logs.Add(new LogEntry(LogEntry.Type.Error, "No grid in object", "Grid system need to be on an object with a Grid component!"));
             }
+
+            if ((gridcolliders != null) && (gridcolliders.Length > 0))
+            {
+                for (int i = 0; i < gridcolliders.Length; i++)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, $"Invalid grid collider at index {i}", "There's a collider entry, but the object is invalid!"));
+                }
+            }
         }
 
         protected void Start()
@@ -126,13 +134,14 @@ namespace OkapiKit
 
             if ((gridcolliders != null) && (gridcolliders.Length > 0))
             {
-                bounds = gridcolliders[0].bounds;
+                bool init = false;
 
-                for (int i = 1; i < gridcolliders.Length; i++)
+                for (int i = 0; i < gridcolliders.Length; i++)
                 {
                     if (gridcolliders[i] == null) continue;
-                    
-                    bounds.Encapsulate(gridcolliders[i].bounds);
+
+                    if (!init) { bounds = gridcolliders[i].bounds; init = true; }
+                    else bounds.Encapsulate(gridcolliders[i].bounds);
                 }
             }
 
@@ -144,28 +153,33 @@ namespace OkapiKit
             mapsByLayer.Clear();
 
             // Compute collision masks
-            foreach (var collider in gridcolliders)
+            if ((gridcolliders != null) && (gridcolliders.Length > 0))
             {
-                var map = GetMapByLayer(collider.gameObject.layer);
-                int idx;
-
-                Vector2 worldPos = new Vector2(bounds.min.x + grid.cellSize.x * 0.5f, bounds.min.y + grid.cellSize.y * 0.5f);
-
-                for (int y = 0; y < mapSizeY; y++)
+                foreach (var collider in gridcolliders)
                 {
-                    for (int x = 0; x < mapSizeX; x++)
-                    {
-                        if (collider.OverlapPoint(worldPos))
-                        {
-                            idx = y * stride + x / 8;
-                            map[idx] |= (byte)(1 << (x % 8));
+                    if (collider == null) continue;
 
-                            Debug.DrawLine(worldPos, worldPos + new Vector2(5.0f, 5.0f), Color.red, 5.0f);
+                    var map = GetMapByLayer(collider.gameObject.layer);
+                    int idx;
+
+                    Vector2 worldPos = new Vector2(bounds.min.x + grid.cellSize.x * 0.5f, bounds.min.y + grid.cellSize.y * 0.5f);
+
+                    for (int y = 0; y < mapSizeY; y++)
+                    {
+                        for (int x = 0; x < mapSizeX; x++)
+                        {
+                            if (collider.OverlapPoint(worldPos))
+                            {
+                                idx = y * stride + x / 8;
+                                map[idx] |= (byte)(1 << (x % 8));
+
+                                Debug.DrawLine(worldPos, worldPos + new Vector2(5.0f, 5.0f), Color.red, 5.0f);
+                            }
+                            worldPos.x += grid.cellSize.x;
                         }
-                        worldPos.x += grid.cellSize.x;
+                        worldPos.x = bounds.min.x + grid.cellSize.x * 0.5f;
+                        worldPos.y += grid.cellSize.y;
                     }
-                    worldPos.x = bounds.min.x + grid.cellSize.x * 0.5f;
-                    worldPos.y += grid.cellSize.y;
                 }
             }
 
