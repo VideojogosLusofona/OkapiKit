@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.17.3
+
+- Fixed issues with coyote time and max jump count on platformer controller
+
 ## V1.17.2
 
 - Added tests for lack of grid colliders on GridSystem

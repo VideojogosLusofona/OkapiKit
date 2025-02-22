@@ -6,6 +6,7 @@ using static OkapiKit.MovementRotate;
 using UnityEngine.UIElements;
 using static OkapiKit.MovementPlatformer;
 using System;
+using Codice.Client.Common.GameUI;
 
 namespace OkapiKit
 {
@@ -107,13 +108,14 @@ namespace OkapiKit
         private bool prevJumpKey = false;
         private float jumpBufferingTimer = 0.0f;
         private float jumpTime;
-        private float coyoteTimer;
-        private bool actualIsGrounded;
+        private float lastGroundTime;
+        private bool isTouchingGround;
         private float glideTimer = 0.0f;
         public bool isGliding { get; private set; }
 
         const float epsilonZero = 1e-3f;
 
+        private int jumpsRemaining => maxJumpCount - currentJumpCount;
         public override Vector2 GetSpeed() => speed;
         public override void SetSpeed(Vector2 speed) { this.speed = speed; }
 
@@ -370,6 +372,10 @@ namespace OkapiKit
             {
                 _logs.Add(new LogEntry(LogEntry.Type.Error, "Need to define air collider (collider used when character is not on the ground)!", "Objects can have different colliders while in the air and on the ground.\nFor example, it's common to have a box collider while in the air, while having a capsule collider on the ground (better to go up ramps, for example).\nIf we want this behaviour, we need to set the air and ground colliders."));
             }
+            if ((jumpBehaviour != JumpBehaviour.None) && (maxJumpCount == 0))
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Warning, "Max jump count is equal to zero!", "You have jumping enable, but max jump count is set to zero, which makes it impossible to jump - set it to at least 1!"));
+            }
             if (jumpInputType == InputType.Button)
             {
                 CheckButton("Jump button", jumpButton);
@@ -443,11 +449,12 @@ namespace OkapiKit
             UpdateGroundState();
 
             // Jump buffering
-            if ((jumpBehaviour != JumpBehaviour.None) && (jumpBufferingTimer > 0))
+            if ((jumpBehaviour != JumpBehaviour.None) && (jumpBufferingTimer > 0) && (maxJumpCount > 0))
             {
                 jumpBufferingTimer -= Time.fixedDeltaTime;
-                if (isGrounded)
+                if (isTouchingGround)
                 {
+                    currentJumpCount = maxJumpCount;
                     Jump();
                 }
             }
@@ -462,7 +469,7 @@ namespace OkapiKit
 
                     if ((isJumpPressed) && (!prevJumpKey))
                     {
-                        if ((isGrounded) && (currentJumpCount == maxJumpCount))
+                        if ((isGrounded) && (currentJumpCount == maxJumpCount) && (maxJumpCount > 0))
                         {
                             Jump();
                         }
@@ -483,11 +490,11 @@ namespace OkapiKit
                     {
                         jumpBufferingTimer = jumpBufferingTime;
 
-                        if ((isGrounded) && (currentJumpCount == maxJumpCount))
+                        if ((isGrounded) && (currentJumpCount == maxJumpCount) && (maxJumpCount > 0))
                         {
                             Jump();
                         }
-                        else if (currentJumpCount > 0)
+                        else if ((currentJumpCount > 0) && (currentJumpCount < maxJumpCount))
                         {
                             Jump();
                         }
@@ -546,7 +553,6 @@ namespace OkapiKit
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, speed.y);
             jumpBufferingTimer = 0.0f;
-            coyoteTimer = 0;
             jumpTime = Time.time;
             currentJumpCount--;
         }
@@ -594,11 +600,6 @@ namespace OkapiKit
         {
             if (!isMovementActive()) return;
 
-            if (coyoteTimer > 0)
-            {
-                coyoteTimer -= Time.deltaTime;
-            }
-
             float deltaX = 0.0f;
 
             UpdateGroundState();
@@ -626,7 +627,7 @@ namespace OkapiKit
             }
 
             // Need to check with actual is grounded or else coyote time will make the jump count reset immediately after flying off
-            if (actualIsGrounded)
+            if (isTouchingGround)
             {
                 rb.gravityScale = 0.0f;
                 currentJumpCount = maxJumpCount;
@@ -649,7 +650,7 @@ namespace OkapiKit
                 if (absoluteHorizontalVelocityParameter != "") animator.SetFloat(absoluteHorizontalVelocityParameter, Mathf.Abs(currentVelocity.x));
                 if (verticalVelocityParameter != "") animator.SetFloat(verticalVelocityParameter, currentVelocity.y);
                 if (absoluteVerticalVelocityParameter != "") animator.SetFloat(absoluteVerticalVelocityParameter, Mathf.Abs(currentVelocity.y));
-                if (isGroundedParameter != "") animator.SetBool(isGroundedParameter, actualIsGrounded);
+                if (isGroundedParameter != "") animator.SetBool(isGroundedParameter, isTouchingGround);
                 if (isGlidingParameter != "") animator.SetBool(isGlidingParameter, isGliding);
             }
 
@@ -699,31 +700,25 @@ namespace OkapiKit
                 int n = Physics2D.OverlapCollider(groundCheckCollider, contactFilter, results);
                 if (n > 0)
                 {
-                    actualIsGrounded = true;
+                    isTouchingGround = true;
                     isGrounded = true;
+                    lastGroundTime = Time.time;
                     return;
                 }
                 else
                 {
-                    actualIsGrounded = false;
-                    if (rb.linearVelocity.y > 0)
-                    {
-                        coyoteTimer = 0;
-                    }
+                    isTouchingGround = false;
                 }
             }
 
-            if (actualIsGrounded)
+            if ((coyoteTime > 0) && (!isTouchingGround))
             {
-                coyoteTimer = coyoteTime;
-            }
-
-            actualIsGrounded = false;
-
-            if (coyoteTimer > 0)
-            {
-                isGrounded = true;
-                return;
+                float elapsedTime = Time.time - lastGroundTime;
+                if (elapsedTime < coyoteTime)
+                {
+                    isGrounded = true;
+                    return;
+                }
             }
 
             isGrounded = false;
