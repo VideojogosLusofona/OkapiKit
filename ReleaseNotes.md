@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.18.0
+
+- Fixed issue with changing platformer movement properties with actions (action ChangeMovementProperties)
+- Added current velocity change option on action ChangeRigidBody.
+
 ## V1.17.3
 
 - Fixed issues with coyote time and max jump count on platformer controller

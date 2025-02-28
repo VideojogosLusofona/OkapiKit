@@ -44,7 +44,6 @@ Simple usage:
 
 Bugs:
 -----
-- Preserve gravity with velocity set (?)
 - Tooltips don't work with Naughty Attributes range
   - Maybe make my own to be able to have tooltips, or propose a fix
 
