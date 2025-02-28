@@ -116,15 +116,20 @@ namespace OkapiKit.Editor
                     {
                         EditorGUILayout.PropertyField(propPercentageValue, new GUIContent("Percentage Value [0 to 1]", "For how much to change the current velocity?\nIf zero, the velocity will be set to zero, if one the velocity will be unchanged, any other value will be multiplied by the current speed in both axis."));
                     }
-                    else if (operation == OkapiKit.ActionChangeMovement.VelocityOperation.AbsoluteModify)
+                    else if (operation == OkapiKit.ActionChangeMovement.VelocityOperation.AxisModify)
                     {
                         EditorGUILayout.PropertyField(propValue, new GUIContent("Value", "Value range to add/subtract to the velocity.\nX is the lower bound, Y is the upper bound."));
                         EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis", "Allows you to select the axis for the value.\nFor example, if you choose 'Absolute Right', with a value of [X=10, Y=10], the velocity will be increased in the absolute horizontal direction (right) by 10 units per second.\nRelative axis are relative to the current direction of the object.\nCurrent is relative to the current velocity (so the direction of the velocity will be the same, even if the velocity changes).\nInverse current is the same, but in the opposite direction."));
+                        EditorGUILayout.PropertyField(propClampSpeed, new GUIContent("Clamp Speed", "Activate this option to be able to select a minimum/maximum speed for the target."));
+                        if (propClampSpeed.boolValue)
+                        {
+                            EditorGUILayout.PropertyField(propClampTo, new GUIContent("Clamp To", "Minimum/Maximum speed of the target object."));
+                        }
                     }
-
-                    if ((operation == OkapiKit.ActionChangeMovement.VelocityOperation.AbsoluteModify) ||
-                        (operation == OkapiKit.ActionChangeMovement.VelocityOperation.AbsoluteModify))
+                    else if (operation == OkapiKit.ActionChangeMovement.VelocityOperation.AxisSet)
                     {
+                        EditorGUILayout.PropertyField(propValue, new GUIContent("Value", "Value range to set the velocity.\nX is the lower bound, Y is the upper bound."));
+                        EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis", "Allows you to select the axis for the value.\nFor example, if you choose 'Absolute Right', with a value of [X=10, Y=10], the velocity will be increased in the absolute horizontal direction (right) by 10 units per second.\nRelative axis are relative to the current direction of the object.\nCurrent is relative to the current velocity (so the direction of the velocity will be the same, even if the velocity changes).\nInverse current is the same, but in the opposite direction."));
                         EditorGUILayout.PropertyField(propClampSpeed, new GUIContent("Clamp Speed", "Activate this option to be able to select a minimum/maximum speed for the target."));
                         if (propClampSpeed.boolValue)
                         {

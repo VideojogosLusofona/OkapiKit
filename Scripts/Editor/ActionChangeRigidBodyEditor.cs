@@ -6,10 +6,17 @@ namespace OkapiKit.Editor
     [CustomEditor(typeof(ActionChangeRigidBody))]
     public class ActionChangeRigidBodyEditor : ActionEditor
     {
-        SerializedProperty propTarget;
-        SerializedProperty propChangeType;
-        SerializedProperty propBodyType;
-        SerializedProperty propValue;
+        SerializedProperty  propTarget;
+        SerializedProperty  propChangeType;
+        SerializedProperty  propBodyType;
+        SerializedProperty  propValue;
+        SerializedProperty  propTimeScaled;
+        SerializedProperty  propRandom;
+        SerializedProperty  propAngleMinMax;
+        SerializedProperty  propSpeedMinMax;
+        SerializedProperty  propAxis;
+        SerializedProperty  propClampSpeed;
+        SerializedProperty  propClampTo;
 
         protected override void OnEnable()
         {
@@ -19,6 +26,13 @@ namespace OkapiKit.Editor
             propChangeType = serializedObject.FindProperty("changeType");
             propBodyType = serializedObject.FindProperty("bodyType");
             propValue = serializedObject.FindProperty("value");
+            propTimeScaled = serializedObject.FindProperty("timeScaled");
+            propRandom = serializedObject.FindProperty("random");
+            propAngleMinMax = serializedObject.FindProperty("angleMinMax");
+            propSpeedMinMax = serializedObject.FindProperty("speedMinMax");
+            propAxis = serializedObject.FindProperty("axis");
+            propClampSpeed = serializedObject.FindProperty("clampSpeed");
+            propClampTo = serializedObject.FindProperty("clampTo");
         }
 
         public override void OnInspectorGUI()
@@ -48,6 +62,28 @@ namespace OkapiKit.Editor
                          (changeType == ActionChangeRigidBody.ChangeType.GravityScale))
                 {
                     EditorGUILayout.PropertyField(propValue, new GUIContent("Value", $"Value to set {changeType}."));
+                }
+                else if ((changeType == ActionChangeRigidBody.ChangeType.VelocityChange) ||
+                         (changeType == ActionChangeRigidBody.ChangeType.VelocitySet))
+                {
+                    if (changeType == ActionChangeRigidBody.ChangeType.VelocityChange)
+                        EditorGUILayout.PropertyField(propTimeScaled, new GUIContent("Time Scaled?", "Should the variation be account the ammount of time?\nThis is useful for adding/removing velocity on input."));
+                    
+                    EditorGUILayout.PropertyField(propRandom, new GUIContent("Random", "Activate this option to randomize the direction/speed."));
+                    EditorGUILayout.PropertyField(propAxis, new GUIContent("Axis", "Direction of the velocity"));
+
+                    if ((ActionChangeRigidBody.Axis)propAxis.enumValueIndex == ActionChangeRigidBody.Axis.Custom)
+                    {
+                        EditorGUILayout.PropertyField(propAngleMinMax, new GUIContent("Angle", "Setup minimum and maximum angle, in degrees."));
+                    }
+
+                    EditorGUILayout.PropertyField(propSpeedMinMax, new GUIContent("Speed", "Setup minimum and maximum speed, in units/sec."));
+
+                    EditorGUILayout.PropertyField(propClampSpeed, new GUIContent("Clamp Speed", "Activate this option to be able to select a minimum/maximum speed for the target."));
+                    if (propClampSpeed.boolValue)
+                    {
+                        EditorGUILayout.PropertyField(propClampTo, new GUIContent("Clamp To", "Minimum/Maximum speed of the target object."));
+                    }
                 }
 
                 if (EditorGUI.EndChangeCheck())

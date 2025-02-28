@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Change Movement")]
+    [AddComponentMenu("Okapi/Action/Change Movement Properties")]
     public class ActionChangeMovement : Action
     {
         public enum ChangeType
@@ -17,7 +14,7 @@ namespace OkapiKit
             GlideMaxTime = 4
         };
 
-        public enum VelocityOperation { Set = 0, PercentageModify = 1, AbsoluteModify = 2 };
+        public enum VelocityOperation { Set = 0, PercentageModify = 1, AxisModify = 2, AxisSet = 3 };
         public enum FloatPlatformerPropertyOperation { Set = 0, PercentageModify = 1 };
         public enum Axis { AbsoluteRight = 0, AbsoluteLeft = 1, AbsoluteUp = 2, AbsoluteDown = 3, RelativeRight = 4, RelativeLeft = 5, RelativeUp = 6, RelativeDown = 7, Current = 8, InverseCurrent = 9 };
 
@@ -33,35 +30,35 @@ namespace OkapiKit
         [SerializeField]
         private FloatPlatformerPropertyOperation floatPlatformerOperation = FloatPlatformerPropertyOperation.Set;
         [SerializeField]
-        private Vector2 percentageValue = new Vector2(1.0f, 1.0f);
+        private Vector2     percentageValue = new Vector2(1.0f, 1.0f);
         [SerializeField]
-        private Vector2 value = new Vector2(1.0f, 1.0f);
+        private Vector2     value = new Vector2(1.0f, 1.0f);
         [SerializeField]
-        private Axis axis;
+        private Axis        axis;
         [SerializeField]
-        private bool useRotation = false;
+        private bool        useRotation = false;
         [SerializeField]
-        private bool useRandom = false;
+        private bool        useRandom = false;
         [SerializeField]
-        private float startAngle = 0.0f;
+        private float       startAngle = 0.0f;
         [SerializeField]
-        private float endAngle = 360.0f;
+        private float       endAngle = 360.0f;
         [SerializeField]
-        private Vector2 speedRange = new Vector2(100, 100);
+        private Vector2     speedRange = new Vector2(100, 100);
         [SerializeField]
-        private Vector2 minVelocity = new Vector2(100, 100);
+        private Vector2     minVelocity = new Vector2(100, 100);
         [SerializeField]
-        private Vector2 maxVelocity = new Vector2(100, 100);
+        private Vector2     maxVelocity = new Vector2(100, 100);
         [SerializeField]
-        private bool clampSpeed;
+        private bool        clampSpeed;
         [SerializeField]
-        private Vector2 clampTo;
+        private Vector2     clampTo;
         [SerializeField]
-        private float fValue;
+        private float       fValue;
         [SerializeField]
-        private int iValue;
+        private int         iValue;
 
-        public override string GetActionTitle() { return "Change Movement"; }
+        public override string GetActionTitle() { return "Change Movement Properties"; }
 
         private (Movement, Rigidbody2D) GetTarget()
         {
@@ -137,15 +134,30 @@ namespace OkapiKit
                         desc += $"changes the current velocity of {targetName} by a percentage in the [{percentageValue.x * 100},{percentageValue.y * 100}] range";
                     }
                 }
-                else if (operation == VelocityOperation.AbsoluteModify)
+                else if ((operation == VelocityOperation.AxisModify) ||
+                         (operation == VelocityOperation.AxisSet))
                 {
-                    if (value.x == value.y)
+                    if (operation == VelocityOperation.AxisModify)
                     {
-                        desc += $"changes the current velocity of {targetName} by {value.x}";
+                        if (value.x == value.y)
+                        {
+                            desc += $"changes the current velocity of {targetName} by {value.x}";
+                        }
+                        else
+                        {
+                            desc += $"changes the current velocity of {targetName} by a value between {value.x} and {value.y}";
+                        }
                     }
-                    else
+                    else if (operation == VelocityOperation.AxisSet)
                     {
-                        desc += $"changes the current velocity of {targetName} by a value between {value.x} and {value.y}";
+                        if (value.x == value.y)
+                        {
+                            desc += $"sets the current velocity of {targetName} to {value.x}";
+                        }
+                        else
+                        {
+                            desc += $"sets the current velocity of {targetName} to a value between {value.x} and {value.y}";
+                        }
                     }
                     switch (axis)
                     {
@@ -185,12 +197,14 @@ namespace OkapiKit
                 }
                 if (clampSpeed)
                 {
-                    desc += $", and clamps the speed to be between [{clampTo.x},{clampTo.y}].";
+                    desc += $", and clamps the speed to be between [{clampTo.x},{clampTo.y}].\n";
                 }
                 else
                 {
-                    desc += ".";
+                    desc += ".\n";
                 }
+
+                desc += "Note that this changes the velocity parameters of the movement, not the current velocity.\nFor that, use the 'Change Rigid Body' action.";
             }
             else if ((changeType == ChangeType.GravityScale) || (changeType == ChangeType.JumpHoldTime) || (changeType == ChangeType.GlideMaxTime))
             {
@@ -344,7 +358,7 @@ namespace OkapiKit
 
                     velocity = velocity + velocity * r;
                 }
-                else if (operation == VelocityOperation.AbsoluteModify)
+                else if (operation == VelocityOperation.AxisModify)
                 {
                     if ((movement) && (movement.IsLinear()))
                     {
@@ -356,42 +370,99 @@ namespace OkapiKit
                     }
 
                     float r = Random.Range(value.x, value.y);
+                    Vector2 deltaVelocity = Vector2.zero;
 
                     switch (axis)
                     {
                         case Axis.AbsoluteRight:
-                            velocity = velocity + Vector2.right * r;
+                            deltaVelocity = Vector2.right * r;
                             break;
                         case Axis.AbsoluteLeft:
-                            velocity = velocity + Vector2.left * r;
+                            deltaVelocity = Vector2.left * r;
                             break;
                         case Axis.AbsoluteUp:
-                            velocity = velocity + Vector2.up * r;
+                            deltaVelocity = Vector2.up * r;
                             break;
                         case Axis.AbsoluteDown:
-                            velocity = velocity + Vector2.down * r;
+                            deltaVelocity = Vector2.down * r;
                             break;
                         case Axis.RelativeRight:
-                            velocity = velocity + new Vector2(transform.right.x * r, transform.right.y * r);
+                            deltaVelocity = new Vector2(transform.right.x * r, transform.right.y * r);
                             break;
                         case Axis.RelativeLeft:
-                            velocity = velocity - new Vector2(transform.right.x * r, transform.right.y * r);
+                            deltaVelocity = new Vector2(transform.right.x * r, transform.right.y * r);
                             break;
                         case Axis.RelativeUp:
-                            velocity = velocity + new Vector2(transform.up.x * r, transform.up.y * r);
+                            deltaVelocity = new Vector2(transform.up.x * r, transform.up.y * r);
                             break;
                         case Axis.RelativeDown:
-                            velocity = velocity - new Vector2(transform.up.x * r, transform.up.y * r);
+                            deltaVelocity = new Vector2(transform.up.x * r, transform.up.y * r);
                             break;
                         case Axis.Current:
-                            velocity = velocity + velocity.normalized * r;
+                            deltaVelocity = velocity.normalized * r;
                             break;
                         case Axis.InverseCurrent:
-                            velocity = velocity - velocity.normalized * r;
+                            deltaVelocity = - velocity.normalized * r;
                             break;
                         default:
                             break;
                     }
+
+                    velocity = velocity + deltaVelocity;
+                }
+                else if (operation == VelocityOperation.AxisSet)
+                {
+                    if ((movement) && (movement.IsLinear()))
+                    {
+                        velocity = movement.GetSpeed();
+                    }
+                    else if (rb)
+                    {
+                        velocity = rb.linearVelocity;
+                    }
+
+                    float r = Random.Range(value.x, value.y);
+                    Vector2 v1 = Vector2.right;
+
+                    switch (axis)
+                    {
+                        case Axis.AbsoluteRight:
+                            v1 = Vector2.right;
+                            break;
+                        case Axis.AbsoluteLeft:
+                            v1 = Vector2.left;
+                            break;
+                        case Axis.AbsoluteUp:
+                            v1 = Vector2.up;
+                            break;
+                        case Axis.AbsoluteDown:
+                            v1 = Vector2.down;
+                            break;
+                        case Axis.RelativeRight:
+                            v1 = transform.right;
+                            break;
+                        case Axis.RelativeLeft:
+                            v1 = -transform.right;
+                            break;
+                        case Axis.RelativeUp:
+                            v1 = transform.up;
+                            break;
+                        case Axis.RelativeDown:
+                            v1 = -transform.up;
+                            break;
+                        case Axis.Current:
+                            v1 = velocity.normalized;
+                            break;
+                        case Axis.InverseCurrent:
+                            v1 = -velocity.normalized;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Vector2 v2 = new Vector2(-v1.y, v1.x);
+
+                    velocity = v1 * r + v2 * Vector2.Dot(v2, velocity);
                 }
                 if (clampSpeed)
                 {
@@ -421,7 +492,7 @@ namespace OkapiKit
                 (movement, rb) = GetTarget();
                 if (movement == null) return;
                 MovementPlatformer platMovement = movement as MovementPlatformer;
-                if (platMovement != null) return;
+                if (platMovement == null) return;
 
                 if (floatPlatformerOperation == FloatPlatformerPropertyOperation.Set)
                 {
@@ -442,7 +513,7 @@ namespace OkapiKit
                 (movement, rb) = GetTarget();
                 if (movement == null) return;
                 MovementPlatformer platMovement = movement as MovementPlatformer;
-                if (platMovement != null) return;
+                if (platMovement == null) return;
 
                 platMovement.SetMaxJumpCount(iValue);
             }
@@ -454,7 +525,7 @@ namespace OkapiKit
                 (movement, rb) = GetTarget();
                 if (movement == null) return;
                 MovementPlatformer platMovement = movement as MovementPlatformer;
-                if (platMovement != null) return;
+                if (platMovement == null) return;
 
                 if (floatPlatformerOperation == FloatPlatformerPropertyOperation.Set)
                 {
@@ -475,7 +546,7 @@ namespace OkapiKit
                 (movement, rb) = GetTarget();
                 if (movement == null) return;
                 MovementPlatformer platMovement = movement as MovementPlatformer;
-                if (platMovement != null) return;
+                if (platMovement == null) return;
 
                 if (floatPlatformerOperation == FloatPlatformerPropertyOperation.Set)
                 {
