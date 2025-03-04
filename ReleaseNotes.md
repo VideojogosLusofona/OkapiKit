@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.18.1
+
+- Fixed issue with OkapiValue inspectors (lack of init variable)
+
 ## V1.18.0
 
 - Fixed issue with changing platformer movement properties with actions (action ChangeMovementProperties)
