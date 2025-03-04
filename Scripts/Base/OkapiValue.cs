@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace OkapiKit
@@ -9,6 +10,11 @@ namespace OkapiKit
     public struct OkapiValue
     {
         public enum Type { Float = 0, Integer = 1, VariableInstance = 2, Variable = 3 };
+
+#pragma warning disable CS0414
+        [SuppressMessage("Compiler", "CS0414", Justification = "Used via reflection in the Editor - don't remove even if it seems it's not used"), SerializeField]
+        private bool               init;
+#pragma warning restore CS0414
 
         [SerializeField] private Type               type;
         [SerializeField] private VariableInstance   variableInstance;
@@ -19,12 +25,14 @@ namespace OkapiKit
 
         public OkapiValue(float v) : this()
         {
+            this.init = true;
             this.type = Type.Float;
             this.floatValue = v;
         }
 
         public OkapiValue(int v) : this()
         {
+            this.init = true;
             this.type = Type.Integer;
             this.intValue = v;
         }
