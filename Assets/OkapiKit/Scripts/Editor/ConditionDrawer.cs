@@ -25,26 +25,26 @@ namespace OkapiKit.Editor
             EditorGUI.indentLevel = 0;
 
             // Check if we need both selectors
-            var propValueType = property.FindPropertyRelative("valueType");
-            var propNegate = property.FindPropertyRelative("negate");
-            var propValueHandler = property.FindPropertyRelative("valueHandler");
-            var propVariable = property.FindPropertyRelative("variable");
-            var propTag = property.FindPropertyRelative("tag");
-            var propTagRangeEnabled = property.FindPropertyRelative("tagCountRangeEnabled");
-            var propTagRange = property.FindPropertyRelative("tagCountRange");
-            var propTransform = property.FindPropertyRelative("sourceTransform");
-            var propRB = property.FindPropertyRelative("rigidBody");
-            var propAxis = property.FindPropertyRelative("axis");
-            var propProbe = property.FindPropertyRelative("probe");
-            var propMovementPlatformer = property.FindPropertyRelative("movementPlatformer");
+            var propValueType = property.FindPropertyRelative(nameof(Condition.valueType));
+            var propNegate = property.FindPropertyRelative(nameof(Condition.negate));
+            var propValueHandler = property.FindPropertyRelative(nameof(Condition.valueHandler));
+            var propVariable = property.FindPropertyRelative(nameof(Condition.variable));
+            var propTag = property.FindPropertyRelative(nameof(Condition.tag));
+            var propTagRangeEnabled = property.FindPropertyRelative(nameof(Condition.tagCountRangeEnabled));
+            var propTagRange = property.FindPropertyRelative(nameof(Condition.tagCountRange));
+            var propTransform = property.FindPropertyRelative(nameof(Condition.sourceTransform));
+            var propRB = property.FindPropertyRelative(nameof(Condition.rigidBody));
+            var propAxis = property.FindPropertyRelative(nameof(Condition.axis));
+            var propProbe = property.FindPropertyRelative(nameof(Condition.probe));
+            var propMovementPlatformer = property.FindPropertyRelative(nameof(Condition.movementPlatformer));
 
-            var propComparison = property.FindPropertyRelative("comparison");
-            var propValue = property.FindPropertyRelative("value");
-            var propComparisonValueHandler = property.FindPropertyRelative("comparisonValueHandler");
-            var propComparisonVariable = property.FindPropertyRelative("comparisonVariable");
-            var propPercentage = property.FindPropertyRelative("percentageCompare");
-            var propTile = property.FindPropertyRelative("tile");
-            var propTileSet = property.FindPropertyRelative("tileSet");
+            var propComparison = property.FindPropertyRelative(nameof(Condition.comparison));
+            var propValue = property.FindPropertyRelative(nameof(Condition.value));
+            var propComparisonValueHandler = property.FindPropertyRelative(nameof(Condition.comparisonValueHandler));
+            var propComparisonVariable = property.FindPropertyRelative(nameof(Condition.comparisonVariable));
+            var propPercentage = property.FindPropertyRelative(nameof(Condition.percentageCompare));
+            var propTile = property.FindPropertyRelative(nameof(Condition.tile));
+            var propTileSet = property.FindPropertyRelative(nameof(Condition.tileSet));
 
             float positionValue = position.x + 50;
 
@@ -102,7 +102,7 @@ namespace OkapiKit.Editor
                             }
                         }
                         else if ((propValueType.intValue >= (int)Condition.ValueType.WorldPositionX) &&
-                                 (propValueType.intValue <= (int)Condition.ValueType.RelativePositionY))
+                                 (propValueType.intValue <= (int)Condition.ValueType.LocalPositionY))
                         {
                             var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 2);
                             var transformRect = new Rect(positionValue, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);
@@ -308,13 +308,13 @@ namespace OkapiKit.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            var propValueHandler = property.FindPropertyRelative("valueHandler");
-            var propVariable = property.FindPropertyRelative("variable");
-            var systemVariable = property.FindPropertyRelative("valueType");
+            var propValueHandler = property.FindPropertyRelative(nameof(Condition.valueHandler));
+            var propVariable = property.FindPropertyRelative(nameof(Condition.variable));
+            var systemVariable = property.FindPropertyRelative(nameof(Condition.valueType));
             var baseHeight = base.GetPropertyHeight(property, label) + 2;
 
-            var propComparisonValueHandler = property.FindPropertyRelative("comparisonValueHandler");
-            var propComparisonVariable = property.FindPropertyRelative("comparisonVariable");
+            var propComparisonValueHandler = property.FindPropertyRelative(nameof(Condition.comparisonValueHandler));
+            var propComparisonVariable = property.FindPropertyRelative(nameof(Condition.comparisonVariable));
 
             float height = baseHeight;
 
@@ -341,8 +341,8 @@ namespace OkapiKit.Editor
                     }
                     else if (condType == Condition.ValueType.Distance)
                     {
-                        var tagVariable = property.FindPropertyRelative("tag");
-                        var transformVariable = property.FindPropertyRelative("sourceTransform");
+                        var tagVariable = property.FindPropertyRelative(nameof(Condition.tag));
+                        var transformVariable = property.FindPropertyRelative(nameof(Condition.sourceTransform));
 
                         if (tagVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 2;
                         else if (transformVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 2;
@@ -350,8 +350,8 @@ namespace OkapiKit.Editor
                     }
                     else if (condType == Condition.ValueType.Angle)
                     {
-                        var tagVariable = property.FindPropertyRelative("tag");
-                        var transformVariable = property.FindPropertyRelative("sourceTransform");
+                        var tagVariable = property.FindPropertyRelative(nameof(Condition.tag));
+                        var transformVariable = property.FindPropertyRelative(nameof(Condition.sourceTransform));
 
                         if (tagVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
                         else if (transformVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
@@ -360,8 +360,8 @@ namespace OkapiKit.Editor
                     else if ((condType == Condition.ValueType.Probe) ||
                              (condType == Condition.ValueType.ProbeDistance))
                     {
-                        var propTag = property.FindPropertyRelative("tag");
-                        var propProbe = property.FindPropertyRelative("probe");
+                        var propTag = property.FindPropertyRelative(nameof(Condition.tag));
+                        var propProbe = property.FindPropertyRelative(nameof(Condition.probe));
 
                         if (propTag.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 2;
                         else if (propProbe.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 2;
@@ -375,8 +375,8 @@ namespace OkapiKit.Editor
                     else if ((condType == Condition.ValueType.OnTile) ||
                              (condType == Condition.ValueType.OnTileSet))
                     {
-                        var tagVariable = property.FindPropertyRelative("tag");
-                        var transformVariable = property.FindPropertyRelative("sourceTransform");
+                        var tagVariable = property.FindPropertyRelative(nameof(Condition.tag));
+                        var transformVariable = property.FindPropertyRelative(nameof(Condition.sourceTransform));
 
                         if (tagVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
                         else if (transformVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
@@ -410,13 +410,13 @@ namespace OkapiKit.Editor
         internal static void OnSceneGUI(SerializedObject serializedObject, SerializedProperty conditionElement)
         {
             // Get type
-            var propValueType = conditionElement.FindPropertyRelative("valueType");
+            var propValueType = conditionElement.FindPropertyRelative(nameof(Condition.valueType));
             var type = (Condition.ValueType)propValueType.intValue;
 
             if (type == Condition.ValueType.TagCount)
             {
-                var propTagRangeEnabled = conditionElement.FindPropertyRelative("tagCountRangeEnabled");
-                var propTagRange = conditionElement.FindPropertyRelative("tagCountRange");
+                var propTagRangeEnabled = conditionElement.FindPropertyRelative(nameof(Condition.tagCountRangeEnabled));
+                var propTagRange = conditionElement.FindPropertyRelative(nameof(Condition.tagCountRange));
 
                 if (propTagRangeEnabled.boolValue)
                 {

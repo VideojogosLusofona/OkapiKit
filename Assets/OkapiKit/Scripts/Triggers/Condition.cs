@@ -13,7 +13,7 @@ namespace OkapiKit
         public enum ValueType
         {
             None = 0, TagCount = 1,
-            WorldPositionX = 2, WorldPositionY = 3, RelativePositionX = 4, RelativePositionY = 5,
+            WorldPositionX = 2, WorldPositionY = 3, LocalPositionX = 4, LocalPositionY = 5,
             VelocityX = 14, VelocityY = 15,
             AbsoluteVelocityX = 6, AbsoluteVelocityY = 7,
             Distance = 8, Angle = 9,
@@ -96,12 +96,12 @@ namespace OkapiKit
                 case ValueType.WorldPositionY:
                     if (sourceTransform) return $"{sourceTransform.name}.y";
                     return $"{gameObject.name}.y";
-                case ValueType.RelativePositionX:
+                case ValueType.LocalPositionX:
                     if (sourceTransform) return $"{sourceTransform.name}.rx";
-                    return $"{gameObject.name}.rx";
-                case ValueType.RelativePositionY:
+                    return $"{gameObject.name}.localX";
+                case ValueType.LocalPositionY:
                     if (sourceTransform) return $"{sourceTransform.name}.ry";
-                    return $"{gameObject.name}.ry";
+                    return $"{gameObject.name}.localY";
                 case ValueType.VelocityX:
                     if (rigidBody) return $"{rigidBody.name}.velocity.x";
                     return $"{gameObject.name}.velocity.x";
@@ -128,7 +128,7 @@ namespace OkapiKit
                     return $"ProbeIntersect([UNDEFINED])";
                 case ValueType.ProbeDistance:
                     if (probe != null) return $"ProbeIntersectionDistance({probe.name}, {probe.GetTags()})";
-                    else if (tag != null) return $"ProbeIntersect(Tag({tag.name}))";
+                    else if (tag != null) return $"ProbeIntersectDistance(Tag({tag.name}))";
                     return $"ProbeIntersectionDistance([UNDEFINED])";
                 case ValueType.IsGrounded:
                     if (movementPlatformer != null) return $"IsGrounded({movementPlatformer.name})";
@@ -301,13 +301,13 @@ namespace OkapiKit
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.RelativePositionX:
+                        case Condition.ValueType.LocalPositionX:
                             t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
                             currentValue = t.localPosition.x;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.RelativePositionY:
+                        case Condition.ValueType.LocalPositionY:
                             t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
                             currentValue = t.localPosition.y;
                             minValue = 0;

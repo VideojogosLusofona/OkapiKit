@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.18.2
+
+- Renamed "relative position" on conditions to "local position"
+- Fixed issues with builds not working
+
 ## V1.18.1
 
 - Fixed issue with OkapiValue inspectors (lack of init variable)
