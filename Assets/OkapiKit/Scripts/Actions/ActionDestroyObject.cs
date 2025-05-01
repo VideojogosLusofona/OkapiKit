@@ -11,7 +11,7 @@ namespace OkapiKit
         public enum Target { Self = 0, Parent = 1, Topmost = 2, Object = 3, Tag = 4, Collider = 5 };
 
         [SerializeField]
-        private Target target = Target.Object;
+        private Target target = Target.Self;
 
         [SerializeField, ShowIf("needsTarget")]
         private GameObject targetObject;

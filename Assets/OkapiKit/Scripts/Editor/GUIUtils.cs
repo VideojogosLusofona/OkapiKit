@@ -167,20 +167,19 @@ namespace OkapiKit.Editor
         {
             if (styles == null) styles = new Dictionary<string, GUIStyle>();
 
-            GUIStyle explanationStyle;
-            styles.TryGetValue("Log", out explanationStyle);
-            if (explanationStyle == null)
+            GUIStyle logStyle;
+            styles.TryGetValue("Log", out logStyle);
+            if (logStyle == null)
             {
-                explanationStyle = new GUIStyle(GUI.skin.label);
-                explanationStyle.fontSize = 12;
-                explanationStyle.fixedHeight = 12;
-                explanationStyle.alignment = TextAnchor.UpperLeft;
-                explanationStyle.normal.textColor = ColorFromHex("#000000");
-                explanationStyle.clipping = TextClipping.Overflow;
-                explanationStyle.wordWrap = false;
-                styles.Add("Log", explanationStyle);
+                logStyle = new GUIStyle(GUI.skin.label);
+                logStyle.fontSize = 12;
+                logStyle.alignment = TextAnchor.UpperLeft;
+                logStyle.normal.textColor = ColorFromHex("#000000");
+                logStyle.clipping = TextClipping.Overflow;
+                logStyle.wordWrap = true;
+                styles.Add("Log", logStyle);
             }
-            return explanationStyle;
+            return logStyle;
         }
 
         static public GUIStyle GetTriggerExplanationStyle()
@@ -193,11 +192,10 @@ namespace OkapiKit.Editor
             {
                 explanationStyle = new GUIStyle(GUI.skin.label);
                 explanationStyle.fontSize = 10;
-                explanationStyle.fixedHeight = 10;
                 explanationStyle.alignment = TextAnchor.UpperLeft;
                 explanationStyle.normal.textColor = ColorFromHex("#0e1a51");
                 explanationStyle.clipping = TextClipping.Overflow;
-                explanationStyle.wordWrap = false;
+                explanationStyle.wordWrap = true;
                 styles.Add("TriggerExplanation", explanationStyle);
             }
             return explanationStyle;
@@ -213,11 +211,10 @@ namespace OkapiKit.Editor
             {
                 explanationStyle = new GUIStyle(GUI.skin.label);
                 explanationStyle.fontSize = 10;
-                explanationStyle.fixedHeight = 10;
                 explanationStyle.alignment = TextAnchor.UpperLeft;
                 explanationStyle.normal.textColor = ColorFromHex("#A0A0A0");
                 explanationStyle.clipping = TextClipping.Overflow;
-                explanationStyle.wordWrap = false;
+                explanationStyle.wordWrap = true;
                 styles.Add("TriggerActionExplanation", explanationStyle);
             }
             return explanationStyle;
