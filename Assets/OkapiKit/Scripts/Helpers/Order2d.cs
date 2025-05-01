@@ -9,16 +9,28 @@ namespace OkapiKit
         private float       offsetZ = 0.0f;
 
         SpriteRenderer  spriteRenderer;
-        OkapiConfig     okapiConfig;
 
         public override string GetRawDescription(string ident, GameObject refObject)
         {
-            return "";
+            string desc = "Sorts the objects using the Y coordinate.\n";
+            desc += "This is useful for th games that are midway between side-view and top-down.\n";
+            desc += "Most is configured on the Okapi Config object, because it has to match between objects.\n";
+            if ((OkapiConfig.orderMode == OrderMode.Z) && (offsetZ != 0.0f))
+            {
+                if (offsetZ > 0.0f) desc += $"The object will be pushed away from the camera {offsetZ} units.";
+                else desc += $"The object will be pushed towards the camera {offsetZ} units.";
+            }
+            return desc;
         }
 
         protected override string Internal_UpdateExplanation()
         {
-            return "";
+            _explanation = "";
+            if (description != "") _explanation += description + "\n----------------\n";
+
+            _explanation += GetRawDescription("", gameObject);
+
+            return _explanation;
         }
 
         protected override void Awake()
@@ -26,20 +38,19 @@ namespace OkapiKit
             base.Awake();
 
             spriteRenderer = GetComponent<SpriteRenderer>();
-            okapiConfig = OkapiConfig.instance;
         }
 
         void LateUpdate()
         {
-            if (okapiConfig.orderMode == OrderMode.Z)
+            if (OkapiConfig.orderMode == OrderMode.Z)
             {
                 var pos = transform.position;
-                pos.z = Mathf.Clamp(okapiConfig.orderScaleY * pos.y + offsetZ, okapiConfig.orderMinZ, okapiConfig.orderMaxZ);
+                pos.z = Mathf.Clamp(OkapiConfig.orderScaleY * pos.y + offsetZ, OkapiConfig.orderMinZ, OkapiConfig.orderMaxZ);
                 transform.position = pos;
             }
-            else if ((okapiConfig.orderMode == OrderMode.Order) && (spriteRenderer))
+            else if ((OkapiConfig.orderMode == OrderMode.Order) && (spriteRenderer))
             {
-                spriteRenderer.sortingOrder = (int)Mathf.Clamp(okapiConfig.orderScaleY * transform.position.y, okapiConfig.orderMin, okapiConfig.orderMax);
+                spriteRenderer.sortingOrder = (int)Mathf.Clamp(OkapiConfig.orderScaleY * transform.position.y, OkapiConfig.orderMin, OkapiConfig.orderMax);
             }
         }
     }

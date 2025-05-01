@@ -23,17 +23,17 @@ namespace OkapiKit
         [SerializeField]
         private bool        displayHypertags = false;
         [SerializeField, Header("Sorting")]
-        public OrderMode    orderMode = OrderMode.Z;
+        private OrderMode   _orderMode = OrderMode.Z;
         [SerializeField]
-        public float        orderScaleY = 0.1f;
+        private float       _orderScaleY = 0.1f;
         [SerializeField]
-        public int          orderMin = -1000;
+        private int         _orderMin = -1000;
         [SerializeField]
-        public int          orderMax = 1000;
+        private int         _orderMax = 1000;
         [SerializeField]
-        public  float       orderMinZ = -5.0f;
+        private float       _orderMinZ = -5.0f;
         [SerializeField]
-        public float        orderMaxZ = 5.0f;
+        private float       _orderMaxZ = 5.0f;
 
         protected OkapiElement  pingComponent;
         protected DateTime      pingTime;
@@ -99,6 +99,13 @@ namespace OkapiKit
 
         public static bool showTags => (instance) ? (instance.displayHypertags) : (false);
         public static bool showConditions => (instance) ? (instance.displayConditions) : (false);
+
+        public static OrderMode orderMode => instance?._orderMode ?? OrderMode.Z;
+        public static float orderScaleY => instance?._orderScaleY ?? 0.0001f;
+        public static int orderMin => instance?._orderMin ?? -1000;
+        public static int orderMax => instance?._orderMax ?? 1000;
+        public static float orderMinZ => instance?._orderMinZ ?? -5.0f;
+        public static float orderMaxZ => instance?._orderMaxZ ?? 5.0f;
 
         static OkapiConfig _instance = null;
 

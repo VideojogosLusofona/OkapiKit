@@ -57,22 +57,25 @@ namespace OkapiKit.Editor
 
             GUIStyle styleTitle = GetTitleSyle();
             GUIStyle explanationStyle = GetExplanationStyle();
+            explanationStyle.wordWrap = true;
 
             (var backgroundColor, var textColor, var separatorColor) = GetColors();
 
             // Compute explanation text height
-            string explanation = GetExplanation();
-            int explanationLines = explanation.Count((c) => c == '\n') + 1;
-            int explanationTextHeight = explanationLines * (explanationStyle.fontSize + 2) + 6;
-
-            // Background and title
             float inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
+            string explanation = GetExplanation();
+            // Background and title
             titleRect = EditorGUILayout.BeginVertical("box");
             Rect rect = new Rect(titleRect.x, titleRect.y, inspectorWidth - titleRect.x, styleTitle.fontSize + 14);
+            float textAreaWidth = Mathf.Max(0, inspectorWidth - 20 - titleRect.x - 4);
+            float explanationTextHeight = 0.0f;
             Rect fullRect = rect;
-            if (explanation != "")
+            if (!string.IsNullOrEmpty(explanation))
             {
-                fullRect.height = rect.height + 6 + explanationTextHeight;
+                var content = new GUIContent(explanation);
+                Rect explanationRect = GUILayoutUtility.GetRect(content, explanationStyle, GUILayout.Width(textAreaWidth));
+                explanationTextHeight = explanationRect.height;
+                fullRect.height = rect.height + 6 + 4 + explanationTextHeight;
             }
             Color barColor = backgroundColor;
             if (OkapiConfig.IsPinged(okapiElement))
@@ -88,14 +91,15 @@ namespace OkapiKit.Editor
             EditorGUILayout.EndVertical();
             EditorGUILayout.Space(fullRect.height);
 
-            if (explanation != "")
+            if (!string.IsNullOrEmpty(explanation))
             {
                 // Separator
                 Rect separatorRect = new Rect(titleRect.x + 4, titleRect.y + rect.height, inspectorWidth - 20 - 8, 4);
                 EditorGUI.DrawRect(separatorRect, separatorColor);
 
                 // Explanation
-                EditorGUI.LabelField(new Rect(titleRect.x + 10, separatorRect.y + separatorRect.height + 4, inspectorWidth - 20 - titleRect.x - 4, explanationTextHeight), explanation, explanationStyle);
+                Rect explanationRect = new Rect(titleRect.x + 10, separatorRect.y + separatorRect.height + 4, textAreaWidth, explanationTextHeight);
+                EditorGUI.LabelField(explanationRect, explanation, explanationStyle);
             }
 
             bool toggle = false;
