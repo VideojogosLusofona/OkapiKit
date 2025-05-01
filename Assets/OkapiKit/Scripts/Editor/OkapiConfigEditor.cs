@@ -20,6 +20,12 @@ namespace OkapiKit.Editor
             AddProp("maxPingTime");
             AddProp("displayHypertags");
             AddProp("displayConditions");
+            AddProp("orderMode");
+            AddProp("orderScaleY");
+            AddProp("orderMin");
+            AddProp("orderMax");
+            AddProp("orderMinZ");
+            AddProp("orderMaxZ");
         }
 
         void AddProp(string name)
@@ -53,6 +59,22 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(props["maxPingTime"], new GUIContent("Max. Ping Time", "When pinging an action, how long does it stays lit up."));
                 EditorGUILayout.PropertyField(props["displayHypertags"], new GUIContent("Display hypertags in scene view?", "Should the hypertags be visible in the scene view?"));
                 EditorGUILayout.PropertyField(props["displayConditions"], new GUIContent("Display conditions in scene view?", "Some conditions can be visualized in the scene view, should they?"));
+                EditorGUILayout.PropertyField(props["displayConditions"], new GUIContent("Display conditions in scene view?", "Some conditions can be visualized in the scene view, should they?"));
+
+                EditorGUILayout.PropertyField(props["orderMode"], new GUIContent("Order mode", "Should the order in layer or the Z position changed when ordering by Y?"));
+
+                if (props["orderMode"].enumValueIndex == (int)OrderMode.Order)
+                {
+                    EditorGUILayout.PropertyField(props["orderScaleY"], new GUIContent("Y Scale", "Y position will be scaled by this factor to figure out the order in layer"));
+                    EditorGUILayout.PropertyField(props["orderMin"], new GUIContent("Min. order in layer", "Minimum order in layer"));
+                    EditorGUILayout.PropertyField(props["orderMax"], new GUIContent("Max. order in layer", "Maximum order in layer"));
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField(props["orderScaleY"], new GUIContent("Y Scale", "Y position will be scaled by this factor to figure out the Z position"));
+                    EditorGUILayout.PropertyField(props["orderMinZ"], new GUIContent("Min Z", "Minimum z value"));
+                    EditorGUILayout.PropertyField(props["orderMaxZ"], new GUIContent("Max Z", "Maximum z value"));
+                }
 
                 if (EditorGUI.EndChangeCheck())
                 {

@@ -51,6 +51,7 @@ namespace OkapiKit.Editor
             var okapiScriptableObject = target as OkapiScriptableObject;
             if ((okapiElement == null) && (okapiScriptableObject == null))
             {
+                Debug.LogWarning($"OkapiBaseEditor used an object not derived froM OkapiElement or OkapiScriptableObject ({target.GetType()})!");
                 return false;
             }
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 using UnityEngine;
+using static OkapiKit.Order2d;
 
 namespace OkapiKit
 {
@@ -16,11 +17,23 @@ namespace OkapiKit
         protected List<LogEntry> _logs = new List<LogEntry>();
 
         [SerializeField]
-        private float maxPingTime = 4.0f;
+        private float       maxPingTime = 4.0f;
         [SerializeField, Header("Scene View")]
-        private bool displayConditions = true;
+        private bool        displayConditions = true;
         [SerializeField]
-        private bool displayHypertags = false;
+        private bool        displayHypertags = false;
+        [SerializeField, Header("Sorting")]
+        public OrderMode    orderMode = OrderMode.Z;
+        [SerializeField]
+        public float        orderScaleY = 0.1f;
+        [SerializeField]
+        public int          orderMin = -1000;
+        [SerializeField]
+        public int          orderMax = 1000;
+        [SerializeField]
+        public  float       orderMinZ = -5.0f;
+        [SerializeField]
+        public float        orderMaxZ = 5.0f;
 
         protected OkapiElement  pingComponent;
         protected DateTime      pingTime;
@@ -89,7 +102,7 @@ namespace OkapiKit
 
         static OkapiConfig _instance = null;
 
-        static OkapiConfig instance { 
+        public static OkapiConfig instance { 
             get {
                 if (_instance) return _instance;
 
