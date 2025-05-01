@@ -171,7 +171,7 @@ namespace OkapiKit.Editor
             var logs = (okapiElement) ? (okapiElement.logs) : (okapiScriptableElement.logs);
             if (logs.Count > 0)
             {
-                var rect = EditorGUILayout.BeginVertical("box");
+                var rect = EditorGUILayout.BeginVertical("");
                 
                 float       inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
                 GUIStyle    logStyle = GUIUtils.GetLogStyle();
@@ -206,11 +206,14 @@ namespace OkapiKit.Editor
                     if (log.tooltip != "")
                         EditorGUI.LabelField(logErrorRect, new GUIContent("", log.tooltip));
 
+                    logErrorRect.y += 2;
                     logErrorRect.x += 10;
-                    logErrorRect.width += 10;
+                    logErrorRect.width -= 10;
 
-                    EditorGUI.LabelField(logRect, log.text, logStyle);
+                    EditorGUI.LabelField(logErrorRect, log.text, logStyle);
                     EditorGUILayout.Space(height);
+
+                    rect.y += height;
                 }
 
                 EditorGUILayout.EndVertical();

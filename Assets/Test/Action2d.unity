@@ -246,8 +246,9 @@ GameObject:
   - component: {fileID: 247460547}
   - component: {fileID: 247460546}
   - component: {fileID: 247460545}
+  - component: {fileID: 247460552}
   m_Layer: 0
-  m_Name: Item
+  m_Name: Item_Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,13 +291,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   _explanation: "When a collision with a trigger with tags [TagPlayer] starts:\n         
-    destroys this object\n"
+    adds item Sword to inventory on the colliding object.\n          destroys this
+    object\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
   hasPreconditions: 0
   preConditions: []
   actions:
+  - delay: 0
+    action: {fileID: 247460552}
   - delay: 0
     action: {fileID: 247460545}
   isTrigger: 1
@@ -460,6 +464,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &247460552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247460544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe4bb4a4755a7340948b8380d4d055c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Adds item Sword to inventory on the colliding object.
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  item: {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
+  quantity: 1
+  inventory:
+    type: 3
+    tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
+    obj: {fileID: 0}
 --- !u!1 &373756858
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +506,9 @@ GameObject:
   - component: {fileID: 373756859}
   - component: {fileID: 373756865}
   - component: {fileID: 373756866}
+  - component: {fileID: 373756869}
+  - component: {fileID: 373756868}
+  - component: {fileID: 373756867}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -744,6 +777,109 @@ MonoBehaviour:
   description: 
   limited: 0
   maxSlots: 9
+--- !u!114 &373756867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373756858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302ff7b812c0d7846bbbf5b0db22ec81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Sets Player''s sprite to [colored_outline_28]'
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: {fileID: 373756860}
+  changeType: 0
+  sprite: {fileID: -1158547798, guid: af35de7345491b1469fd6769999c4ffe, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  boolState: 0
+--- !u!114 &373756868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373756858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302ff7b812c0d7846bbbf5b0db22ec81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Sets Player''s sprite to [colored_outline_30]'
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: {fileID: 373756860}
+  changeType: 0
+  sprite: {fileID: 322826389, guid: af35de7345491b1469fd6769999c4ffe, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  boolState: 0
+--- !u!114 &373756869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373756858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When (HasItem( on this object, Sword):\n          sets Player's
+    sprite to [colored_outline_28]\nelse\n          sets Player's sprite to [colored_outline_30]\n\nThis
+    trigger will execute only when the conditions change and they are all true."
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 373756867}
+  continuous: 0
+  conditions:
+  - negate: 0
+    valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 18
+    tag: {fileID: 0}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
+    comparison: 4
+    value: 1
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
+    percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 2
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+    item: {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
+  elseActions:
+  - delay: 0
+    action: {fileID: 373756868}
 --- !u!1 &548997013
 GameObject:
   m_ObjectHideFlags: 0

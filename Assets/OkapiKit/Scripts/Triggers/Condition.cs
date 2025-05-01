@@ -1,8 +1,7 @@
-using System.Collections;
+using Codice.CM.Common;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace OkapiKit
 {
@@ -20,6 +19,7 @@ namespace OkapiKit
             Probe = 10, ProbeDistance = 11,
             IsGrounded = 12, IsGliding = 13,
             OnTile = 16, OnTileSet = 17,
+            HasItem = 18, ItemCount = 19,
         };
         [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5 };
         [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
@@ -45,6 +45,8 @@ namespace OkapiKit
         public bool                 percentageCompare;
         public TileBase             tile;
         public TileSet              tileSet;
+        public TargetInventory      inventory;
+        public Item                 item;
         
         private GridObject          gridObject;
 
@@ -59,6 +61,7 @@ namespace OkapiKit
             if (valueType == ValueType.IsGliding) return DataType.Boolean;
             if (valueType == ValueType.OnTile) return DataType.Boolean;
             if (valueType == ValueType.OnTileSet) return DataType.Boolean;
+            if (valueType == ValueType.HasItem) return DataType.Boolean;
             else return DataType.Number;
         }
 
@@ -73,7 +76,7 @@ namespace OkapiKit
             return null;
         }
 
-        public string GetVariableName(GameObject gameObject)
+        public string GetDataName(GameObject gameObject)
         {
             if (variable) return variable.name;
             if (valueHandler) return valueHandler.name;
@@ -151,6 +154,10 @@ namespace OkapiKit
                         else if (valueType == ValueType.OnTileSet) return $"{targetName} is on top of {tileName})";
                     }
                     break;
+                case ValueType.HasItem:
+                    return $"HasItem({inventory.GetRawDescription("", gameObject)}, {item?.displayName ?? "UNDEFINED"})";
+                case ValueType.ItemCount:
+                    return $"ItemCount({inventory.GetRawDescription("", gameObject)}, {item?.displayName ?? "UNDEFINED"})";
             }
 
             return "[Unknown]";
@@ -168,7 +175,7 @@ namespace OkapiKit
         {
             string desc = "";
             if (negate) desc += "not ";
-            desc += $"({GetVariableName(gameObject)}";
+            desc += $"({GetDataName(gameObject)}";
             if (GetDataType() == DataType.Number)
             {
                 switch (comparison)
@@ -247,6 +254,12 @@ namespace OkapiKit
                             {
                                 b = gridObject.IsOnTile(targetTransform.position, tileSet);
                             }
+                        }
+                        break;
+                    case Condition.ValueType.HasItem:
+                        {
+                            var inv = inventory.GetTarget(gameObject);
+                            b = inv?.HasItem(item) ?? false;
                         }
                         break;
                     default:
@@ -413,6 +426,14 @@ namespace OkapiKit
                                 currentValue = probe.GetIntersectionDistance();
                                 minValue = probe.GetMinDistance();
                                 maxValue = probe.GetMaxDistance();
+                            }
+                            break;
+                        case Condition.ValueType.ItemCount:
+                            {
+                                var inv = inventory.GetTarget(gameObject);
+                                currentValue = inv?.GetItemCount(item) ?? 0;
+                                minValue = 0;
+                                minValue = int.MaxValue;
                             }
                             break;
                         default:
@@ -600,6 +621,16 @@ namespace OkapiKit
                     {
                         errors.Add(new LogEntry(LogEntry.Type.Error, "No Grid Object object present!", "Only objects with a Grid Object can use the OnTileSet condition."));
                     }
+                }
+            }
+            else if ((valueType == ValueType.HasItem) ||
+                     (valueType == ValueType.ItemCount))
+            {
+                inventory.CheckErrors(errors, "inventory", go);
+
+                if (item == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Need to define an item to check!", "Need to define an item to check!"));
                 }
             }
         }

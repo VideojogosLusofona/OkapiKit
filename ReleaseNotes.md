@@ -5,6 +5,8 @@
 - Text now wraps correctly in explanations
 - Added Order2d helper - This provides users with a way to sort objects by vertical position, which is helpful on games midway between side-scroller and top-down.
 - Added Item scriptable object and Inventory system, with respective editors
+- Added AddItem and RemoveItem actions
+- Added HasItem and ItemCount conditions
 
 ## V1.18.2
 
