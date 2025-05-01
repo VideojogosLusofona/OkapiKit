@@ -25,7 +25,7 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
-                if (OkapiConfig.instance.orderMode == OrderMode.Z)
+                if (OkapiConfig.orderMode == OrderMode.Z)
                 {
                     EditorGUILayout.PropertyField(propOffsetZ, new GUIContent("Z Offset", "Offset of the ordering in Z - this is added to the z coord of this object when ordering"));
                 }

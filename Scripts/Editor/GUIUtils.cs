@@ -154,11 +154,10 @@ namespace OkapiKit.Editor
             {
                 explanationStyle = new GUIStyle(GUI.skin.label);
                 explanationStyle.fontSize = 10;
-                explanationStyle.fixedHeight = 10;
                 explanationStyle.alignment = TextAnchor.UpperLeft;
                 explanationStyle.normal.textColor = ColorFromHex("#0e1a51");
                 explanationStyle.clipping = TextClipping.Overflow;
-                explanationStyle.wordWrap = false;
+                explanationStyle.wordWrap = true;
                 styles.Add("ActionExplanation", explanationStyle);
             }
             return explanationStyle;
