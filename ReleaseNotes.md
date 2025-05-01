@@ -8,6 +8,7 @@
 - Added AddItem and RemoveItem actions
 - Added HasItem and ItemCount conditions
 - Added ItemDisplay UI element
+- Added equipment system
 - Fixed several UI bugs
 
 ## V1.18.2

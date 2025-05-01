@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 480810439929990867}
   - component: {fileID: 9184529794262144026}
   - component: {fileID: 7006846546982316711}
+  - component: {fileID: 4475409492578370034}
+  - component: {fileID: 6254663799545402259}
   m_Layer: 5
   m_Name: ItemDisplay
   m_TagString: Untagged
@@ -97,6 +99,70 @@ MonoBehaviour:
   slot: 0
   imageRef: {fileID: 3427461052735905658}
   quantityRef: {fileID: 4700587125259129973}
+--- !u!114 &4475409492578370034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387079206728779127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac24d8e98e97620458dc0c6fbe26a958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When key Alpha1 is pressed:\n          equips item\n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 6254663799545402259}
+  inputType: 1
+  buttonName: 
+  key: 49
+  axis: 
+  deadArea: {x: -0.2, y: 0.2}
+  continuous: 0
+  negate: 0
+  useCooldown: 0
+  cooldown: 1
+  elseActions: []
+--- !u!114 &6254663799545402259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387079206728779127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3747d4c07f9ae0f48a7a6c89eaec4858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Equips item
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  equipment:
+    type: 0
+    tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
+    obj: {fileID: 0}
+  itemSource: 2
+  item: {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
+  inventory:
+    type: 0
+    tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
+    obj: {fileID: 0}
+  inventorySlot: 0
+  unequipIfEquipped: 1
 --- !u!1 &4965562815383536827
 GameObject:
   m_ObjectHideFlags: 0

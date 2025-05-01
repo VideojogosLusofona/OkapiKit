@@ -17,6 +17,7 @@ namespace OkapiKit
         public bool         isStackable = false;
         [ShowIf(nameof(isStackable))]
         public int          maxStack = 1;
+        public Hypertag[]   inventorySlots;
 
         public override string GetRawDescription(string ident, ScriptableObject refObject)
         {
@@ -26,6 +27,38 @@ namespace OkapiKit
         protected override string Internal_UpdateExplanation()
         {
             return "Item";
+        }
+
+        public Hypertag GetEquipAutoSlot(Equipment equipManager, bool prioritizeSame)
+        {
+            float       minTime = float.MaxValue;
+            Hypertag    minSlot = null;
+
+            if (prioritizeSame)
+            {
+                foreach (var slot in inventorySlots)
+                {
+                    if (slot == null) continue;
+                    if (!equipManager.HasSlot(slot)) continue;
+
+                    if (equipManager.GetItem(slot) == this) return slot;
+                }
+            }
+
+            foreach (var slot in inventorySlots)
+            {
+                if (slot == null) continue;
+                if (!equipManager.HasSlot(slot)) continue;
+
+                float lastChange = equipManager.GetLastChange(slot);
+                if (lastChange < minTime)
+                {
+                    minTime = lastChange;
+                    minSlot = slot;
+                }
+            }
+
+            return minSlot;
         }
 
         internal bool IsA(Item itemType)

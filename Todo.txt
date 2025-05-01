@@ -16,7 +16,7 @@ Features:
 - Add target to ActionSetParent (need rename of variables)
 - Spawner with boxes should have options for direction
 - Spawner should have random direction possibility
-- Path shows direction (debug)
+- Move Path from Unity Common to OkapiKit
 - Bool and string variables
 - Comment Code
 - Documentation
@@ -64,7 +64,6 @@ Ideas Okapi V2.0:
 - All objects that are "Okapi" objects have a "OkapiObject" component, with a scriptable object that belongs to them and has all the Okapi stuff in it
 - Add node-based programming
 - Packages that support types of system/games:
-  - Inventory
   - Dialogues
   - AI
   - Visual Novel

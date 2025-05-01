@@ -23,3 +23,5 @@ MonoBehaviour:
   displayTextColor: {r: 1, g: 1, b: 1, a: 1}
   isStackable: 0
   maxStack: 1
+  inventorySlots:
+  - {fileID: 11400000, guid: a9d3c91dd4b4dd04bac9d4a684ddcd3a, type: 2}
