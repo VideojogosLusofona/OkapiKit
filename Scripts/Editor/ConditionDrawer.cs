@@ -67,9 +67,9 @@ namespace OkapiKit.Editor
                     if (propValueType.intValue == 0)
                     {
                         // Calculate rects
-                        var systemRect = new Rect(positionValue, position.y + position.height / 3, 150 + extra_width_variable, position.height / 3);
+                        var systemRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 3);
                         var valueHandlerRect = new Rect(positionValue, position.y + 2 * position.height / 3, 150 + extra_width_variable, position.height / 3);
-                        var variableRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 3);
+                        var variableRect = new Rect(positionValue, position.y + position.height / 3, 150 + extra_width_variable, position.height / 3);
 
                         // Draw fields - pass GUIContent.none to each so they are drawn without labels
                         EditorGUI.PropertyField(systemRect, propValueType, new GUIContent("", "Function"));
@@ -164,13 +164,13 @@ namespace OkapiKit.Editor
                         else if ((valueType == Condition.ValueType.Probe) || (valueType == Condition.ValueType.ProbeDistance))
                         {
                             float lines = 2.0f;
-                            if ((propProbe.objectReferenceValue == null) &&  (propTag.objectReferenceValue == null)) lines = 3.0f;
-                            
+                            if ((propProbe.objectReferenceValue == null) && (propTag.objectReferenceValue == null)) lines = 3.0f;
+
                             var elemHeight = position.height / lines;
 
                             var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
                             var probeRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
-                            var probeTagRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+                            var probeTagRect = new Rect(positionValue, position.y + elemHeight * 2.0f, 150 + extra_width_variable, elemHeight);
 
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                             if (propProbe.objectReferenceValue == null)
@@ -245,7 +245,33 @@ namespace OkapiKit.Editor
                                 EditorGUI.PropertyField(rect, propTileSet, GUIContent.none);
 
                             dataType = Condition.DataType.Boolean;
-                        }                        
+                        }
+                        else if ((valueType == Condition.ValueType.HasItem) ||
+                                 (valueType == Condition.ValueType.ItemCount))
+                        {
+                            var propItem = property.FindPropertyRelative(nameof(Condition.item));
+                            var propInventory= property.FindPropertyRelative(nameof(Condition.inventory));
+
+                            var elemHeight = position.height / 3.0f;
+
+                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                            var propInventoryRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+                            var propItemRect = new Rect(positionValue, position.y + elemHeight * 2.0f, 150 + extra_width_variable, elemHeight);
+
+                            float originalLabelWidth = EditorGUIUtility.labelWidth;
+                            EditorGUIUtility.labelWidth = propInventoryRect.width * 0.35f;
+
+                            EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                            var prefixLabel = EditorGUI.PrefixLabel(propInventoryRect, new GUIContent("Inventory"));
+                            EditorGUI.PropertyField(prefixLabel, propInventory, GUIContent.none);
+                            prefixLabel = EditorGUI.PrefixLabel(propItemRect, new GUIContent("Item"));
+                            EditorGUI.PropertyField(prefixLabel, propItem, GUIContent.none);
+
+                            EditorGUIUtility.labelWidth = originalLabelWidth;
+
+                            if (valueType == Condition.ValueType.HasItem)
+                                dataType = Condition.DataType.Boolean;
+                        }
                     }
                 }
                 else
@@ -382,6 +408,11 @@ namespace OkapiKit.Editor
                         else if (transformVariable.objectReferenceValue != null) height = base.GetPropertyHeight(property, label) * 3;
                         else height = baseHeight * 4;
                     }
+                    else if ((condType == Condition.ValueType.HasItem) ||
+                             (condType == Condition.ValueType.ItemCount))
+                    {
+                        height = baseHeight * 3;
+                    }
                 }
             }
 
@@ -389,7 +420,8 @@ namespace OkapiKit.Editor
                 (condType == Condition.ValueType.IsGrounded) ||
                 (condType == Condition.ValueType.IsGliding) ||
                 (condType == Condition.ValueType.OnTile) ||
-                (condType == Condition.ValueType.OnTileSet))
+                (condType == Condition.ValueType.OnTileSet) ||
+                (condType == Condition.ValueType.HasItem))
             {
                 // No need for a comparison value
             }

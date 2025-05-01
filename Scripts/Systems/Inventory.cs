@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -208,4 +209,8 @@ namespace OkapiKit
         }
     }
 
+    [Serializable]
+    public class TargetInventory : OkapiTarget<Inventory>
+    {
+    }
 }

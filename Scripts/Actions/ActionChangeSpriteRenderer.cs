@@ -92,9 +92,9 @@ namespace OkapiKit
                     _logs.Add(new LogEntry(LogEntry.Type.Warning, "Sprite renderer to modify is this object, but it should be explicitly linked!", "Setting options explicitly is always better than letting the system find them, since it might have to guess our intentions."));
                 }
             }
-            if (changeType == ChangeType.Sprite)
+            if ((changeType == ChangeType.Sprite) && (sprite == null))
             {
-                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined sprite to change sprite renderer!", "We want to change the sprite of an object, so we need to know which object (more precisely, which sprite renderer) to change"));
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Undefined sprite to change sprite renderer!", "We want to change the sprite of an object, so we need to know to which sprite to change"));
             }
         }
     }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 using UnityEngine;
-using static OkapiKit.Order2d;
 
 namespace OkapiKit
 {
