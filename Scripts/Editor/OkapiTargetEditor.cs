@@ -49,4 +49,14 @@ namespace OkapiKit.Editor
         }
     }
 
+    [CustomPropertyDrawer(typeof(TargetInventory))]
+    public class TargetInventoryEditor : OkapiTargetEditor<Inventory>
+    {
+    }
+
+    [CustomPropertyDrawer(typeof(TargetEquipment))]
+    public class EquipmentInventoryEditor : OkapiTargetEditor<Equipment>
+    {
+    }
+
 }

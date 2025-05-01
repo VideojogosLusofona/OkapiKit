@@ -272,6 +272,30 @@ namespace OkapiKit.Editor
                             if (valueType == Condition.ValueType.HasItem)
                                 dataType = Condition.DataType.Boolean;
                         }
+                        else if (valueType == Condition.ValueType.IsEquipped)
+                        {
+                            var propItem = property.FindPropertyRelative(nameof(Condition.item));
+                            var propEquipment = property.FindPropertyRelative(nameof(Condition.equipment));
+
+                            var elemHeight = position.height / 3.0f;
+
+                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                            var propInventoryRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+                            var propItemRect = new Rect(positionValue, position.y + elemHeight * 2.0f, 150 + extra_width_variable, elemHeight);
+
+                            float originalLabelWidth = EditorGUIUtility.labelWidth;
+                            EditorGUIUtility.labelWidth = propInventoryRect.width * 0.35f;
+
+                            EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                            var prefixLabel = EditorGUI.PrefixLabel(propInventoryRect, new GUIContent("Equipment"));
+                            EditorGUI.PropertyField(prefixLabel, propEquipment, GUIContent.none);
+                            prefixLabel = EditorGUI.PrefixLabel(propItemRect, new GUIContent("Item"));
+                            EditorGUI.PropertyField(prefixLabel, propItem, GUIContent.none);
+
+                            EditorGUIUtility.labelWidth = originalLabelWidth;
+
+                            dataType = Condition.DataType.Boolean;
+                        }
                     }
                 }
                 else
@@ -409,7 +433,8 @@ namespace OkapiKit.Editor
                         else height = baseHeight * 4;
                     }
                     else if ((condType == Condition.ValueType.HasItem) ||
-                             (condType == Condition.ValueType.ItemCount))
+                             (condType == Condition.ValueType.ItemCount) ||
+                             (condType == Condition.ValueType.IsEquipped))
                     {
                         height = baseHeight * 3;
                     }

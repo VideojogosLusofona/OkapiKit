@@ -16,6 +16,7 @@ namespace OkapiKitEditor
         SerializedProperty displayTextColorProp;
         SerializedProperty isStackableProp;
         SerializedProperty maxStackProp;
+        SerializedProperty inventorySlotsProp;
 
         Item item;
 
@@ -33,6 +34,7 @@ namespace OkapiKitEditor
             displayTextColorProp = serializedObject.FindProperty("displayTextColor");
             isStackableProp = serializedObject.FindProperty("isStackable");
             maxStackProp = serializedObject.FindProperty("maxStack");
+            inventorySlotsProp = serializedObject.FindProperty("inventorySlots");
         }
 
         public override void OnInspectorGUI()
@@ -61,6 +63,8 @@ namespace OkapiKitEditor
                     {
                         EditorGUILayout.PropertyField(maxStackProp);
                     }
+
+                    EditorGUILayout.PropertyField(inventorySlotsProp);
                 }
 
                 serializedObject.ApplyModifiedProperties();

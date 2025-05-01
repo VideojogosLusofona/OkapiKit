@@ -1,5 +1,6 @@
 using Codice.CM.Common;
 using System.Collections.Generic;
+using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -20,6 +21,7 @@ namespace OkapiKit
             IsGrounded = 12, IsGliding = 13,
             OnTile = 16, OnTileSet = 17,
             HasItem = 18, ItemCount = 19,
+            IsEquipped = 20,
         };
         [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5 };
         [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
@@ -47,6 +49,7 @@ namespace OkapiKit
         public TileSet              tileSet;
         public TargetInventory      inventory;
         public Item                 item;
+        public TargetEquipment      equipment;
         
         private GridObject          gridObject;
 
@@ -62,6 +65,7 @@ namespace OkapiKit
             if (valueType == ValueType.OnTile) return DataType.Boolean;
             if (valueType == ValueType.OnTileSet) return DataType.Boolean;
             if (valueType == ValueType.HasItem) return DataType.Boolean;
+            if (valueType == ValueType.IsEquipped) return DataType.Boolean;
             else return DataType.Number;
         }
 
@@ -158,6 +162,8 @@ namespace OkapiKit
                     return $"HasItem({inventory.GetRawDescription("", gameObject)}, {item?.displayName ?? "UNDEFINED"})";
                 case ValueType.ItemCount:
                     return $"ItemCount({inventory.GetRawDescription("", gameObject)}, {item?.displayName ?? "UNDEFINED"})";
+                case ValueType.IsEquipped:
+                    return $"{item?.displayName ?? "[UNDEFINED]"} is equipped {equipment.GetRawDescription("", gameObject)})";
             }
 
             return "[Unknown]";
@@ -260,6 +266,12 @@ namespace OkapiKit
                         {
                             var inv = inventory.GetTarget(gameObject);
                             b = inv?.HasItem(item) ?? false;
+                        }
+                        break;
+                    case Condition.ValueType.IsEquipped:
+                        {
+                            var equip = equipment.GetTarget(gameObject);
+                            b = equip?.IsEquipped(item) ?? false;
                         }
                         break;
                     default:
@@ -627,6 +639,15 @@ namespace OkapiKit
                      (valueType == ValueType.ItemCount))
             {
                 inventory.CheckErrors(errors, "inventory", go);
+
+                if (item == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Need to define an item to check!", "Need to define an item to check!"));
+                }
+            }
+            else if (valueType == ValueType.IsEquipped)
+            {
+                equipment.CheckErrors(errors, "equipment", go);
 
                 if (item == null)
                 {
