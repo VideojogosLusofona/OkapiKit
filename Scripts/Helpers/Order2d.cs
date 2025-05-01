@@ -13,7 +13,7 @@ namespace OkapiKit
         public override string GetRawDescription(string ident, GameObject refObject)
         {
             string desc = "Sorts the objects using the Y coordinate.\n";
-            desc += "This is useful for th games that are midway between side-view and top-down.\n";
+            desc += "This is useful for games that are midway between side-view and top-down.\n";
             desc += "Most is configured on the Okapi Config object, because it has to match between objects.\n";
             if ((OkapiConfig.orderMode == OrderMode.Z) && (offsetZ != 0.0f))
             {

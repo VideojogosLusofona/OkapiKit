@@ -20,6 +20,8 @@ namespace OkapiKit.Editor
 
         protected abstract string GetTitle();
 
+        protected virtual Color GetIconBackgroundColor() => new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        
         protected abstract Texture2D GetIcon();
 
         protected virtual bool showInfo
@@ -85,7 +87,14 @@ namespace OkapiKit.Editor
             EditorGUI.DrawRect(fullRect, barColor);
             var prevColor = styleTitle.normal.textColor;
             styleTitle.normal.textColor = textColor;
-            GUI.DrawTexture(new Rect(titleRect.x + 10, titleRect.y + 4, 32, 32), GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
+
+            Rect iconRect = new Rect(titleRect.x + 10, titleRect.y + 4, 32, 32);
+            var  iconBackgroundColor = GetIconBackgroundColor();
+            if (iconBackgroundColor.a > 0.0f)
+            {
+                EditorGUI.DrawRect(iconRect, iconBackgroundColor);
+            }
+            GUI.DrawTexture(iconRect, GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
             EditorGUI.LabelField(new Rect(titleRect.x + 50, titleRect.y + 6, inspectorWidth - 20 - titleRect.x - 4, styleTitle.fontSize), GetTitle(), styleTitle);
             styleTitle.normal.textColor = prevColor;
             EditorGUILayout.EndVertical();
@@ -165,7 +174,7 @@ namespace OkapiKit.Editor
                 var rect = EditorGUILayout.BeginVertical("box");
                 
                 float       inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
-                GUIStyle    explanationStyle = GUIUtils.GetLogStyle();
+                GUIStyle    logStyle = GUIUtils.GetLogStyle();
 
                 int index = 0;
                 foreach (var log in logs)
@@ -188,8 +197,9 @@ namespace OkapiKit.Editor
                     }
                     index++;
 
-                    int textLines = log.text.Count((c) => c == '\n');
-                    int height = 18 + textLines * 16;
+                    var content = new GUIContent(log.text);
+                    Rect logRect = GUILayoutUtility.GetRect(content, logStyle, GUILayout.Width(inspectorWidth - titleRect.x - 30));
+                    float height = logRect.height + 4;
 
                     Rect logErrorRect = new Rect(titleRect.x, rect.y, inspectorWidth - 10 - titleRect.x - 4, height);
                     EditorGUI.DrawRect(logErrorRect, color);
@@ -199,8 +209,7 @@ namespace OkapiKit.Editor
                     logErrorRect.x += 10;
                     logErrorRect.width += 10;
 
-                    EditorGUI.LabelField(logErrorRect, log.text, explanationStyle);
-                    rect.y += height;
+                    EditorGUI.LabelField(logRect, log.text, logStyle);
                     EditorGUILayout.Space(height);
                 }
 
