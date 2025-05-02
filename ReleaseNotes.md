@@ -12,6 +12,7 @@
 - Added resource type and resource system
 - Added SpriteEffect system - improved effects on Flash action
 - Added change resource action
+- Added resource value condition
 - Fixed several UI bugs
 
 ## V1.18.2

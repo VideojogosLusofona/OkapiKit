@@ -21,7 +21,7 @@ namespace OkapiKit
             IsGrounded = 12, IsGliding = 13,
             OnTile = 16, OnTileSet = 17,
             HasItem = 18, ItemCount = 19,
-            IsEquipped = 20,
+            IsEquipped = 20, ResourceValue = 21
         };
         [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5 };
         [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
@@ -50,6 +50,7 @@ namespace OkapiKit
         public TargetInventory      inventory;
         public Item                 item;
         public TargetEquipment      equipment;
+        public TargetResource       resource;
         
         private GridObject          gridObject;
 
@@ -164,6 +165,8 @@ namespace OkapiKit
                     return $"ItemCount({inventory.GetRawDescription("", gameObject)}, {item?.displayName ?? "UNDEFINED"})";
                 case ValueType.IsEquipped:
                     return $"{item?.displayName ?? "[UNDEFINED]"} is equipped {equipment.GetRawDescription("", gameObject)})";
+                case ValueType.ResourceValue:
+                    return $"{resource.GetShortDescription(gameObject)}";
             }
 
             return "[Unknown]";
@@ -445,7 +448,15 @@ namespace OkapiKit
                                 var inv = inventory.GetTarget(gameObject);
                                 currentValue = inv?.GetItemCount(item) ?? 0;
                                 minValue = 0;
-                                minValue = int.MaxValue;
+                                maxValue = int.MaxValue;
+                            }
+                            break;
+                        case Condition.ValueType.ResourceValue:
+                            {
+                                var resValue = resource.GetTarget(gameObject);
+                                currentValue = resValue?.resource ?? 0;
+                                minValue = 0;
+                                maxValue = resValue?.maxValue ?? float.MaxValue;
                             }
                             break;
                         default:

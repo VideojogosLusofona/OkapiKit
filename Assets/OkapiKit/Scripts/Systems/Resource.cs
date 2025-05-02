@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace OkapiKit
 {
@@ -40,10 +41,11 @@ namespace OkapiKit
         protected bool  _resourceEmpty;
         protected float lastChange;
         protected Dictionary<GameObject, float> lastChangePerSource = new();
-
+        
         public bool isOnGlobalCooldown => ((flags & Flags.UseCooldownOnChanges) != 0) && ((Time.time - lastChange) < globalCooldown);
-        public bool isOnCooldown(GameObject src) => (isOnGlobalCooldown) || ((flags & Flags.UseCooldownPerSource) != 0) && (lastChangePerSource.ContainsKey(src) && (Time.time - lastChangePerSource[src]) < cooldownPerSource);
+        public bool isOnCooldown(GameObject src) => (isOnGlobalCooldown) || ((flags & Flags.UseCooldownPerSource) != 0) && (src != null) && (lastChangePerSource.ContainsKey(src) && (Time.time - lastChangePerSource[src]) < cooldownPerSource);
 
+        public float maxValue => type?.maxValue ?? 0.0f;
         public float resource
         {
             get { return _resource; }
@@ -238,12 +240,40 @@ namespace OkapiKit
         {
             var targets = GetTargets(parentGameObject);
 
+            if (type == OkapiTarget<Resource>.Type.Object) return (targets.Count > 0) ? (targets[0]) : (null);
+
             foreach (var target in targets)
             {
                 if (target.type == resourceType) return target;
             }
 
             return null;
+        }
+
+        public override string GetShortDescription(GameObject refObject)
+        {
+            var resName = resourceType?.displayName ?? "[UNDEFINED]";
+            switch (type)
+            {
+                case Type.Hypertag:
+                    if (tag) return $"[{tag.name}]";
+                    else return $"[UNDEFINED].{resName}";
+                case Type.Object:
+                    if (obj)
+                    {
+                        resName = obj.type?.displayName ?? "[UNDEFINED]";
+                        return $"[{obj.name}].{resName}";
+                    }
+                    else return $"[UNDEFINED].[UNDEFINED]";
+                case Type.Self:
+                    return $"{resName}";
+                case Type.LastCollider:
+                    return $"Collider.{resName}";
+                default:
+                    break;
+            }
+
+            return "[UNDEFINED]";
         }
     }
 }

@@ -1209,6 +1209,11 @@ MonoBehaviour:
       type: 2
       tag: {fileID: 0}
       obj: {fileID: 0}
+    resource:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      resourceType: {fileID: 0}
   elseActions:
   - delay: 0
     action: {fileID: 373756868}
@@ -9546,8 +9551,11 @@ GameObject:
   - component: {fileID: 1682697948}
   - component: {fileID: 1682697947}
   - component: {fileID: 1682697946}
-  - component: {fileID: 1682697945}
-  - component: {fileID: 1682697944}
+  - component: {fileID: 1682697958}
+  - component: {fileID: 1682697957}
+  - component: {fileID: 1682697956}
+  - component: {fileID: 1682697955}
+  - component: {fileID: 1682697954}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -9555,56 +9563,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1682697944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1682697943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 302ff7b812c0d7846bbbf5b0db22ec81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 0
-  _explanation: 'Sets Enemy''s sprite to [colored_outline_28]'
-  description: 
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  target: {fileID: 1682697952}
-  changeType: 0
-  sprite: {fileID: -1158547798, guid: af35de7345491b1469fd6769999c4ffe, type: 3}
-  color: {r: 1, g: 1, b: 1, a: 1}
-  boolState: 0
---- !u!114 &1682697945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1682697943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 302ff7b812c0d7846bbbf5b0db22ec81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showInfo: 0
-  _explanation: 'Sets Enemy''s sprite to [colored_outline_30]'
-  description: 
-  enableAction: 1
-  hasTags: 0
-  actionTags: []
-  hasConditions: 0
-  actionConditions: []
-  target: {fileID: 1682697952}
-  changeType: 0
-  sprite: {fileID: 322826389, guid: af35de7345491b1469fd6769999c4ffe, type: 3}
-  color: {r: 1, g: 1, b: 1, a: 1}
-  boolState: 0
 --- !u!114 &1682697946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9674,7 +9632,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1682697943}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -9855,6 +9813,177 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1682697954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682697943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef5f9e0d47611f4da64c31fc24a95e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Set the X scale of object Enemy to 0.5, and set the Y scale of object
+    Enemy to 0.5.
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: {fileID: 1682697953}
+  changeType: 2
+  xAxis: 2
+  positionX: {x: 0.5, y: 0.5}
+  deltaX: {x: 0, y: 0}
+  yAxis: 2
+  positionY: {x: 0.5, y: 0.5}
+  deltaY: {x: 0, y: 0}
+  scaleWithTime: 0
+--- !u!114 &1682697955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682697943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302ff7b812c0d7846bbbf5b0db22ec81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Sets Enemy's sprite color to RGBA(0.547, 0.547, 0.547, 1.000)
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: {fileID: 1682697952}
+  changeType: 1
+  sprite: {fileID: 0}
+  color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  boolState: 0
+--- !u!114 &1682697956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682697943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302ff7b812c0d7846bbbf5b0db22ec81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Sets Enemy''s sprite to [colored_outline_577]'
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: {fileID: 1682697952}
+  changeType: 0
+  sprite: {fileID: 1746157636, guid: af35de7345491b1469fd6769999c4ffe, type: 3}
+  color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
+  boolState: 0
+--- !u!114 &1682697957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682697943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: Disables component Enemy (UnityEngine.BoxCollider2D)
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  target: {fileID: 1682697951}
+  state: 1
+--- !u!114 &1682697958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682697943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 0
+  _explanation: "Check for enemy death\n----------------\nWhen ([Enemy].Health <=
+    0):\n          disables component Enemy (UnityEngine.BoxCollider2D)\n         
+    sets Enemy's sprite to [colored_outline_577]\n          sets Enemy's sprite color
+    to RGBA(0.547, 0.547, 0.547, 1.000)\n          set the X scale of object Enemy
+    to 0.5, and set the Y scale of object Enemy to 0.5.\n\nThis trigger will execute
+    only when the conditions change and they are all true."
+  description: Check for enemy death
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1682697957}
+  - delay: 0
+    action: {fileID: 1682697956}
+  - delay: 0
+    action: {fileID: 1682697955}
+  - delay: 0
+    action: {fileID: 1682697954}
+  continuous: 0
+  conditions:
+  - negate: 0
+    valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 21
+    tag: {fileID: 0}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
+    comparison: 2
+    value: 0
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
+    percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+    resource:
+      type: 1
+      tag: {fileID: 0}
+      obj: {fileID: 1682697946}
+      resourceType: {fileID: 0}
+  elseActions: []
 --- !u!1 &1692738601
 GameObject:
   m_ObjectHideFlags: 0
@@ -9949,18 +10078,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When button Fire1 is pressed (this can only happen every 0.25 seconds):\n         
-    enables object AttackPoint\n then, at 0.1 seconds, \n          disables object
-    AttackPoint\n"
+  _explanation: "If (Sword is equipped  on Player) and when button fire1 is pressed
+    (this can only happen every 0.25 seconds):\n          enables object AttackPoint\n
+    then, at 0.1 seconds, \n          disables object AttackPoint\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
-  hasPreconditions: 0
+  hasPreconditions: 1
   preConditions:
   - negate: 0
     valueHandler: {fileID: 0}
     variable: {fileID: 0}
-    valueType: 0
+    valueType: 20
     tag: {fileID: 0}
     tagCountRangeEnabled: 0
     tagCountRange: 0
@@ -9980,11 +10109,16 @@ MonoBehaviour:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
-    item: {fileID: 0}
+    item: {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
     equipment:
+      type: 1
+      tag: {fileID: 0}
+      obj: {fileID: 373756870}
+    resource:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      resourceType: {fileID: 0}
   actions:
   - delay: 0
     action: {fileID: 1692738608}
@@ -10405,14 +10539,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When a collision with a trigger with tags [TagEnemy] starts:\n         
-    flashes renderer target on the colliding object for 0.2 seconds\n          subtracts
-    10 from resource Collider.Health\n"
+  _explanation: "If (Collider.Health > 0) and when a collision with a trigger with
+    tags [tagenemy] starts:\n          flashes renderer target on the colliding object
+    for 0.2 seconds\n          subtracts 10 from resource Collider.Health\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
+  hasPreconditions: 1
+  preConditions:
+  - negate: 0
+    valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 21
+    tag: {fileID: 0}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
+    comparison: 3
+    value: 0
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
+    percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+    resource:
+      type: 3
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      resourceType: {fileID: 11400000, guid: 6b8f20c052a84a54cacf7eef24a4877d, type: 2}
   actions:
   - delay: 0
     action: {fileID: 2116790361}

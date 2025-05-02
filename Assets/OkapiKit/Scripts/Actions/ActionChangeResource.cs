@@ -56,16 +56,7 @@ namespace OkapiKit
 
         string GetTargetName()
         {
-            var resName = resource.resourceType?.displayName ?? "[UNDEFINED]";
-
-            if (resource.targetType == OkapiTarget<Resource>.Type.Object)
-            {
-                var t = resource.GetTarget(gameObject);
-                if (t) resName = t.type?.displayName ?? "[UNDEFINED]";
-                else resName = "[UNDEFINED]";
-            }
-
-            return $"{resource.GetShortDescription(gameObject)}.{resName}";
+            return $"{resource.GetShortDescription(gameObject)}";
         }
 
         public override string GetActionTitle()
