@@ -112,6 +112,5 @@ namespace OkapiKit
 
             return _explanation;
         }
-
     }
 }

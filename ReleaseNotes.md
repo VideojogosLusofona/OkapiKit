@@ -13,6 +13,7 @@
 - Added SpriteEffect system - improved effects on Flash action
 - Added change resource action
 - Added resource value condition
+- Added Quest and QuestManager system
 - Fixed several UI bugs
 
 ## V1.18.2

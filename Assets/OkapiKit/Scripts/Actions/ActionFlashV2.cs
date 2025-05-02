@@ -31,5 +31,7 @@ namespace OkapiKit
 
             return desc;
         }
+
+        public override string GetActionTitle() { return "Flash"; }
     }
 }

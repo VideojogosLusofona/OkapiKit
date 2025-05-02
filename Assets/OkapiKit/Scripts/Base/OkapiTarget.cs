@@ -7,7 +7,7 @@ namespace OkapiKit
     [Serializable]
     public class OkapiTarget<T> where T : Component
     {
-        public enum Type { Hypertag, Object, Self, LastCollider };
+        public enum Type { Hypertag, Object, Self, Parent, Child, LastCollider };
 
         [SerializeField] protected Type       type = Type.Hypertag;
         [SerializeField] protected Hypertag   tag;
@@ -36,6 +36,10 @@ namespace OkapiKit
                     break;
                 case Type.Self:
                     return parentGameObject.GetComponent<T>();
+                case Type.Parent:
+                    return parentGameObject.GetComponentInParent<T>();
+                case Type.Child:
+                    return parentGameObject.GetComponentInChildren<T>();
                 case Type.LastCollider:
                     var colliderObject = TriggerOnCollision.GetLastCollider();
                     if (colliderObject != null)
@@ -70,6 +74,12 @@ namespace OkapiKit
                 case Type.Self:
                     ret.Add(parentGameObject.GetComponent<T>());
                     break;
+                case Type.Parent:
+                    ret.Add(parentGameObject.GetComponentInParent<T>());
+                    break;
+                case Type.Child:
+                    ret.AddRange(parentGameObject.GetComponentsInChildren<T>());
+                    break;
                 case Type.LastCollider:
                     var colliderObject = TriggerOnCollision.GetLastCollider();
                     if (colliderObject != null)
@@ -102,6 +112,18 @@ namespace OkapiKit
                         logs.Add(new LogEntry(LogEntry.Type.Error, $"This object doesn't have a target of type {typeof(T).Name}!"));
                     }
                     break;
+                case Type.Parent:
+                    if (parentGameObject.GetComponentInParent<T>() == null)
+                    {
+                        logs.Add(new LogEntry(LogEntry.Type.Error, $"Can't find a target of type {typeof(T).Name} on the parents of this object!"));
+                    }
+                    break;
+                case Type.Child:
+                    if (parentGameObject.GetComponentInChildren<T>() == null)
+                    {
+                        logs.Add(new LogEntry(LogEntry.Type.Error, $"Can't find a target of type {typeof(T).Name} on the children of this object!"));
+                    }
+                    break;
                 case Type.LastCollider:
                     break;
                 default:
@@ -121,6 +143,10 @@ namespace OkapiKit
                     else return $"{propName} on [UNDEFINED]";
                 case Type.Self:
                     return $"{propName} on this object";
+                case Type.Parent:
+                    return $"{propName} on this object's parents";
+                case Type.Child:
+                    return $"{propName} on this object's children";
                 case Type.LastCollider:
                     return $"{propName} on the colliding object";
                 default:
@@ -142,6 +168,10 @@ namespace OkapiKit
                     else return $"[UNDEFINED]";
                 case Type.Self:
                     return $"";
+                case Type.Parent:
+                    return $"Parent";
+                case Type.Child:
+                    return $"Child";
                 case Type.LastCollider:
                     return $"Collider";
                 default:

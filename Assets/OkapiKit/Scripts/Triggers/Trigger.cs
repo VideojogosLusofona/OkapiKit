@@ -27,6 +27,44 @@ namespace OkapiKit
 
         public virtual string GetTriggerTitle() { return "Trigger"; }
 
+        public static string ToLowerExcludingQuotedAndBracketed(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+
+            bool inQuotes = false;
+            bool inBrackets = false;
+            var result = new System.Text.StringBuilder(input.Length);
+
+            foreach (char c in input)
+            {
+                if (c == '"' && !inBrackets)
+                {
+                    inQuotes = !inQuotes;
+                    result.Append(c);
+                }
+                else if (c == '[' && !inQuotes)
+                {
+                    inBrackets = true;
+                    result.Append(c);
+                }
+                else if (c == ']' && !inQuotes)
+                {
+                    inBrackets = false;
+                    result.Append(c);
+                }
+                else if (inQuotes || inBrackets)
+                {
+                    result.Append(c);
+                }
+                else
+                {
+                    result.Append(char.ToLower(c));
+                }
+            }
+
+            return result.ToString();
+        }
+
         protected override string Internal_UpdateExplanation()
         {
             _explanation = "";
@@ -48,7 +86,7 @@ namespace OkapiKit
             }
 
             string remainingExplanation = GetRawDescription("", gameObject) + ":\n";
-            if (hasIf) remainingExplanation = remainingExplanation.ToLower();
+            if (hasIf) remainingExplanation = ToLowerExcludingQuotedAndBracketed(remainingExplanation);
             _explanation += remainingExplanation;
 
             _explanation += GetDescriptionActions(actions);

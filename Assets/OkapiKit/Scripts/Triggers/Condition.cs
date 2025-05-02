@@ -160,11 +160,11 @@ namespace OkapiKit
                     }
                     break;
                 case ValueType.HasItem:
-                    return $"HasItem({inventory.GetRawDescription("", gameObject)}, {item?.displayName ?? "UNDEFINED"})";
+                    return $"({inventory.GetShortDescription(gameObject)} has item {item?.displayName ?? "UNDEFINED"})";
                 case ValueType.ItemCount:
                     return $"ItemCount({inventory.GetRawDescription("", gameObject)}, {item?.displayName ?? "UNDEFINED"})";
                 case ValueType.IsEquipped:
-                    return $"{item?.displayName ?? "[UNDEFINED]"} is equipped {equipment.GetRawDescription("", gameObject)})";
+                    return $"({item?.displayName ?? "[UNDEFINED]"} is equipped {equipment.GetRawDescription("", gameObject)})";
                 case ValueType.ResourceValue:
                     return $"{resource.GetShortDescription(gameObject)}";
             }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1770d6d104d90a469edd1bb40026b95, type: 3}
+  m_Name: QuestKillGoblins
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "Requires the following quests:\n\nQuest Objectives:\n   Goblins
+    Killed (0/2)\n"
+  description: 
+  displayName: Kill Goblins
+  questText: 'The king has asked you to kill some goblins '
+  questsRequired: []
+  questObjectives:
+  - type: 1
+    name: Goblins Killed
+    item: {fileID: 0}
+    tag: {fileID: 11400000, guid: 1d8b8689454aab0448df04414e42d46e, type: 2}
+    count: 2
