@@ -9,6 +9,9 @@
 - Added HasItem and ItemCount conditions
 - Added ItemDisplay UI element
 - Added equipment system
+- Added resource type and resource system
+- Added SpriteEffect system - improved effects on Flash action
+- Added change resource action
 - Fixed several UI bugs
 
 ## V1.18.2

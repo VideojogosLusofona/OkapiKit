@@ -24,11 +24,6 @@ namespace OkapiKit
             return "Item";
         }
 
-        protected override string Internal_UpdateExplanation()
-        {
-            return "Item";
-        }
-
         public Hypertag GetEquipAutoSlot(Equipment equipManager, bool prioritizeSame)
         {
             float       minTime = float.MaxValue;

@@ -1,0 +1,43 @@
+using UnityEditor;
+using UnityEngine;
+
+namespace OkapiKit.Editor
+{
+    public abstract class ActionEffectEditor : ActionEditor
+    {
+        protected SerializedProperty targetRenderer;
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            targetRenderer = serializedObject.FindProperty("targetRenderer");
+        }
+
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+
+            if (WriteTitle())
+            {
+                StdEditor(false);
+
+                var action = (target as ActionEffect);
+                if (action == null) return;
+
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(targetRenderer, new GUIContent("Target", "What's the target renderer to flash?\nNote that only renderers that have a material will be able to flash, like sprite renderers. Others might work, but the behaviour might be unexpected."));
+
+                ActionEffect_OnInspectorGUI();
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    (target as ActionEffect).UpdateExplanation();
+                }
+            }
+        }
+
+        protected abstract void ActionEffect_OnInspectorGUI();
+    }
+}

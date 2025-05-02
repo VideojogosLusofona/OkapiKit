@@ -35,7 +35,16 @@ namespace OkapiKit
             return Internal_UpdateExplanation();
         }
 
-        protected abstract string Internal_UpdateExplanation();
+        protected virtual string Internal_UpdateExplanation()
+        {
+            _explanation = "";
+            if (description != "") _explanation += description + "\n----------------\n";
+
+            _explanation += GetRawDescription("", this);
+
+            return _explanation;
+        }
+
         protected virtual void CheckErrors()
         {
 

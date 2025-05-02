@@ -113,6 +113,31 @@ namespace OkapiKit
 
             return "unnamed";
         }
+
+        public void CheckErrors(List<LogEntry> logs, string propName, GameObject parentGameObject)
+        {
+            switch (type)
+            {
+                case Type.Float:
+                    break;
+                case Type.Integer:
+                    break;
+                case Type.VariableInstance:
+                    if (variableInstance != null)
+                    {
+                        logs.Add(new LogEntry(LogEntry.Type.Error, $"Undefined source variable instance for {propName}!", "You need to define the variable from which to fetch a value!"));
+                    }
+                    break;
+                case Type.Variable:
+                    if (variable != null)
+                    {
+                        logs.Add(new LogEntry(LogEntry.Type.Error, $"Undefined source variable for {propName}!", "You need to define the variable from which to fetch a value!"));
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
 

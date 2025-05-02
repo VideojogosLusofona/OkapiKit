@@ -1,9 +1,7 @@
 using UnityEditor;
 using UnityEngine;
-using OkapiKit;
-using OkapiKit.Editor;
 
-namespace OkapiKitEditor
+namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(Equipment))]
     public class EquipmentEditor : OkapiBaseEditor
