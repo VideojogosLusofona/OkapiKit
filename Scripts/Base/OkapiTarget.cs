@@ -9,9 +9,9 @@ namespace OkapiKit
     {
         public enum Type { Hypertag, Object, Self, LastCollider };
 
-        [SerializeField] private Type       type = Type.Hypertag;
-        [SerializeField] private Hypertag   tag;
-        [SerializeField] private T          obj;
+        [SerializeField] protected Type       type = Type.Hypertag;
+        [SerializeField] protected Hypertag   tag;
+        [SerializeField] protected T          obj;
 
         public Type         targetType => type;
         public Hypertag     targetTag => tag;
@@ -64,7 +64,7 @@ namespace OkapiKit
                 case Type.Object:
                     if (obj)
                     {
-                        ret.Add(obj.GetComponent<T>());
+                        ret.Add(obj);
                     }
                     break;
                 case Type.Self:
@@ -130,7 +130,7 @@ namespace OkapiKit
             return "[UNDEFINED]";
         }
 
-        public string GetShortDescription(GameObject refObject)
+        public virtual string GetShortDescription(GameObject refObject)
         {
             switch (type)
             {

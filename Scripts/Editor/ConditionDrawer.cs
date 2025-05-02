@@ -250,7 +250,7 @@ namespace OkapiKit.Editor
                                  (valueType == Condition.ValueType.ItemCount))
                         {
                             var propItem = property.FindPropertyRelative(nameof(Condition.item));
-                            var propInventory= property.FindPropertyRelative(nameof(Condition.inventory));
+                            var propInventory = property.FindPropertyRelative(nameof(Condition.inventory));
 
                             var elemHeight = position.height / 3.0f;
 
@@ -295,6 +295,18 @@ namespace OkapiKit.Editor
                             EditorGUIUtility.labelWidth = originalLabelWidth;
 
                             dataType = Condition.DataType.Boolean;
+                        }
+                        else if (valueType == Condition.ValueType.ResourceValue)
+                        {
+                            var propResource = property.FindPropertyRelative(nameof(Condition.resource));
+
+                            var elemHeight = position.height / 3.0f;
+
+                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                            var resourceRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight * 2.0f);
+
+                            EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                            EditorGUI.PropertyField(resourceRect, propResource, GUIContent.none);
                         }
                     }
                 }
@@ -434,7 +446,8 @@ namespace OkapiKit.Editor
                     }
                     else if ((condType == Condition.ValueType.HasItem) ||
                              (condType == Condition.ValueType.ItemCount) ||
-                             (condType == Condition.ValueType.IsEquipped))
+                             (condType == Condition.ValueType.IsEquipped) ||
+                             (condType == Condition.ValueType.ResourceValue))
                     {
                         height = baseHeight * 3;
                     }

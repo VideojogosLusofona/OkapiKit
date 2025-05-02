@@ -87,10 +87,12 @@ namespace OkapiKit
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Enter) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
-            if (!EvaluatePreconditions()) return;
 
             PushLastCollider(collision.gameObject);
-            ExecuteTrigger();
+            if (EvaluatePreconditions())
+            {
+                ExecuteTrigger();
+            }
             PopLastCollider();
         }
 
@@ -103,10 +105,12 @@ namespace OkapiKit
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Enter) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
-            if (!EvaluatePreconditions()) return;
 
             PushLastCollider(collision.otherCollider.gameObject);
-            ExecuteTrigger();
+            if (EvaluatePreconditions())
+            {
+                ExecuteTrigger();
+            }
             PopLastCollider();
         }
         private void OnTriggerStay2D(Collider2D collision)
@@ -117,10 +121,12 @@ namespace OkapiKit
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Stay) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
-            if (!EvaluatePreconditions()) return;
-
+            
             PushLastCollider(collision.gameObject);
-            ExecuteTrigger();
+            if (EvaluatePreconditions())
+            {
+                ExecuteTrigger();
+            }
             PopLastCollider();
         }
 
@@ -133,10 +139,12 @@ namespace OkapiKit
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Stay) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
-            if (!EvaluatePreconditions()) return;
 
             PushLastCollider(collision.otherCollider.gameObject);
-            ExecuteTrigger();
+            if (EvaluatePreconditions())
+            {
+                ExecuteTrigger();
+            }
             PopLastCollider();
         }
 
@@ -148,10 +156,12 @@ namespace OkapiKit
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Exit) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
-            if (!EvaluatePreconditions()) return;
 
             PushLastCollider(collision.gameObject);
-            ExecuteTrigger();
+            if (EvaluatePreconditions())
+            {
+                ExecuteTrigger();
+            }
             PopLastCollider();
         }
 
@@ -163,10 +173,12 @@ namespace OkapiKit
             if (!isTriggerEnabled) return;
             if (eventType != CollisionEvent.Exit) return;
             if (!collision.gameObject.HasHypertags(tags)) return;
-            if (!EvaluatePreconditions()) return;
 
             PushLastCollider(collision.otherCollider.gameObject);
-            ExecuteTrigger();
+            if (EvaluatePreconditions())
+            {
+                ExecuteTrigger();
+            }
             PopLastCollider();
         }
     }
