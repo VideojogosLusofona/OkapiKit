@@ -1,10 +1,7 @@
 using UnityEditor;
 using UnityEngine;
-using OkapiKit;
-using OkapiKit.Editor;
-using UnityEditor.Graphs;
 
-namespace OkapiKitEditor
+namespace OkapiKit.Editor
 {
     [CustomEditor(typeof(ItemDisplay))]
     public class ItemDisplayEditor : OkapiBaseEditor

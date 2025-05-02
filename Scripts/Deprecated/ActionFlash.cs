@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OkapiKit
 {
-    [AddComponentMenu("Okapi/Action/Flash")]
+    [AddComponentMenu("Okapi/Action/Deprecated/Flash (Deprecated)")]
     public class ActionFlash : Action
     {
         [SerializeField] private Renderer target;
@@ -82,9 +82,9 @@ namespace OkapiKit
             if (ret == null)
             {
                 ret = GetComponent<Renderer>();
-                if (ret  == null)
+                if (ret == null)
                 {
-                    ret  = GetComponentInChildren<Renderer>();
+                    ret = GetComponentInChildren<Renderer>();
                 }
             }
 

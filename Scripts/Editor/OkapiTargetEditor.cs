@@ -1,9 +1,10 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
 namespace OkapiKit.Editor
 {
-    public abstract class OkapiTargetEditor<T> : PropertyDrawer where T : MonoBehaviour
+    public abstract class OkapiTargetEditor<T> : PropertyDrawer where T : Component
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -40,7 +41,14 @@ namespace OkapiKit.Editor
                     break;
             }
 
+            CustomOnGUI(position, property, label, contentRect);
+
             EditorGUI.EndProperty();
+        }
+
+        protected virtual void CustomOnGUI(Rect position, SerializedProperty property, GUIContent label, Rect contentRect)
+        {
+
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -58,5 +66,44 @@ namespace OkapiKit.Editor
     public class EquipmentInventoryEditor : OkapiTargetEditor<Equipment>
     {
     }
+
+    [CustomPropertyDrawer(typeof(TargetRenderer))]
+    public class TargetRendererEditor : OkapiTargetEditor<Renderer>
+    {
+    }
+
+    [CustomPropertyDrawer(typeof(TargetResource))]
+    public class TargetResourceEditor : OkapiTargetEditor<Resource>
+    {
+        protected override void CustomOnGUI(Rect position, SerializedProperty property, GUIContent label, Rect contentRect)
+        {
+            var typeProp = property.FindPropertyRelative("type");
+
+            if (typeProp.enumValueIndex == (int)TargetResource.Type.Object) return;
+
+            var resourceType = property.FindPropertyRelative("resourceType");
+
+            var rect = contentRect;
+            rect.y += EditorGUIUtility.singleLineHeight;
+            rect.height = EditorGUIUtility.singleLineHeight;
+
+            float originalLabelWidth = EditorGUIUtility.labelWidth;
+            EditorGUIUtility.labelWidth = rect.width * 0.15f;
+
+            EditorGUI.PropertyField(rect, resourceType, new GUIContent("Type"));
+
+            EditorGUIUtility.labelWidth = originalLabelWidth;
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            var typeProp = property.FindPropertyRelative("type");
+            if (typeProp.enumValueIndex == (int)TargetResource.Type.Object)
+                return EditorGUIUtility.singleLineHeight;
+
+            return EditorGUIUtility.singleLineHeight * 2;
+        }
+    }
+
 
 }
