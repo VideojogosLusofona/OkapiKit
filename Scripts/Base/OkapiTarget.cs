@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,25 @@ namespace OkapiKit
     [Serializable]
     public class OkapiTarget<T> where T : Component
     {
-        public enum Type { Hypertag, Object, Self, Parent, Child, LastCollider };
+        [Flags]
+        public enum Flags
+        {
+            IncChildren = 1,
+            IncParent = 2
+        };
+        public enum Type { Hypertag, Object, Self, LastCollider };
 
-        [SerializeField] protected Type       type = Type.Hypertag;
-        [SerializeField] protected Hypertag   tag;
-        [SerializeField] protected T          obj;
+        [SerializeField] protected Type         type = Type.Hypertag;
+        [SerializeField] protected Hypertag     tag;
+        [SerializeField] protected T            obj;
+        [SerializeField] protected Flags        flags;
 
         public Type         targetType => type;
         public Hypertag     targetTag => tag;
 
         public bool         isDynamic => (type == Type.LastCollider) || (type == Type.Hypertag);
+        public bool         incChildren => (flags & Flags.IncChildren) != 0;
+        public bool         incParent => (flags & Flags.IncParent) != 0;
 
         public virtual T GetTarget(GameObject parentGameObject)
         {
@@ -25,26 +35,59 @@ namespace OkapiKit
                 case Type.Hypertag:
                     if (tag)
                     {
-                        return parentGameObject.FindObjectOfTypeWithHypertag<T>(tag);
+                        var allObjects = parentGameObject.FindObjectsOfTypeWithHypertag<HypertaggedObject>(tag);
+                        foreach (var obj in allObjects)
+                        {
+                            var t = obj.GetComponent<T>();
+                            if (t) return t;
+
+                            if (incChildren) t = obj.GetComponentInChildren<T>();
+                            if (t) return t;
+
+                            if (incParent) t = obj.GetComponentInParent<T>();
+                            if (t) return t;
+                        }
                     }
                     break;
                 case Type.Object:
                     if (obj)
                     {
-                        return obj.GetComponent<T>();
+                        var t = obj.GetComponent<T>();
+                        if (t) return t;
+
+                        if (incChildren) t = obj.GetComponentInChildren<T>();
+                        if (t) return t;
+
+                        if (incParent) t = obj.GetComponentInParent<T>();
+                        if (t) return t;
                     }
                     break;
                 case Type.Self:
-                    return parentGameObject.GetComponent<T>();
-                case Type.Parent:
-                    return parentGameObject.GetComponentInParent<T>();
-                case Type.Child:
-                    return parentGameObject.GetComponentInChildren<T>();
+                    {
+                        var obj = parentGameObject;
+                        var t = obj.GetComponent<T>();
+                        if (t) return t;
+
+                        if (incChildren) t = obj.GetComponentInChildren<T>();
+                        if (t) return t;
+
+                        if (incParent) t = obj.GetComponentInParent<T>();
+                        if (t) return t;
+                    }
+                    break;
                 case Type.LastCollider:
                     var colliderObject = TriggerOnCollision.GetLastCollider();
                     if (colliderObject != null)
                     {
-                        return colliderObject.GetComponent<T>();
+                        var obj = colliderObject;
+                        var t = obj.GetComponent<T>();
+                        if (t) return t;
+
+                        if (incChildren) t = obj.GetComponentInChildren<T>();
+                        if (t) return t;
+
+                        if (incParent) t = obj.GetComponentInParent<T>();
+                        if (t) return t;
                     }
                     break;
                 default:
@@ -62,29 +105,65 @@ namespace OkapiKit
                 case Type.Hypertag:
                     if (tag)
                     {
-                        ret.AddRange(parentGameObject.FindObjectsOfTypeWithHypertag<T>(tag));
+                        var allObjects = parentGameObject.FindObjectsOfTypeWithHypertag<HypertaggedObject>(tag);
+                        foreach (var obj in allObjects)
+                        {
+                            var t = obj.GetComponent<T>();
+                            T[] tt = null;
+                            if (t) ret.Add(t);
+
+                            if (incChildren) tt = obj.GetComponentsInChildren<T>();
+                            if ((tt != null) && (tt.Length > 0)) ret.AddRange(tt);
+
+                            if (incParent) t = obj.GetComponentInParent<T>();
+                            if (t) ret.Add(t);
+                        }
                     }
                     break;
                 case Type.Object:
                     if (obj)
                     {
-                        ret.Add(obj);
+                        if (obj) ret.Add(obj);
+
+                        T   t = null;
+                        T[] tt = null;
+                        if (incChildren) tt = obj.GetComponentsInChildren<T>();
+                        if ((tt != null) && (tt.Length > 0)) ret.AddRange(tt);
+
+                        if (incParent) t = obj.GetComponentInParent<T>();
+                        if (t) ret.Add(t);
                     }
                     break;
                 case Type.Self:
-                    ret.Add(parentGameObject.GetComponent<T>());
-                    break;
-                case Type.Parent:
-                    ret.Add(parentGameObject.GetComponentInParent<T>());
-                    break;
-                case Type.Child:
-                    ret.AddRange(parentGameObject.GetComponentsInChildren<T>());
+                    {
+                        T t = null;
+
+                        t = parentGameObject.GetComponent<T>();
+                        if (t) ret.Add(t);
+
+                        T[] tt = null;
+                        if (incChildren) tt = parentGameObject.GetComponentsInChildren<T>();
+                        if ((tt != null) && (tt.Length > 0)) ret.AddRange(tt);
+
+                        if (incParent) t = parentGameObject.GetComponentInParent<T>();
+                        if (t) ret.Add(t);
+                    }
                     break;
                 case Type.LastCollider:
                     var colliderObject = TriggerOnCollision.GetLastCollider();
                     if (colliderObject != null)
                     {
-                        ret.Add(colliderObject.GetComponent<T>());
+                        T t = null;
+
+                        t = colliderObject.GetComponent<T>();
+                        if (t) ret.Add(t);
+
+                        T[] tt = null;
+                        if (incChildren) tt = colliderObject.GetComponentsInChildren<T>();
+                        if ((tt != null) && (tt.Length > 0)) ret.AddRange(tt);
+
+                        if (incParent) t = colliderObject.GetComponentInParent<T>();
+                        if (t) ret.Add(t);
                     }
                     break;
                 default:
@@ -107,21 +186,9 @@ namespace OkapiKit
                         logs.Add(new LogEntry(LogEntry.Type.Error, $"No target defined for {propName}!"));
                     break;
                 case Type.Self:
-                    if (parentGameObject.GetComponent<T>() == null)
+                    if ((parentGameObject.GetComponent<T>() == null) && (flags == 0))
                     {
                         logs.Add(new LogEntry(LogEntry.Type.Error, $"This object doesn't have a target of type {typeof(T).Name}!"));
-                    }
-                    break;
-                case Type.Parent:
-                    if (parentGameObject.GetComponentInParent<T>() == null)
-                    {
-                        logs.Add(new LogEntry(LogEntry.Type.Error, $"Can't find a target of type {typeof(T).Name} on the parents of this object!"));
-                    }
-                    break;
-                case Type.Child:
-                    if (parentGameObject.GetComponentInChildren<T>() == null)
-                    {
-                        logs.Add(new LogEntry(LogEntry.Type.Error, $"Can't find a target of type {typeof(T).Name} on the children of this object!"));
                     }
                     break;
                 case Type.LastCollider:
@@ -133,52 +200,62 @@ namespace OkapiKit
 
         public string GetRawDescription(string propName, GameObject refObject)
         {
+            string desc = "";
+
             switch (type)
             {
                 case Type.Hypertag:
-                    if (tag) return $"{propName} with tag [{tag.name}]";
-                    else return $"{propName} with tag [UNDEFINED]";
+                    if (tag) desc = $"{propName} with tag [{tag.name}]";
+                    else desc = $"{propName} with tag [UNDEFINED]";
+                    break;
                 case Type.Object:
-                    if (obj) return $"{propName} on {obj.name}";
-                    else return $"{propName} on [UNDEFINED]";
+                    if (obj) desc = $"{propName} on {obj.name}";
+                    else desc = $"{propName} on [UNDEFINED]";
+                    break;
                 case Type.Self:
-                    return $"{propName} on this object";
-                case Type.Parent:
-                    return $"{propName} on this object's parents";
-                case Type.Child:
-                    return $"{propName} on this object's children";
+                    desc = $"{propName} on this object";
+                    break;
                 case Type.LastCollider:
-                    return $"{propName} on the colliding object";
+                    desc = $"{propName} on the colliding object";
+                    break;
                 default:
                     break;
             }
+            if ((incChildren) && (incParent)) desc += "(inc. children & parent)";
+            else if (incChildren) desc += "(inc. children)";
+            else if (incParent) desc += "(inc. parent)";
 
-            return "[UNDEFINED]";
+            return desc;
         }
 
         public virtual string GetShortDescription(GameObject refObject)
         {
+            string desc = "";
+
             switch (type)
             {
                 case Type.Hypertag:
-                    if (tag) return $"[{tag.name}]";
-                    else return $"[UNDEFINED]";
+                    if (tag) desc = $"[{tag.name}]";
+                    else desc = $"[UNDEFINED]";
+                    break;
                 case Type.Object:
-                    if (obj) return $"[{obj.name}]";
-                    else return $"[UNDEFINED]";
+                    if (obj) desc = $"[{obj.name}]";
+                    else desc = $"[UNDEFINED]";
+                    break;
                 case Type.Self:
-                    return $"";
-                case Type.Parent:
-                    return $"Parent";
-                case Type.Child:
-                    return $"Child";
+                    desc = $"this";
+                    break;
                 case Type.LastCollider:
-                    return $"Collider";
+                    desc = $"Collider";
+                    break;
                 default:
                     break;
             }
+            if ((incChildren) && (incParent)) desc += "(inc. children & parent)";
+            else if (incChildren) desc += "(inc. children)";
+            else if (incParent) desc += "(inc. parent)";
 
-            return "[UNDEFINED]";
+            return desc;
         }
     }
 

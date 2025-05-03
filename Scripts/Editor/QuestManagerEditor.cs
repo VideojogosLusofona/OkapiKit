@@ -52,6 +52,8 @@ namespace OkapiKit.Editor
                     DrawQuestList("Active Quests", manager.ActiveQuests, Color.cyan, showObjectives: true);
                     DrawQuestList("Failed Quests", manager.FailedQuests, Color.red);
                     DrawQuestList("Completed Quests", manager.CompletedQuests, Color.green);
+
+                    DrawTokenTable("Token Inventory", manager);
                 }
             }
 
@@ -95,6 +97,26 @@ namespace OkapiKit.Editor
                 }
             }
         }
+
+        void DrawTokenTable(string title, QuestManager manager)
+        {
+            if ((manager == null) || (manager.Tokens == null) || (manager.Tokens.Count == 0))
+                return;
+
+            EditorGUILayout.Space(10);
+            GUIStyle titleStyle = new GUIStyle(EditorStyles.boldLabel);
+            titleStyle.normal.textColor = Color.magenta;
+            EditorGUILayout.LabelField(title, titleStyle);
+
+            EditorGUI.indentLevel++;
+            foreach (var kvp in manager.Tokens)
+            {
+                string name = kvp.Key != null ? kvp.Key.name : "[null]";
+                EditorGUILayout.LabelField($"• {name}: {kvp.Value}", EditorStyles.miniLabel);
+            }
+            EditorGUI.indentLevel--;
+        }
+
 
         protected override string GetTitle()
         {

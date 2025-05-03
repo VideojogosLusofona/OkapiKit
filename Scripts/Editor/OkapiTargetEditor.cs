@@ -18,11 +18,16 @@ namespace OkapiKit.Editor
 
             Rect typeRect = new Rect(contentRect.x, contentRect.y, enumWidth, EditorGUIUtility.singleLineHeight);
             Rect valueRect = new Rect(contentRect.x + enumWidth + 2, contentRect.y, valueWidth - 2, EditorGUIUtility.singleLineHeight);
+            Rect flagsRect = valueRect;
+            flagsRect.width *= 0.3f;
+            valueRect.width -= flagsRect.width;
+            flagsRect.x = valueRect.xMax;
 
             // Get properties
             var typeProp = property.FindPropertyRelative("type");
             var tagProp = property.FindPropertyRelative("tag");
             var objProp = property.FindPropertyRelative("obj");
+            var flagsProp = property.FindPropertyRelative("flags");
 
             // Draw enum and appropriate field
             EditorGUI.PropertyField(typeRect, typeProp, GUIContent.none);
@@ -38,8 +43,12 @@ namespace OkapiKit.Editor
                     break;
                 case OkapiTarget<T>.Type.Self:
                 case OkapiTarget<T>.Type.LastCollider:
+                    flagsRect.width = valueWidth * 0.5f;
+                    flagsRect.x = contentRect.x + enumWidth + 2;
                     break;
             }
+
+            EditorGUI.PropertyField(flagsRect, flagsProp, GUIContent.none);
 
             CustomOnGUI(position, property, label, contentRect);
 
