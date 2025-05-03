@@ -25,3 +25,4 @@ MonoBehaviour:
     item: {fileID: 0}
     tag: {fileID: 11400000, guid: 1d8b8689454aab0448df04414e42d46e, type: 2}
     count: 2
+  flags: 2

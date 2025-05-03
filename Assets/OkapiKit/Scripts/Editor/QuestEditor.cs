@@ -10,6 +10,7 @@ namespace OkapiKit.Editor
         SerializedProperty questTextProp;
         SerializedProperty questsRequired;
         SerializedProperty questObjectives;
+        SerializedProperty flags;
 
         Quest quest;
 
@@ -23,6 +24,7 @@ namespace OkapiKit.Editor
             questTextProp = serializedObject.FindProperty("questText");
             questsRequired = serializedObject.FindProperty("questsRequired");
             questObjectives = serializedObject.FindProperty("questObjectives");
+            flags = serializedObject.FindProperty("flags");
         }
 
         public override void OnInspectorGUI()
@@ -37,6 +39,7 @@ namespace OkapiKit.Editor
                 EditorGUILayout.PropertyField(questTextProp, new GUIContent("Quest Text", "Quest text of the quest"));
 
                 EditorGUILayout.Space(5);
+                EditorGUILayout.PropertyField(flags, new GUIContent("Flags", "Flags"), true);
                 EditorGUILayout.PropertyField(questsRequired, new GUIContent("Required Quests", "These quests need to be done before this quest can be active"), true);
                 EditorGUILayout.PropertyField(questObjectives, new GUIContent("Quest objectives", "Quest objectives"), true);
             }
