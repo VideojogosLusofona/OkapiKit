@@ -14,6 +14,7 @@
 - Added change resource action
 - Added resource value condition
 - Added Quest and QuestManager system
+- Added quest events (OnQuestEvent trigger)
 - Fixed several UI bugs
 
 ## V1.18.2
