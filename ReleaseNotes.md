@@ -17,6 +17,7 @@
 - Added quest events (OnQuestEvent trigger)
 - Added Quest actions (Give, Remove and Fail quest)
 - Added Token actions (Give, Remove)
+- Added quest-linked conditions (IsQuestActive, etc, and TokenCount)
 - Fixed several UI bugs
 
 ## V1.18.2

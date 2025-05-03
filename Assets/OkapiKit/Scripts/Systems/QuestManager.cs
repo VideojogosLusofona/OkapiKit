@@ -86,6 +86,10 @@ namespace OkapiKit
 
         public void AddQuest(Quest quest)
         {
+            // Check if quest is already pending/active
+            if (pendingQuests.IndexOf(quest) != -1) return;
+            if (activeQuests.IndexOf(quest) != -1) return;
+
             // Quests are added to the pending quest list, in case they depend on other quests
             pendingQuests.Add(quest);
         }
@@ -132,6 +136,22 @@ namespace OkapiKit
             if (completedQuests == null) return false;
 
             return (completedQuests.IndexOf(quest) != -1);
+        }
+
+        public bool IsQuestActive(Quest quest)
+        {
+            if (quest == null) return true;
+            if (activeQuests == null) return false;
+
+            return (activeQuests.IndexOf(quest) != -1);
+        }
+
+        public bool IsQuestFailed(Quest quest)
+        {
+            if (quest == null) return true;
+            if (failedQuests == null) return false;
+
+            return (failedQuests.IndexOf(quest) != -1);
         }
 
         protected override void CheckErrors()

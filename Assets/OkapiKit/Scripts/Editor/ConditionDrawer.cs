@@ -58,7 +58,13 @@ namespace OkapiKit.Editor
             var extra_width_variable = extra_width * 2.0f / 3.0f;
             var extra_width_value = extra_width / 3.0f;
 
-            Condition.DataType dataType = Condition.DataType.Number;
+            Condition.DataType dataType = Condition.GetDataType((Condition.ValueType)propValueType.enumValueIndex);
+            if (dataType == Condition.DataType.Boolean)
+            {
+                // Expand to take the whole space, need to change the variables above
+                extra_width_variable = width - 150;
+                extra_width_value = width - 150;
+            }
 
             if (propValueHandler.objectReferenceValue == null)
             {
@@ -191,8 +197,6 @@ namespace OkapiKit.Editor
                                 EditorGUI.PropertyField(probeRect, propProbe, GUIContent.none);
 
                             }
-
-                            if (valueType == Condition.ValueType.Probe) dataType = Condition.DataType.Boolean;
                         }
                         else if (valueType == Condition.ValueType.IsGrounded)
                         {
@@ -203,8 +207,6 @@ namespace OkapiKit.Editor
 
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                             EditorGUI.PropertyField(movementRect, propMovementPlatformer, GUIContent.none);
-
-                            dataType = Condition.DataType.Boolean;
                         }
                         else if (valueType == Condition.ValueType.IsGliding)
                         {
@@ -215,8 +217,6 @@ namespace OkapiKit.Editor
 
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                             EditorGUI.PropertyField(movementRect, propMovementPlatformer, GUIContent.none);
-
-                            dataType = Condition.DataType.Boolean;
                         }
                         else if ((valueType == Condition.ValueType.OnTile) ||
                                  (valueType == Condition.ValueType.OnTileSet))
@@ -243,8 +243,6 @@ namespace OkapiKit.Editor
                                 EditorGUI.PropertyField(rect, propTile, GUIContent.none);
                             else if (valueType == Condition.ValueType.OnTileSet)
                                 EditorGUI.PropertyField(rect, propTileSet, GUIContent.none);
-
-                            dataType = Condition.DataType.Boolean;
                         }
                         else if ((valueType == Condition.ValueType.HasItem) ||
                                  (valueType == Condition.ValueType.ItemCount))
@@ -259,7 +257,10 @@ namespace OkapiKit.Editor
                             var propItemRect = new Rect(positionValue, position.y + elemHeight * 2.0f, 150 + extra_width_variable, elemHeight);
 
                             float originalLabelWidth = EditorGUIUtility.labelWidth;
-                            EditorGUIUtility.labelWidth = propInventoryRect.width * 0.35f;
+                            if (valueType == Condition.ValueType.HasItem)
+                                EditorGUIUtility.labelWidth = propInventoryRect.width * 0.20f;
+                            else
+                                EditorGUIUtility.labelWidth = propInventoryRect.width * 0.35f;
 
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                             var prefixLabel = EditorGUI.PrefixLabel(propInventoryRect, new GUIContent("Inventory"));
@@ -268,9 +269,6 @@ namespace OkapiKit.Editor
                             EditorGUI.PropertyField(prefixLabel, propItem, GUIContent.none);
 
                             EditorGUIUtility.labelWidth = originalLabelWidth;
-
-                            if (valueType == Condition.ValueType.HasItem)
-                                dataType = Condition.DataType.Boolean;
                         }
                         else if (valueType == Condition.ValueType.IsEquipped)
                         {
@@ -284,7 +282,7 @@ namespace OkapiKit.Editor
                             var propItemRect = new Rect(positionValue, position.y + elemHeight * 2.0f, 150 + extra_width_variable, elemHeight);
 
                             float originalLabelWidth = EditorGUIUtility.labelWidth;
-                            EditorGUIUtility.labelWidth = propInventoryRect.width * 0.35f;
+                            EditorGUIUtility.labelWidth = propInventoryRect.width * 0.20f;
 
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                             var prefixLabel = EditorGUI.PrefixLabel(propInventoryRect, new GUIContent("Equipment"));
@@ -293,8 +291,6 @@ namespace OkapiKit.Editor
                             EditorGUI.PropertyField(prefixLabel, propItem, GUIContent.none);
 
                             EditorGUIUtility.labelWidth = originalLabelWidth;
-
-                            dataType = Condition.DataType.Boolean;
                         }
                         else if (valueType == Condition.ValueType.ResourceValue)
                         {
@@ -307,6 +303,54 @@ namespace OkapiKit.Editor
 
                             EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
                             EditorGUI.PropertyField(resourceRect, propResource, GUIContent.none);
+                        }
+                        else if ((valueType == Condition.ValueType.IsQuestActive) ||
+                                 (valueType == Condition.ValueType.IsQuestActiveOrCompleted) ||
+                                 (valueType == Condition.ValueType.IsQuestCompleted) ||
+                                 (valueType == Condition.ValueType.IsQuestDone) ||
+                                 (valueType == Condition.ValueType.IsQuestFailed))
+                        {
+                            var propQuest = property.FindPropertyRelative(nameof(Condition.quest));
+                            var propQuestManager = property.FindPropertyRelative(nameof(Condition.questManager));
+
+                            var elemHeight = position.height / 3.0f;
+
+                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                            var propQuestManagerRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+                            var propQuestRect = new Rect(positionValue, position.y + elemHeight * 2.0f, 150 + extra_width_variable, elemHeight);
+
+                            float originalLabelWidth = EditorGUIUtility.labelWidth;
+                            EditorGUIUtility.labelWidth = propQuestManagerRect.width * 0.20f;
+
+                            EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                            var prefixLabel = EditorGUI.PrefixLabel(propQuestManagerRect, new GUIContent("Quest Manager"));
+                            EditorGUI.PropertyField(prefixLabel, propQuestManager, GUIContent.none);
+                            prefixLabel = EditorGUI.PrefixLabel(propQuestRect, new GUIContent("Quest"));
+                            EditorGUI.PropertyField(prefixLabel, propQuest, GUIContent.none);
+
+                            EditorGUIUtility.labelWidth = originalLabelWidth;
+                        }
+                        else if (valueType == Condition.ValueType.TokenCount)
+                        {
+                            var propToken = property.FindPropertyRelative(nameof(Condition.tag));
+                            var propQuestManager = property.FindPropertyRelative(nameof(Condition.questManager));
+
+                            var elemHeight = position.height / 3.0f;
+
+                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                            var propQuestManagerRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+                            var propTokenRect = new Rect(positionValue, position.y + elemHeight * 2.0f, 150 + extra_width_variable, elemHeight);
+
+                            float originalLabelWidth = EditorGUIUtility.labelWidth;
+                            EditorGUIUtility.labelWidth = propQuestManagerRect.width * 0.35f;
+
+                            EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                            var prefixLabel = EditorGUI.PrefixLabel(propQuestManagerRect, new GUIContent("Quest Manager"));
+                            EditorGUI.PropertyField(prefixLabel, propQuestManager, GUIContent.none);
+                            prefixLabel = EditorGUI.PrefixLabel(propTokenRect, new GUIContent("Token"));
+                            EditorGUI.PropertyField(prefixLabel, propToken, GUIContent.none);
+
+                            EditorGUIUtility.labelWidth = originalLabelWidth;
                         }
                     }
                 }
@@ -447,7 +491,13 @@ namespace OkapiKit.Editor
                     else if ((condType == Condition.ValueType.HasItem) ||
                              (condType == Condition.ValueType.ItemCount) ||
                              (condType == Condition.ValueType.IsEquipped) ||
-                             (condType == Condition.ValueType.ResourceValue))
+                             (condType == Condition.ValueType.ResourceValue) ||
+                             (condType == Condition.ValueType.IsQuestActive) ||
+                             (condType == Condition.ValueType.IsQuestActiveOrCompleted) ||
+                             (condType == Condition.ValueType.IsQuestCompleted) ||
+                             (condType == Condition.ValueType.IsQuestDone) ||
+                             (condType == Condition.ValueType.IsQuestFailed) ||
+                             (condType == Condition.ValueType.TokenCount))
                     {
                         height = baseHeight * 3;
                     }

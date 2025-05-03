@@ -1,6 +1,4 @@
-using Codice.CM.Common;
 using System.Collections.Generic;
-using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -21,7 +19,14 @@ namespace OkapiKit
             IsGrounded = 12, IsGliding = 13,
             OnTile = 16, OnTileSet = 17,
             HasItem = 18, ItemCount = 19,
-            IsEquipped = 20, ResourceValue = 21
+            IsEquipped = 20, ResourceValue = 21,
+            IsQuestActive = 22,
+            IsQuestFailed = 23,
+            IsQuestCompleted = 24,
+            IsQuestDone = 25,
+            IsQuestActiveOrCompleted = 26,
+            TokenCount = 27,
+
         };
         [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5 };
         [System.Serializable] public enum Axis { UpAxis = 0, RightAxis = 1 };
@@ -51,6 +56,8 @@ namespace OkapiKit
         public Item                 item;
         public TargetEquipment      equipment;
         public TargetResource       resource;
+        public TargetQuestManager   questManager;
+        public Quest                quest;
         
         private GridObject          gridObject;
 
@@ -58,7 +65,7 @@ namespace OkapiKit
         static List<Transform> potentialTransforms = new();
         static List<GameObject> gameObjects = new();
 
-        public DataType GetDataType()
+        public static DataType GetDataType(ValueType valueType)
         {
             if (valueType == ValueType.Probe) return DataType.Boolean;
             if (valueType == ValueType.IsGrounded) return DataType.Boolean;
@@ -67,7 +74,13 @@ namespace OkapiKit
             if (valueType == ValueType.OnTileSet) return DataType.Boolean;
             if (valueType == ValueType.HasItem) return DataType.Boolean;
             if (valueType == ValueType.IsEquipped) return DataType.Boolean;
-            else return DataType.Number;
+            if (valueType == ValueType.IsQuestActive) return DataType.Boolean;
+            if (valueType == ValueType.IsQuestFailed) return DataType.Boolean;
+            if (valueType == ValueType.IsQuestCompleted) return DataType.Boolean;
+            if (valueType == ValueType.IsQuestDone) return DataType.Boolean;
+            if (valueType == ValueType.IsQuestActiveOrCompleted) return DataType.Boolean;
+
+            return DataType.Number;
         }
 
         public Variable GetVariable()
@@ -155,18 +168,30 @@ namespace OkapiKit
                         if (tag != null) targetName = $"Tag[{tag.name}]";
                         else if (sourceTransform) targetName = $"Position[{sourceTransform.name}]";
 
-                        if (valueType == ValueType.OnTile) return $"{targetName} is on top of {tileName})";
-                        else if (valueType == ValueType.OnTileSet) return $"{targetName} is on top of {tileName})";
+                        if (valueType == ValueType.OnTile) return $"{targetName} is on top of {tileName}";
+                        else if (valueType == ValueType.OnTileSet) return $"{targetName} is on top of {tileName}";
                     }
                     break;
                 case ValueType.HasItem:
-                    return $"({inventory.GetShortDescription(gameObject)} has item {item?.displayName ?? "UNDEFINED"})";
+                    return $"{inventory.GetShortDescription(gameObject)} has item {item?.displayName ?? "UNDEFINED"}";
                 case ValueType.ItemCount:
                     return $"ItemCount({inventory.GetRawDescription("", gameObject)}, {item?.displayName ?? "UNDEFINED"})";
                 case ValueType.IsEquipped:
-                    return $"({item?.displayName ?? "[UNDEFINED]"} is equipped {equipment.GetRawDescription("", gameObject)})";
+                    return $"{item?.displayName ?? "[UNDEFINED]"} is equipped {equipment.GetRawDescription("", gameObject)}";
                 case ValueType.ResourceValue:
                     return $"{resource.GetShortDescription(gameObject)}";
+                case ValueType.IsQuestActive:
+                    return $"Quest \"{quest?.displayName ?? "UNDEFINED"}\" is active";
+                case ValueType.IsQuestFailed:
+                    return $"Quest \"{quest?.displayName ?? "UNDEFINED"}\" is failed";
+                case ValueType.IsQuestCompleted:
+                    return $"Quest \"{quest?.displayName ?? "UNDEFINED"}\" is complete";
+                case ValueType.IsQuestDone:
+                    return $"Quest \"{quest?.displayName ?? "UNDEFINED"}\" is done";
+                case ValueType.IsQuestActiveOrCompleted:
+                    return $"Quest \"{quest?.displayName ?? "UNDEFINED"}\" is active or complete";
+                case ValueType.TokenCount:
+                    return $"TokenCount([{tag?.name ?? "UNDEFINED"}])\"";
             }
 
             return "[Unknown]";
@@ -185,7 +210,7 @@ namespace OkapiKit
             string desc = "";
             if (negate) desc += "not ";
             desc += $"({GetDataName(gameObject)}";
-            if (GetDataType() == DataType.Number)
+            if (GetDataType(valueType) == DataType.Number)
             {
                 switch (comparison)
                 {
@@ -200,8 +225,8 @@ namespace OkapiKit
                 }
                 desc += GetComparisonValueString();
                 if (percentageCompare) desc += "%";
-                desc += ")";
             }
+            desc += ")";
 
             return desc;
         }
@@ -210,7 +235,7 @@ namespace OkapiKit
         {
             bool b = false;
 
-            if (GetDataType() == DataType.Boolean)
+            if (GetDataType(valueType) == DataType.Boolean)
             {
                 switch (valueType)
                 {
@@ -231,19 +256,19 @@ namespace OkapiKit
                             }
                         }
                         break;
-                    case Condition.ValueType.IsGrounded:
+                    case ValueType.IsGrounded:
                         if (movementPlatformer)
                         {
                             b = movementPlatformer.isGrounded;
                         }
                         break;
-                    case Condition.ValueType.IsGliding:
+                    case ValueType.IsGliding:
                         if (movementPlatformer)
                         {
                             b = movementPlatformer.isGliding;
                         }
                         break;
-                    case Condition.ValueType.OnTile:
+                    case ValueType.OnTile:
                         {
                             var targetTransform = GetTransform(gameObject);
                             if (gridObject == null) gridObject = gameObject.GetComponent<GridObject>();
@@ -254,7 +279,7 @@ namespace OkapiKit
                             }
                         }
                         break;
-                    case Condition.ValueType.OnTileSet:
+                    case ValueType.OnTileSet:
                         {
                             var targetTransform = GetTransform(gameObject);
                             if (gridObject == null) gridObject = gameObject.GetComponent<GridObject>();
@@ -265,16 +290,48 @@ namespace OkapiKit
                             }
                         }
                         break;
-                    case Condition.ValueType.HasItem:
+                    case ValueType.HasItem:
                         {
                             var inv = inventory.GetTarget(gameObject);
                             b = inv?.HasItem(item) ?? false;
                         }
                         break;
-                    case Condition.ValueType.IsEquipped:
+                    case ValueType.IsEquipped:
                         {
                             var equip = equipment.GetTarget(gameObject);
                             b = equip?.IsEquipped(item) ?? false;
+                        }
+                        break;
+                    case ValueType.IsQuestActive:
+                        {
+                            var qm = questManager.GetTarget(gameObject);
+                            b = qm?.IsQuestActive(quest) ?? false;
+                        }
+                        break;
+                    case ValueType.IsQuestFailed:
+                        {
+                            var qm = questManager.GetTarget(gameObject);
+                            b = qm?.IsQuestFailed(quest) ?? false;
+                        }
+                        break;
+                    case ValueType.IsQuestCompleted:
+                        {
+                            var qm = questManager.GetTarget(gameObject);
+                            b = qm?.IsQuestComplete(quest) ?? false;
+                        }
+                        break;
+                    case ValueType.IsQuestDone:
+                        {
+                            var qm = questManager.GetTarget(gameObject);
+                            b = qm?.IsQuestComplete(quest) ?? false;
+                            if (!b) b = qm?.IsQuestFailed(quest) ?? false;
+                        }
+                        break;
+                    case ValueType.IsQuestActiveOrCompleted:
+                        {
+                            var qm = questManager.GetTarget(gameObject);
+                            b = qm?.IsQuestComplete(quest) ?? false;
+                            if (!b) b = qm?.IsQuestActive(quest) ?? false;
                         }
                         break;
                     default:
@@ -294,7 +351,7 @@ namespace OkapiKit
                 {
                     switch (valueType)
                     {
-                        case Condition.ValueType.TagCount:
+                        case ValueType.TagCount:
                             {
                                 gameObjects.Clear();
                                 HypertaggedObject.FindGameObjectsWithHypertag(tag, gameObjects);
@@ -317,56 +374,56 @@ namespace OkapiKit
                                 maxValue = gameObjects.Count;
                             }
                             break;
-                        case Condition.ValueType.WorldPositionX:
+                        case ValueType.WorldPositionX:
                             t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
                             currentValue = t.position.x;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.WorldPositionY:
+                        case ValueType.WorldPositionY:
                             t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
                             currentValue = t.position.y;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.LocalPositionX:
+                        case ValueType.LocalPositionX:
                             t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
                             currentValue = t.localPosition.x;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.LocalPositionY:
+                        case ValueType.LocalPositionY:
                             t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
                             currentValue = t.localPosition.y;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.VelocityX:
+                        case ValueType.VelocityX:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
                             if (rb) currentValue = rb.linearVelocity.x;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.VelocityY:
+                        case ValueType.VelocityY:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
                             if (rb) currentValue = rb.linearVelocity.y;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.AbsoluteVelocityX:
+                        case ValueType.AbsoluteVelocityX:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
                             if (rb) currentValue = Mathf.Abs(rb.linearVelocity.x);
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.AbsoluteVelocityY:
+                        case ValueType.AbsoluteVelocityY:
                             rb = (rigidBody) ? (rigidBody) : (gameObject.GetComponent<Rigidbody2D>());
                             if (rb) currentValue = Mathf.Abs(rb.linearVelocity.y);
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
-                        case Condition.ValueType.Distance:
-                        case Condition.ValueType.Angle:
+                        case ValueType.Distance:
+                        case ValueType.Angle:
                             {
                                 Transform target = null;
 
@@ -418,7 +475,7 @@ namespace OkapiKit
                                 maxValue = float.MaxValue;
                             }
                             break;
-                        case Condition.ValueType.ProbeDistance:
+                        case ValueType.ProbeDistance:
                             currentValue = float.MaxValue;
                             minValue = 0;
                             maxValue = float.MaxValue;
@@ -443,7 +500,7 @@ namespace OkapiKit
                                 maxValue = probe.GetMaxDistance();
                             }
                             break;
-                        case Condition.ValueType.ItemCount:
+                        case ValueType.ItemCount:
                             {
                                 var inv = inventory.GetTarget(gameObject);
                                 currentValue = inv?.GetItemCount(item) ?? 0;
@@ -451,12 +508,20 @@ namespace OkapiKit
                                 maxValue = int.MaxValue;
                             }
                             break;
-                        case Condition.ValueType.ResourceValue:
+                        case ValueType.ResourceValue:
                             {
                                 var resValue = resource.GetTarget(gameObject);
                                 currentValue = resValue?.resource ?? 0;
                                 minValue = 0;
                                 maxValue = resValue?.maxValue ?? float.MaxValue;
+                            }
+                            break;
+                        case ValueType.TokenCount:
+                            {
+                                var qm = questManager.GetTarget(gameObject);
+                                currentValue = qm?.GetTokenCount(tag) ?? 0;
+                                minValue = 0;
+                                maxValue = float.MaxValue;
                             }
                             break;
                         default:
@@ -663,6 +728,28 @@ namespace OkapiKit
                 if (item == null)
                 {
                     errors.Add(new LogEntry(LogEntry.Type.Error, "Need to define an item to check!", "Need to define an item to check!"));
+                }
+            }
+            else if ((valueType == ValueType.IsQuestActive) ||
+                     (valueType == ValueType.IsQuestFailed) ||
+                     (valueType == ValueType.IsQuestCompleted) ||
+                     (valueType == ValueType.IsQuestDone) ||
+                     (valueType == ValueType.IsQuestActiveOrCompleted))
+            {
+                questManager.CheckErrors(errors, "quest manager", go);
+                
+                if (quest == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Need to define a quest to check!", "Need to define a quest to check!"));
+                }
+            }
+            else if (valueType == ValueType.TokenCount)
+            {
+                questManager.CheckErrors(errors, "quest manager", go);
+
+                if (tag == null)
+                {
+                    errors.Add(new LogEntry(LogEntry.Type.Error, "Need to define a token to check!", "Need to define a token to check!"));
                 }
             }
         }

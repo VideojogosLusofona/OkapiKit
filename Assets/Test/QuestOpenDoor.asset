@@ -13,15 +13,21 @@ MonoBehaviour:
   m_Name: QuestOpenDoor
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "Requires the following quests:\n\nQuest Objectives:\n   Open Door
-    (0/1)\n"
+  _explanation: "Requires the following quests:\n\nQuest Objectives:\n  Gold Key
+    (0/1)\n   Open Door (0/1)\n"
   description: 
   displayName: Open Door
-  questText: You need to open the door to the hut nearby.
+  questText: You need to find the gold key, and open the door of the mysterious hut.
   questsRequired: []
   questObjectives:
+  - type: 0
+    name: 
+    item: {fileID: 11400000, guid: 8f52d74f4b0462f42a20ec47fe3c3cd7, type: 2}
+    tag: {fileID: 0}
+    count: 1
   - type: 1
     name: Open Door
     item: {fileID: 11400000, guid: 8f52d74f4b0462f42a20ec47fe3c3cd7, type: 2}
     tag: {fileID: 11400000, guid: f2d8158fbeb626644a2636efef789cf1, type: 2}
     count: 1
+  flags: -1
