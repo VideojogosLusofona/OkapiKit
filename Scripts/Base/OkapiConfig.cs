@@ -24,7 +24,7 @@ namespace OkapiKit
         [SerializeField, Header("Sorting")]
         private OrderMode   _orderMode = OrderMode.Z;
         [SerializeField]
-        private float       _orderScaleY = 0.1f;
+        private float       _orderScaleY = 0.0001f;
         [SerializeField]
         private int         _orderMin = -1000;
         [SerializeField]
