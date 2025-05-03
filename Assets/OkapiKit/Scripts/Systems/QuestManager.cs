@@ -65,6 +65,25 @@ namespace OkapiKit
                     }
                 }
             }
+
+            // Check for completed quests
+            if ((activeQuests != null) && (activeQuests.Count > 0))
+            {
+                var checkQuests = new List<Quest>(activeQuests);
+                foreach (var q in checkQuests)
+                {
+                    if (q.IsCompleted(this))
+                    {
+                        CompleteQuest(q);
+                    }
+                }
+            }
+        }
+
+        public void AddQuest(Quest quest)
+        {
+            // Quests are added to the pending quest list, in case they depend on other quests
+            pendingQuests.Add(quest);
         }
 
         public void StartQuest(Quest q)
@@ -72,6 +91,34 @@ namespace OkapiKit
             activeQuests.Add(q);
             onQuestStart?.Invoke(q);
         }
+
+        public void CompleteQuest(Quest q)
+        {
+            activeQuests.Remove(q);
+            pendingQuests.Remove(q);
+            completedQuests.Add(q);
+
+            onQuestComplete?.Invoke(q);
+        }
+
+        public void FailQuest(Quest quest)
+        {
+            activeQuests.Remove(quest);
+            pendingQuests.Remove(quest);
+            failedQuests.Add(quest);
+
+            onQuestFailed?.Invoke(quest);
+        }
+
+        internal void RemoveQuest(Quest quest)
+        {
+            activeQuests.Remove(quest);
+            pendingQuests.Remove(quest);
+            failedQuests.Remove(quest);
+
+            onQuestFailed?.Invoke(quest);
+        }
+
 
         public bool IsQuestComplete(Quest quest)
         {
@@ -109,12 +156,13 @@ namespace OkapiKit
             return count;
         }
 
-        internal int GetTokenCount(Hypertag tag)
+        public int GetTokenCount(Hypertag tag)
         {
             return 0;
         }
     }
 
+    [Serializable]
     public class TargetQuestManager : OkapiTarget<QuestManager>
     {
 

@@ -9970,7 +9970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "If (Sword is equipped  on Player) and when button fire1 is pressed
+  _explanation: "If ((Sword is equipped  on Player) and when button fire1 is pressed
     (this can only happen every 0.25 seconds):\n          enables object AttackPoint\n
     then, at 0.1 seconds, \n          disables object AttackPoint\n"
   description: 
@@ -10215,6 +10215,8 @@ GameObject:
   - component: {fileID: 1901302411}
   - component: {fileID: 1901302414}
   - component: {fileID: 1901302413}
+  - component: {fileID: 1901302415}
+  - component: {fileID: 1901302416}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -10343,7 +10345,65 @@ MonoBehaviour:
   - delay: 0
     action: {fileID: 1901302413}
   eventType: 0
+  questManager:
+    type: 0
+    tag: {fileID: 0}
+    obj: {fileID: 0}
   quest: {fileID: 0}
+--- !u!114 &1901302415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901302410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25a57138a272de4ba4675b160be4628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "When quest Find Gold Key completes:\n          Give quest \"Open
+    Door\" \n"
+  description: 
+  enableTrigger: 1
+  allowRetrigger: 1
+  hasPreconditions: 0
+  preConditions: []
+  actions:
+  - delay: 0
+    action: {fileID: 1901302416}
+  eventType: 2
+  questManager:
+    type: 0
+    tag: {fileID: 0}
+    obj: {fileID: 0}
+  quest: {fileID: 11400000, guid: d08422c04b6f12f448dc799a6466d039, type: 2}
+--- !u!114 &1901302416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901302410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2de30ff905b15446a3c7ff6cf37bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'Give quest "Open Door" '
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  questManager:
+    type: 2
+    tag: {fileID: 0}
+    obj: {fileID: 0}
+  quest: {fileID: 11400000, guid: 5dfd8894b201ca946b8f6a0c3b573e92, type: 2}
 --- !u!1001 &2050705214
 PrefabInstance:
   m_ObjectHideFlags: 0

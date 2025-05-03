@@ -15,6 +15,7 @@
 - Added resource value condition
 - Added Quest and QuestManager system
 - Added quest events (OnQuestEvent trigger)
+- Added Quest actions (Give, Remove and Fail quest)
 - Fixed several UI bugs
 
 ## V1.18.2

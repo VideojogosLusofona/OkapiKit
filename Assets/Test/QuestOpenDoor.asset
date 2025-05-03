@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1770d6d104d90a469edd1bb40026b95, type: 3}
+  m_Name: QuestOpenDoor
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: "Requires the following quests:\n\nQuest Objectives:\n   Open Door
+    (0/1)\n"
+  description: 
+  displayName: Open Door
+  questText: You need to open the door to the hut nearby.
+  questsRequired: []
+  questObjectives:
+  - type: 1
+    name: Open Door
+    item: {fileID: 11400000, guid: 8f52d74f4b0462f42a20ec47fe3c3cd7, type: 2}
+    tag: {fileID: 11400000, guid: f2d8158fbeb626644a2636efef789cf1, type: 2}
+    count: 1
