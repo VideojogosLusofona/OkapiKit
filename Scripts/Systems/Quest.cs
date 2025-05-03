@@ -105,6 +105,17 @@ namespace OkapiKit
             return false;
         }
 
+        public bool IsCompleted(QuestManager questManager)
+        {
+            for (int i = 0; i < objectiveCount; i++)
+            {
+                if (!IsObjectiveCompleted(i, questManager)) return false;
+            }
+
+            return true;
+        }
+
+
         public override string GetRawDescription(string ident, ScriptableObject refObject)
         {
             string desc = "Requires the following quests:\n";
