@@ -105,5 +105,8 @@ namespace OkapiKit.Editor
         }
     }
 
-
+    [CustomPropertyDrawer(typeof(TargetQuestManager))]
+    public class TargetQuestManagerEditor : OkapiTargetEditor<QuestManager>
+    {
+    }
 }

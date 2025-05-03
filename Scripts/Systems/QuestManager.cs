@@ -6,6 +6,11 @@ namespace OkapiKit
 {
     public class QuestManager : OkapiElement
     {
+        public delegate void OnQuestEvent(Quest quest);
+        public event OnQuestEvent onQuestStart;
+        public event OnQuestEvent onQuestFailed;
+        public event OnQuestEvent onQuestComplete;
+
         class QuestState
         {
         };
@@ -65,6 +70,7 @@ namespace OkapiKit
         public void StartQuest(Quest q)
         {
             activeQuests.Add(q);
+            onQuestStart?.Invoke(q);
         }
 
         public bool IsQuestComplete(Quest quest)
@@ -107,5 +113,10 @@ namespace OkapiKit
         {
             return 0;
         }
+    }
+
+    public class TargetQuestManager : OkapiTarget<QuestManager>
+    {
+
     }
 }
