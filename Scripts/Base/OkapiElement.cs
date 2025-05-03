@@ -39,7 +39,7 @@ namespace OkapiKit
         protected virtual string Internal_UpdateExplanation()
         {
             _explanation = "";
-            if (description != "") _explanation += description + "\n----------------\n";
+            if (!string.IsNullOrEmpty(description)) _explanation += description + "\n----------------\n";
 
             _explanation += GetRawDescription("", gameObject);
 

@@ -1,13 +1,9 @@
-﻿using NaughtyAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace OkapiKit
 {
-
     public class Resource : OkapiElement
     {
         public enum ChangeType { Burst, OverTime };
@@ -17,6 +13,7 @@ namespace OkapiKit
             UseCooldownOnChanges = 1,
             UseCooldownPerSource = 2,
             OverrideStartValue = 4,
+            EnableCombatText = 8,
         };
 
         public delegate void OnChange(ChangeType changeType, float deltaValue, Vector3 changeSrcPosition, Vector3 changeSrcDirection, GameObject changeSource);
@@ -44,6 +41,7 @@ namespace OkapiKit
         
         public bool isOnGlobalCooldown => ((flags & Flags.UseCooldownOnChanges) != 0) && ((Time.time - lastChange) < globalCooldown);
         public bool isOnCooldown(GameObject src) => (isOnGlobalCooldown) || ((flags & Flags.UseCooldownPerSource) != 0) && (src != null) && (lastChangePerSource.ContainsKey(src) && (Time.time - lastChangePerSource[src]) < cooldownPerSource);
+        public bool isCombatTextEnabled => (flags & Flags.EnableCombatText) != 0;
 
         public float maxValue => type?.maxValue ?? 0.0f;
         public float resource
@@ -93,6 +91,13 @@ namespace OkapiKit
                         {
                             onChange?.Invoke(changeType, deltaValue, changeSrcPosition, changeSrcDirection, changeSource);
                         }
+
+                        if (isCombatTextEnabled)
+                        {
+                            Color c1 = type.displayNegativeTextColor;
+                            Color c2 = c1; c2.a = 0.0f;
+                            CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", c1, c2);
+                        }
                     }
                 }
                 else if (deltaValue > 0)
@@ -110,6 +115,13 @@ namespace OkapiKit
                                 onResourceNotEmpty?.Invoke(changeSource);
                                 _resourceEmpty = false;
                             }
+
+                            if (isCombatTextEnabled)
+                            {
+                                Color c1 = type.displayTextColor;
+                                Color c2 = c1; c2.a = 0.0f;
+                                CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", c1, c2);
+                            }
                         }
                     }
                     else if (_resourceEmpty) ret = false;
@@ -120,6 +132,13 @@ namespace OkapiKit
                             _resource = Mathf.Clamp(_resource + deltaValue, 0.0f, type.maxValue);
 
                             onChange?.Invoke(changeType, deltaValue, changeSrcPosition, changeSrcDirection, changeSource);
+
+                            if (isCombatTextEnabled)
+                            {
+                                Color c1 = type.displayTextColor;
+                                Color c2 = c1; c2.a = 0.0f;
+                                CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", c1, c2);
+                            }
                         }
                         else ret = false;
                     }
