@@ -33,6 +33,7 @@ namespace OkapiKit
         public List<Quest> FailedQuests => failedQuests;
         
         public Dictionary<Hypertag, int>    Tokens => tokens;
+        public Inventory Inventory => _inventory;
 
         Inventory _inventory;
         Equipment _equipment;
@@ -100,6 +101,8 @@ namespace OkapiKit
             activeQuests.Remove(q);
             pendingQuests.Remove(q);
             completedQuests.Add(q);
+
+            q.CompleteQuest(this);
 
             onQuestComplete?.Invoke(q);
         }

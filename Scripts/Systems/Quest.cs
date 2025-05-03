@@ -9,6 +9,12 @@ namespace OkapiKit
     [CreateAssetMenu(fileName = "Quest", menuName = "Okapi Kit/Quest")]
     public class Quest : OkapiScriptableObject
     {
+        [Flags]
+        public enum Flags { 
+            RemoveItemsOnComplete = 1, 
+            RemoveTokensOnComplete = 2 
+        };
+
         [Serializable]
         public class QuestObjective
         {
@@ -26,7 +32,10 @@ namespace OkapiKit
         public string           questText;
         public Quest[]          questsRequired;
         public QuestObjective[] questObjectives;
+        public Flags            flags;
 
+        public bool removeItemsOnComplete => (flags & Flags.RemoveItemsOnComplete) != 0;
+        public bool removeTokensOnComplete => (flags & Flags.RemoveTokensOnComplete) != 0;
         public int objectiveCount => questObjectives?.Length ?? 0;
         public string GetObjectiveDescription(int index, QuestManager questManager)
         {
@@ -216,6 +225,30 @@ namespace OkapiKit
                                 "Ensure the token count is greater than zero to make it meaningful."
                             ));
                         }
+                        break;
+                }
+            }
+        }
+
+        public void CompleteQuest(QuestManager questManager)
+        {
+            foreach (var objective in questObjectives)
+            {
+                switch (objective.type)
+                {
+                    case QuestObjective.Type.Item:
+                        if (removeItemsOnComplete)
+                        {
+                            questManager.Inventory.Remove(objective.item, objective.count);
+                        }
+                        break;
+                    case QuestObjective.Type.Token:
+                        if (removeTokensOnComplete)
+                        {
+                            questManager.ChangeToken(objective.tag, -objective.count);
+                        }
+                        break;
+                    default:
                         break;
                 }
             }
