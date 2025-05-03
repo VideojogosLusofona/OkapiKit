@@ -140,7 +140,7 @@ namespace OkapiKit.Editor
 
             if (EditorGUI.EndChangeCheck())
             {
-                (target as Action).UpdateExplanation();
+                (target as OkapiElement).UpdateExplanation();
             }
 
         }

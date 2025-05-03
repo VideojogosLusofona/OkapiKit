@@ -89,7 +89,7 @@ namespace OkapiKit.Editor
                 if (EditorGUI.EndChangeCheck())
                 {
                     serializedObject.ApplyModifiedProperties();
-                    (target as Action).UpdateExplanation();
+                    action.UpdateExplanation();
                 }
             }
         }

@@ -51,7 +51,7 @@ namespace OkapiKit.Editor
                 EditorGUI.EndChangeCheck();
 
                 serializedObject.ApplyModifiedProperties();
-                (target as Action).UpdateExplanation();
+                action.UpdateExplanation();
             }
         }
     }

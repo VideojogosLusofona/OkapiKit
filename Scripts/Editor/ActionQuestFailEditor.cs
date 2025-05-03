@@ -35,7 +35,7 @@ namespace OkapiKit.Editor
                 if (EditorGUI.EndChangeCheck())
                 {
                     serializedObject.ApplyModifiedProperties();
-                    (target as ActionEffect).UpdateExplanation();
+                    action.UpdateExplanation();
                 }
             }
         }
