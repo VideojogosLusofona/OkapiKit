@@ -19,6 +19,7 @@
 - Added Token actions (Give, Remove)
 - Added quest-linked conditions (IsQuestActive, etc, and TokenCount)
 - Added UI element for quest display
+- Added BounceWalk helper, which is a visual effect for low-cost animation
 - Fixed several UI bugs
 
 ## V1.18.2

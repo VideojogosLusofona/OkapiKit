@@ -267,7 +267,7 @@ namespace OkapiKit
                     else return $"[UNDEFINED].[UNDEFINED]";
                 case Type.Self:
                     return $"{resName}";
-                case Type.LastCollider:
+                case Type.Collider:
                     return $"Collider.{resName}";
                 default:
                     break;

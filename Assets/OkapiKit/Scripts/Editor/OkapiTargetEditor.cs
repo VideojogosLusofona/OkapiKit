@@ -36,13 +36,14 @@ namespace OkapiKit.Editor
             switch (enumVal)
             {
                 case OkapiTarget<T>.Type.Hypertag:
+                case OkapiTarget<T>.Type.ColliderChildTag:
                     EditorGUI.PropertyField(valueRect, tagProp, GUIContent.none);
                     break;
                 case OkapiTarget<T>.Type.Object:
                     EditorGUI.PropertyField(valueRect, objProp, GUIContent.none);
                     break;
                 case OkapiTarget<T>.Type.Self:
-                case OkapiTarget<T>.Type.LastCollider:
+                case OkapiTarget<T>.Type.Collider:
                     flagsRect.width = valueWidth * 0.5f;
                     flagsRect.x = contentRect.x + enumWidth + 2;
                     break;
@@ -116,6 +117,11 @@ namespace OkapiKit.Editor
 
     [CustomPropertyDrawer(typeof(TargetQuestManager))]
     public class TargetQuestManagerEditor : OkapiTargetEditor<QuestManager>
+    {
+    }
+
+    [CustomPropertyDrawer(typeof(TargetTransform))]
+    public class TargetTransformEditor : OkapiTargetEditor<Transform>
     {
     }
 }

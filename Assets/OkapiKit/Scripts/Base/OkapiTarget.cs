@@ -1,4 +1,3 @@
-using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +13,7 @@ namespace OkapiKit
             IncChildren = 1,
             IncParent = 2
         };
-        public enum Type { Hypertag, Object, Self, LastCollider };
+        public enum Type { Hypertag, Object, Self, Collider, ColliderChildTag };
 
         [SerializeField] protected Type         type = Type.Hypertag;
         [SerializeField] protected Hypertag     tag;
@@ -24,7 +23,7 @@ namespace OkapiKit
         public Type         targetType => type;
         public Hypertag     targetTag => tag;
 
-        public bool         isDynamic => (type == Type.LastCollider) || (type == Type.Hypertag);
+        public bool         isDynamic => (type == Type.Collider) || (type == Type.Hypertag) || (type == Type.ColliderChildTag);
         public bool         incChildren => (flags & Flags.IncChildren) != 0;
         public bool         incParent => (flags & Flags.IncParent) != 0;
 
@@ -75,19 +74,46 @@ namespace OkapiKit
                         if (t) return t;
                     }
                     break;
-                case Type.LastCollider:
-                    var colliderObject = TriggerOnCollision.GetLastCollider();
-                    if (colliderObject != null)
+                case Type.Collider:
                     {
-                        var obj = colliderObject;
-                        var t = obj.GetComponent<T>();
-                        if (t) return t;
+                        var colliderObject = TriggerOnCollision.GetLastCollider();
+                        if (colliderObject != null)
+                        {
+                            var obj = colliderObject;
+                            var t = obj.GetComponent<T>();
+                            if (t) return t;
 
-                        if (incChildren) t = obj.GetComponentInChildren<T>();
-                        if (t) return t;
+                            if (incChildren) t = obj.GetComponentInChildren<T>();
+                            if (t) return t;
 
-                        if (incParent) t = obj.GetComponentInParent<T>();
-                        if (t) return t;
+                            if (incParent) t = obj.GetComponentInParent<T>();
+                            if (t) return t;
+                        }
+                    }
+                    break;
+                case Type.ColliderChildTag:
+                    {
+                        var colliderObject = TriggerOnCollision.GetLastCollider();
+                        if (colliderObject != null)
+                        {
+                            var obj = colliderObject;
+                            var tt = obj.GetComponentsInChildren<HypertaggedObject>();
+                            foreach (var tmp in tt)
+                            {
+                                if (tmp.Has(tag))
+                                {
+                                    var t = tmp.GetComponent<T>();
+                                    if (t) return t;
+
+                                    if (incChildren) t = tmp.GetComponentInChildren<T>();
+                                    if (t) return t;
+
+                                    if (incParent) t = tmp.GetComponentInParent<T>();
+                                    if (t) return t;
+                                }                                
+                            }
+
+                        }
                     }
                     break;
                 default:
@@ -149,21 +175,49 @@ namespace OkapiKit
                         if (t) ret.Add(t);
                     }
                     break;
-                case Type.LastCollider:
-                    var colliderObject = TriggerOnCollision.GetLastCollider();
-                    if (colliderObject != null)
+                case Type.Collider:
                     {
-                        T t = null;
+                        var colliderObject = TriggerOnCollision.GetLastCollider();
+                        if (colliderObject != null)
+                        {
+                            T t = null;
 
-                        t = colliderObject.GetComponent<T>();
-                        if (t) ret.Add(t);
+                            t = colliderObject.GetComponent<T>();
+                            if (t) ret.Add(t);
 
-                        T[] tt = null;
-                        if (incChildren) tt = colliderObject.GetComponentsInChildren<T>();
-                        if ((tt != null) && (tt.Length > 0)) ret.AddRange(tt);
+                            T[] tt = null;
+                            if (incChildren) tt = colliderObject.GetComponentsInChildren<T>();
+                            if ((tt != null) && (tt.Length > 0)) ret.AddRange(tt);
 
-                        if (incParent) t = colliderObject.GetComponentInParent<T>();
-                        if (t) ret.Add(t);
+                            if (incParent) t = colliderObject.GetComponentInParent<T>();
+                            if (t) ret.Add(t);
+                        }
+                    }
+                    break;
+                case Type.ColliderChildTag:
+                    {
+                        var colliderObject = TriggerOnCollision.GetLastCollider();
+                        if (colliderObject != null)
+                        {
+                            var obj = colliderObject;
+                            var allObjs = obj.GetComponentsInChildren<HypertaggedObject>();
+                            foreach (var tmp in allObjs)
+                            {
+                                if (tmp.Has(tag))
+                                {
+                                    var tt = tmp.GetComponents<T>();
+                                    if ((tt != null) && (tt.Length > 0)) ret.AddRange(tt);
+
+                                    if (incChildren) tt = tmp.GetComponentsInChildren<T>();
+                                    if ((tt != null) && (tt.Length > 0)) ret.AddRange(tt);
+
+                                    T t = null;
+                                    if (incParent) t = tmp.GetComponentInParent<T>();
+                                    if (t) ret.Add(t);
+                                }
+                            }
+
+                        }
                     }
                     break;
                 default:
@@ -191,7 +245,9 @@ namespace OkapiKit
                         logs.Add(new LogEntry(LogEntry.Type.Error, $"This object doesn't have a target of type {typeof(T).Name}!"));
                     }
                     break;
-                case Type.LastCollider:
+                case Type.ColliderChildTag:
+                    if (tag == null)
+                        logs.Add(new LogEntry(LogEntry.Type.Error, $"No target tag defined to search for {propName}!", $"An object of type {propName} will be searched on the last collider with the given tag."));
                     break;
                 default:
                     break;
@@ -205,8 +261,7 @@ namespace OkapiKit
             switch (type)
             {
                 case Type.Hypertag:
-                    if (tag) desc = $"{propName} with tag [{tag.name}]";
-                    else desc = $"{propName} with tag [UNDEFINED]";
+                    desc = $"{propName} with tag [{tag?.name ?? "UNDEFINED"}]";
                     break;
                 case Type.Object:
                     if (obj) desc = $"{propName} on {obj.name}";
@@ -215,8 +270,11 @@ namespace OkapiKit
                 case Type.Self:
                     desc = $"{propName} on this object";
                     break;
-                case Type.LastCollider:
+                case Type.Collider:
                     desc = $"{propName} on the colliding object";
+                    break;
+                case Type.ColliderChildTag:
+                    desc = $"{propName} on the colliding object children with tag [{tag?.name ?? "UNDEFINED"}]";
                     break;
                 default:
                     break;
@@ -245,8 +303,11 @@ namespace OkapiKit
                 case Type.Self:
                     desc = $"this";
                     break;
-                case Type.LastCollider:
+                case Type.Collider:
                     desc = $"Collider";
+                    break;
+                case Type.ColliderChildTag:
+                    desc = $"Collider[{tag?.name ?? "UNDEFINED"}]";
                     break;
                 default:
                     break;
@@ -261,6 +322,12 @@ namespace OkapiKit
 
     [Serializable]
     public class TargetRenderer : OkapiTarget<Renderer>
+    {
+
+    }
+
+    [Serializable]
+    public class TargetTransform : OkapiTarget<Transform>
     {
 
     }

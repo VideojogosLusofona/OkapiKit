@@ -79,7 +79,35 @@ namespace OkapiKit
 
         public override string GetRawDescription(string ident, GameObject refObject)
         {
-            return "";
+            string desc = "";
+
+            string managerName = sourceQuestManager != null
+                ? sourceQuestManager.GetRawDescription("quest manager", refObject)
+                : "a [missing quest manager]";
+
+            desc += $"Displays quest {questIndex} from {managerName}.";
+
+            bool hasTitle = titleText != null;
+            bool hasObjectives = objectiveText != null && objectiveText.Length > 0;
+
+            if (!hasTitle && !hasObjectives)
+            {
+                desc += " No UI elements assigned, so nothing will be displayed.";
+                return desc;
+            }
+
+            if (hasTitle)
+            {
+                desc += " Shows the quest's display name as a title.";
+            }
+
+            if (hasObjectives)
+            {
+                desc += $" Shows up to {objectiveText.Length} objectives, coloring them in different colors.";
+            }
+
+            return desc;
         }
+
     }
 }

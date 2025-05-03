@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3359697408256928935
+--- !u!1 &1817637711585242123
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,51 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6358569863902464795}
-  - component: {fileID: 1094377123877606951}
-  - component: {fileID: 1077061395224891063}
-  - component: {fileID: 7531181733586496059}
-  - component: {fileID: 2042119395122866894}
-  - component: {fileID: 7384027599709142972}
-  - component: {fileID: 7539606091131250059}
-  - component: {fileID: 3802645516858951368}
-  - component: {fileID: 4555538045600545894}
-  - component: {fileID: 4737629173671138328}
-  - component: {fileID: 2115601472862949525}
-  - component: {fileID: 2218663580103738320}
-  - component: {fileID: 1444758286954308781}
-  - component: {fileID: 3208297967067761859}
-  - component: {fileID: 6423814612614164898}
+  - component: {fileID: 2028918396733601606}
+  - component: {fileID: 7979723858318692730}
+  - component: {fileID: 6738569738381520242}
   m_Layer: 0
-  m_Name: Goblin
+  m_Name: Gfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6358569863902464795
+--- !u!4 &2028918396733601606
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3359697408256928935}
+  m_GameObject: {fileID: 1817637711585242123}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.2, y: 7.9, z: -0.1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1035237943869291248}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 6358569863902464795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1094377123877606951
+--- !u!212 &7979723858318692730
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3359697408256928935}
+  m_GameObject: {fileID: 1817637711585242123}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -101,6 +88,158 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &6738569738381520242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817637711585242123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  hypertags:
+  - {fileID: 11400000, guid: 3dab2c28c4be93d4f8b9855ad89609b6, type: 2}
+--- !u!1 &3283867061016462839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6556743829210921363}
+  - component: {fileID: 4606722697080256085}
+  m_Layer: 0
+  m_Name: Shadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6556743829210921363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3283867061016462839}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6358569863902464795}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &4606722697080256085
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3283867061016462839}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 575bd1481830c7f47b664b68a42c0b57, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 8, y: 4}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &3359697408256928935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6358569863902464795}
+  - component: {fileID: 1077061395224891063}
+  - component: {fileID: 7531181733586496059}
+  - component: {fileID: 2042119395122866894}
+  - component: {fileID: 7384027599709142972}
+  - component: {fileID: 7539606091131250059}
+  - component: {fileID: 1144744872614388903}
+  - component: {fileID: 3802645516858951368}
+  - component: {fileID: 4555538045600545894}
+  - component: {fileID: 4737629173671138328}
+  - component: {fileID: 2115601472862949525}
+  - component: {fileID: 2218663580103738320}
+  - component: {fileID: 1444758286954308781}
+  - component: {fileID: 3208297967067761859}
+  - component: {fileID: 6423814612614164898}
+  m_Layer: 0
+  m_Name: Goblin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6358569863902464795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3359697408256928935}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 57.2, y: 7.9, z: -0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2028918396733601606}
+  - {fileID: 6556743829210921363}
+  - {fileID: 1035237943869291248}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1077061395224891063
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -261,6 +400,29 @@ MonoBehaviour:
 '
   description: 
   offsetZ: 0
+--- !u!114 &1144744872614388903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3359697408256928935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14e6c143c2403d469e77a917c7cdce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  target:
+    type: 1
+    tag: {fileID: 0}
+    obj: {fileID: 2028918396733601606}
+    flags: 0
+  stepTime: 0.25
+  stepHeight: 2
+  teleportDistance: 50
 --- !u!114 &3802645516858951368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,10 +458,10 @@ MonoBehaviour:
   _showInfo: 1
   _explanation: "Check for enemy death\n----------------\nWhen ([Goblin].Health <=
     0):\n          disables component Goblin (UnityEngine.BoxCollider2D)\n         
-    sets Goblin's sprite to [colored_outline_577]\n          sets Goblin's sprite
-    color to RGBA(0.547, 0.547, 0.547, 1.000)\n          set the X scale of object
-    Goblin to 0.5, and set the Y scale of object Goblin to 0.5.\n          Give token
-    \"TokenKillGoblin\" to [TagPlayer]\n          spawns prefab GoldKey at the position
+    sets Gfx's sprite to [colored_outline_577]\n          sets Gfx's sprite color
+    to RGBA(0.547, 0.547, 0.547, 1.000)\n          set the X scale of object Goblin
+    to 0.5, and set the Y scale of object Goblin to 0.5.\n          Give token \"TokenKillGoblin\"
+    to [TagPlayer](inc. children)\n          spawns prefab GoldKey at the position
     of DropPoint\n\nThis trigger will execute only when the conditions change and
     they are all true."
   description: Check for enemy death
@@ -358,6 +520,12 @@ MonoBehaviour:
       obj: {fileID: 3802645516858951368}
       flags: 0
       resourceType: {fileID: 0}
+    questManager:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    quest: {fileID: 0}
   elseActions: []
 --- !u!114 &4737629173671138328
 MonoBehaviour:
@@ -394,14 +562,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: 'Sets Goblin''s sprite to [colored_outline_577]'
+  _explanation: 'Sets Gfx''s sprite to [colored_outline_577]'
   description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  target: {fileID: 1094377123877606951}
+  target: {fileID: 7979723858318692730}
   changeType: 0
   sprite: {fileID: 1746157636, guid: af35de7345491b1469fd6769999c4ffe, type: 3}
   color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
@@ -419,14 +587,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: Sets Goblin's sprite color to RGBA(0.547, 0.547, 0.547, 1.000)
+  _explanation: Sets Gfx's sprite color to RGBA(0.547, 0.547, 0.547, 1.000)
   description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  target: {fileID: 1094377123877606951}
+  target: {fileID: 7979723858318692730}
   changeType: 1
   sprite: {fileID: 0}
   color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
@@ -499,7 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: 
+  _explanation: Give token "TokenKillGoblin" to [TagPlayer](inc. children)
   description: 
   enableAction: 1
   hasTags: 0
@@ -512,6 +680,7 @@ MonoBehaviour:
     obj: {fileID: 0}
     flags: 1
   token: {fileID: 11400000, guid: 1d8b8689454aab0448df04414e42d46e, type: 2}
+  quantity: 1
 --- !u!1 &5066776696835148068
 GameObject:
   m_ObjectHideFlags: 0
