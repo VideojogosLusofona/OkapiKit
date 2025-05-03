@@ -18,6 +18,7 @@
 - Added Quest actions (Give, Remove and Fail quest)
 - Added Token actions (Give, Remove)
 - Added quest-linked conditions (IsQuestActive, etc, and TokenCount)
+- Added UI element for quest display
 - Fixed several UI bugs
 
 ## V1.18.2

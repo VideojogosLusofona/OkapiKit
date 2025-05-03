@@ -125,6 +125,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 
 * All source code by Diogo Andrade is licensed under the [MIT] license.
 * Font "Karmatic Arcade" by [Vic Fieger]
+* Font "Alagard" by [Hewett Tsoi]
 * Breakout paddle by [Zealex], licensed under [CC-BY 3.0]
 * Breakout bricks by [Pavel Kutejnikov], licensed under [CC0]
 * Space Invaders enemies and player by [Clear_code], licensed under [CC-BY 4.0]
@@ -156,6 +157,7 @@ cursor on top of the Trigger icon (blue dot) on the Player object and we can see
 [ULHT]:https://www.ulusofona.pt/
 [lv]:https://www.ulusofona.pt/licenciatura/videojogos
 [Vic Fieger]:http://www.vicfieger.com/
+[Hewett Tsoi]:https://www.dafont.com/pt/profile.php?user=698002
 [Zealex]:https://opengameart.org/users/zealex
 [Pavel Kutejnikov]:https://opengameart.org/users/kutejnikov
 [Clear_code]:https://opengameart.org/users/clearcode

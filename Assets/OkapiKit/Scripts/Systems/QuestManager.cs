@@ -6,10 +6,12 @@ namespace OkapiKit
 {
     public class QuestManager : OkapiElement
     {
+        public delegate void OnQuestListEvent();
         public delegate void OnQuestEvent(Quest quest);
-        public event OnQuestEvent onQuestStart;
-        public event OnQuestEvent onQuestFailed;
-        public event OnQuestEvent onQuestComplete;
+        public event OnQuestEvent       onQuestStart;
+        public event OnQuestEvent       onQuestFailed;
+        public event OnQuestEvent       onQuestComplete;
+        public event OnQuestListEvent   onQuestStateModified;
 
         class QuestState
         {
@@ -45,13 +47,23 @@ namespace OkapiKit
 
         void Start()
         {
-            if (startQuests != null) pendingQuests = new List<Quest>(startQuests);
+            if (startQuests != null)
+            {
+                pendingQuests = new List<Quest>(startQuests);
+                onQuestStateModified?.Invoke();
+            }
 
             _inventory = GetComponent<Inventory>();
             if (_inventory == null) _inventory = targetInventory.GetTarget(gameObject);
+            if (_inventory != null) _inventory.onChange += Inventory_onChange;
 
             _equipment = GetComponent<Equipment>();
             if (_equipment == null) _equipment = targetEquipment.GetTarget(gameObject);
+        }
+
+        private void Inventory_onChange(bool add, Item item, int slot)
+        {
+            onQuestStateModified?.Invoke();
         }
 
         void Update()
@@ -98,6 +110,7 @@ namespace OkapiKit
         {
             activeQuests.Add(q);
             onQuestStart?.Invoke(q);
+            onQuestStateModified?.Invoke();
         }
 
         public void CompleteQuest(Quest q)
@@ -109,6 +122,7 @@ namespace OkapiKit
             q.CompleteQuest(this);
 
             onQuestComplete?.Invoke(q);
+            onQuestStateModified?.Invoke();
         }
 
         public void FailQuest(Quest quest)
@@ -118,6 +132,7 @@ namespace OkapiKit
             failedQuests.Add(quest);
 
             onQuestFailed?.Invoke(quest);
+            onQuestStateModified?.Invoke();
         }
 
         internal void RemoveQuest(Quest quest)
@@ -126,7 +141,7 @@ namespace OkapiKit
             pendingQuests.Remove(quest);
             failedQuests.Remove(quest);
 
-            onQuestFailed?.Invoke(quest);
+            onQuestStateModified?.Invoke();
         }
 
 
@@ -153,6 +168,17 @@ namespace OkapiKit
 
             return (failedQuests.IndexOf(quest) != -1);
         }
+
+        public Quest GetActiveQuest(int questIndex)
+        {
+            if ((questIndex >= 0) && (questIndex < activeQuests.Count))
+            {
+                return activeQuests[questIndex];
+            }
+
+            return null;
+        }
+
 
         protected override void CheckErrors()
         {
@@ -206,6 +232,8 @@ namespace OkapiKit
             {
                 tokens.Remove(token);
             }
+
+            onQuestStateModified?.Invoke();
         }
     }
 
