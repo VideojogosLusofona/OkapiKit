@@ -15,9 +15,9 @@ MonoBehaviour:
   maxPingTime: 4
   displayConditions: 1
   displayHypertags: 0
-  orderMode: 0
-  orderScaleY: 0.0001
-  orderMin: -1000
-  orderMax: 1000
-  orderMinZ: -5
-  orderMaxZ: 5
+  _orderMode: 0
+  _orderScaleY: 0.001
+  _orderMin: -1000
+  _orderMax: 1000
+  _orderMinZ: -5
+  _orderMaxZ: 5
