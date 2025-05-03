@@ -24,12 +24,15 @@ namespace OkapiKit
         List<Quest> completedQuests = new();
         List<Quest> failedQuests = new();
 
-        Dictionary<Quest, QuestState> questState;
+        Dictionary<Quest, QuestState>   questState;
+        Dictionary<Hypertag, int>       tokens;
 
         public List<Quest> PendingQuests => pendingQuests;
         public List<Quest> ActiveQuests => activeQuests;
         public List<Quest> CompletedQuests => completedQuests;
         public List<Quest> FailedQuests => failedQuests;
+        
+        public Dictionary<Hypertag, int>    Tokens => tokens;
 
         Inventory _inventory;
         Equipment _equipment;
@@ -156,9 +159,30 @@ namespace OkapiKit
             return count;
         }
 
-        public int GetTokenCount(Hypertag tag)
+        public int GetTokenCount(Hypertag token)
         {
+            if (token == null) return 0;
+            if (tokens == null) return 0;
+
+            if (tokens.TryGetValue(token, out int current)) return current;
+
             return 0;
+        }
+
+        public void ChangeToken(Hypertag token, int quantity)
+        {
+            if (token == null) return;
+            if (tokens == null) tokens = new();
+
+            int current = 0;
+            tokens.TryGetValue(token, out current);
+
+            tokens[token] = current + quantity;
+            
+            if (tokens[token] <= 0)
+            {
+                tokens.Remove(token);
+            }
         }
     }
 

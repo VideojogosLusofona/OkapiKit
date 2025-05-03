@@ -233,9 +233,10 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8f52d74f4b0462f42a20ec47fe3c3cd7, type: 2}
   quantity: 1
   inventory:
-    type: 5
+    type: 3
     tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
     obj: {fileID: 0}
+    flags: 0
 --- !u!114 &1917462642037594007
 MonoBehaviour:
   m_ObjectHideFlags: 0

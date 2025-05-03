@@ -684,9 +684,10 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
   quantity: 1
   inventory:
-    type: 5
+    type: 3
     tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
     obj: {fileID: 0}
+    flags: 0
 --- !u!1001 &258637053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -698,6 +699,20 @@ PrefabInstance:
     - target: {fileID: 3359697408256928935, guid: f946c81315575aa48b861ab9836affb3, type: 3}
       propertyPath: m_Name
       value: Goblin (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555538045600545894, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _explanation
+      value: "Check for enemy death\n----------------\nWhen ([Goblin (1)].Health
+        <= 0):\n          disables component Goblin (1) (UnityEngine.BoxCollider2D)\n         
+        sets Goblin (1)'s sprite to [colored_outline_577]\n          sets Goblin
+        (1)'s sprite color to RGBA(0.547, 0.547, 0.547, 1.000)\n          set the
+        X scale of object Goblin (1) to 0.5, and set the Y scale of object Goblin
+        (1) to 0.5.\n          Give quest \"TokenKillGoblin\" to [TagPlayer]\n\nThis
+        trigger will execute only when the conditions change and they are all true."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555538045600545894, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: actions.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6358569863902464795, guid: f946c81315575aa48b861ab9836affb3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -832,15 +847,18 @@ MonoBehaviour:
       type: 0
       tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
       obj: {fileID: 0}
+      flags: 0
     item: {fileID: 11400000, guid: 8f52d74f4b0462f42a20ec47fe3c3cd7, type: 2}
     equipment:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
     resource:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
       resourceType: {fileID: 0}
   actions:
   - delay: 0
@@ -1534,15 +1552,18 @@ MonoBehaviour:
       type: 2
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
     item: {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
     equipment:
       type: 2
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
     resource:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
       resourceType: {fileID: 0}
   elseActions:
   - delay: 0
@@ -1568,6 +1589,7 @@ MonoBehaviour:
     type: 2
     tag: {fileID: 0}
     obj: {fileID: 0}
+    flags: 0
   availableSlots:
   - {fileID: 11400000, guid: a9d3c91dd4b4dd04bac9d4a684ddcd3a, type: 2}
 --- !u!114 &373756871
@@ -10001,15 +10023,18 @@ MonoBehaviour:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
     item: {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
     equipment:
       type: 1
       tag: {fileID: 0}
       obj: {fileID: 373756870}
+      flags: 0
     resource:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
       resourceType: {fileID: 0}
   actions:
   - delay: 0
@@ -10244,13 +10269,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d08422c04b6f12f448dc799a6466d039, type: 2}
   - {fileID: 11400000, guid: fdf3e6caa6935b64fa1e224c66424c53, type: 2}
   targetInventory:
-    type: 3
+    type: 2
     tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
     obj: {fileID: 0}
+    flags: 2
   targetEquipment:
-    type: 3
+    type: 2
     tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
     obj: {fileID: 0}
+    flags: 2
 --- !u!4 &1901302412
 Transform:
   m_ObjectHideFlags: 0
@@ -10290,6 +10317,7 @@ MonoBehaviour:
     type: 0
     tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
     obj: {fileID: 0}
+    flags: 0
   color:
     serializedVersion: 2
     key0: {r: 1, g: 0.96324, b: 0, a: 1}
@@ -10349,6 +10377,7 @@ MonoBehaviour:
     type: 0
     tag: {fileID: 0}
     obj: {fileID: 0}
+    flags: 0
   quest: {fileID: 0}
 --- !u!114 &1901302415
 MonoBehaviour:
@@ -10364,7 +10393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   _explanation: "When quest Find Gold Key completes:\n          Give quest \"Open
-    Door\" \n"
+    Door\" to this\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -10378,6 +10407,7 @@ MonoBehaviour:
     type: 0
     tag: {fileID: 0}
     obj: {fileID: 0}
+    flags: 0
   quest: {fileID: 11400000, guid: d08422c04b6f12f448dc799a6466d039, type: 2}
 --- !u!114 &1901302416
 MonoBehaviour:
@@ -10392,7 +10422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: 'Give quest "Open Door" '
+  _explanation: Give quest "Open Door" to this
   description: 
   enableAction: 1
   hasTags: 0
@@ -10403,6 +10433,7 @@ MonoBehaviour:
     type: 2
     tag: {fileID: 0}
     obj: {fileID: 0}
+    flags: 0
   quest: {fileID: 11400000, guid: 5dfd8894b201ca946b8f6a0c3b573e92, type: 2}
 --- !u!1001 &2050705214
 PrefabInstance:
@@ -10663,15 +10694,18 @@ MonoBehaviour:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
     item: {fileID: 0}
     equipment:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
     resource:
-      type: 5
+      type: 3
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
       resourceType: {fileID: 11400000, guid: 6b8f20c052a84a54cacf7eef24a4877d, type: 2}
   actions:
   - delay: 0
@@ -10766,9 +10800,10 @@ MonoBehaviour:
   hasConditions: 0
   actionConditions: []
   targetRenderer:
-    type: 5
+    type: 3
     tag: {fileID: 0}
     obj: {fileID: 0}
+    flags: 0
   color:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10821,9 +10856,10 @@ MonoBehaviour:
   hasConditions: 0
   actionConditions: []
   resource:
-    type: 5
+    type: 3
     tag: {fileID: 0}
     obj: {fileID: 1682697946}
+    flags: 0
     resourceType: {fileID: 11400000, guid: 6b8f20c052a84a54cacf7eef24a4877d, type: 2}
   operation: 3
   changeValue:
@@ -11239,6 +11275,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 4555538045600545894, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _explanation
+      value: "Check for enemy death\n----------------\nWhen ([Goblin].Health <= 0):\n         
+        disables component Goblin (UnityEngine.BoxCollider2D)\n          sets Goblin's
+        sprite to [colored_outline_577]\n          sets Goblin's sprite color to
+        RGBA(0.547, 0.547, 0.547, 1.000)\n          set the X scale of object Goblin
+        to 0.5, and set the Y scale of object Goblin to 0.5.\n          Give token
+        \"TokenKillGoblin\" to [TagPlayer](inc. children)\n          spawns prefab
+        GoldKey at the position of DropPoint\n\nThis trigger will execute only when
+        the conditions change and they are all true."
+      objectReference: {fileID: 0}
     - target: {fileID: 6358569863902464795, guid: f946c81315575aa48b861ab9836affb3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 57.2
@@ -11278,6 +11325,10 @@ PrefabInstance:
     - target: {fileID: 6358569863902464795, guid: f946c81315575aa48b861ab9836affb3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423814612614164898, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _explanation
+      value: Give token "TokenKillGoblin" to [TagPlayer](inc. children)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

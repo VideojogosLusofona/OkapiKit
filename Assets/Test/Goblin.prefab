@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 2218663580103738320}
   - component: {fileID: 1444758286954308781}
   - component: {fileID: 3208297967067761859}
+  - component: {fileID: 6423814612614164898}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -297,9 +298,10 @@ MonoBehaviour:
     0):\n          disables component Goblin (UnityEngine.BoxCollider2D)\n         
     sets Goblin's sprite to [colored_outline_577]\n          sets Goblin's sprite
     color to RGBA(0.547, 0.547, 0.547, 1.000)\n          set the X scale of object
-    Goblin to 0.5, and set the Y scale of object Goblin to 0.5.\n          spawns
-    prefab GoldKey at the position of DropPoint\n\nThis trigger will execute only
-    when the conditions change and they are all true."
+    Goblin to 0.5, and set the Y scale of object Goblin to 0.5.\n          Give token
+    \"TokenKillGoblin\" to [TagPlayer]\n          spawns prefab GoldKey at the position
+    of DropPoint\n\nThis trigger will execute only when the conditions change and
+    they are all true."
   description: Check for enemy death
   enableTrigger: 1
   allowRetrigger: 0
@@ -314,6 +316,8 @@ MonoBehaviour:
     action: {fileID: 2218663580103738320}
   - delay: 0
     action: {fileID: 1444758286954308781}
+  - delay: 0
+    action: {fileID: 6423814612614164898}
   - delay: 0
     action: {fileID: 3208297967067761859}
   continuous: 0
@@ -341,15 +345,18 @@ MonoBehaviour:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
     item: {fileID: 0}
     equipment:
       type: 0
       tag: {fileID: 0}
       obj: {fileID: 0}
+      flags: 0
     resource:
       type: 1
       tag: {fileID: 0}
       obj: {fileID: 3802645516858951368}
+      flags: 0
       resourceType: {fileID: 0}
   elseActions: []
 --- !u!114 &4737629173671138328
@@ -365,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: Disables component Enemy (UnityEngine.BoxCollider2D)
+  _explanation: Disables component Goblin (UnityEngine.BoxCollider2D)
   description: 
   enableAction: 1
   hasTags: 0
@@ -387,7 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: 'Sets Enemy''s sprite to [colored_outline_577]'
+  _explanation: 'Sets Goblin''s sprite to [colored_outline_577]'
   description: 
   enableAction: 1
   hasTags: 0
@@ -412,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: Sets Enemy's sprite color to RGBA(0.547, 0.547, 0.547, 1.000)
+  _explanation: Sets Goblin's sprite color to RGBA(0.547, 0.547, 0.547, 1.000)
   description: 
   enableAction: 1
   hasTags: 0
@@ -437,8 +444,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: Set the X scale of object Enemy to 0.5, and set the Y scale of object
-    Enemy to 0.5.
+  _explanation: Set the X scale of object Goblin to 0.5, and set the Y scale of object
+    Goblin to 0.5.
   description: 
   enableAction: 1
   hasTags: 0
@@ -479,6 +486,32 @@ MonoBehaviour:
   targetPosition: {fileID: 1035237943869291248}
   targetTag: {fileID: 0}
   setParent: 0
+--- !u!114 &6423814612614164898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3359697408256928935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d078bb4575a6dfe45b766da90d921e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
+  enableAction: 1
+  hasTags: 0
+  actionTags: []
+  hasConditions: 0
+  actionConditions: []
+  questManager:
+    type: 0
+    tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
+    obj: {fileID: 0}
+    flags: 1
+  token: {fileID: 11400000, guid: 1d8b8689454aab0448df04414e42d46e, type: 2}
 --- !u!1 &5066776696835148068
 GameObject:
   m_ObjectHideFlags: 0
