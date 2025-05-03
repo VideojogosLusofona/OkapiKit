@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: ResHealth
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: 
+  _explanation: Resource Type
   description: 
   displayName: Health
   displaySpriteColor: {r: 1, g: 1, b: 1, a: 1}
   displaySprite: {fileID: 21300000, guid: a5118d743fa7c3747919158ca85bd724, type: 3}
   displayTextColor: {r: 0.61409813, g: 0.9622642, b: 0.5855287, a: 1}
+  displayNegativeTextColor: {r: 0.9245283, g: 0.46662515, b: 0.46662515, a: 1}
   displayBarColor: {r: 0.544527, g: 0.8679245, b: 0.5199359, a: 1}
   defaultValue: 100
   maxValue: 100

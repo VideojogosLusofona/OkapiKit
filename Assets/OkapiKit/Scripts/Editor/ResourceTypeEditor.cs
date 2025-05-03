@@ -10,6 +10,7 @@ namespace OkapiKit.Editor
         SerializedProperty displaySpriteColorProp;
         SerializedProperty displaySpriteProp;
         SerializedProperty displayTextColorProp;
+        SerializedProperty displayNegativeTextColorProp;
         SerializedProperty displayBarColorProp;
         SerializedProperty defaultValueProp;
         SerializedProperty maxValueProp;
@@ -26,6 +27,7 @@ namespace OkapiKit.Editor
             displaySpriteColorProp = serializedObject.FindProperty("displaySpriteColor");
             displaySpriteProp = serializedObject.FindProperty("displaySprite");
             displayTextColorProp = serializedObject.FindProperty("displayTextColor");
+            displayNegativeTextColorProp = serializedObject.FindProperty("displayNegativeTextColor");
             displayBarColorProp = serializedObject.FindProperty("displayBarColor");
             defaultValueProp = serializedObject.FindProperty("defaultValue");
             maxValueProp = serializedObject.FindProperty("maxValue");
@@ -46,6 +48,7 @@ namespace OkapiKit.Editor
                 }
 
                 EditorGUILayout.PropertyField(displayTextColorProp);
+                EditorGUILayout.PropertyField(displayNegativeTextColorProp);
                 EditorGUILayout.PropertyField(displayBarColorProp);
                 EditorGUILayout.PropertyField(defaultValueProp);
                 EditorGUILayout.PropertyField(maxValueProp);

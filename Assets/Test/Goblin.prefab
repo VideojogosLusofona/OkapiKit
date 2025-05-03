@@ -238,6 +238,7 @@ Transform:
   - {fileID: 2028918396733601606}
   - {fileID: 6556743829210921363}
   - {fileID: 1035237943869291248}
+  - {fileID: 5122616588697654649}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1077061395224891063
@@ -413,7 +414,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: 
+  _explanation: Applies a vertical bounce to target on Gfx based on this object's
+    movement. One bounce cycle takes 0.25 seconds and reaches a height of 2 units.
+    If the object teleports more than 50 units, the bounce resets.
   description: 
   target:
     type: 1
@@ -439,7 +442,7 @@ MonoBehaviour:
   _explanation: 
   description: 
   type: {fileID: 11400000, guid: 6b8f20c052a84a54cacf7eef24a4877d, type: 2}
-  flags: 2
+  flags: 10
   globalCooldown: 0.1
   cooldownPerSource: 0.1
   startValue: 0
@@ -681,6 +684,50 @@ MonoBehaviour:
     flags: 1
   token: {fileID: 11400000, guid: 1d8b8689454aab0448df04414e42d46e, type: 2}
   quantity: 1
+--- !u!1 &4274641225684940274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5122616588697654649}
+  - component: {fileID: 4083151409380287959}
+  m_Layer: 0
+  m_Name: CombatTextPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5122616588697654649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274641225684940274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 22, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6358569863902464795}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4083151409380287959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274641225684940274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b961f9f3503737645ab86b4e11e9eda8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5066776696835148068
 GameObject:
   m_ObjectHideFlags: 0
