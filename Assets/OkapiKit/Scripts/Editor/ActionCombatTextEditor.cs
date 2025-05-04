@@ -29,7 +29,7 @@ namespace OkapiKit.Editor
             {
                 StdEditor(false);
 
-                var action = (target as ActionDash);
+                var action = (target as Action);
                 if (action == null) return;
                 
                 EditorGUI.BeginChangeCheck();
