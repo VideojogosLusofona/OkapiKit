@@ -23,6 +23,8 @@
 - Added CombatText system
 - Added "CombatText" action
 - Added automatic combat text for quests, inventory and equipment manager
+- Added SetOutline action
+- Added option to invert color on Flash action
 - Fixed several UI bugs
 
 ## V1.18.2

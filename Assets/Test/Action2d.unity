@@ -11276,7 +11276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: Flashes renderer target with tag [TagPlayer] for 0.25 seconds
+  _explanation: Flashes renderer target on Gfx with a color for 0.25 seconds
   description: 
   enableAction: 1
   hasTags: 0
@@ -11284,10 +11284,11 @@ MonoBehaviour:
   hasConditions: 0
   actionConditions: []
   targetRenderer:
-    type: 0
+    type: 1
     tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
-    obj: {fileID: 0}
+    obj: {fileID: 102954139}
     flags: 0
+  mode: 0
   color:
     serializedVersion: 2
     key0: {r: 1, g: 0.96324, b: 0, a: 1}
@@ -11332,8 +11333,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When any quest starts:\n          flashes renderer target with tag
-    [TagPlayer] for 0.25 seconds\n"
+  _explanation: "When any quest starts:\n          flashes renderer target on Gfx
+    with a color for 0.25 seconds\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -12173,6 +12174,7 @@ MonoBehaviour:
     tag: {fileID: 11400000, guid: 3dab2c28c4be93d4f8b9855ad89609b6, type: 2}
     obj: {fileID: 0}
     flags: 0
+  mode: 0
   color:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -12909,20 +12911,52 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1144744872614388903, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1444758286954308781, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2115601472862949525, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2218663580103738320, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208297967067761859, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3359697408256928935, guid: f946c81315575aa48b861ab9836affb3, type: 3}
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 3802645516858951368, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555538045600545894, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4555538045600545894, guid: f946c81315575aa48b861ab9836affb3, type: 3}
       propertyPath: _explanation
       value: "Check for enemy death\n----------------\nWhen ([Goblin].Health <= 0):\n         
-        disables component Goblin (UnityEngine.BoxCollider2D)\n          sets Goblin's
-        sprite to [colored_outline_577]\n          sets Goblin's sprite color to
-        RGBA(0.547, 0.547, 0.547, 1.000)\n          set the X scale of object Goblin
-        to 0.5, and set the Y scale of object Goblin to 0.5.\n          Give token
-        \"TokenKillGoblin\" to [TagPlayer](inc. children)\n          spawns prefab
-        GoldKey at the position of DropPoint\n\nThis trigger will execute only when
-        the conditions change and they are all true."
+        disables component Goblin (UnityEngine.BoxCollider2D)\n          sets Gfx's
+        sprite to [colored_outline_577]\n          sets Gfx's sprite color to RGBA(0.547,
+        0.547, 0.547, 1.000)\n          set the X scale of object Goblin to 0.5,
+        and set the Y scale of object Goblin to 0.5.\n          Give token \"TokenKillGoblin\"
+        to [TagPlayer](inc. children)\n          spawns prefab GoldKey at the position
+        of DropPoint\n\nThis trigger will execute only when the conditions change
+        and they are all true."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737629173671138328, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6358569863902464795, guid: f946c81315575aa48b861ab9836affb3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12965,8 +12999,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6423814612614164898, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423814612614164898, guid: f946c81315575aa48b861ab9836affb3, type: 3}
       propertyPath: _explanation
       value: Give token "TokenKillGoblin" to [TagPlayer](inc. children)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539606091131250059, guid: f946c81315575aa48b861ab9836affb3, type: 3}
+      propertyPath: _showInfo
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
