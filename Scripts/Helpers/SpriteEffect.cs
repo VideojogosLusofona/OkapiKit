@@ -205,7 +205,7 @@ namespace OkapiKit
 
     public static class SpriteEffectExtensions
     {
-        public static Tweener.BaseInterpolator FlashInvert(this SpriteEffect spriteEffect, float duration)
+        public static Tweener.BaseInterpolator SmoothInvert(this SpriteEffect spriteEffect, float duration)
         {
             spriteEffect.Tween().Stop("FlashInvert", Tweener.StopBehaviour.SkipToEnd);
 
@@ -238,6 +238,17 @@ namespace OkapiKit
             {
                 spriteEffect.SetFlashColor(color.Evaluate(value));
             }, "FlashColor").Done(() => spriteEffect.SetFlashColor(color.Evaluate(1.0f)));
+        }
+
+        public static Tweener.BaseInterpolator FlashInvert(this SpriteEffect spriteEffect, float duration)
+        {
+            spriteEffect.Tween().Stop("InvertColor", Tweener.StopBehaviour.SkipToEnd);
+            spriteEffect.SetInverseFactor(1.0f);
+
+            return spriteEffect.Tween().Interpolate(0.0f, 1.0f, duration, (value) =>
+            {
+                spriteEffect.SetInverseFactor(1.0f - value);
+            }, "InvertColor").Done(() => spriteEffect.SetInverseFactor(0.0f));
         }
     }
 }
