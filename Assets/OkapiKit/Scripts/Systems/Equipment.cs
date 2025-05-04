@@ -14,6 +14,14 @@ namespace OkapiKit
         private TargetInventory linkedInventory;
         [SerializeField]
         private List<Hypertag>  availableSlots;
+        [SerializeField]
+        private bool combatTextEnable;
+        [SerializeField]
+        private float combatTextDuration = 1.0f;
+        [SerializeField]
+        private Color combatTextEquippedItemColor = Color.yellow;
+        [SerializeField]
+        private Color combatTextUnequippedItemColor = Color.green;
 
         private class EquipItem
         {
@@ -80,6 +88,8 @@ namespace OkapiKit
                 lastChange = Time.time
             };
             onChange?.Invoke(true, slot, itemToEquip);
+            if (combatTextEnable)
+                CombatTextManager.SpawnText(gameObject, $"Equipped {itemToEquip.displayName}", combatTextEquippedItemColor, combatTextEquippedItemColor, combatTextDuration);
         }
 
         public bool IsEquipped(Item item)
@@ -94,12 +104,17 @@ namespace OkapiKit
 
         public void Unequip(Hypertag slot)
         {
+            var prevItem = GetItem(slot);
             items[slot] = new()
             {
                 item = null,
                 lastChange = Time.time
             };
             onChange?.Invoke(false, slot, null);
+            if ((combatTextEnable) && (prevItem))
+            {
+                CombatTextManager.SpawnText(gameObject, $"Unequipped {prevItem.displayName}", combatTextUnequippedItemColor, combatTextUnequippedItemColor, combatTextDuration);
+            }
         }
 
         public List<Hypertag> GetAvailableSlots()

@@ -8,6 +8,10 @@ namespace OkapiKit.Editor
     {
         SerializedProperty limitedProp;
         SerializedProperty maxSlotsProp;
+        SerializedProperty combatTextEnable;
+        SerializedProperty combatTextDuration;
+        SerializedProperty combatTextReceivedItemColor;
+        SerializedProperty combatTextLostItemColor;
 
         Inventory inventory;
 
@@ -19,6 +23,10 @@ namespace OkapiKit.Editor
 
             limitedProp = serializedObject.FindProperty("limited");
             maxSlotsProp = serializedObject.FindProperty("maxSlots");
+            combatTextEnable = serializedObject.FindProperty("combatTextEnable");
+            combatTextDuration = serializedObject.FindProperty("combatTextDuration");
+            combatTextReceivedItemColor = serializedObject.FindProperty("combatTextReceivedItemColor");
+            combatTextLostItemColor = serializedObject.FindProperty("combatTextLostItemColor");
         }
 
         public override void OnInspectorGUI()
@@ -32,6 +40,15 @@ namespace OkapiKit.Editor
                 if (limitedProp.boolValue)
                 {
                     EditorGUILayout.PropertyField(maxSlotsProp);
+                }
+                EditorGUILayout.PropertyField(combatTextEnable, new GUIContent("Combat Text Enable", "Should combat text spawn when a new item is received/lost?"));
+                if (combatTextEnable.boolValue)
+                {
+                    EditorGUI.indentLevel++;
+                    EditorGUILayout.PropertyField(combatTextDuration, new GUIContent("Duration", "Combat text duration"));
+                    EditorGUILayout.PropertyField(combatTextReceivedItemColor, new GUIContent("Received Item Color", "Color to display text when an item is received"));
+                    EditorGUILayout.PropertyField(combatTextLostItemColor, new GUIContent("Lost Item Color", "Color to display text when an item is lost"));
+                    EditorGUI.indentLevel--;
                 }
 
                 serializedObject.ApplyModifiedProperties();

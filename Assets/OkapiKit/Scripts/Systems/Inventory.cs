@@ -16,6 +16,14 @@ namespace OkapiKit
         private bool limited = false;
         [SerializeField, ShowIf(nameof(limited))]
         private int maxSlots = 9;
+        [SerializeField] 
+        private bool combatTextEnable;
+        [SerializeField] 
+        private float combatTextDuration = 1.0f;
+        [SerializeField] 
+        private Color combatTextReceivedItemColor = Color.yellow;
+        [SerializeField] 
+        private Color combatTextLostItemColor = Color.green;
 
         private class Items
         {
@@ -30,13 +38,21 @@ namespace OkapiKit
             int count = 0;
             for (int i = 0; i < quantity; i++)
             {
-                if (Add(item)) count++;
+                if (Add(item, false)) count++;
+            }
+
+            if (combatTextEnable)
+            {
+                if (quantity > 1)
+                    CombatTextManager.SpawnText(gameObject, $"Received {quantity}x {item.displayName}", combatTextReceivedItemColor, combatTextReceivedItemColor, combatTextDuration);
+                else
+                    CombatTextManager.SpawnText(gameObject, $"Received {item.displayName}", combatTextReceivedItemColor, combatTextReceivedItemColor, combatTextDuration);
             }
 
             return count;
         }
 
-        public bool Add(Item item)
+        public bool Add(Item item, bool combatText = true)
         {
             int slotIndex = GetSlot(item);
             if (slotIndex == -1)
@@ -49,22 +65,34 @@ namespace OkapiKit
 
             onChange?.Invoke(true, item, slotIndex);
 
+            if ((combatTextEnable) && (combatText))
+                CombatTextManager.SpawnText(gameObject, $"Received {item.displayName}", combatTextReceivedItemColor, combatTextReceivedItemColor, combatTextDuration);
+
             return true;
         }
 
-        public int Remove(Item item, int count)
+        public int Remove(Item item, int quantity)
         {
             int ret = 0;
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < quantity; i++)
             {
-                if (Remove(item)) ret++;
+                if (Remove(item, false)) ret++;
             }
+
+            if (combatTextEnable)
+            {
+                if (quantity > 1)
+                    CombatTextManager.SpawnText(gameObject, $"Lost {quantity}x {item.displayName}", combatTextLostItemColor, combatTextLostItemColor, combatTextDuration);
+                else
+                    CombatTextManager.SpawnText(gameObject, $"Lost {item.displayName}", combatTextLostItemColor, combatTextLostItemColor, combatTextDuration);
+            }
+
 
             return ret;
         }
 
-        public bool Remove(Item item)
+        public bool Remove(Item item, bool combatText = true)
         {
             int slotIndex = FindItem(item);
             if (slotIndex == -1)
@@ -81,6 +109,9 @@ namespace OkapiKit
             }
 
             onChange?.Invoke(false, item, slotIndex);
+
+            if ((combatText) && (combatTextEnable))
+                CombatTextManager.SpawnText(gameObject, $"Lost {item.displayName}", combatTextLostItemColor, combatTextLostItemColor, combatTextDuration);
 
             return true;
         }

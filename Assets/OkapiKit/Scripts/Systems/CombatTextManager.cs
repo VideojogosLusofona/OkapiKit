@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace OkapiKit
 {
 
-    public class CombatTextManager : MonoBehaviour
+    public class CombatTextManager : OkapiElement
     {
         static CombatTextManager instance;
 
@@ -25,22 +25,23 @@ namespace OkapiKit
             public TextMeshProUGUI textObject;
         }
 
-        public TextMeshProUGUI textPrefab;
-        public float defaultTime = 1.0f;
-        public Vector2 movementVector;
-        public float fadeRate = 1;
+        [SerializeField] private TextMeshProUGUI textPrefab;
+        [SerializeField] private float defaultTime = 1.0f;
+        [SerializeField] private Vector2 movementVector;
+        [SerializeField] private float fadeRate = 1;
+        
+        Camera          uiCamera;
+        List<TextElem>  textList;
+        Canvas          canvas;
+        RectTransform   rectTransform;
+        Vector2         screenToCanvasSizes;
+        CanvasScaler    canvasScaler;
 
-        [SerializeField] private Camera uiCamera;
-
-        List<TextElem> textList;
-        Canvas canvas;
-        RectTransform rectTransform;
-        Vector2 screenToCanvasSizes;
-        CanvasScaler canvasScaler;
-
-        void Awake()
+        protected override void Awake()
         {
-            if (instance != null)
+            base.Awake();
+
+            if ((instance != null) && (instance != this))
             {
                 Destroy(gameObject);
                 return;
@@ -183,24 +184,76 @@ namespace OkapiKit
             newText.textObject.text = string.Format(text, newText.number);
             newText.textObject.color = startColor;
         }
+        public override string GetRawDescription(string ident, GameObject refObject)
+        {
+            var desc = "This allows the developer to use combat text easily.\n";
+
+            desc += $"Every combat text will spawn (or reuse) a {textPrefab?.name ?? "UNDEFINED"} prefab.\n";
+            desc += $"It will move {movementVector} units per second, for {defaultTime} seconds, fading out in {fadeRate} seconds.\n";
+
+            return desc;
+        }
+
+        protected override void CheckErrors()
+        {
+            base.CheckErrors();
+
+            if (textPrefab == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Need a prefab to spawn!", "The prefab has to have at least a TextMeshProUGUI component that gets modified each time a combat text is spawned!"));
+            }
+
+            canvas = GetComponentInParent<Canvas>();
+            if (canvas == null)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "This manager needs to be underneath a Canvas element.", "This manager needs to be placed in a child object underneath a Canvas element."));
+            }
+            else
+            {
+                if (canvas.renderMode != RenderMode.ScreenSpaceCamera)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Canvas needs to be a screen space camera canvas!", "Canvas needs to be a screen space camera canvas, otherwise positions won't work properly."));
+                }
+                canvasScaler = canvas.GetComponent<CanvasScaler>();
+                if (canvasScaler == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Canvas needs a canvas scaler attached to it!", "Canvas needs a CanvasScaler component attached to it, otherwise positions won't work properly."));
+                }
+                uiCamera = canvas.worldCamera;
+                if (uiCamera == null)
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Canvas needs a camera configured!", "Canvas needs a camera configured!"));
+                }
+            }
+        }
+
+        public static bool IsActive()
+        {
+            if (instance == null)
+            {
+                instance = FindFirstObjectByType<CombatTextManager>();
+            }
+
+            return (instance != null);
+        }
 
         public static void SpawnText(GameObject ownerObject, string text, Color startColor, Color endColor, float time = 0.0f, float moveSpeedModifier = 1.0f)
         {
-            instance._SpawnText(ownerObject, Vector2.zero, text, startColor, endColor, time, moveSpeedModifier);
+            instance?._SpawnText(ownerObject, Vector2.zero, text, startColor, endColor, time, moveSpeedModifier);
         }
         public static void SpawnText(GameObject ownerObject, Vector2 offset, string text, Color startColor, Color endColor, float time = 0.0f, float moveSpeedModifier = 1.0f)
         {
-            instance._SpawnText(ownerObject, offset, text, startColor, endColor, time, moveSpeedModifier);
+            instance?._SpawnText(ownerObject, offset, text, startColor, endColor, time, moveSpeedModifier);
         }
 
         public static void SpawnText(GameObject ownerObject, float value, string text, Color startColor, Color endColor, float time = 0.0f, float moveSpeedModifier = 1.0f)
         {
-            instance._SpawnText(ownerObject, Vector2.zero, value, text, startColor, endColor, time, moveSpeedModifier);
+            instance?._SpawnText(ownerObject, Vector2.zero, value, text, startColor, endColor, time, moveSpeedModifier);
         }
 
         public static void SpawnText(GameObject ownerObject, Vector2 offset, float value, string text, Color startColor, Color endColor, float time = 0.0f, float moveSpeedModifier = 1.0f)
         {
-            instance._SpawnText(ownerObject, offset, value, text, startColor, endColor, time, moveSpeedModifier);
+            instance?._SpawnText(ownerObject, offset, value, text, startColor, endColor, time, moveSpeedModifier);
         }
     }
 }

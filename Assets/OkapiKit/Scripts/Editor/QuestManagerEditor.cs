@@ -10,6 +10,10 @@ namespace OkapiKit.Editor
         SerializedProperty startQuests;
         SerializedProperty targetInventory;
         SerializedProperty targetEquipment;
+        SerializedProperty combatTextEnable;
+        SerializedProperty combatTextDuration;
+        SerializedProperty combatTextActiveQuestColor;
+        SerializedProperty combatTextCompletedQuestColor;
 
         QuestManager manager;
 
@@ -22,6 +26,10 @@ namespace OkapiKit.Editor
             startQuests = serializedObject.FindProperty("startQuests");
             targetInventory = serializedObject.FindProperty("targetInventory");
             targetEquipment = serializedObject.FindProperty("targetEquipment");
+            combatTextEnable = serializedObject.FindProperty("combatTextEnable");
+            combatTextDuration = serializedObject.FindProperty("combatTextDuration");
+            combatTextActiveQuestColor = serializedObject.FindProperty("combatTextActiveQuestColor");
+            combatTextCompletedQuestColor = serializedObject.FindProperty("combatTextCompletedQuestColor");
         }
 
         public override void OnInspectorGUI()
@@ -44,6 +52,16 @@ namespace OkapiKit.Editor
                 if (manager.GetComponent<Equipment>() == null)
                 {
                     EditorGUILayout.PropertyField(targetEquipment, new GUIContent("Target Equipment", "When checking for items, I'll check this equipment as well."));
+                }
+                
+                EditorGUILayout.PropertyField(combatTextEnable, new GUIContent("Combat Text Enable", "Should combat text spawn when a new quest is received/completed?"));
+                if (combatTextEnable.boolValue)
+                {
+                    EditorGUI.indentLevel++;
+                    EditorGUILayout.PropertyField(combatTextDuration, new GUIContent("Duration", "Combat text duration"));
+                    EditorGUILayout.PropertyField(combatTextActiveQuestColor, new GUIContent("Active Quest Color", "Color to display text when a quest is received"));
+                    EditorGUILayout.PropertyField(combatTextCompletedQuestColor, new GUIContent("Completed Quest Color", "Color to display text when a quest is completed"));
+                    EditorGUI.indentLevel--;
                 }
 
                 if (Application.isPlaying)

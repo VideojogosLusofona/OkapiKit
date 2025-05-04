@@ -20,6 +20,10 @@ namespace OkapiKit
         [SerializeField] private Quest[]            startQuests;
         [SerializeField] private TargetInventory    targetInventory;
         [SerializeField] private TargetEquipment    targetEquipment;
+        [SerializeField] private bool               combatTextEnable;
+        [SerializeField] private float              combatTextDuration = 1.0f;
+        [SerializeField] private Color              combatTextActiveQuestColor = Color.yellow;
+        [SerializeField] private Color              combatTextCompletedQuestColor = Color.green;
 
         List<Quest> pendingQuests = new();
         List<Quest> activeQuests = new();
@@ -111,6 +115,11 @@ namespace OkapiKit
             activeQuests.Add(q);
             onQuestStart?.Invoke(q);
             onQuestStateModified?.Invoke();
+
+            if (combatTextEnable)
+            {
+                CombatTextManager.SpawnText(gameObject, $"Quest \"{q.displayName}\" accepted!", combatTextActiveQuestColor, combatTextActiveQuestColor, combatTextDuration);
+            }
         }
 
         public void CompleteQuest(Quest q)
@@ -123,6 +132,11 @@ namespace OkapiKit
 
             onQuestComplete?.Invoke(q);
             onQuestStateModified?.Invoke();
+
+            if (combatTextEnable)
+            {
+                CombatTextManager.SpawnText(gameObject, $"Quest \"{q.displayName}\" completed!", combatTextCompletedQuestColor, combatTextCompletedQuestColor, combatTextDuration);
+            }
         }
 
         public void FailQuest(Quest quest)
@@ -195,6 +209,14 @@ namespace OkapiKit
             if (!hasEquipment)
             {
                 targetEquipment.CheckErrors(_logs, "inventory", gameObject);
+            }
+
+            if (combatTextEnable)
+            {
+                if (!CombatTextManager.IsActive()) 
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Combat text is enabled, but there's no combat text manager!", "If you want to use combat text, you need to have an object with a combat text manager component."));
+                }
             }
         }
 

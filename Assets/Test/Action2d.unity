@@ -2075,12 +2075,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b38143588b70b64b9d09f62fb989215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
   _explanation: Inventory system, use with actions such as Add Item and Remove Item,
     or conditions such as HasItem or GetItemCount
   description: 
   limited: 1
   maxSlots: 10
+  combatTextEnable: 1
+  combatTextDuration: 1
+  combatTextReceivedItemColor: {r: 0.7924528, g: 0.21306513, b: 0.6860502, a: 1}
+  combatTextLostItemColor: {r: 0.46697992, g: 0.15970986, b: 0.9150943, a: 1}
 --- !u!114 &373756870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2093,7 +2097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b95e4ce53cee442b7a4546b79f7b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
   _explanation: "Equipment system, use with actions such as Equip/Unequip/Toggle
     Item, or conditions such as IsEquipped.\nThe following slots are available:\n  
     SlotMainWeapon\n"
@@ -2105,6 +2109,10 @@ MonoBehaviour:
     flags: 0
   availableSlots:
   - {fileID: 11400000, guid: a9d3c91dd4b4dd04bac9d4a684ddcd3a, type: 2}
+  combatTextEnable: 0
+  combatTextDuration: 1
+  combatTextEquippedItemColor: {r: 0.015686274, g: 1, b: 0.95134175, a: 1}
+  combatTextUnequippedItemColor: {r: 0.070354216, g: 0.31262743, b: 0.4811321, a: 1}
 --- !u!114 &373756871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11236,6 +11244,10 @@ MonoBehaviour:
     tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
     obj: {fileID: 0}
     flags: 2
+  combatTextEnable: 1
+  combatTextDuration: 1
+  combatTextActiveQuestColor: {r: 0.8396226, g: 0.7850279, b: 0.1544589, a: 1}
+  combatTextCompletedQuestColor: {r: 0.19188325, g: 0.8301887, b: 0.19188325, a: 1}
 --- !u!4 &1901302412
 Transform:
   m_ObjectHideFlags: 0
@@ -11385,11 +11397,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b056a974028826b4aa23888b80cd05f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 'This allows the developer to use combat text easily.
+
+    Every
+    combat text will spawn (or reuse) a CombatTextElement prefab.
+
+    It will move
+    (0.00, 15.00) units per second, for 1 seconds, fading out in 0.25 seconds.
+
+'
+  description: 
   textPrefab: {fileID: 8016154947846259167, guid: 1b0781f4bb8a6a04486a49ee7e474107, type: 3}
   defaultTime: 1
   movementVector: {x: 0, y: 15}
   fadeRate: 0.25
-  uiCamera: {fileID: 0}
 --- !u!1001 &1994299548
 PrefabInstance:
   m_ObjectHideFlags: 0
