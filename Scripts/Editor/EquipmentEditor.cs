@@ -8,6 +8,10 @@ namespace OkapiKit.Editor
     {
         SerializedProperty availableSlots;
         SerializedProperty linkedInventory;
+        SerializedProperty combatTextEnable;
+        SerializedProperty combatTextDuration;
+        SerializedProperty combatTextEquippedItemColor;
+        SerializedProperty combatTextUnequippedItemColor;
 
         Equipment equipment;
 
@@ -19,6 +23,10 @@ namespace OkapiKit.Editor
 
             availableSlots = serializedObject.FindProperty("availableSlots");
             linkedInventory = serializedObject.FindProperty("linkedInventory");
+            combatTextEnable = serializedObject.FindProperty("combatTextEnable");
+            combatTextDuration = serializedObject.FindProperty("combatTextDuration");
+            combatTextEquippedItemColor = serializedObject.FindProperty("combatTextEquippedItemColor");
+            combatTextUnequippedItemColor = serializedObject.FindProperty("combatTextUnequippedItemColor");
         }
 
         public override void OnInspectorGUI()
@@ -29,6 +37,16 @@ namespace OkapiKit.Editor
             {
                 EditorGUILayout.PropertyField(linkedInventory);
                 EditorGUILayout.PropertyField(availableSlots);
+
+                EditorGUILayout.PropertyField(combatTextEnable, new GUIContent("Combat Text Enable", "Should combat text spawn when a new item is equipped/unequipped?"));
+                if (combatTextEnable.boolValue)
+                {
+                    EditorGUI.indentLevel++;
+                    EditorGUILayout.PropertyField(combatTextDuration, new GUIContent("Duration", "Combat text duration"));
+                    EditorGUILayout.PropertyField(combatTextEquippedItemColor, new GUIContent("Received Item Color", "Color to display text when an item is equipped"));
+                    EditorGUILayout.PropertyField(combatTextUnequippedItemColor, new GUIContent("Lost Item Color", "Color to display text when an item is unequipped"));
+                    EditorGUI.indentLevel--;
+                }
 
                 serializedObject.ApplyModifiedProperties();
 

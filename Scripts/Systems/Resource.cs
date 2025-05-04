@@ -94,9 +94,7 @@ namespace OkapiKit
 
                         if (isCombatTextEnabled)
                         {
-                            Color c1 = type.displayNegativeTextColor;
-                            Color c2 = c1; c2.a = 0.0f;
-                            CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", c1, c2);
+                            CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", type.displayNegativeTextColor, type.displayNegativeTextColor);
                         }
                     }
                 }
@@ -118,9 +116,7 @@ namespace OkapiKit
 
                             if (isCombatTextEnabled)
                             {
-                                Color c1 = type.displayTextColor;
-                                Color c2 = c1; c2.a = 0.0f;
-                                CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", c1, c2);
+                                CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", type.displayTextColor, type.displayTextColor);
                             }
                         }
                     }
@@ -135,9 +131,7 @@ namespace OkapiKit
 
                             if (isCombatTextEnabled)
                             {
-                                Color c1 = type.displayTextColor;
-                                Color c2 = c1; c2.a = 0.0f;
-                                CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", c1, c2);
+                                CombatTextManager.SpawnText(gameObject, deltaValue, "Health {0}", type.displayTextColor, type.displayTextColor);
                             }
                         }
                         else ret = false;
