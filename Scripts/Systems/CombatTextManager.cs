@@ -210,9 +210,9 @@ namespace OkapiKit
             }
             else
             {
-                if (canvas.renderMode != RenderMode.ScreenSpaceCamera)
+                if (canvas.renderMode != RenderMode.WorldSpace)
                 {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Canvas needs to be a screen space camera canvas!", "Canvas needs to be a screen space camera canvas, otherwise positions won't work properly."));
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "Canvas needs to be a world space canvas!", "Canvas needs to be a world space canvas, otherwise positions won't work properly."));
                 }
                 canvasScaler = canvas.GetComponent<CanvasScaler>();
                 if (canvasScaler == null)
