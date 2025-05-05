@@ -6,7 +6,7 @@ using UnityEngine;
 namespace OkapiKit
 {
 
-    public class DialogueManager : MonoBehaviour
+    public class DialogueManager : OkapiElement
     {
         public delegate void OnDialogueStart(string dialogueKey);
         public event OnDialogueStart onDialogueStart;
@@ -505,6 +505,11 @@ namespace OkapiKit
             if (Instance == null) return false;
 
             return Instance._HasDialogueEvent(dialogueEventName, frameTolerance);
+        }
+
+        public override string GetRawDescription(string ident, GameObject refObject)
+        {
+            return "This is needed if you want to use the dialogue system.";
         }
 
         public static bool hasMoreText
