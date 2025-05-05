@@ -94,7 +94,16 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.DrawRect(iconRect, iconBackgroundColor);
             }
-            GUI.DrawTexture(iconRect, GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
+            var icon = GetIcon();
+            if (icon == null) icon = GetIcon(); // Seems like sometimes the first time doesn't execute properly (when using AssetPreview)
+            if (icon != null)
+            {
+                GUI.DrawTexture(iconRect, GetIcon(), ScaleMode.ScaleToFit, true, 1.0f);
+            }
+            else
+            {
+                Debug.LogWarning("Missing icon texture for OkapiBaseEditor!");
+            }
             EditorGUI.LabelField(new Rect(titleRect.x + 50, titleRect.y + 6, inspectorWidth - 20 - titleRect.x - 4, styleTitle.fontSize), GetTitle(), styleTitle);
             styleTitle.normal.textColor = prevColor;
             EditorGUILayout.EndVertical();

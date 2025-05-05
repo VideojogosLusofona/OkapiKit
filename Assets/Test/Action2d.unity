@@ -11196,7 +11196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showInfo: 1
   _explanation: "When a collision with a bounding volume with tags [TagPlayer] starts:\n         
-    Starts conversation WizardHello.\n"
+    Starts conversation [WizardHello].\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -11222,7 +11222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: Starts conversation WizardHello.
+  _explanation: Starts conversation [WizardHello].
   description: 
   enableAction: 1
   hasTags: 0
@@ -13635,6 +13635,13 @@ MonoBehaviour:
   endSnd: {fileID: 0}
   skipSnd: {fileID: 0}
   optionSnd: {fileID: 0}
+  skipInput:
+    _type: 1
+    axis: Horizontal
+    buttonPositive: SkipDialogue
+    buttonNegative: Left
+    keyPositive: 275
+    keyNegative: 276
 --- !u!114 &4652864676364901390
 MonoBehaviour:
   m_ObjectHideFlags: 0
