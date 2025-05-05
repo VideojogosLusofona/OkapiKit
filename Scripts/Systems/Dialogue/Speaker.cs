@@ -5,7 +5,7 @@ namespace OkapiKit
 {
 
     [CreateAssetMenu(fileName = "Speaker", menuName = "Okapi Kit/Speaker")]
-    public class Speaker : ScriptableObject
+    public class Speaker : OkapiScriptableObject
     {
         public string displayName;
         public string[] nameAlias;
@@ -21,5 +21,10 @@ namespace OkapiKit
         public Vector2 characterSndPitch = Vector2.one;
 
         bool hasCharacterSnd => characterSnd != null;
+
+        public override string GetRawDescription(string ident, ScriptableObject refObject)
+        {
+            return "";
+        }
     }
 }

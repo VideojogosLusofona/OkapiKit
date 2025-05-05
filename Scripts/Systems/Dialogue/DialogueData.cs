@@ -10,7 +10,7 @@ namespace OkapiKit
 {
 
     [CreateAssetMenu(fileName = "Dialogue Data", menuName = "Okapi Kit/Dialogue Data")]
-    public class DialogueData : ScriptableObject
+    public class DialogueData : OkapiScriptableObject
     {
         [Flags]
         public enum DialogueFlags
@@ -555,6 +555,11 @@ namespace OkapiKit
                 keys.Add(dialogue.name);
             }
 
+        }
+
+        public override string GetRawDescription(string ident, ScriptableObject refObject)
+        {
+            return "";
         }
     }
 }
