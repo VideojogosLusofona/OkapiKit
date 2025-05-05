@@ -6,7 +6,7 @@ ShaderVariantCollection:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UnityCommonShaders
+  m_Name: OkapiCommonShaders
   m_Shaders:
   - first: {fileID: -6465566751694194690, guid: 00203c5c3cc86ce468b227e90799daea, type: 3}
     second:

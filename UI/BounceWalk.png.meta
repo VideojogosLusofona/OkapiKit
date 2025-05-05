@@ -272,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BounceWalk_0: -5206013309672557890
+      BounceWalk_1: 7029009882969144123
+      BounceWalk_2: -3642227297879540227
+      BounceWalk_3: -8472104813624946265
+      BounceWalk_4: -8913743880786412857
+      BounceWalk_5: -79971384379249634
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

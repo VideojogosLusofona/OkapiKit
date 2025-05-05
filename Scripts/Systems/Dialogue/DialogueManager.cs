@@ -22,6 +22,9 @@ namespace OkapiKit
         Dictionary<string, int> dialogueCount = new();
         Dictionary<string, int> dialogueEvents = new();
 
+        int dialogueStackCount = 0;
+        Dictionary<Component, bool> dialogueStackPrevState = new();
+
         static DialogueManager instance = null;
 
         public static DialogueManager Instance
@@ -45,8 +48,53 @@ namespace OkapiKit
             }
 
             instance = this;
+
+            onDialogueStart += DialogueManager_onDialogueStart;
+            onDialogueEnd += DialogueManager_onDialogueEnd;
         }
 
+        private void DialogueManager_onDialogueStart(string dialogueKey)
+        {
+            dialogueStackCount++;
+            if (dialogueStackCount == 1)
+            {
+                // Disable all rigidbodies and movement
+                dialogueStackPrevState = new();
+                var movements = FindObjectsByType<Movement>(FindObjectsSortMode.None);
+                foreach (var movement in movements)
+                {
+                    dialogueStackPrevState[movement] = movement.enabled;
+                    movement.enabled = false;
+                }
+                var rigidbodies = FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
+                foreach (var rb in rigidbodies)
+                {
+                    dialogueStackPrevState[rb] = rb.simulated;
+                    rb.simulated = false;
+                }
+                var onInputs = FindObjectsByType<TriggerOnInput>(FindObjectsSortMode.None);
+                foreach (var onInput in onInputs)
+                {
+                    dialogueStackPrevState[onInput] = onInput.enabled;
+                    onInput.enabled = false;
+                }
+            }
+        }
+
+        private void DialogueManager_onDialogueEnd()
+        {
+            dialogueStackCount--;
+            if (dialogueStackCount == 0)
+            {
+                // Disable all rigidbodies and movement
+                foreach (var component in dialogueStackPrevState)
+                {
+                    if (component.Key is Rigidbody2D rb) rb.simulated = component.Value;
+                    else if (component.Key is MonoBehaviour mb) mb.enabled = component.Value;
+                }
+                dialogueStackPrevState.Clear();
+            }
+        }
         (DialogueData, DialogueData.Dialogue) FindDialogue(string dialogueKey)
         {
             if (dialogueData != null)

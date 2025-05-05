@@ -16,12 +16,12 @@ namespace OkapiKit
 
         public override string GetActionTitle() 
         { 
-            return $"Run Conversation {dialogueKey}";
+            return $"Run Conversation [{dialogueKey}]";
         }
 
         public override string GetRawDescription(string ident, GameObject refObject)
         {
-            return $"Starts conversation {dialogueKey}.";
+            return $"Starts conversation [{dialogueKey}].";
         }
 
         protected override void CheckErrors()

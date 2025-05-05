@@ -98,12 +98,15 @@ namespace OkapiKit.Editor
 
         protected override Texture2D GetIcon()
         {
+            Texture2D ret = null;
+
             if ((resource.type != null) && (resource.type.displaySprite != null))
             {
-                return AssetPreview.GetAssetPreview(resource.type.displaySprite);
+                ret = AssetPreview.GetAssetPreview(resource.type.displaySprite);
             }
+            else ret = GUIUtils.GetTexture("Resource");
 
-            return GUIUtils.GetTexture("Resource");
+            return ret;
         }
 
         protected override (Color, Color, Color) GetColors()
