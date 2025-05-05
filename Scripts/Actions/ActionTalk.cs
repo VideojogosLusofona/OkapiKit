@@ -6,12 +6,40 @@ namespace OkapiKit
     {
         [SerializeField, DialogueKey] private string dialogueKey;
 
+        float timeOfLastDialogue;
+
+        private void Start()
+        {
+            if (DialogueManager.Instance)
+            {
+                DialogueManager.Instance.onDialogueEnd += Instance_onDialogueEnd;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (DialogueManager.Instance)
+            {
+                DialogueManager.Instance.onDialogueEnd -= Instance_onDialogueEnd;
+            }
+        }
+
         public override void Execute()
         {
             if (!enableAction) return;
             if (!EvaluatePreconditions()) return;
 
+            if ((Time.time - timeOfLastDialogue) < 0.25f)
+            {
+                return;
+            }
+
             DialogueManager.StartConversation(dialogueKey);
+        }
+
+        private void Instance_onDialogueEnd()
+        {
+            timeOfLastDialogue = Time.time;
         }
 
         public override string GetActionTitle() 

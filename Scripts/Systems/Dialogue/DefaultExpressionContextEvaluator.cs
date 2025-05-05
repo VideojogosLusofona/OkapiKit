@@ -127,6 +127,7 @@ namespace OkapiKit
                 return false;
             }
             var inventory = HypertaggedObject.FindObjectByHypertag<Inventory>(targetTag);
+            if (inventory == null) inventory = HypertaggedObject.FindObjectByHypertag<Transform>(targetTag)?.GetComponentInChildren<Inventory>();
             if (inventory == null)
             {
                 Debug.LogError($"Can't find inventory tagged with {targetTagName}");
@@ -148,6 +149,7 @@ namespace OkapiKit
                 return false;
             }
             var inventory = HypertaggedObject.FindObjectByHypertag<Inventory>(targetTag);
+            if (inventory == null) inventory = HypertaggedObject.FindObjectByHypertag<Transform>(targetTag)?.GetComponentInChildren<Inventory>();
             if (inventory == null)
             {
                 Debug.LogError($"Can't find inventory tagged with {targetTagName}");
@@ -171,6 +173,7 @@ namespace OkapiKit
                 return false;
             }
             var inventory = HypertaggedObject.FindObjectByHypertag<Inventory>(targetTag);
+            if (inventory == null) inventory = HypertaggedObject.FindObjectByHypertag<Transform>(targetTag)?.GetComponentInChildren<Inventory>();
             if (inventory == null)
             {
                 Debug.LogError($"Can't find inventory tagged with {targetTagName}");

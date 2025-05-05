@@ -167,6 +167,14 @@ namespace OkapiKit
             return (completedQuests.IndexOf(quest) != -1);
         }
 
+        public bool IsQuestPending(Quest quest)
+        {
+            if (quest == null) return true;
+            if (pendingQuests == null) return false;
+
+            return (pendingQuests.IndexOf(quest) != -1);
+        }
+
         public bool IsQuestActive(Quest quest)
         {
             if (quest == null) return true;

@@ -33,6 +33,7 @@ namespace OkapiKit
         [SerializeField] AudioClip skipSnd;
         [SerializeField] AudioClip optionSnd;
         [SerializeField, InputButton] InputControl skipInput;
+        [SerializeField] InputControl optionSelectionInput;
 
         DialogueData.DialogueElement currentDialogue;
         Coroutine showTextCR;
@@ -289,6 +290,9 @@ namespace OkapiKit
         private void Update()
         {
             if (skipInput.IsDown()) DialogueManager.Continue();
+
+            float axis = optionSelectionInput.GetAxis();
+            SetInput(Vector2.up * axis);
         }
     }
 }

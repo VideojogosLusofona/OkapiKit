@@ -266,9 +266,13 @@ namespace OkapiKit
                 }
                 else if (trimmedLine.StartsWith("*"))
                 {
+                    // if there is no currentElement, we need to create one with the current data
+                    if (currentElement == null)
+                        currentElement = new DialogueElement { speaker = currentSpeaker };
+
                     ParseOption(trimmedLine, currentElement);
                 }
-                else
+                else   
                 {
                     textBuffer.Add(trimmedLine);
                 }

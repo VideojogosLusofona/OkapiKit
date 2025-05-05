@@ -352,6 +352,27 @@ namespace OkapiKit.Editor
 
                             EditorGUIUtility.labelWidth = originalLabelWidth;
                         }
+                        else if (valueType == Condition.ValueType.IsTalking)
+                        {
+                            var elemHeight = position.height;
+
+                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+
+                            EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                        }
+                        else if (valueType == Condition.ValueType.HasSaid)
+                        {
+                            var propDialogueKey = property.FindPropertyRelative(nameof(Condition.dialogueKey));
+
+                            var elemHeight = position.height / 2.0f;
+
+                            var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, elemHeight);
+                            var dialogueKeyRect = new Rect(positionValue, position.y + elemHeight, 150 + extra_width_variable, elemHeight);
+
+                            EditorGUI.PropertyField(valueTypeRect, propValueType, GUIContent.none);
+                            EditorGUI.PropertyField(dialogueKeyRect, propDialogueKey, GUIContent.none);
+                        }
+
                     }
                 }
                 else
@@ -501,15 +522,18 @@ namespace OkapiKit.Editor
                     {
                         height = baseHeight * 3;
                     }
+                    else if (condType == Condition.ValueType.HasSaid)
+                    {
+                        height = baseHeight * 2;
+                    }
+                    else if (condType == Condition.ValueType.IsTalking)
+                    {
+                        height = baseHeight;
+                    }
                 }
             }
 
-            if ((condType == Condition.ValueType.Probe) ||
-                (condType == Condition.ValueType.IsGrounded) ||
-                (condType == Condition.ValueType.IsGliding) ||
-                (condType == Condition.ValueType.OnTile) ||
-                (condType == Condition.ValueType.OnTileSet) ||
-                (condType == Condition.ValueType.HasItem))
+            if (Condition.GetDataType(condType) == Condition.DataType.Boolean)
             {
                 // No need for a comparison value
             }
