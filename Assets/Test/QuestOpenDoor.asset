@@ -17,7 +17,8 @@ MonoBehaviour:
     (0/1)\n   Open Door (0/1)\n"
   description: 
   displayName: Open Door
-  questText: You need to find the gold key, and open the door of the mysterious hut.
+  questText: Now that you have the key, you need to open the door of the mysterious
+    hut.
   questsRequired: []
   questObjectives:
   - type: 0

@@ -26,6 +26,8 @@ namespace OkapiKit
             IsQuestDone = 25,
             IsQuestActiveOrCompleted = 26,
             TokenCount = 27,
+            IsTalking = 28,
+            HasSaid = 29,
 
         };
         [System.Serializable] public enum Comparison { Equal = 0, Less = 1, LessEqual = 2, Greater = 3, GreaterEqual = 4, Different = 5 };
@@ -58,6 +60,8 @@ namespace OkapiKit
         public TargetResource       resource;
         public TargetQuestManager   questManager;
         public Quest                quest;
+        [DialogueKey]
+        public string               dialogueKey;
         
         private GridObject          gridObject;
 
@@ -79,6 +83,8 @@ namespace OkapiKit
             if (valueType == ValueType.IsQuestCompleted) return DataType.Boolean;
             if (valueType == ValueType.IsQuestDone) return DataType.Boolean;
             if (valueType == ValueType.IsQuestActiveOrCompleted) return DataType.Boolean;
+            if (valueType == ValueType.IsTalking) return DataType.Boolean;
+            if (valueType == ValueType.HasSaid) return DataType.Boolean;
 
             return DataType.Number;
         }
@@ -192,6 +198,10 @@ namespace OkapiKit
                     return $"Quest \"{quest?.displayName ?? "UNDEFINED"}\" is active or complete";
                 case ValueType.TokenCount:
                     return $"TokenCount([{tag?.name ?? "UNDEFINED"}])\"";
+                case ValueType.IsTalking:
+                    return $"is talking";
+                case ValueType.HasSaid:
+                    return $"has said [{dialogueKey}]";
             }
 
             return "[Unknown]";
@@ -332,7 +342,14 @@ namespace OkapiKit
                             var qm = questManager.GetTarget(gameObject);
                             b = qm?.IsQuestComplete(quest) ?? false;
                             if (!b) b = qm?.IsQuestActive(quest) ?? false;
+                            if (!b) b = qm?.IsQuestPending(quest) ?? false;
                         }
+                        break;
+                    case ValueType.IsTalking:
+                        b = DialogueManager.isTalking;
+                        break;
+                    case ValueType.HasSaid:
+                        b = DialogueManager.HasSaidDialogue(dialogueKey);
                         break;
                     default:
                         break;

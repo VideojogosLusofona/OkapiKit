@@ -5,7 +5,6 @@ using System.Reflection;
 
 namespace OkapiKit.Editor
 {
-
     [CustomEditor(typeof(DefaultExpressionContextEvaluator), true)]
     public class DefaultExpressionContextEvaluatorDrawer : UnityEditor.Editor
     {
@@ -68,6 +67,13 @@ namespace OkapiKit.Editor
                     EditorGUILayout.EndHorizontal();
                 }
             }
+
+            DisplayUtilities();
+        }
+
+        protected virtual void DisplayUtilities()
+        {
+            DefaultExpressionContextEvaluator evaluator = (DefaultExpressionContextEvaluator)target;
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Utilities", EditorStyles.boldLabel);

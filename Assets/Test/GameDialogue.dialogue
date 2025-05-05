@@ -9,13 +9,20 @@ Comments can be used
 
 // This defines a named dialogue (WizardHello in this case)
 # WizardHello
-{OneShot}
-[Wizard]: Hi there, adventurer!
-I need your help!
+[Wizard]: Help, adventurer!
 
 These goblins stole my key! Can you get it back for me?
+*No, I'm scared! -> WizardHello:No
+*Yes, let's go! -> WizardHello:Yes
+
+# WizardHello:No
+[Wizard]: Oh, too bad... :(
+
+# WizardHello:Yes
+[Wizard]: Yay!
 =>{    
-    TutorialStage = 1;
+    // This is code that's executed when this  dialogue ends
+    GiveQuest("TagPlayer", "QuestFindKey"); 
 }
 
 // This one evaluates the expression inside the {} and goes to the first text that matches - this requires a implementation of the UCExpression.IContext interface in the same GameObject as the DialogueManager
@@ -43,7 +50,7 @@ But don't worry, you will always come back, although something may be lost in th
 =>Death1:Question
 
 # Death1:Question
-[TestSpeaker]: Are you ready to go on?
+[TestSpeaker]: Are you ready to go on? 
 // This represents a choice in the dialog. Each of the options lead to a different text element
 *No, I'm scared! -> Death1:No
 *Yes, let's go! -> Death1:Yes

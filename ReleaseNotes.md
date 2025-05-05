@@ -26,6 +26,7 @@
 - Added SetOutline action
 - Added option to invert color on Flash action
 - Added dialogue system
+- Added dialogue system conditions (HasSaid, IsTalking)
 - Fixed several UI bugs
 
 ## V1.18.2

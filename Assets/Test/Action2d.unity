@@ -640,6 +640,7 @@ MonoBehaviour:
       obj: {fileID: 0}
       flags: 0
     quest: {fileID: 0}
+    dialogueKey: 
   elseActions:
   - delay: 0
     action: {fileID: 102954137}
@@ -1418,6 +1419,7 @@ MonoBehaviour:
       obj: {fileID: 0}
       flags: 0
     quest: {fileID: 0}
+    dialogueKey: 
   actions:
   - delay: 0
     action: {fileID: 260508328}
@@ -1683,6 +1685,7 @@ MonoBehaviour:
       obj: {fileID: 0}
       flags: 1
     quest: {fileID: 11400000, guid: d08422c04b6f12f448dc799a6466d039, type: 2}
+    dialogueKey: 
   actions:
   - delay: 0
     action: {fileID: 260508326}
@@ -11195,13 +11198,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _explanation: "When a collision with a bounding volume with tags [TagPlayer] starts:\n         
-    Starts conversation [WizardHello].\n"
+  _explanation: "If not (Quest \"Find Key\" is active or complete) and when a collision
+    with a bounding volume with tags [TagPlayer] starts:\n          Starts conversation
+    [WizardHello].\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
-  hasPreconditions: 0
-  preConditions: []
+  hasPreconditions: 1
+  preConditions:
+  - negate: 1
+    valueHandler: {fileID: 0}
+    variable: {fileID: 0}
+    valueType: 26
+    tag: {fileID: 0}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
+    sourceTransform: {fileID: 0}
+    rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
+    comparison: 0
+    value: 0
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
+    percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    resource:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+      resourceType: {fileID: 0}
+    questManager:
+      type: 0
+      tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
+      obj: {fileID: 0}
+      flags: 1
+    quest: {fileID: 11400000, guid: 1031800b58bc6f84fbfd657806e39e54, type: 2}
+    dialogueKey: 
   actions:
   - delay: 0
     action: {fileID: 1653477396}
@@ -11385,6 +11432,7 @@ MonoBehaviour:
       obj: {fileID: 0}
       flags: 0
     quest: {fileID: 0}
+    dialogueKey: 
   actions:
   - delay: 0
     action: {fileID: 1692738608}
@@ -11746,8 +11794,7 @@ MonoBehaviour:
   _explanation: Quest system, use with actions such as Add/Remove/Fail Quest, conditions
     such as QuestComplete/Active/Failed, or events as QuestStarted/Completed
   description: 
-  startQuests:
-  - {fileID: 11400000, guid: fdf3e6caa6935b64fa1e224c66424c53, type: 2}
+  startQuests: []
   targetInventory:
     type: 2
     tag: {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
@@ -12591,6 +12638,7 @@ MonoBehaviour:
       obj: {fileID: 0}
       flags: 0
     quest: {fileID: 0}
+    dialogueKey: 
   actions:
   - delay: 0
     action: {fileID: 2116790361}
@@ -13516,6 +13564,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8848600277238212936, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
       propertyPath: selectorBarSelected
       value: 
@@ -13642,6 +13694,13 @@ MonoBehaviour:
     buttonNegative: Left
     keyPositive: 275
     keyNegative: 276
+  optionSelectionInput:
+    _type: 0
+    axis: Vertical
+    buttonPositive: Right
+    buttonNegative: Left
+    keyPositive: 275
+    keyNegative: 276
 --- !u!114 &4652864676364901390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13666,8 +13725,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b15c0375d215a6d448617e7a341abc27, type: 2}
+  m_sharedMaterial: {fileID: 6907249995619641842, guid: b15c0375d215a6d448617e7a341abc27, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13968,6 +14027,10 @@ PrefabInstance:
     - target: {fileID: 5774341869116849163, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848600277238212936, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
       propertyPath: selectorBarSelected
@@ -14500,8 +14563,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b15c0375d215a6d448617e7a341abc27, type: 2}
+  m_sharedMaterial: {fileID: 6907249995619641842, guid: b15c0375d215a6d448617e7a341abc27, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14706,6 +14769,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8848600277238212936, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
       propertyPath: selectorBarSelected
       value: 
@@ -14830,7 +14897,7 @@ GameObject:
   - component: {fileID: 5070426480186859596}
   - component: {fileID: 8037320224010982347}
   - component: {fileID: 3930975365490532937}
-  - component: {fileID: 8037320224010982346}
+  - component: {fileID: 8037320224010982348}
   m_Layer: 5
   m_Name: DialogueDisplay
   m_TagString: Untagged
@@ -14838,92 +14905,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8037320224010982346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8037320224010982345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf0322db02e5af4a93521af17ee7a7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tags:
-  - {fileID: 11400000, guid: d5958356fcc685946af4e76d64830e68, type: 2}
-  - {fileID: 11400000, guid: 5ed5adee97fbbaa41b3e760893c6da86, type: 2}
-  - {fileID: 11400000, guid: d86af5fd4f0cd564e8a0b38658546618, type: 2}
-  - {fileID: 11400000, guid: 385188b18282f0e4c82fc89f4bc47ef1, type: 2}
-  - {fileID: 11400000, guid: d1bc12c6888803a46859c5ae4beca2b3, type: 2}
-  - {fileID: 11400000, guid: b51e68d37579c9a49bcc68ee51a9cc67, type: 2}
-  - {fileID: 11400000, guid: 3f1db2282755626448862f9b0a85d92a, type: 2}
-  - {fileID: 11400000, guid: 0e9c1f2ea83a6214a83079ab2387ad25, type: 2}
-  - {fileID: 11400000, guid: 1a78b44e20b30794b8b40dbd522adbba, type: 2}
-  - {fileID: 11400000, guid: 2ba8e7b7fe2aac349b46dacaf88f8b46, type: 2}
-  - {fileID: 11400000, guid: 86df63b147ed4bb4daa97acb26380862, type: 2}
-  - {fileID: 11400000, guid: b2bb66f99c083a645bc4043daf03e1b6, type: 2}
-  - {fileID: 11400000, guid: 0b86c48eb5b088f45a7d07b7ae12d647, type: 2}
-  - {fileID: 11400000, guid: 259a32814b3c4184582fbcab805c809a, type: 2}
-  - {fileID: 11400000, guid: fb3017d777dc13541bbde190984d4bff, type: 2}
-  - {fileID: 11400000, guid: 693704083fea7a844aa44060b8ce07db, type: 2}
-  - {fileID: 11400000, guid: 2f478aa6dec00f3449f3977690be69d6, type: 2}
-  - {fileID: 11400000, guid: 76220200ca6fac545990fa726cd81fb1, type: 2}
-  - {fileID: 11400000, guid: 9ab9e95079bd14e42b717c584d65a977, type: 2}
-  - {fileID: 11400000, guid: 1f4fe9a669e2b524c91a10e25b6ec9ba, type: 2}
-  - {fileID: 11400000, guid: 0592c610a1215f84582e72c26d3529a0, type: 2}
-  - {fileID: 11400000, guid: 7e2c396cd21ce0d47970864cdfe71a51, type: 2}
-  - {fileID: 11400000, guid: 8efa30800e1db9e479bbdb4f1d5d1aa1, type: 2}
-  - {fileID: 11400000, guid: 309131fb20ec2fe4fb423dc6fc76ba04, type: 2}
-  - {fileID: 11400000, guid: 996aefeec6070174e8c75e545cc8319d, type: 2}
-  - {fileID: 11400000, guid: e674918a218329f41863b4fc18dbe6cd, type: 2}
-  - {fileID: 11400000, guid: ef738cdf582e7b74ca6542cab74d7ad0, type: 2}
-  - {fileID: 11400000, guid: af2086267f233d54e9a14529b5654533, type: 2}
-  - {fileID: 11400000, guid: cdad527fae3b09b4cb251b9c29774cc6, type: 2}
-  - {fileID: 11400000, guid: b876f14a22677cc4094372a33a6a903c, type: 2}
-  - {fileID: 11400000, guid: 0cddcf2b66cc810499bd7e886edb3aaf, type: 2}
-  - {fileID: 11400000, guid: a6867e8f47561dd47addd221d82d3e1b, type: 2}
-  - {fileID: 11400000, guid: fadc2229ceb691242bd4a57e8e52cd74, type: 2}
-  - {fileID: 11400000, guid: daf14f151d7a4754cadb3d997c2cc2de, type: 2}
-  - {fileID: 11400000, guid: 10fa1ca39f9fece46a76fe6c0ff4d47a, type: 2}
-  - {fileID: 11400000, guid: 2c6852c22a7267d479055824ade73ab3, type: 2}
-  - {fileID: 11400000, guid: a19d6302f286d8645aecfb440ea769c4, type: 2}
-  - {fileID: 11400000, guid: 397247d90ae851442b6c45df23ad58af, type: 2}
-  - {fileID: 11400000, guid: 93fc19a2abe8f5b42bc2d8308f0ad76a, type: 2}
-  - {fileID: 11400000, guid: 43c385caf29257549a7fcb9b5b92bc1d, type: 2}
-  - {fileID: 11400000, guid: 19ebb58d081764041b5d7100c88b581a, type: 2}
-  - {fileID: 11400000, guid: 19f4fd020485c1c4dad091a621746a87, type: 2}
-  - {fileID: 11400000, guid: 7f3dc234f521da84290b81f3bb6bbcf3, type: 2}
-  - {fileID: 11400000, guid: 7f6a546c0eff3dd4b90475a96eaf8310, type: 2}
-  - {fileID: 11400000, guid: bc889e9e6833bc84aabfbb2cfba652b4, type: 2}
-  - {fileID: 11400000, guid: 3138ad8dc4cf4f74a98c1580707d1de8, type: 2}
-  - {fileID: 11400000, guid: 2ad4557f04a8828439b7a0ab012efa6d, type: 2}
-  - {fileID: 11400000, guid: dbc7d71d954fbea49b1f6498f2651686, type: 2}
-  - {fileID: 11400000, guid: 0f38c391cf243a249b8e2fbda2b8f5f2, type: 2}
-  - {fileID: 11400000, guid: 0e9db43483f6321449aa741cec9b135e, type: 2}
-  - {fileID: 11400000, guid: 517fdcb6818efec45b99c031076bff66, type: 2}
-  - {fileID: 11400000, guid: 6156a1b63b0986945b973773d1c15a8a, type: 2}
-  - {fileID: 11400000, guid: 8f4da0dc9765f2f4d9992daaa93250ed, type: 2}
-  - {fileID: 11400000, guid: 999cfefaa83c22449aad89d25ac07a8b, type: 2}
-  - {fileID: 11400000, guid: 26c6aabe8f9ad1c4697e9bf7819e39b5, type: 2}
-  - {fileID: 11400000, guid: cb2be485da8536140a4f8ca292e6065b, type: 2}
-  - {fileID: 11400000, guid: b024f07356167dc4489bd82f16a3ca87, type: 2}
-  - {fileID: 11400000, guid: edd1136b682163842b5800c01d22910f, type: 2}
-  - {fileID: 11400000, guid: 0b53ca25ffc47ac419c3d04d6e8a31f8, type: 2}
-  - {fileID: 11400000, guid: 9e0f8987f7ff23341946280521adca40, type: 2}
-  - {fileID: 11400000, guid: 71f7220fa2e613743a9e8eb72b96298c, type: 2}
-  - {fileID: 11400000, guid: a9d3c91dd4b4dd04bac9d4a684ddcd3a, type: 2}
-  - {fileID: 11400000, guid: 2eed8d5cd72836c4ca3245061c6be17d, type: 2}
-  - {fileID: 11400000, guid: 3dab2c28c4be93d4f8b9855ad89609b6, type: 2}
-  - {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
-  - {fileID: 11400000, guid: f2d8158fbeb626644a2636efef789cf1, type: 2}
-  - {fileID: 11400000, guid: 1d8b8689454aab0448df04414e42d46e, type: 2}
-  items:
-  - {fileID: 11400000, guid: ce1ec59e97114df4d88d7bd999ed0ae8, type: 2}
-  - {fileID: 11400000, guid: 8f52d74f4b0462f42a20ec47fe3c3cd7, type: 2}
-  - {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
-  prefabs:
-    items: []
 --- !u!114 &8037320224010982347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14939,6 +14920,34 @@ MonoBehaviour:
   dialogueData:
   - {fileID: -246705742386849380, guid: a70d47deb6a87df47b770dfbcb67d67a, type: 3}
   display: {fileID: 3930975365490532937}
+--- !u!114 &8037320224010982348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8037320224010982345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0c51f5505dff44980cb385738cc621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - {fileID: 11400000, guid: 2eed8d5cd72836c4ca3245061c6be17d, type: 2}
+  - {fileID: 11400000, guid: 3dab2c28c4be93d4f8b9855ad89609b6, type: 2}
+  - {fileID: 11400000, guid: 35791f9ec39768042a09b8acd4e0bcf0, type: 2}
+  - {fileID: 11400000, guid: f2d8158fbeb626644a2636efef789cf1, type: 2}
+  - {fileID: 11400000, guid: 1d8b8689454aab0448df04414e42d46e, type: 2}
+  items:
+  - {fileID: 11400000, guid: ce1ec59e97114df4d88d7bd999ed0ae8, type: 2}
+  - {fileID: 11400000, guid: 8f52d74f4b0462f42a20ec47fe3c3cd7, type: 2}
+  - {fileID: 11400000, guid: beb0e2c1ba9be344cad08601d425b5ab, type: 2}
+  prefabs:
+    items: []
+  quests:
+  - {fileID: 11400000, guid: 1031800b58bc6f84fbfd657806e39e54, type: 2}
+  - {fileID: 11400000, guid: fdf3e6caa6935b64fa1e224c66424c53, type: 2}
+  - {fileID: 11400000, guid: d08422c04b6f12f448dc799a6466d039, type: 2}
 --- !u!224 &8199592319070052009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14955,7 +14964,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 439, y: -31.82}
+  m_AnchoredPosition: {x: 439, y: -27.51}
   m_SizeDelta: {x: 878, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &8271597868633287069
