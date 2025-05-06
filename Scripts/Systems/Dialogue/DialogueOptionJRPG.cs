@@ -11,7 +11,7 @@ namespace OkapiKit
         [SerializeField] Color optionTextNormalColor = Color.white;
         [SerializeField] Color optionTextSelectedColor = Color.yellow;
         [SerializeField] Image selectorBarSelected;
-        [SerializeField] Color optionBarNormalColor = Color.white;
+        [SerializeField] Color optionBarNormalColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         [SerializeField] Color optionBarSelectedColor = Color.yellow;
 
         public override void Show(string text)

@@ -29,7 +29,7 @@ namespace OkapiKit.Editor
             // Display Title and Explanation
             if (WriteTitle())
             {
-                EditorGUILayout.PropertyField(dialogueDataProp, new GUIContent("Dialogue Data", "The array of DialogueData used for conversation."));
+                EditorGUILayout.PropertyField(dialogueDataProp, new GUIContent("Dialogue Data", "All the data that can be used in the dialogues."));
                 EditorGUILayout.PropertyField(displayProp, new GUIContent("Dialogue Display", "The UI element used to display the dialogue."));
 
                 serializedObject.ApplyModifiedProperties();
@@ -62,7 +62,9 @@ namespace OkapiKit.Editor
 
         protected override (Color, Color, Color) GetColors()
         {
-            return (GUIUtils.ColorFromHex("#e8cfa0"), GUIUtils.ColorFromHex("#3b5e3a"), GUIUtils.ColorFromHex("#9d8b1f"));
+            return (
+                GUIUtils.ColorFromHex("#C7D8D8"), GUIUtils.ColorFromHex("#4F4F8C"), GUIUtils.ColorFromHex("#8080D0")
+            );
         }
     }
 }
