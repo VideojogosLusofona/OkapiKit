@@ -13568,10 +13568,6 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
-      propertyPath: selectorBarSelected
-      value: 
-      objectReference: {fileID: 3628546091143944738}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13582,17 +13578,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5071263196759886666, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
   m_PrefabInstance: {fileID: 3628546091143944736}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3628546091143944738 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 182871123683351048, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
-  m_PrefabInstance: {fileID: 3628546091143944736}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3628546091143944739 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
@@ -13665,6 +13650,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e496b4c1f5f124eb7df86ed0333587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: This element will be used to render the dialogues.
+  description: 
   fadeTime: 0.5
   speakerContainer: {fileID: 6067202358351707472}
   speakerPortrait: {fileID: 7887670185054933371}
@@ -14032,10 +14020,6 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
-      propertyPath: selectorBarSelected
-      value: 
-      objectReference: {fileID: 6134397049052190158}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14046,17 +14030,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5071263196759886666, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
   m_PrefabInstance: {fileID: 6134397049052190156}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6134397049052190158 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 182871123683351048, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
-  m_PrefabInstance: {fileID: 6134397049052190156}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6134397049052190159 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
@@ -14773,10 +14746,6 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
-      propertyPath: selectorBarSelected
-      value: 
-      objectReference: {fileID: 7672167879339889078}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14787,17 +14756,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5071263196759886666, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
   m_PrefabInstance: {fileID: 7672167879339889076}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7672167879339889078 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 182871123683351048, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
-  m_PrefabInstance: {fileID: 7672167879339889076}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7672167879339889079 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8899779565268423566, guid: ebd926d2af9242c44a2c06f2f819bca8, type: 3}
@@ -14917,6 +14875,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e2c37579b18cc44b2745d866e61907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: This is needed if you want to use the dialogue system.
+  description: 
   dialogueData:
   - {fileID: -246705742386849380, guid: a70d47deb6a87df47b770dfbcb67d67a, type: 3}
   display: {fileID: 3930975365490532937}

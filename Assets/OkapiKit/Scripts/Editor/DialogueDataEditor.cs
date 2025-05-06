@@ -60,7 +60,9 @@ namespace OkapiKit.Editor
 
         protected override (Color, Color, Color) GetColors()
         {
-            return (GUIUtils.ColorFromHex("#d1d283"), GUIUtils.ColorFromHex("#000000"), GUIUtils.ColorFromHex("#969721"));
+            return (
+                GUIUtils.ColorFromHex("#C7D8D8"), GUIUtils.ColorFromHex("#4F4F8C"), GUIUtils.ColorFromHex("#8080D0")
+            );
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace OkapiKit
 {
 
-    public abstract class DialogueDisplay : MonoBehaviour
+    public abstract class DialogueDisplay : OkapiElement
     {
         protected CanvasGroup canvasGroup;
 
@@ -22,5 +22,10 @@ namespace OkapiKit
         public abstract bool isDisplaying();
         public abstract void SetInput(Vector2 moveVector);
         public abstract int GetSelectedOption();
+
+        public override string GetRawDescription(string ident, GameObject refObject)
+        {
+            return "This element will be used to render the dialogues.";
+        }
     }
 }
