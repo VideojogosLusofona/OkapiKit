@@ -27,7 +27,7 @@ namespace OkapiKit
         {
             if (targetTransform == null) return;
 
-            Vector3 deltaPos = transform.position - prevPos;
+            Vector3 deltaPos = transform.position.xy0() - prevPos.xy0();
             float   distance = deltaPos.magnitude;
             
             if (distance > teleportDistance)
@@ -37,7 +37,7 @@ namespace OkapiKit
             }
             else
             {
-                if (Mathf.Approximately(distance, 0.0f))
+                if (distance < 1e-3)
                 {
                     // Stopped - return to rest
                     if ((angle > 0.0f) && (angle < Mathf.PI * 0.5f))

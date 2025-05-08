@@ -1,6 +1,8 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 
 namespace OkapiKit
@@ -11,19 +13,40 @@ namespace OkapiKit
         protected bool          hasConditions = false;
         [SerializeField]
         protected Condition[]   conditions;
+        
         protected Rigidbody2D   rb;
+        protected AI            aiModule;
         protected Vector3       lastDelta;
+        protected Vector3       _lastNonNullDelta;
 
         abstract public Vector2 GetSpeed();
         abstract public void SetSpeed(Vector2 speed);
+        public virtual void SetMoveVector(Vector2 moveVector)
+        {
+            throw new System.NotImplementedException("SetMoveVector not implemented on this class!");
+        }
 
         virtual public bool IsLinear() { return true; }
 
         abstract public string GetTitle();
 
+        public Vector3 lastNonNullDelta => _lastNonNullDelta;
+
+        public bool hasAI
+        {
+            get
+            {
+                if (aiModule == null) 
+                    aiModule = GetComponent<AI>();
+
+                return (aiModule != null);
+            }
+        }
+
         protected virtual void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+            aiModule = GetComponent<AI>();
             UpdateExplanation();
         }
 
@@ -38,6 +61,7 @@ namespace OkapiKit
                 transform.position = transform.position + delta;
             }
             lastDelta = delta;
+            if (delta.magnitude > 0.0f) _lastNonNullDelta = delta;
         }
 
         protected void StopMovement()

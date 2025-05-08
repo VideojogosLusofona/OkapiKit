@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6a58b7040b077634b9636231ae33af0f
+guid: 79445117612fd8a4aae43644f4f0f460
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1865427760376244436
-    second: QuestScripts_0
+      213: -6109537550073445355
+    second: BrainScripts_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: QuestScripts_0
+      name: BrainScripts_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 13
+        y: 9
         width: 128
-        height: 102
+        height: 110
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4d8e0632aa453e910800000000000000
-      internalID: 1865427760376244436
+      spriteID: 51446f9c7ff863ba0800000000000000
+      internalID: -6109537550073445355
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      QuestScripts_0: 1865427760376244436
+      BrainScripts_0: -6109537550073445355
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

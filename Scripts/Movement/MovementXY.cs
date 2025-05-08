@@ -75,6 +75,7 @@ namespace OkapiKit
         Vector3 moveVector;
         Vector3 currentVelocity = Vector3.zero;
         SpriteRenderer spriteRenderer;
+        Quaternion originalRotation;
 
         public override Vector2 GetSpeed() => speed;
         public override void SetSpeed(Vector2 speed) { this.speed = speed; }
@@ -84,33 +85,41 @@ namespace OkapiKit
         public override string GetRawDescription(string ident, GameObject refObject)
         {
             string desc = "";
-            if (speed.x != 0.0f)
+            
+            if (hasAI)
             {
-                if (speed.y != 0.0f)
-                {
-                    desc += $"Dual axis movement, at {speed} units per second.\n";
-                }
-                else
-                {
-                    desc += $"Horizontal movement, at {speed.x} units per second.\n";
-                }
+                desc += $"This module will be controlled by the AI module. Object moves at {speed} units per second.\n";
             }
             else
             {
-                if (speed.y != 0.0f)
+                if (speed.x != 0.0f)
                 {
-                    desc += $"Vertical movement, at {speed.y} units per second.\n";
+                    if (speed.y != 0.0f)
+                    {
+                        desc += $"Dual axis movement, at {speed} units per second.\n";
+                    }
+                    else
+                    {
+                        desc += $"Horizontal movement, at {speed.x} units per second.\n";
+                    }
                 }
                 else
                 {
-                    desc += $"No movement!\n";
+                    if (speed.y != 0.0f)
+                    {
+                        desc += $"Vertical movement, at {speed.y} units per second.\n";
+                    }
+                    else
+                    {
+                        desc += $"No movement!\n";
+                    }
                 }
             }
             if (limitSpeed)
             {
                 desc += $"Speed will be limited to {speedLimit} units per second.\n";
             }
-            if (useRotation)
+            if ((useRotation) && (!hasAI))
             {
                 desc += "These directions will be relative to the current object orientation.\n";
             }
@@ -122,50 +131,53 @@ namespace OkapiKit
                     desc += $"This object will turn {maxTurnSpeed} degrees/sec to align it's {axisName} axis to the movement direction.\n";
                 }
             }
-            if (inputEnabled)
+            if (!hasAI)
             {
-                if (inertiaEnable)
+                if (inputEnabled)
                 {
-                    if (inertiaStopTime > 0)
+                    if (inertiaEnable)
                     {
-                        desc += $"Object will have inertia and will stop in {inertiaStopTime} seconds when at maximum speed.\n";
+                        if (inertiaStopTime > 0)
+                        {
+                            desc += $"Object will have inertia and will stop in {inertiaStopTime} seconds when at maximum speed.\n";
+                        }
+                        else
+                        {
+                            desc += $"Object will have inertia, but will stop immediately.\n";
+                        }
                     }
-                    else
+                    if (inputType == InputType.Axis)
                     {
-                        desc += $"Object will have inertia, but will stop immediately.\n";
+                        if ((horizontalAxis != "") && (horizontalAxis != "None"))
+                        {
+                            desc += $"Horizontal movement will be controlled by the [{horizontalAxis}] axis.\n";
+                        }
+                        if ((verticalAxis != "") && (verticalAxis != "None"))
+                        {
+                            desc += $"Vertical movement will be controlled by the [{verticalAxis}] axis.\n";
+                        }
                     }
-                }
-                if (inputType == InputType.Axis)
-                {
-                    if ((horizontalAxis != "") && (horizontalAxis != "None"))
+                    else if (inputType == InputType.Button)
                     {
-                        desc += $"Horizontal movement will be controlled by the [{horizontalAxis}] axis.\n";
+                        if ((horizontalButtonPositive != "") || (horizontalButtonNegative != ""))
+                        {
+                            desc += $"Horizontal movement will be controlled by the [{horizontalButtonNegative}] and [{horizontalButtonPositive}] buttons.\n";
+                        }
+                        if ((verticalButtonPositive != "") || (verticalButtonNegative != ""))
+                        {
+                            desc += $"Vertical movement will be controlled by the [{verticalButtonNegative}] and [{verticalButtonPositive}] buttons.\n";
+                        }
                     }
-                    if ((verticalAxis != "") && (verticalAxis != "None"))
+                    else if (inputType == InputType.Key)
                     {
-                        desc += $"Vertical movement will be controlled by the [{verticalAxis}] axis.\n";
-                    }
-                }
-                else if (inputType == InputType.Button)
-                {
-                    if ((horizontalButtonPositive != "") || (horizontalButtonNegative != ""))
-                    {
-                        desc += $"Horizontal movement will be controlled by the [{horizontalButtonNegative}] and [{horizontalButtonPositive}] buttons.\n";
-                    }
-                    if ((verticalButtonPositive != "") || (verticalButtonNegative != ""))
-                    {
-                        desc += $"Vertical movement will be controlled by the [{verticalButtonNegative}] and [{verticalButtonPositive}] buttons.\n";
-                    }
-                }
-                else if (inputType == InputType.Key)
-                {
-                    if ((horizontalKeyPositive != KeyCode.None) || (horizontalKeyNegative != KeyCode.None))
-                    {
-                        desc += $"Horizontal movement will be controlled by the [{horizontalKeyNegative}] and [{horizontalKeyPositive}] keys.\n";
-                    }
-                    if ((verticalKeyPositive != KeyCode.None) || (verticalKeyNegative != KeyCode.None))
-                    {
-                        desc += $"Vertical movement will be controlled by the [{verticalKeyNegative}] and [{verticalKeyPositive}] keys.\n";
+                        if ((horizontalKeyPositive != KeyCode.None) || (horizontalKeyNegative != KeyCode.None))
+                        {
+                            desc += $"Horizontal movement will be controlled by the [{horizontalKeyNegative}] and [{horizontalKeyPositive}] keys.\n";
+                        }
+                        if ((verticalKeyPositive != KeyCode.None) || (verticalKeyNegative != KeyCode.None))
+                        {
+                            desc += $"Vertical movement will be controlled by the [{verticalKeyNegative}] and [{verticalKeyPositive}] keys.\n";
+                        }
                     }
                 }
             }
@@ -272,6 +284,7 @@ namespace OkapiKit
             base.Awake();
 
             spriteRenderer = GetComponent<SpriteRenderer>();
+            originalRotation = transform.rotation;
         }
 
         void FixedUpdate()
@@ -279,7 +292,7 @@ namespace OkapiKit
             if (!isMovementActive()) return;
 
             Vector3 transformedDelta = moveVector;
-            if (useRotation)
+            if ((useRotation) && (!hasAI))
             {
                 transformedDelta = moveVector.x * transform.right + moveVector.y * transform.up;
             }
@@ -300,7 +313,7 @@ namespace OkapiKit
                 }
             }
 
-            if ((inertiaEnable) && (inputEnabled))
+            if ((inertiaEnable) && (inputEnabled) && (!hasAI))
             {
                 if (inertiaStopTime > 0)
                 {
@@ -339,34 +352,41 @@ namespace OkapiKit
         {
             if (!isMovementActive()) return;
 
-            moveVector = Vector3.zero;
-            if (inputEnabled)
+            if (hasAI)
             {
-                switch (inputType)
-                {
-                    case InputType.Axis:
-                        if (horizontalAxis != "") moveVector.x = Input.GetAxis(horizontalAxis) * speed.x;
-                        if (verticalAxis != "") moveVector.y = Input.GetAxis(verticalAxis) * speed.y;
-                        break;
-                    case InputType.Button:
-                        if ((horizontalButtonPositive != "") && (Input.GetButton(horizontalButtonPositive))) moveVector.x = speed.x;
-                        if ((horizontalButtonNegative != "") && (Input.GetButton(horizontalButtonNegative))) moveVector.x = -speed.x;
-                        if ((verticalButtonPositive != "") && (Input.GetButton(verticalButtonPositive))) moveVector.y = speed.y;
-                        if ((verticalButtonNegative != "") && (Input.GetButton(verticalButtonNegative))) moveVector.y = -speed.y;
-                        break;
-                    case InputType.Key:
-                        if ((horizontalKeyPositive != KeyCode.None) && (Input.GetKey(horizontalKeyPositive))) moveVector.x = speed.x;
-                        if ((horizontalKeyNegative != KeyCode.None) && (Input.GetKey(horizontalKeyNegative))) moveVector.x = -speed.x;
-                        if ((verticalKeyPositive != KeyCode.None) && (Input.GetKey(verticalKeyPositive))) moveVector.y = speed.y;
-                        if ((verticalKeyNegative != KeyCode.None) && (Input.GetKey(verticalKeyNegative))) moveVector.y = -speed.y;
-                        break;
-                    default:
-                        break;
-                }
+
             }
             else
             {
-                moveVector = speed;
+                moveVector = Vector3.zero;
+                if (inputEnabled)
+                {
+                    switch (inputType)
+                    {
+                        case InputType.Axis:
+                            if (horizontalAxis != "") moveVector.x = Input.GetAxis(horizontalAxis) * speed.x;
+                            if (verticalAxis != "") moveVector.y = Input.GetAxis(verticalAxis) * speed.y;
+                            break;
+                        case InputType.Button:
+                            if ((horizontalButtonPositive != "") && (Input.GetButton(horizontalButtonPositive))) moveVector.x = speed.x;
+                            if ((horizontalButtonNegative != "") && (Input.GetButton(horizontalButtonNegative))) moveVector.x = -speed.x;
+                            if ((verticalButtonPositive != "") && (Input.GetButton(verticalButtonPositive))) moveVector.y = speed.y;
+                            if ((verticalButtonNegative != "") && (Input.GetButton(verticalButtonNegative))) moveVector.y = -speed.y;
+                            break;
+                        case InputType.Key:
+                            if ((horizontalKeyPositive != KeyCode.None) && (Input.GetKey(horizontalKeyPositive))) moveVector.x = speed.x;
+                            if ((horizontalKeyNegative != KeyCode.None) && (Input.GetKey(horizontalKeyNegative))) moveVector.x = -speed.x;
+                            if ((verticalKeyPositive != KeyCode.None) && (Input.GetKey(verticalKeyPositive))) moveVector.y = speed.y;
+                            if ((verticalKeyNegative != KeyCode.None) && (Input.GetKey(verticalKeyNegative))) moveVector.y = -speed.y;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    moveVector = speed;
+                }
             }
 
             const float epsilonZero = 1e-3f;
@@ -386,8 +406,8 @@ namespace OkapiKit
                     else if ((currentVelocity.x < -epsilonZero) && (transform.localScale.x > 0.0f)) transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                     break;
                 case FlipBehaviour.VelocityRotatesSprite:
-                    if ((currentVelocity.x > epsilonZero) && (transform.right.x < 0.0f)) transform.rotation *= Quaternion.Euler(0, 180, 0);
-                    else if ((currentVelocity.x < -epsilonZero) && (transform.right.x > 0.0f)) transform.rotation *= transform.rotation *= Quaternion.Euler(0, 180, 0);
+                    if ((currentVelocity.x > epsilonZero) && (transform.right.x < 0.0f)) transform.rotation = originalRotation;
+                    else if ((currentVelocity.x < -epsilonZero) && (transform.right.x > 0.0f)) transform.rotation = originalRotation * Quaternion.Euler(0, 180, 0);
                     break;
                 default:
                     break;
@@ -400,6 +420,11 @@ namespace OkapiKit
                 if (verticalVelocityParameter != "") animator.SetFloat(verticalVelocityParameter, currentVelocity.y);
                 if (absoluteVerticalVelocityParameter != "") animator.SetFloat(absoluteVerticalVelocityParameter, Mathf.Abs(currentVelocity.y));
             }
+        }
+
+        public override void SetMoveVector(Vector2 moveVector)
+        {
+            this.moveVector = moveVector;
         }
     }
 }
