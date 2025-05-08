@@ -377,6 +377,7 @@ MonoBehaviour:
   description: 
   hypertags:
   - {fileID: 11400000, guid: 2eed8d5cd72836c4ca3245061c6be17d, type: 2}
+  - {fileID: 11400000, guid: 55a4b328fb6a3e841ba4740c19b31032, type: 2}
 --- !u!114 &7539606091131250059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +530,7 @@ MonoBehaviour:
       obj: {fileID: 0}
       flags: 0
     quest: {fileID: 0}
+    dialogueKey: 
   elseActions: []
 --- !u!114 &4737629173671138328
 MonoBehaviour:
@@ -728,6 +730,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b961f9f3503737645ab86b4e11e9eda8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
 --- !u!1 &5066776696835148068
 GameObject:
   m_ObjectHideFlags: 0

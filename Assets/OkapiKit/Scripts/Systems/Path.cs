@@ -583,6 +583,15 @@ namespace OkapiKit
         }
 
 #if UNITY_EDITOR
+        public void DrawPath()
+        {
+            var renderPoints = GetPoints();
+            for (int i = 1; i < renderPoints.Count; i++)
+            {
+                Handles.DrawLine(renderPoints[i - 1], renderPoints[i], 1.0f);
+            }
+        }
+
         private void OnDrawGizmos()
         {
             bool selected = false;
@@ -595,19 +604,18 @@ namespace OkapiKit
 
             Handles.color = (selected && editMode) ? (Color.white) : (displayColor);
 
-            var renderPoints = GetPoints();
-            for (int i = 1; i < renderPoints.Count; i++)
-            {
-                Handles.DrawLine(renderPoints[i - 1], renderPoints[i], 1.0f);
-            }
+            DrawPath();
 
-            float s = 1.0f;
-            for (int i = 0; i < points.Count; i++)
+            if (points != null)
             {
-                Vector2 p = points[i];
+                float s = 1.0f;
+                for (int i = 0; i < points.Count; i++)
+                {
+                    Vector2 p = points[i];
 
-                Handles.DrawLine(p + new Vector2(s, s), p + new Vector2(-s, -s), 1.0f);
-                Handles.DrawLine(p + new Vector2(s, -s), p + new Vector2(-s, s), 1.0f);
+                    Handles.DrawLine(p + new Vector2(s, s), p + new Vector2(-s, -s), 1.0f);
+                    Handles.DrawLine(p + new Vector2(s, -s), p + new Vector2(-s, s), 1.0f);
+                }
             }
         }
 #endif

@@ -79,6 +79,9 @@ namespace OkapiKit.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
+                Movement movement = target as Movement;
+                bool     hasAI = movement.hasAI;
+
                 DefaultMovementEditor();
 
                 EditorGUILayout.PropertyField(propSpeed, new GUIContent("Speed", "Maximum movement speed in world units (pixels)/second"));
@@ -87,9 +90,11 @@ namespace OkapiKit.Editor
                 {
                     EditorGUILayout.PropertyField(propSpeedLimit, new GUIContent("Maximum Speed", "Maximum absolute speed in world units (pixels)/second"));
                 }
-
-                EditorGUILayout.PropertyField(propUseRotation, new GUIContent("Use Rotation?", "If true, the X and Y speed is relative to the rotation of the object.\nThis means that if the object is turned they refer to the right and up of the object, and not the absolute screen coordinates."));
-                if (!propUseRotation.boolValue)
+                if (!hasAI)
+                {
+                    EditorGUILayout.PropertyField(propUseRotation, new GUIContent("Use Rotation?", "If true, the X and Y speed is relative to the rotation of the object.\nThis means that if the object is turned they refer to the right and up of the object, and not the absolute screen coordinates."));
+                }
+                if ((!propUseRotation.boolValue) || (hasAI))
                 {
                     EditorGUILayout.PropertyField(propTurnToDirection, new GUIContent("Turn To Movement Direction?", "If active, the object will turn towards the movement direction."));
                     if (propTurnToDirection.boolValue)
@@ -99,39 +104,42 @@ namespace OkapiKit.Editor
                     }
                 }
 
-                EditorGUILayout.PropertyField(propInputEnabled, new GUIContent("Use Input?", "Is the object controlled by the player?"));
-                if (propInputEnabled.boolValue)
+                if (!hasAI)
                 {
-                    EditorGUILayout.PropertyField(propInertiaEnable, new GUIContent("Use Inertia?", "If true, the object will have inertia and take a bit to stop completely when input is released."));
-                    if (propInertiaEnable.boolValue)
+                    EditorGUILayout.PropertyField(propInputEnabled, new GUIContent("Use Input?", "Is the object controlled by the player?"));
+                    if (propInputEnabled.boolValue)
                     {
-                        EditorGUILayout.PropertyField(propInertiaStopTime, new GUIContent("Stop Time", "How long does the object take stopping?"));
-                    }
+                        EditorGUILayout.PropertyField(propInertiaEnable, new GUIContent("Use Inertia?", "If true, the object will have inertia and take a bit to stop completely when input is released."));
+                        if (propInertiaEnable.boolValue)
+                        {
+                            EditorGUILayout.PropertyField(propInertiaStopTime, new GUIContent("Stop Time", "How long does the object take stopping?"));
+                        }
 
-                    EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type", "What's the input type?\nAxis: Use two axis to move\nButton: Use four keys to move\nKey: Use four keys to move"));
+                        EditorGUILayout.PropertyField(propInputType, new GUIContent("Input Type", "What's the input type?\nAxis: Use two axis to move\nButton: Use four keys to move\nKey: Use four keys to move"));
 
-                    var inputType = (MovementXY.InputType)propInputType.intValue;
+                        var inputType = (MovementXY.InputType)propInputType.intValue;
 
-                    switch (inputType)
-                    {
-                        case MovementXY.InputType.Axis:
-                            EditorGUILayout.PropertyField(propHorizontalAxis, new GUIContent("Horizontal Axis", "Horizontal axis"));
-                            EditorGUILayout.PropertyField(propVerticalAxis, new GUIContent("Vertical Axis", "Vertical axis"));
-                            break;
-                        case MovementXY.InputType.Button:
-                            EditorGUILayout.PropertyField(propHorizontalButtonPositive, new GUIContent("Horizontal Positive Button", "Right button"));
-                            EditorGUILayout.PropertyField(propHorizontalButtonNegative, new GUIContent("Horizontal Negative Button", "Left button"));
-                            EditorGUILayout.PropertyField(propVerticalButtonPositive, new GUIContent("Vertical Positive Button", "Up button"));
-                            EditorGUILayout.PropertyField(propVerticalButtonNegative, new GUIContent("Vertical Negative Button", "Down button"));
-                            break;
-                        case MovementXY.InputType.Key:
-                            EditorGUILayout.PropertyField(propHorizontalKeyPositive, new GUIContent("Horizontal Positive Key", "Right key"));
-                            EditorGUILayout.PropertyField(propHorizontalKeyNegative, new GUIContent("Horizontal Negative Key", "Left key"));
-                            EditorGUILayout.PropertyField(propVerticalKeyPositive, new GUIContent("Vertical Positive Key", "Up key"));
-                            EditorGUILayout.PropertyField(propVerticalKeyNegative, new GUIContent("Vertical Negative Key", "Down key"));
-                            break;
-                        default:
-                            break;
+                        switch (inputType)
+                        {
+                            case MovementXY.InputType.Axis:
+                                EditorGUILayout.PropertyField(propHorizontalAxis, new GUIContent("Horizontal Axis", "Horizontal axis"));
+                                EditorGUILayout.PropertyField(propVerticalAxis, new GUIContent("Vertical Axis", "Vertical axis"));
+                                break;
+                            case MovementXY.InputType.Button:
+                                EditorGUILayout.PropertyField(propHorizontalButtonPositive, new GUIContent("Horizontal Positive Button", "Right button"));
+                                EditorGUILayout.PropertyField(propHorizontalButtonNegative, new GUIContent("Horizontal Negative Button", "Left button"));
+                                EditorGUILayout.PropertyField(propVerticalButtonPositive, new GUIContent("Vertical Positive Button", "Up button"));
+                                EditorGUILayout.PropertyField(propVerticalButtonNegative, new GUIContent("Vertical Negative Button", "Down button"));
+                                break;
+                            case MovementXY.InputType.Key:
+                                EditorGUILayout.PropertyField(propHorizontalKeyPositive, new GUIContent("Horizontal Positive Key", "Right key"));
+                                EditorGUILayout.PropertyField(propHorizontalKeyNegative, new GUIContent("Horizontal Negative Key", "Left key"));
+                                EditorGUILayout.PropertyField(propVerticalKeyPositive, new GUIContent("Vertical Positive Key", "Up key"));
+                                EditorGUILayout.PropertyField(propVerticalKeyNegative, new GUIContent("Vertical Negative Key", "Down key"));
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
 

@@ -27,6 +27,7 @@
 - Added option to invert color on Flash action
 - Added dialogue system
 - Added dialogue system conditions (HasSaid, IsTalking)
+- Added AI system for simple behaviours for NPCs and enemies
 - Fixed several UI bugs
 
 ## V1.18.2
