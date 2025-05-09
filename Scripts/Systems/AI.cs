@@ -1,5 +1,7 @@
 using NaughtyAttributes;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -544,28 +546,76 @@ namespace OkapiKit
             if (canFlee)
             {
                 if ((fleeTags == null) || (fleeTags.Length == 0))
-                {
-                    _logs.Add(new LogEntry(LogEntry.Type.Error, "No flee tags defined!", "Flee is enabled, but no flee tags are defined!\nFlee tags are what this AI runs away from."));
-                }
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "No flee tags defined!", "Flee is enabled, but no flee tags are defined! These tags define what the AI runs away from."));
                 else
                 {
-                    foreach (var tag in fleeTags)
+                    for (int i = 0; i < fleeTags.Length; i++)
                     {
-                        if (tag == null)
-                        {
-                            _logs.Add(new LogEntry(LogEntry.Type.Error, "Empty tag defined in flee tag list!", "You need to assign the tag!"));
-                        }
+                        if (fleeTags[i] == null)
+                            _logs.Add(new LogEntry(LogEntry.Type.Error, $"Flee tag #{i} is null.", "You must assign a valid Hypertag for all flee targets."));
                     }
+                }
+            }
+
+            if (canChase)
+            {
+                if ((chaseTags == null) || (chaseTags.Length == 0))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Warning, "No chase tags defined!", "Chase is enabled, but no chase tags are defined. The AI won't have any targets to chase."));
+                }
+            }
+
+            if (canPatrol)
+            {
+                if ((patrolPath == null) && ((patrolPoints == null) || (patrolPoints.Length == 0)))
+                {
+                    _logs.Add(new LogEntry(LogEntry.Type.Error, "No patrol path or points defined!", "Patrol is enabled but neither a patrol path nor patrol points are assigned."));
                 }
             }
         }
 
         public override string GetRawDescription(string ident, GameObject refObject)
         {
-            var desc = "This module implements a series of behaviours on an object.";
+            List<string> parts = new List<string>
+            {
+                "This module enables AI behavior for this object, including stateful transitions between behaviors such as idle, patrol, wandering, fleeing, chasing, and searching."
+            };
 
-            return desc;
+            if (canPatrol)
+            {
+                string patrolInfo = patrolPath != null ? "a predefined path" : "a list of patrol points";
+                parts.Add($"- Patrols using {patrolInfo}, in {patrolMode} mode, at {patrolSpeedModifier:0.##}× movement speed.");
+            }
+
+            if (canWander)
+            {
+                parts.Add($"- Wanders within a radius of {wanderRadius:0.##} units from its spawn point every {timeBetweenWanders.x:0.##}–{timeBetweenWanders.y:0.##}s at {wanderSpeedModifier:0.##}× speed.");
+            }
+
+            if (canFlee)
+            {
+                parts.Add($"- Flees from objects tagged with: {string.Join(", ", fleeTags.Select(t => t != null ? t.name : "<null>"))}, within {fleeProximityRadius:0.##} units, at {fleeSpeedModifier:0.##}× speed.");
+            }
+
+            if (canChase)
+            {
+                var chaseFlags = new List<string>();
+                if (chaseUseFOV) chaseFlags.Add($"FOV {chaseFieldOfView}°");
+                if (chaseRequireLOS) chaseFlags.Add("LOS required");
+                if (chaseUseMaxRangeFromSpawn) chaseFlags.Add($"max range {chaseMaxRangeFromSpawn} units");
+
+                string modifiers = chaseFlags.Count > 0 ? $" ({string.Join(", ", chaseFlags)})" : "";
+                parts.Add($"- Chases objects tagged with: {string.Join(", ", chaseTags.Select(t => t != null ? t.name : "<null>"))}, up to {chaseViewDistance:0.##} units{modifiers}, at {chaseSpeedModifier:0.##}× speed.");
+            }
+
+            if (canSearch)
+            {
+                parts.Add($"- Searches for lost targets within {searchRadius:0.##} units for up to {searchMaxTime:0.##}s at {searchSpeedModifier:0.##}× speed.");
+            }
+
+            return string.Join("\n", parts.Select(p => $"{ident}{p}"));
         }
+
 
 
 #if UNITY_EDITOR
