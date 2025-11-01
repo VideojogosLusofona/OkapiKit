@@ -22,7 +22,7 @@ namespace OkapiKit
         public bool isTriggerEnabled
         {
             get { return enableTrigger; }
-            set { enableTrigger = value; }
+            set { enableTrigger = value; if (value) alreadyTriggered = false; }
         }
 
         public virtual string GetTriggerTitle() { return "Trigger"; }
