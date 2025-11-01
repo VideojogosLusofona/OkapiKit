@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.19.1
+
+- Fixed issues with builds not working
+
 ## V1.19.0
 
 - Text now wraps correctly in explanations

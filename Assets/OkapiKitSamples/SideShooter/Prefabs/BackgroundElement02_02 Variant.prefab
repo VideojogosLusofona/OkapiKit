@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7378753547071188160, guid: f06baac340c78814a8011896ac1081d5, type: 3}
@@ -53,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7378753547071188166, guid: f06baac340c78814a8011896ac1081d5, type: 3}
       propertyPath: m_Name
-      value: BackgroundElement02_02
+      value: BackgroundElement02_02 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7378753547397994953, guid: f06baac340c78814a8011896ac1081d5, type: 3}
       propertyPath: m_Tiles.Array.size
@@ -880,4 +881,7 @@ PrefabInstance:
       value: 65535
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f06baac340c78814a8011896ac1081d5, type: 3}
