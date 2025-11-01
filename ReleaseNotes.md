@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.20.1
+
+- Triggers with retrigger disabled now get renabled if you activate them with the ChangeTriggerState action.
+
 ## V1.20.0
 
 - Added LocalScale and WorldScale to conditions
