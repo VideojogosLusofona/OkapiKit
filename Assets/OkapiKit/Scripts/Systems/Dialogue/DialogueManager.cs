@@ -39,8 +39,10 @@ namespace OkapiKit
             }
         }
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             if ((instance != null) && (instance != this))
             {
                 Destroy(gameObject);

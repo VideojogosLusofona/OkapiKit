@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.20.0
+
+- Added LocalScale and WorldScale to conditions
+
 ## V1.19.1
 
 - Fixed issues with builds not working

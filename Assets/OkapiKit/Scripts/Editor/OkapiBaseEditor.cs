@@ -180,7 +180,7 @@ namespace OkapiKit.Editor
             var logs = (okapiElement) ? (okapiElement.logs) : (okapiScriptableElement.logs);
             if (logs.Count > 0)
             {
-                var rect = EditorGUILayout.BeginVertical("");
+                var rect = EditorGUILayout.BeginVertical();
                 
                 float       inspectorWidth = EditorGUIUtility.currentViewWidth - 20;
                 GUIStyle    logStyle = GUIUtils.GetLogStyle();
