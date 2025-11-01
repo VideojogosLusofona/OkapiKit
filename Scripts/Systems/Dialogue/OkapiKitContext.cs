@@ -128,6 +128,6 @@ namespace OkapiKit
         {
             quests = new List<Quest>(AssetUtils.GetAll<Quest>());
         }
-    }
 #endif
+    }
 }
