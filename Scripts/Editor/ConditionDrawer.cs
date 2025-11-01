@@ -107,8 +107,10 @@ namespace OkapiKit.Editor
                                 EditorGUI.PropertyField(tagRangeRect, propTagRange, GUIContent.none);
                             }
                         }
-                        else if ((propValueType.intValue >= (int)Condition.ValueType.WorldPositionX) &&
-                                 (propValueType.intValue <= (int)Condition.ValueType.LocalPositionY))
+                        else if (((propValueType.intValue >= (int)Condition.ValueType.WorldPositionX) &&
+                                 (propValueType.intValue <= (int)Condition.ValueType.LocalPositionY)) ||
+                                 ((propValueType.intValue >= (int)Condition.ValueType.WorldScaleX) &&
+                                 (propValueType.intValue <= (int)Condition.ValueType.LocalScaleY)))
                         {
                             var valueTypeRect = new Rect(positionValue, position.y, 150 + extra_width_variable, position.height / 2);
                             var transformRect = new Rect(positionValue, position.y + position.height / 2, 150 + extra_width_variable, position.height / 2);

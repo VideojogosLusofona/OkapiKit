@@ -12,6 +12,7 @@ namespace OkapiKit
         {
             None = 0, TagCount = 1,
             WorldPositionX = 2, WorldPositionY = 3, LocalPositionX = 4, LocalPositionY = 5,
+            WorldScaleX = 30, WorldScaleY = 31, LocalScaleX = 32, LocalScaleY = 33,
             VelocityX = 14, VelocityY = 15,
             AbsoluteVelocityX = 6, AbsoluteVelocityY = 7,
             Distance = 8, Angle = 9,
@@ -129,6 +130,18 @@ namespace OkapiKit
                 case ValueType.LocalPositionY:
                     if (sourceTransform) return $"{sourceTransform.name}.ry";
                     return $"{gameObject.name}.localY";
+                case ValueType.WorldScaleX:
+                    if (sourceTransform) return $"{sourceTransform.name}.ry";
+                    return $"{gameObject.name}.localScaleX";
+                case ValueType.WorldScaleY:
+                    if (sourceTransform) return $"{sourceTransform.name}.ry";
+                    return $"{gameObject.name}.localScaleY";
+                case ValueType.LocalScaleX:
+                    if (sourceTransform) return $"{sourceTransform.name}.ry";
+                    return $"{gameObject.name}.scaleX";
+                case ValueType.LocalScaleY:
+                    if (sourceTransform) return $"{sourceTransform.name}.ry";
+                    return $"{gameObject.name}.scaleY";
                 case ValueType.VelocityX:
                     if (rigidBody) return $"{rigidBody.name}.velocity.x";
                     return $"{gameObject.name}.velocity.x";
@@ -412,6 +425,30 @@ namespace OkapiKit
                         case ValueType.LocalPositionY:
                             t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
                             currentValue = t.localPosition.y;
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+                            break;
+                        case ValueType.WorldScaleX:
+                            t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
+                            currentValue = t.lossyScale.x;
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+                            break;
+                        case ValueType.WorldScaleY:
+                            t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
+                            currentValue = t.lossyScale.y;
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+                            break;
+                        case ValueType.LocalScaleX:
+                            t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
+                            currentValue = t.localScale.x;
+                            minValue = 0;
+                            maxValue = float.MaxValue;
+                            break;
+                        case ValueType.LocalScaleY:
+                            t = (sourceTransform) ? (sourceTransform) : (gameObject.transform);
+                            currentValue = t.localScale.y;
                             minValue = 0;
                             maxValue = float.MaxValue;
                             break;
