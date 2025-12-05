@@ -71,6 +71,7 @@ namespace OkapiKit.Editor
                 // Make sure to update the serializedObject to reflect the latest data
                 serializedObject.Update();
 
+                if (propHasConditions == null) return;
                 if (!propHasConditions.boolValue) return;
 
                 // Iterate through all elements in the propConditions array

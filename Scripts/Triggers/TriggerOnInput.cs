@@ -172,9 +172,9 @@ namespace OkapiKit
             }
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             if ((elseActions != null) && (elseActions.Length > 0))
             {
@@ -187,7 +187,7 @@ namespace OkapiKit
                     }
                     else
                     {
-                        action.action.ForceCheckErrors();
+                        action.action.ForceCheckErrors(level + 1);
                         var actionLogs = action.action.logs;
                         foreach (var log in actionLogs)
                         {

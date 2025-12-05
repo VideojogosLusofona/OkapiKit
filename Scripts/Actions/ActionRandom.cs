@@ -35,7 +35,11 @@ namespace OkapiKit
 
             for (int i = 0; i < actions.Length; i++)
             {
-                if (actions[i].action != null)
+                if (actions[i].action == this)
+                {
+                    desc += $"{ident}  {i + 1}. {ident}    [ERROR!] ({(int)(actions[i].probability * 100 / total)}%)";
+                }
+                else if (actions[i].action != null)
                 {
                     desc += $"{ident}  {i + 1}. {actions[i].action.GetRawDescription(ident + "    ", gameObject)} ({(int)(actions[i].probability * 100 / total)}%)";
                 }
@@ -48,9 +52,9 @@ namespace OkapiKit
 
             return desc;
         }
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > CheckErrorsMaxLevel) return;
 
             if ((actions == null) || (actions.Length == 0))
             {
@@ -70,13 +74,20 @@ namespace OkapiKit
                     {
                         _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty action in action list (index={index})!", "Empty actions don't do anything"));
                     }
+                    else if (action.action == this)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Recursive action in action list (index={index})!", "Recursive actions can cause problems, please remove this action!"));
+                    }
                     else
                     {
-                        action.action.ForceCheckErrors();
+                        action.action.ForceCheckErrors(level + 1);
                         var actionLogs = action.action.logs;
-                        foreach (var log in actionLogs)
+                        if (actionLogs != null)
                         {
-                            _logs.Add(new LogEntry(log.type, $"On action {index}: " + log.text, log.tooltip));
+                            foreach (var log in actionLogs)
+                            {
+                                _logs.Add(new LogEntry(log.type, $"On action {index}: " + log.text, log.tooltip));
+                            }
                         }
                     }
                     if (action.probability <= 0.0f)

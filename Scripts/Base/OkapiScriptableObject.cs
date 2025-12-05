@@ -31,7 +31,7 @@ namespace OkapiKit
         {
             _logs.Clear();
 
-            CheckErrors();
+            CheckErrors(0);
             return Internal_UpdateExplanation();
         }
 
@@ -45,10 +45,13 @@ namespace OkapiKit
             return _explanation;
         }
 
-        protected virtual void CheckErrors()
+        protected virtual void CheckErrors(int level)
         {
-
-        }        
+            if (level > OkapiElement.CheckErrorsMaxLevel)
+            {
+                _logs.Add(new LogEntry(LogEntry.Type.Error, "Maximum depth for error checking reached", "You probably have a self reference somewhere in the hierarchy, check any action lists!"));
+            }
+        }
 
         protected virtual void Awake()
         {

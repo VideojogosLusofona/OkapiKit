@@ -115,15 +115,18 @@ namespace OkapiKit
             return _explanation;
         }
 
-        public void ForceCheckErrors()
+        public void ForceCheckErrors(int level)
         {
+            if (level > OkapiElement.CheckErrorsMaxLevel) return;
+
             _logs.Clear();
-            CheckErrors();
+            CheckErrors(level);
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+            // Max depth of 5 levels for checking errors
+            base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             if (hasTags)
             {

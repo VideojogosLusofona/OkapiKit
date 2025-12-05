@@ -127,9 +127,9 @@ namespace OkapiKit
             return desc;
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             if ((triggerTags == null) || (triggerTags.Length == 0))
             {

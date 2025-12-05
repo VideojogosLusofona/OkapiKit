@@ -9,9 +9,9 @@ namespace OkapiKit
 
         SpriteEffect effect;
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+            base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             targetRenderer.CheckErrors(_logs, "renderer", gameObject);
         }

@@ -80,9 +80,9 @@ namespace OkapiKit
             return desc;
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             var spawner = GetComponent<Spawner>();
             if (spawner == null)
@@ -120,7 +120,7 @@ namespace OkapiKit
             }
             else
             {
-                spawner.ForceCheckErrors();
+                spawner.ForceCheckErrors(level + 1);
                 var actionLogs = spawner.logs;
                 foreach (var log in actionLogs)
                 {

@@ -37,9 +37,9 @@ namespace OkapiKit
             return $"removes item {itemName} to {inventoryName}.";
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             inventory.CheckErrors(_logs, "inventory", gameObject);
 
