@@ -68,7 +68,11 @@ namespace OkapiKit
                         timeString += spaces;
                     }
 
-                    if (action.action != null)
+                    if (action.action == this)
+                    {
+                        actionDesc = "  Recursive action, please remove, this will cause problems!";
+                    }
+                    else if (action.action != null)
                     {
                         actionDesc = action.action.GetRawDescription("  ", gameObject);
                         actionDesc = actionDesc.Replace("\n", "\n" + spaces);
@@ -83,9 +87,9 @@ namespace OkapiKit
             return desc;
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             if ((actions == null) || (actions.Length == 0))
             {
@@ -105,9 +109,13 @@ namespace OkapiKit
                     {
                         _logs.Add(new LogEntry(LogEntry.Type.Error, $"Empty action in action list (index={index})!", "Empty actions don't do anything"));
                     }
+                    else if (action.action == this)
+                    {
+                        _logs.Add(new LogEntry(LogEntry.Type.Error, $"Recursive action in action list (index={index})!", "Recursive actions will cause problems, please remove this!"));
+                    }
                     else
                     {
-                        action.action.ForceCheckErrors();
+                        action.action.ForceCheckErrors(level + 1);
                         var actionLogs = action.action.logs;
                         foreach (var log in actionLogs)
                         {

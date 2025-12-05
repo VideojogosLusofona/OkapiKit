@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.20.2
+
+- Sequence and random actions that self reference are now identified and an error is output instead of just stack overflowing
+
 ## V1.20.1
 
 - Triggers with retrigger disabled now get renabled if you activate them with the ChangeTriggerState action.

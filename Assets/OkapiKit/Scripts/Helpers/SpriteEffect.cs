@@ -184,9 +184,9 @@ namespace OkapiKit
             return "This is a system linked to sprite visual effects. This can be used with actions such as Flash.";
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             if (spriteRenderer == null)
             {

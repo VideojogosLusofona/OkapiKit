@@ -63,9 +63,9 @@ namespace OkapiKit
             return desc;
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             if ((eventType == GridEvent.PushObject) || (eventType == GridEvent.HitObject) ||
                 (eventType == GridEvent.WasPushed) || (eventType == GridEvent.WasHit))

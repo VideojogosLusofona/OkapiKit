@@ -49,9 +49,9 @@ namespace OkapiKit
             return _explanation;
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             linkedInventory.CheckErrors(_logs, "linked inventory", gameObject);
         }

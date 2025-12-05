@@ -72,9 +72,9 @@ namespace OkapiKit
             return ret;
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             var textGUI = GetComponent<TextMeshProUGUI>();
             if (textGUI == null)

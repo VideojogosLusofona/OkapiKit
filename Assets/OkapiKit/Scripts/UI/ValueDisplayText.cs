@@ -63,9 +63,9 @@ namespace OkapiKit
             return "This component displays the variable as text.\nThere has to be a text component on this object with the C# text formatter string set.";
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
             var textGUI = GetComponent<TextMeshProUGUI>();
             if (textGUI == null)

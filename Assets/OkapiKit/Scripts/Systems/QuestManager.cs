@@ -202,9 +202,10 @@ namespace OkapiKit
         }
 
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+            base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
+            if (level > Action.CheckErrorsMaxLevel) return;
 
             bool hasInventory = GetComponent<Inventory>() != null;
             bool hasEquipment = GetComponent<Equipment>() != null;

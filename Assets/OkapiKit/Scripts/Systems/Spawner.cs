@@ -467,9 +467,9 @@ namespace OkapiKit
             return _explanation;
         }
 
-        protected override void CheckErrors()
+        protected override void CheckErrors(int level)
         {
-            base.CheckErrors();
+              base.CheckErrors(level); if (level > Action.CheckErrorsMaxLevel) return;
 
 #if UNITY_EDITOR
             if ((prefabs == null) || (prefabs.Length == 0))
@@ -538,10 +538,10 @@ namespace OkapiKit
             }
         }
 
-        public void ForceCheckErrors()
+        public void ForceCheckErrors(int level )
         {
             _logs.Clear();
-            CheckErrors();
+            CheckErrors(level);
         }
 
         public int GetSpawnPointCount()
