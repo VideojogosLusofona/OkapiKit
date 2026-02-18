@@ -11,7 +11,7 @@ namespace OkapiKit
     {
         public enum ChangeType { Emission = 0 };
 
-        [SerializeField] private enum BoolChange { Enable = 0, Disable = 1, Toggle = 2 };
+        private enum BoolChange { Enable = 0, Disable = 1, Toggle = 2 };
 
         [SerializeField]
         new private ParticleSystem particleSystem;

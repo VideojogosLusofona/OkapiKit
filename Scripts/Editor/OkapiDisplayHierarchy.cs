@@ -24,7 +24,7 @@ namespace OkapiKit.Editor
                 GUI.tooltip = "";
             }
 
-            GameObject go = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
+            GameObject go = EditorUtility.EntityIdToObject(instanceID) as GameObject;
             if (go != null)
             {
                 var variable = go.GetComponent<VariableInstance>();
