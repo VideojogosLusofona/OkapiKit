@@ -267,8 +267,7 @@ namespace OkapiKit
             {
                 if (colliders.Length > 0)
                 {
-                    var contactFilter = new ContactFilter2D();
-                    contactFilter.NoFilter();
+                    var contactFilter = ContactFilter2D.noFilter;
                     contactFilter.useTriggers = true;
 
                     targetActions = new List<Action>();

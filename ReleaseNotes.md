@@ -1,5 +1,9 @@
 # Release Notes
 
+## V1.20.3
+
+- Fixed issue so that compilation works on Unity 6.3
+
 ## V1.20.2
 
 - Sequence and random actions that self reference are now identified and an error is output instead of just stack overflowing

@@ -9,7 +9,7 @@ namespace OkapiKit
     [AddComponentMenu("Okapi/Other/Path Object")]
     public class Path : OkapiElement
     {
-        [SerializeField] public enum Type { Linear = 0, Smooth = 1, Circle = 2, Arc = 3, Polygon = 4};
+        public enum Type { Linear = 0, Smooth = 1, Circle = 2, Arc = 3, Polygon = 4};
 
         [SerializeField]
         private Type    type = Type.Linear;
