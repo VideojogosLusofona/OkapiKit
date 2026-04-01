@@ -32,13 +32,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6331027737151652830}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6331027738892186350}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6331027737151652829
 MonoBehaviour:
@@ -53,11 +53,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   type: 0
   currentValue: 100
   defaultValue: 100
-  isInteger: 0
   hasLimits: 1
   minValue: 0
   maxValue: 100
@@ -73,10 +73,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: "When (Health <= 0):\n          spawns prefab Explosion at the position
+    of this object (Health)\n          disables component Cannon (OkapiKit.MovementRotate)\n         
+    disables trigger Cannon.Every frame\n          disables trigger Cannon.Every
+    frame\n          disables trigger Cannon.On Timer\n          disables trigger
+    Cannon.On Collision\n then, at 0.1 seconds, \n          sets Cannon's sprite
+    to [gun_big_tripple_destroyed]\n\nThis trigger will execute only when the conditions
+    change and they are all true."
   description: 
   enableTrigger: 1
-  allowRetrigger: 1
+  allowRetrigger: 0
   hasPreconditions: 0
   preConditions: []
   actions:
@@ -94,23 +101,52 @@ MonoBehaviour:
     action: {fileID: 6331027737151652818}
   - delay: 0.1
     action: {fileID: 6331027737151652819}
-  _explanation: "When (Health <= 0):\n First, \n          spawns prefab Explosion
-    at the position of this object (Health)\n          disables component Cannon
-    (MovementRotate) on Cannon\n          disables trigger Cannon.Every frame\n         
-    disables trigger Cannon.Every frame\n          disables trigger Cannon.On Timer\n         
-    disables trigger Cannon.On Collision\n then, at 0.1 seconds, \n          sets
-    Cannon's sprite to [gun_big_tripple_destroyed]\n"
+  continuous: 0
   conditions:
-  - valueHandler: {fileID: 6331027737151652829}
+  - negate: 0
+    valueHandler: {fileID: 6331027737151652829}
     variable: {fileID: 0}
     valueType: 0
     tag: {fileID: 0}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
     axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 2
     value: 0
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
     percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    resource:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+      resourceType: {fileID: 0}
+    questManager:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    quest: {fileID: 0}
+    dialogueKey: 
+  elseActions: []
 --- !u!114 &6331027737151652821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,13 +159,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3e7a99a4ca9064085e4a2664ef1f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Spawns prefab Explosion at the position of this object (Health)
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Explosion at the position of this object (Health)
   prefabObject: {fileID: 5363241896603793910, guid: 0bc1535a61d6dbc46b6a175863825d14, type: 3}
   spawnPosition: 1
   targetPosition: {fileID: 0}
@@ -147,13 +184,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Disables component Cannon (OkapiKit.MovementRotate)
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables component Cannon (MovementRotate) on Cannon
   target: {fileID: 6331027737871467299}
   state: 1
 --- !u!114 &6331027737151652823
@@ -168,13 +206,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c8e5ca8f3d04141b3e3ca48a91ebb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Disables trigger Cannon.Every frame
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables trigger Cannon.Every frame
   target: {fileID: 6331027737871467300}
   state: 1
 --- !u!114 &6331027737151652816
@@ -189,13 +228,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c8e5ca8f3d04141b3e3ca48a91ebb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Disables trigger Cannon.Every frame
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables trigger Cannon.Every frame
   target: {fileID: 6331027737871467302}
   state: 1
 --- !u!114 &6331027737151652817
@@ -210,13 +250,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c8e5ca8f3d04141b3e3ca48a91ebb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Disables trigger Cannon.On Timer
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables trigger Cannon.On Timer
   target: {fileID: 6331027737871467322}
   state: 1
 --- !u!114 &6331027737151652818
@@ -231,13 +272,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c8e5ca8f3d04141b3e3ca48a91ebb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Disables trigger Cannon.On Collision
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables trigger Cannon.On Collision
   target: {fileID: 6331027737871467320}
   state: 1
 --- !u!114 &6331027737151652819
@@ -252,16 +294,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302ff7b812c0d7846bbbf5b0db22ec81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: 'Sets Cannon''s sprite to [gun_big_tripple_destroyed]'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Sets Cannon's sprite to [gun_big_tripple_destroyed]
   target: {fileID: 6331027737871467296}
   changeType: 0
   sprite: {fileID: 21300000, guid: 8e76c9a72a168894f9a2479f59ba4e19, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  boolState: 0
 --- !u!1 &6331027737564949008
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +339,6 @@ RectTransform:
   m_Children:
   - {fileID: 6331027738424902942}
   m_Father: {fileID: 6331027738746315060}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -375,6 +419,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6331027737871467309}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -384,10 +429,10 @@ Transform:
   - {fileID: 6331027738860690948}
   - {fileID: 6331027737932825448}
   m_Father: {fileID: 6331027738892186350}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6331027737871467296
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -403,6 +448,11 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -424,9 +474,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: af6a3d3365ec5f04a8a1a68a2cb58c72, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -436,11 +488,10 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &6331027737871467297
 Rigidbody2D:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -451,10 +502,16 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -467,13 +524,33 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6331027737871467309}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0}
-  serializedVersion: 2
   m_Radius: 90.5
 --- !u!114 &6331027737871467327
 MonoBehaviour:
@@ -488,7 +565,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 76220200ca6fac545990fa726cd81fb1, type: 2}
 --- !u!114 &6331027737871467299
@@ -504,7 +582,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
-  _description: 
+  _explanation: 'This object will align its up axis with the direction towards the
+    closest object tagged with Player, at a maximum 45 degrees per second.
+
+'
+  description: 
+  hasConditions: 0
+  conditions: []
   speed: 45
   mode: 3
   inputType: 0
@@ -526,6 +610,8 @@ MonoBehaviour:
   axisToAlign: 0
   targetObject: {fileID: 0}
   targetTag: {fileID: 11400000, guid: 8efa30800e1db9e479bbdb4f1d5d1aa1, type: 2}
+  cameraObject: {fileID: 0}
+  cameraTag: {fileID: 0}
 --- !u!114 &6331027737871467300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,27 +625,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "Only rotate cannon if it's within the range of the player\n----------------\nIf
+    (DistanceTo(Tag[Player]) < 1200) and every frame:\n          enables component
+    Cannon (OkapiKit.MovementRotate)\n"
   description: Only rotate cannon if it's within the range of the player
   enableTrigger: 1
   allowRetrigger: 1
   hasPreconditions: 1
   preConditions:
-  - valueHandler: {fileID: 0}
+  - negate: 0
+    valueHandler: {fileID: 0}
     variable: {fileID: 0}
     valueType: 8
     tag: {fileID: 11400000, guid: 8efa30800e1db9e479bbdb4f1d5d1aa1, type: 2}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
     axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 1
     value: 1200
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
     percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    resource:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+      resourceType: {fileID: 0}
+    questManager:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    quest: {fileID: 0}
+    dialogueKey: 
   actions:
   - delay: 0
     action: {fileID: 6331027737871467301}
-  _explanation: "Only rotate cannon if it's within the range of the player\n----------------\nIf
-    (DistanceTo(Tag[Player]) < 1200) and Every frame:\n First, \n          enables
-    component Cannon (MovementRotate) on Cannon\n"
 --- !u!114 &6331027737871467301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,12 +692,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Enables component Cannon (OkapiKit.MovementRotate)
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Enables component Cannon (MovementRotate) on Cannon
   target: {fileID: 6331027737871467299}
   state: 0
 --- !u!114 &6331027737871467302
@@ -594,27 +714,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "Don't rotate cannon if it's outside the range of the player\n----------------\nIf
+    (DistanceTo(Tag[Player]) >= 1200) and every frame:\n          disables component
+    Cannon (OkapiKit.MovementRotate)\n"
   description: Don't rotate cannon if it's outside the range of the player
   enableTrigger: 1
   allowRetrigger: 1
   hasPreconditions: 1
   preConditions:
-  - valueHandler: {fileID: 0}
+  - negate: 0
+    valueHandler: {fileID: 0}
     variable: {fileID: 0}
     valueType: 8
     tag: {fileID: 11400000, guid: 8efa30800e1db9e479bbdb4f1d5d1aa1, type: 2}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
     axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 4
     value: 1200
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
     percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    resource:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+      resourceType: {fileID: 0}
+    questManager:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    quest: {fileID: 0}
+    dialogueKey: 
   actions:
   - delay: 0
     action: {fileID: 6331027737871467303}
-  _explanation: "Don't rotate cannon if it's outside the range of the player\n----------------\nIf
-    (DistanceTo(Tag[Player]) >= 1200) and Every frame:\n First, \n          disables
-    component Cannon (MovementRotate) on Cannon\n"
 --- !u!114 &6331027737871467303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,12 +781,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Disables component Cannon (OkapiKit.MovementRotate)
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables component Cannon (MovementRotate) on Cannon
   target: {fileID: 6331027737871467299}
   state: 1
 --- !u!114 &6331027737871467322
@@ -649,39 +803,107 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: "If (DistanceTo(Tag[Player]) < 1200) and (AngleBetween(Tag[Player],
+    UpAxis) < 10) and every 0.5 to 1 seconds, trigger the actions::\n          find
+    actions underneath this object tagged with any of [Shooter] and execute each
+    of them in sequence each time this action is executed.\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
   hasPreconditions: 1
   preConditions:
-  - valueHandler: {fileID: 0}
+  - negate: 0
+    valueHandler: {fileID: 0}
     variable: {fileID: 0}
     valueType: 8
     tag: {fileID: 11400000, guid: 8efa30800e1db9e479bbdb4f1d5d1aa1, type: 2}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
     axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 1
     value: 1200
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
     percentageCompare: 0
-  - valueHandler: {fileID: 0}
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    resource:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+      resourceType: {fileID: 0}
+    questManager:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    quest: {fileID: 0}
+    dialogueKey: 
+  - negate: 0
+    valueHandler: {fileID: 0}
     variable: {fileID: 0}
     valueType: 9
     tag: {fileID: 11400000, guid: 8efa30800e1db9e479bbdb4f1d5d1aa1, type: 2}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
     axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 1
     value: 10
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
     percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    resource:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+      resourceType: {fileID: 0}
+    questManager:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    quest: {fileID: 0}
+    dialogueKey: 
   actions:
   - delay: 0
     action: {fileID: 6331027737871467323}
-  _explanation: "If (DistanceTo(Tag[Player]) < 1200) and (AngleBetween(Tag[Player],
-    UpAxis) < 10) and Every [0.5,1] seconds, trigger the actions::\n First, \n         
-    find actions underneath this object tagged with any of [Shooter] and execute
-    each of them in sequence each time this action is executed.\n"
   startTriggered: 0
+  initialDelayEnable: 0
+  initialDelay: {x: 5, y: 5}
   timeInterval: {x: 0.5, y: 1}
 --- !u!114 &6331027737871467323
 MonoBehaviour:
@@ -696,16 +918,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 0
+  _explanation: Find actions underneath this object tagged with any of [Shooter]
+    and execute each of them in sequence each time this action is executed.
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Find actions underneath this object tagged with any of [Shooter]
-    and execute each of them in sequence each time this action is executed.
   searchType: 2
   searchTags:
   - {fileID: 11400000, guid: 996aefeec6070174e8c75e545cc8319d, type: 2}
+  colliders: []
   triggerType: 1
   triggerTags:
   - {fileID: 11400000, guid: 996aefeec6070174e8c75e545cc8319d, type: 2}
@@ -722,6 +946,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When a collision with a trigger with tags [PlayerBullet] starts:\n         
+    adds -10 to variable Health\n"
   description: 
   enableTrigger: 1
   allowRetrigger: 1
@@ -730,8 +956,6 @@ MonoBehaviour:
   actions:
   - delay: 0
     action: {fileID: 6331027737871467321}
-  _explanation: "When a collision with a trigger with tags [PlayerBullet] starts:\n
-    First, \n          adds -10 to variable Health\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -749,12 +973,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Adds -10 to variable Health
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Adds -10 to variable Health
   valueHandler: {fileID: 6331027737151652829}
   variable: {fileID: 0}
   operation: 1
@@ -785,13 +1010,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6331027737932825449}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 48, y: 117, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6331027737871467308}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6331027737932825454
 MonoBehaviour:
@@ -806,13 +1031,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Spawns prefab Bullet at the position of this object (Shooter)
+  description: 
   enableAction: 1
   hasTags: 1
   actionTags:
   - {fileID: 11400000, guid: 996aefeec6070174e8c75e545cc8319d, type: 2}
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Bullet at the position of this object (Shooter)
   prefabObject: {fileID: 1181817552025154719, guid: 9ab020ff5cddc6d468c73859e0f208a7, type: 3}
   spawnPosition: 1
   targetPosition: {fileID: 0}
@@ -850,7 +1076,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6331027738424902942}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -907,6 +1132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325523b87d87de346baade62e2b79aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   valueHandler: {fileID: 6331027737151652829}
   variable: {fileID: 0}
   fill: {fileID: 6331027738273565098}
@@ -938,6 +1166,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
 --- !u!1 &6331027738424902943
@@ -972,7 +1201,6 @@ RectTransform:
   m_Children:
   - {fileID: 6331027738273565098}
   m_Father: {fileID: 6331027737564949015}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1041,13 +1269,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6331027738476617567}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -45, y: 117, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6331027737871467308}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6331027738476617564
 MonoBehaviour:
@@ -1062,13 +1290,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Spawns prefab Bullet at the position of this object (Shooter)
+  description: 
   enableAction: 1
   hasTags: 1
   actionTags:
   - {fileID: 11400000, guid: 996aefeec6070174e8c75e545cc8319d, type: 2}
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Bullet at the position of this object (Shooter)
   prefabObject: {fileID: 1181817552025154719, guid: 9ab020ff5cddc6d468c73859e0f208a7, type: 3}
   spawnPosition: 1
   targetPosition: {fileID: 0}
@@ -1106,7 +1335,6 @@ RectTransform:
   m_Children:
   - {fileID: 6331027737564949015}
   m_Father: {fileID: 6331027738892186350}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1130,7 +1358,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_TargetDisplay: 0
@@ -1181,13 +1411,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6331027738860690949}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: 130, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6331027737871467308}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6331027738860690970
 MonoBehaviour:
@@ -1202,13 +1432,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Spawns prefab Bullet at the position of this object (Shooter)
+  description: 
   enableAction: 1
   hasTags: 1
   actionTags:
   - {fileID: 11400000, guid: 996aefeec6070174e8c75e545cc8319d, type: 2}
   hasConditions: 0
   actionConditions: []
-  _explanation: Spawns prefab Bullet at the position of this object (Shooter)
   prefabObject: {fileID: 1181817552025154719, guid: 9ab020ff5cddc6d468c73859e0f208a7, type: 3}
   spawnPosition: 1
   targetPosition: {fileID: 0}
@@ -1238,6 +1469,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6331027738892186344}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3926, y: -2874, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1247,10 +1479,10 @@ Transform:
   - {fileID: 6331027737151652828}
   - {fileID: 6331027738746315060}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6331027738892186351
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1266,6 +1498,11 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1287,9 +1524,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 4e60544587b0d1a4181099db29a91a5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1299,5 +1538,4 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
