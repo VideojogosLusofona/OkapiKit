@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6576810376526392214}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6576810377233776054}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &6576810376526392213
 ParticleSystem:
@@ -251,6 +251,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -280,6 +281,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     startSize:
@@ -601,6 +603,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
+    gravitySource: 0
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -1388,6 +1391,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 3
       minGradient:
@@ -1417,6 +1421,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
@@ -3637,6 +3642,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -3666,6 +3672,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
@@ -4043,6 +4050,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minVertexDistance: 0.2
     textureMode: 0
+    textureScale: {x: 1, y: 1}
     ribbonCount: 1
     shadowBias: 0.5
     worldSpace: 0
@@ -4085,6 +4093,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -4114,6 +4123,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     widthOverTrail:
@@ -4201,6 +4211,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -4230,6 +4241,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   CustomDataModule:
@@ -4268,6 +4280,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -4297,6 +4310,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     colorLabel0: Color
@@ -4550,6 +4564,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -4579,6 +4594,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     colorLabel1: Color
@@ -4800,7 +4816,7 @@ ParticleSystem:
     vectorLabel1_3: W
 --- !u!199 &6576810376526392212
 ParticleSystemRenderer:
-  serializedVersion: 6
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4816,6 +4832,11 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4837,9 +4858,11 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4854,13 +4877,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -4869,7 +4894,6 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
-  m_MaskInteraction: 0
 --- !u!1 &6576810376846172168
 GameObject:
   m_ObjectHideFlags: 0
@@ -4895,13 +4919,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6576810376846172168}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6576810377233776054}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &6576810376846172167
 ParticleSystem:
@@ -5121,6 +5145,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -5150,6 +5175,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     startSize:
@@ -5471,6 +5497,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
+    gravitySource: 0
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -6258,6 +6285,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 3
       minGradient:
@@ -6287,6 +6315,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
@@ -8507,6 +8536,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -8536,6 +8566,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
@@ -8913,6 +8944,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minVertexDistance: 0.2
     textureMode: 0
+    textureScale: {x: 1, y: 1}
     ribbonCount: 1
     shadowBias: 0.5
     worldSpace: 0
@@ -8955,6 +8987,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -8984,6 +9017,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     widthOverTrail:
@@ -9071,6 +9105,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -9100,6 +9135,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   CustomDataModule:
@@ -9138,6 +9174,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -9167,6 +9204,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     colorLabel0: Color
@@ -9420,6 +9458,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -9449,6 +9488,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
     colorLabel1: Color
@@ -9670,7 +9710,7 @@ ParticleSystem:
     vectorLabel1_3: W
 --- !u!199 &6576810376846172166
 ParticleSystemRenderer:
-  serializedVersion: 6
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9686,6 +9726,11 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9707,9 +9752,11 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -9724,13 +9771,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -9739,7 +9788,6 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
-  m_MaskInteraction: 0
 --- !u!1 &6576810377050572917
 GameObject:
   m_ObjectHideFlags: 0
@@ -9770,13 +9818,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6576810377050572917}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6576810377233776054}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6576810377050572916
 MonoBehaviour:
@@ -9790,12 +9838,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c124f990a067b478caf900b6cb6d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
-  _description: Health of the base
-  type: 1
+  _showInfo: 1
+  _explanation: 
+  description: 
+  type: 0
   currentValue: 8
   defaultValue: 8
-  isInteger: 1
   hasLimits: 0
   minValue: -3.4028235e+38
   maxValue: 3.4028235e+38
@@ -9811,10 +9859,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3203f38d4afc6a4283618fa1df06ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: "When (Health <= 0):\n          play particle system BigHit\n         
+    disables renderer Base\n          disables component Base (UnityEngine.BoxCollider2D)\n         
+    plays sound explosion at volume 1 and a pitch in the range [0.8992686,1.196398]\n
+    then, at 3 seconds, \n          destroys the parent of this object\n\nThis trigger
+    will execute only when the conditions change and they are all true."
   description: 
   enableTrigger: 1
-  allowRetrigger: 1
+  allowRetrigger: 0
   hasPreconditions: 0
   preConditions: []
   actions:
@@ -9828,21 +9881,52 @@ MonoBehaviour:
     action: {fileID: 7619897011921874865}
   - delay: 3
     action: {fileID: 6576810377050572914}
-  _explanation: "When (Health <= 0):\n First, \n          play particle system BigHit\n         
-    disables renderer Base1\n          disables component Base1 (UnityEngine.BoxCollider2D)
-    on Base1\n          plays sound explosion at volume 1 and a pitch in the range
-    [0.8992686,1.196398]\n then, at 3 seconds, \n          destroys the parent of
-    this object\n"
+  continuous: 0
   conditions:
-  - valueHandler: {fileID: 6576810377050572916}
+  - negate: 0
+    valueHandler: {fileID: 6576810377050572916}
     variable: {fileID: 0}
     valueType: 0
     tag: {fileID: 0}
+    tagCountRangeEnabled: 0
+    tagCountRange: 0
     sourceTransform: {fileID: 0}
     rigidBody: {fileID: 0}
+    axis: 0
+    probe: {fileID: 0}
+    movementPlatformer: {fileID: 0}
     comparison: 2
     value: 0
+    comparisonValueHandler: {fileID: 0}
+    comparisonVariable: {fileID: 0}
     percentageCompare: 0
+    tile: {fileID: 0}
+    tileSet: {fileID: 0}
+    inventory:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    item: {fileID: 0}
+    equipment:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    resource:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+      resourceType: {fileID: 0}
+    questManager:
+      type: 0
+      tag: {fileID: 0}
+      obj: {fileID: 0}
+      flags: 0
+    quest: {fileID: 0}
+    dialogueKey: 
+  elseActions: []
 --- !u!114 &6576810377050572911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9855,13 +9939,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3e57c646e95844d843a12ec6d71381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Play particle system BigHit
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Play particle system BigHit
   target: {fileID: 6576810376846172167}
 --- !u!114 &6576810377050572912
 MonoBehaviour:
@@ -9875,13 +9960,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4ebeb1f5b4ca24a998b898d5c1ad2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Disables renderer Base
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables renderer Base1
   renderer: {fileID: 6576810377233776055}
   changeType: 0
   visibility: 1
@@ -9897,13 +9983,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e9241509df85c44871f6a996f27c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Disables component Base (UnityEngine.BoxCollider2D)
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Disables component Base1 (UnityEngine.BoxCollider2D) on Base1
   target: {fileID: 6576810377233776058}
   state: 1
 --- !u!114 &7619897011921874865
@@ -9918,13 +10005,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766d16681200cf841a49e1df59f6076f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: 'Plays sound explosion at volume 1 and a pitch in the range [0.8992686,1.196398]'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Plays sound explosion at volume 1 and a pitch in the range [0.8992686,1.196398]
   clip: {fileID: 8300000, guid: 3d1ed18b96b40c14ba50d9b74a73fd89, type: 3}
   volume: {x: 1, y: 1}
   pitch: {x: 0.8992686, y: 1.1963985}
@@ -9940,13 +10028,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e75877c0562c0e49a1475541c319262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfo: 0
+  _showInfo: 1
+  _explanation: Destroys the parent of this object
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Destroys the parent of this object
   target: 1
   targetObject: {fileID: 0}
   tags: []
@@ -9983,6 +10072,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6576810377233776063}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -265, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -9992,10 +10082,10 @@ Transform:
   - {fileID: 6576810376526392211}
   - {fileID: 6576810376846172165}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6576810377233776055
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10011,6 +10101,11 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -10032,9 +10127,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 1088891212, guid: a0b0fd463b62e78468e71f811a59445a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -10044,11 +10141,10 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &6576810377233776056
 Animator:
-  serializedVersion: 4
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10062,13 +10158,15 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &6576810377233776057
 Rigidbody2D:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10079,10 +10177,16 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -10095,11 +10199,32 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6576810377233776063}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: -1, y: -7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -10110,7 +10235,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 76, y: 26}
   m_EdgeRadius: 0
 --- !u!114 &6576810377233776053
@@ -10125,6 +10249,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc8a1e9dd21634a9cb00402422ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showInfo: 1
+  _explanation: 
+  description: 
   hypertags:
   - {fileID: 11400000, guid: 999cfefaa83c22449aad89d25ac07a8b, type: 2}
 --- !u!114 &6576810377233776059
@@ -10140,6 +10267,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: "When hit by a shot (player or enemy), or by the enemy ship, reduce
+    one health\n----------------\nWhen a collision with a trigger with tags [TagAlien,TagPlayerShot,TagEnemyShot]
+    starts:\n          adds -1 to variable Health\n          play particle system
+    SmallHit\n          sets animation parameter Health of object Base to the value
+    of Health\n          plays sound explosion at volume 0.3044457 and a pitch in
+    the range [0.8992686,1.196398]\n"
   description: When hit by a shot (player or enemy), or by the enemy ship, reduce
     one health
   enableTrigger: 1
@@ -10155,12 +10288,6 @@ MonoBehaviour:
     action: {fileID: 6576810377233776062}
   - delay: 0
     action: {fileID: 4711081686870132699}
-  _explanation: "When hit by a shot (player or enemy), or by the enemy ship, reduce
-    one health\n----------------\nWhen a collision with a trigger with tags [TagAlien,TagPlayerShot,TagEnemyShot]
-    starts:\n At 0 seconds, Adds -1 to variable Health\n At 0 seconds, Play particle
-    system SmallHit\n At 0 seconds, Sets animation parameter Health of object Base
-    to the value of Health\n At 0 seconds, Plays sound explosion with a volume in
-    the range [0.5002815,0.561058] and a pitch in the range [0.8992686,1.196398]\n"
   isTrigger: 1
   eventType: 0
   tags:
@@ -10180,12 +10307,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Adds -1 to variable Health
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Adds -1 to variable Health
   valueHandler: {fileID: 6576810377050572916}
   variable: {fileID: 0}
   operation: 1
@@ -10205,12 +10333,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Play particle system SmallHit
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Play particle system SmallHit
   target: {fileID: 6576810376526392213}
 --- !u!114 &6576810377233776062
 MonoBehaviour:
@@ -10225,12 +10354,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: Sets animation parameter Health of object Base to the value of Health
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Sets animation parameter Health of object Base to the value of Health
   animator: {fileID: 6576810377233776056}
   animationParameter: Health
   valueType: 4
@@ -10239,6 +10369,7 @@ MonoBehaviour:
   boolValue: 0
   valueHandler: {fileID: 6576810377050572916}
   variable: {fileID: 0}
+  absolute: 0
 --- !u!114 &4711081686870132699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10252,13 +10383,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showInfo: 1
+  _explanation: 'Plays sound explosion at volume 0.3044457 and a pitch in the range
+    [0.8992686,1.196398]'
+  description: 
   enableAction: 1
   hasTags: 0
   actionTags: []
   hasConditions: 0
   actionConditions: []
-  _explanation: Plays sound explosion at volume 0.3044457 and a pitch in the range
-    [0.8992686,1.196398]
   clip: {fileID: 8300000, guid: 3d1ed18b96b40c14ba50d9b74a73fd89, type: 3}
   volume: {x: 0.30444568, y: 0.30444568}
   pitch: {x: 0.8992686, y: 1.1963985}

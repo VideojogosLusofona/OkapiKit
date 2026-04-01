@@ -153,19 +153,22 @@ namespace OkapiKit
         {
             if (!enableTrigger) return;
 
-            foreach (var action in elseActions)
+            if (elseActions != null)
             {
-                if (action.action != null)
+                foreach (var action in elseActions)
                 {
-                    if (action.action.isActionEnabled)
+                    if (action.action != null)
                     {
-                        if (action.delay > 0)
+                        if (action.action.isActionEnabled)
                         {
-                            StartCoroutine(ExecuteTriggerCR(action));
-                        }
-                        else
-                        {
-                            action.action.Execute();
+                            if (action.delay > 0)
+                            {
+                                StartCoroutine(ExecuteTriggerCR(action));
+                            }
+                            else
+                            {
+                                action.action.Execute();
+                            }
                         }
                     }
                 }

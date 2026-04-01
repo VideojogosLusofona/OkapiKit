@@ -1,5 +1,10 @@
 # Release Notes
 
+## V1.20.4
+
+- Fixed issue with explosion on demo applications
+- Added check for else clause existence before trying to run it
+
 ## V1.20.3
 
 - Fixed issue so that compilation works on Unity 6.3
