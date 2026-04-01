@@ -156,6 +156,14 @@ namespace OkapiKit.Editor
                 EditorGUILayout.EndVertical();
             }
         }
+    }
 
+    class OkapiConfigPostprocessor : AssetPostprocessor
+    {
+        static void OnPostprocessAllAssets(string[] imported, string[] deleted,
+                                           string[] moved, string[] movedFrom)
+        {
+            OkapiConfig.ResetSingleton();
+        }
     }
 }

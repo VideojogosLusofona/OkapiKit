@@ -106,16 +106,21 @@ namespace OkapiKit
         public static float orderMinZ => instance?._orderMinZ ?? -5.0f;
         public static float orderMaxZ => instance?._orderMaxZ ?? 5.0f;
 
+        static bool        _okapiConfigSearched = false;
         static OkapiConfig _instance = null;
 
         public static OkapiConfig instance { 
             get {
                 if (_instance) return _instance;
 
-                var allConfigs = FindAllInstances<OkapiConfig>();
-                if (allConfigs.Count == 1)
+                if (!_okapiConfigSearched)
                 {
-                    _instance = allConfigs[0];
+                    var allConfigs = FindAllInstances<OkapiConfig>();
+                    if (allConfigs.Count == 1)
+                    {
+                        _instance = allConfigs[0];
+                    }
+                    _okapiConfigSearched = true;
                 }
 
                 return _instance;
@@ -142,6 +147,14 @@ namespace OkapiKit
 #else
             return null;
 #endif
+        }
+
+        public static void ResetSingleton()
+        {
+            if (_instance == null)
+            {
+                _okapiConfigSearched = false;
+            }
         }
     }
 }

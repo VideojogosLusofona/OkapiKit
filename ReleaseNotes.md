@@ -2,6 +2,7 @@
 
 ## V1.20.4
 
+- Large performance improvements on editor UI 
 - Fixed issue with explosion on demo applications
 - Added check for else clause existence before trying to run it
 

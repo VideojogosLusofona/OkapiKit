@@ -300,26 +300,21 @@ namespace OkapiKit.Editor
                 if (texture) return texture;
             }
 
-            // Find path
+            // Try Assets path first, then Packages path
             string path = $"Assets/OkapiKit/UI/{name}.png";
-            if (!File.Exists(path))
+            texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            if (texture == null)
             {
-                path = System.IO.Path.GetFullPath($"Packages/com.videojogoslusofona.okapikit/UI/{name}.png");
-                if (!File.Exists(path))
-                {
-                    return null;
-                }
+                path = $"Packages/com.videojogoslusofona.okapikit/UI/{name}.png";
+                texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             }
 
-            texture = new Texture2D(1, 1);
-            if (texture.LoadImage(File.ReadAllBytes(path)))
+            if (texture != null)
             {
-                texture.Apply();
                 AddTexture(name, texture);
-                return texture;
             }
 
-            return null;
+            return texture;
         }
 
         static public Texture2D BitmapToTexture(string name, GUIBitmap bitmap)
